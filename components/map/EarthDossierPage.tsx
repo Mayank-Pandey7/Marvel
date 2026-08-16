@@ -51,7 +51,7 @@ export default function EarthDossierPage({
       onMouseMove={(e) => e.stopPropagation()}
       onMouseUp={(e) => e.stopPropagation()}
       onWheel={(e) => e.stopPropagation()}
-      className={`fixed inset-0 w-screen h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-300 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed inset-0 w-screen h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-100 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isClosing
           ? "opacity-0 scale-98 pointer-events-none filter blur-sm"
           : isExpanded
@@ -64,106 +64,88 @@ export default function EarthDossierPage({
         <img
           src={backdropSrc}
           alt={earth.name}
-          className={`w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.10] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`w-full h-full object-cover object-center filter brightness-[0.75] contrast-[1.08] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "scale-105 blur-0 opacity-100" : "scale-125 blur-lg opacity-0"
           }`}
         />
 
-        {/* Focused Contrast Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/96 via-[#020204]/80 to-[#020204]/50" />
+        {/* Contrast Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/95 via-[#020204]/75 to-[#020204]/45" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(2,2,4,0.85)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.90)_0%,transparent_25%,transparent_75%,rgba(2,2,4,0.95)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.92)_0%,transparent_25%,transparent_75%,rgba(2,2,4,0.95)_100%)]" />
       </div>
 
-      {/* 2. TOP HEADER */}
+      {/* 2. MINIMALIST TOP HEADER */}
       <header
         className={`relative z-20 w-full px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
         }`}
       >
-        {/* Left: Return */}
+        {/* Left: Clean Return Button (No Border, Plain Text with Arrow) */}
         <button
           onClick={handleClose}
-          className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/60 border border-white/20 hover:border-white/70 text-stone-200 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer backdrop-blur-md shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+          className="group inline-flex items-center gap-2 px-0 py-1 bg-transparent hover:text-white text-stone-300 text-xs font-mono tracking-widest uppercase transition-all cursor-pointer"
+          title="Return to Universe Map"
         >
-          <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-          <span>RETURN TO UNIVERSE MAP</span>
+          <ArrowLeft size={15} className="text-stone-400 group-hover:text-white group-hover:-translate-x-1 transition-transform" />
+          <span>RETURN</span>
         </button>
 
-        {/* Center: Brand */}
+        {/* Center: Brand Title */}
         <div className="text-center pointer-events-none">
-          <h1 className="font-mono uppercase text-stone-100 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.6)]">
+          <h1 className="font-sans uppercase text-white font-black text-sm sm:text-base tracking-[0.6em] drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
             M A R V E L
           </h1>
         </div>
 
-        {/* Right: Earth Designation & Triquetra */}
-        <div className="flex items-center gap-3">
-          <div className="px-3.5 py-1 rounded-full bg-black/60 border border-white/20 text-stone-200 font-mono text-[10px] tracking-widest uppercase backdrop-blur-md shadow-md">
-            {earth.designation}
-          </div>
-
-          <div
-            className="w-8 h-8 rounded-full border border-white/20 bg-black/60 flex items-center justify-center text-stone-300 backdrop-blur-md"
-            title="Multiverse Continuity"
-          >
-            <span className="text-xs font-serif">⎊</span>
-          </div>
-        </div>
+        {/* Right: Clean Spacer (No Icons / No Words on Right) */}
+        <div className="w-16" />
       </header>
 
       {/* 3. MAIN MULTIVERSE DOSSIER STAGE */}
-      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-8 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-6 flex flex-col lg:flex-row items-center justify-between gap-10 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
-        {/* LEFT COLUMN: TITLE & NARRATIVE BRIEFING */}
+        {/* LEFT COLUMN: TITLE & NARRATIVE BRIEFING IN SOLID FROSTED GLASS CARD */}
         <div
-          className={`flex-1 max-w-2xl flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
-            isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
+          className={`flex-1 max-w-2xl bg-[#06060a]/85 border border-white/15 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+            isExpanded ? "opacity-100 translate-x-0 translate-y-0" : "opacity-0 -translate-x-12 translate-y-4"
           }`}
         >
           {/* Status Tag */}
-          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.35em] text-stone-300 uppercase font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            <span className="text-white">MULTIVERSE CONTINUITY</span>
+          <div className="flex items-center gap-3 text-xs font-mono tracking-wider text-stone-300 uppercase font-semibold">
+            <span className="text-white font-bold">MULTIVERSE CONTINUITY</span>
             <span className="text-stone-500">•</span>
-            <span style={{ color: earth.color || "#ffffff" }} className="drop-shadow-[0_0_8px_currentColor]">
+            <span style={{ color: earth.color || "#ffffff" }} className="font-bold">
               {earth.status.replace("_", " ").toUpperCase()}
             </span>
           </div>
 
           {/* Large Cinematic Title */}
-          <h2
-            className={`font-mono font-light text-2xl sm:text-4xl md:text-5xl text-white uppercase leading-tight mt-3 drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
-              isExpanded
-                ? "tracking-[0.15em] sm:tracking-[0.2em] opacity-100 scale-100"
-                : "tracking-[0.35em] opacity-0 scale-95"
-            }`}
-          >
+          <h2 className="font-sans font-black text-2xl sm:text-4xl md:text-5xl text-white uppercase leading-tight mt-3 tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,1)]">
             {earth.name}
           </h2>
 
-          <div className="mt-1 text-sm font-mono tracking-widest text-stone-300 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            DESIGNATION: <span className="text-white font-bold">{earth.designation}</span>
+          <div className="mt-1.5 text-xs font-mono tracking-wider text-stone-300 uppercase font-semibold">
+            DESIGNATION: <span className="text-amber-300 font-bold">{earth.designation}</span>
           </div>
 
           {/* Description */}
-          <div className="mt-6 text-sm sm:text-base text-stone-100 font-sans font-normal leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-            <p className="bg-black/40 p-4 rounded-2xl border border-white/10 backdrop-blur-md">
-              {earth.description}
-            </p>
+          <div className="mt-5 text-sm sm:text-base text-stone-200 font-sans leading-relaxed">
+            <p className="font-normal">{earth.description}</p>
           </div>
 
           {/* Notable Inhabitants & Heroes */}
-          <div className="mt-6">
-            <span className="text-[10px] font-mono tracking-[0.3em] text-stone-300 uppercase block mb-2.5 font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              NOTABLE INHABITANTS & ENTANGLED HEROES
+          <div className="mt-5">
+            <span className="text-xs font-mono tracking-wider text-stone-400 uppercase block mb-2 font-bold">
+              NOTABLE INHABITANTS & HEROES
             </span>
             <div className="flex flex-wrap gap-2">
               {earth.notableCharacters.map((hero) => (
                 <span
                   key={hero}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-mono px-3.5 py-1.5 rounded-full bg-black/60 border border-white/25 text-stone-100 shadow-md hover:border-white/60 transition-colors backdrop-blur-md"
+                  className="inline-flex items-center gap-1.5 text-xs font-sans px-3.5 py-1.5 rounded-full bg-white/10 border border-white/25 text-white font-medium shadow-sm hover:border-white/60 transition-colors"
                 >
-                  <Sparkles size={11} className="text-stone-300" />
+                  <Sparkles size={12} className="text-amber-400" />
                   <span>{hero}</span>
                 </span>
               ))}
@@ -174,31 +156,31 @@ export default function EarthDossierPage({
         {/* RIGHT COLUMN: REALITY PIN & FEATURED PRODUCTIONS */}
         <div
           className={`w-full lg:w-96 flex flex-col items-center lg:items-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
-            isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
+            isExpanded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
           }`}
         >
           {/* Vertical Reality Pin */}
           <div className="flex flex-col items-center mb-6">
-            <span className="text-[11px] font-mono tracking-[0.35em] uppercase text-stone-200 font-bold mb-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+            <span className="text-xs font-mono tracking-widest uppercase text-stone-200 font-bold mb-1 drop-shadow-[0_2px_6px_rgba(0,0,0,1)]">
               {earth.designation}
             </span>
-            <span className="text-base text-white animate-spin [animation-duration:16s] drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">✹</span>
+            <span className="text-base text-white animate-spin [animation-duration:16s]">✹</span>
             <div className="w-[1.5px] h-8 bg-gradient-to-b from-white to-white/30" />
-            <span className="text-xs font-mono font-bold text-white tracking-widest bg-black/80 px-3 py-1 rounded-full border border-white/30 mt-1 shadow-xl uppercase">
+            <span className="text-xs font-mono font-bold text-white tracking-widest bg-black/90 px-3 py-1 rounded-full border border-white/30 mt-1 shadow-xl uppercase">
               {earth.status.replace("_", " ")}
             </span>
           </div>
 
           {/* Featured MCU Productions List */}
-          <div className="w-full bg-black/75 border border-white/20 rounded-2xl p-4 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
-            <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/15">
+          <div className="w-full bg-[#06060a]/90 border border-white/15 rounded-3xl p-5 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)]">
+            <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-white/15">
               <div className="flex items-center gap-2">
-                <Film size={13} className="text-white" />
-                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-white font-bold">
+                <Film size={14} className="text-amber-400" />
+                <span className="text-xs font-mono tracking-wider uppercase text-white font-bold">
                   FEATURED IN MCU
                 </span>
               </div>
-              <span className="text-[9px] font-mono text-stone-400">
+              <span className="text-[10px] font-mono text-stone-400">
                 {earth.featuredMovies.length} ENTRIES
               </span>
             </div>
@@ -207,7 +189,7 @@ export default function EarthDossierPage({
               {earth.featuredMovies.map((movie) => (
                 <div
                   key={movie}
-                  className="p-3 rounded-xl border border-white/15 bg-black/50 text-left shadow-sm"
+                  className="p-3 rounded-2xl border border-white/10 bg-white/[0.04] text-left shadow-sm"
                 >
                   <span className="text-xs font-sans font-bold text-white block">
                     {movie}
@@ -218,8 +200,8 @@ export default function EarthDossierPage({
           </div>
 
           {/* Multiversal Coordinates */}
-          <div className="mt-4 text-[9px] font-mono text-stone-400 tracking-[0.25em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            MULTIVERSE CONTINUITY DOMAIN: {earth.id.toUpperCase()}
+          <div className="mt-4 text-[10px] font-mono text-stone-400 tracking-wider uppercase">
+            DOMAIN: {earth.id.toUpperCase()}
           </div>
         </div>
       </main>
