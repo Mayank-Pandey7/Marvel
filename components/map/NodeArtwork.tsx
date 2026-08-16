@@ -241,10 +241,12 @@ export default function NodeArtwork({
   movieId,
   className = "w-full h-full",
   isActive = false,
+  rounded = "rounded-full",
 }: {
   movieId: string;
   className?: string;
   isActive?: boolean;
+  rounded?: string;
 }) {
   const [imgError, setImgError] = useState(false);
   const data = MCU_POSTER_MAP[movieId] || {
@@ -254,7 +256,7 @@ export default function NodeArtwork({
   };
 
   return (
-    <div className={`relative ${className} flex items-center justify-center bg-black overflow-hidden rounded-full select-none`}>
+    <div className={`relative ${className} flex items-center justify-center bg-black overflow-hidden ${rounded} select-none`}>
       {/* Background Poster Image */}
       {!imgError ? (
         <img
@@ -263,7 +265,7 @@ export default function NodeArtwork({
           onError={() => setImgError(true)}
           loading="lazy"
           className={`w-full h-full object-cover object-center transition-all duration-700 ${
-            isActive ? "scale-115 filter brightness-110 contrast-105" : "scale-100 filter brightness-90 contrast-100 group-hover:scale-110 group-hover:brightness-105"
+            isActive ? "scale-110 filter brightness-110 contrast-105" : "scale-100 filter brightness-95 contrast-100 group-hover:scale-105 group-hover:brightness-105"
           }`}
         />
       ) : (
@@ -277,13 +279,13 @@ export default function NodeArtwork({
         </div>
       )}
 
-      {/* Cinematic Vignette Overlay around Circle */}
-      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,0.85)_100%)] pointer-events-none" />
+      {/* Cinematic Vignette Overlay */}
+      <div className={`absolute inset-0 ${rounded} bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,0.85)_100%)] pointer-events-none`} />
 
       {/* Active Inner Cosmic Glow Ring */}
       {isActive && (
         <div
-          className="absolute inset-0 rounded-full pointer-events-none transition-opacity duration-300"
+          className={`absolute inset-0 ${rounded} pointer-events-none transition-opacity duration-300`}
           style={{
             boxShadow: `inset 0 0 16px ${data.color}90`,
             border: `1.5px solid ${data.color}`,
