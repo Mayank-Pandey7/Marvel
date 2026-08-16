@@ -354,11 +354,11 @@ export default function UniverseMap({
           {onReturn && (
             <button
               onClick={onReturn}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer"
               title="Return to Timeline Selector"
             >
               <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-              <span className="hidden sm:inline">RETURN TO SELECTOR</span>
+              <span>RETURN</span>
             </button>
           )}
         </div>

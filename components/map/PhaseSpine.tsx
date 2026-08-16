@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { PHASES_CONFIG, MCU_EARTHS, type MCUEarth } from "@/data/movies";
 import { X } from "lucide-react";
+import EarthDossierPage from "./EarthDossierPage";
 
 export default function PhaseSpine({
   currentPhase = 1,
@@ -206,94 +207,12 @@ export default function PhaseSpine({
         </div>
       </aside>
 
-      {/* ========================================================
-          MULTIVERSE EARTH DOSSIER MODAL OVERLAY
-         ======================================================== */}
+      {/* FULL-SCREEN MULTIVERSE REALITY DOSSIER PAGE */}
       {selectedEarthModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 select-none">
-          <div
-            className="fixed inset-0 bg-[#020204]/90 backdrop-blur-xl animate-in fade-in duration-300"
-            onClick={() => setSelectedEarthModal(null)}
-          />
-
-          <div className="relative z-10 w-full max-w-lg bg-[#07070c]/98 border border-stone-800 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-2xl flex flex-col gap-5 animate-in zoom-in-95 duration-300">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-stone-800">
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-14 h-14 rounded-full border border-stone-700 flex items-center justify-center p-1 shrink-0"
-                  style={{ color: selectedEarthModal.color }}
-                >
-                  {renderEarthLabel(selectedEarthModal.id, selectedEarthModal.designation)}
-                </div>
-                <div className="flex flex-col">
-                  <h2 className="text-base sm:text-lg font-mono font-bold text-white tracking-wider">
-                    {selectedEarthModal.designation}
-                  </h2>
-                  <span className="text-[10px] font-mono text-stone-400">
-                    {selectedEarthModal.name}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setSelectedEarthModal(null)}
-                className="text-stone-500 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Description */}
-            <p className="text-xs text-stone-300 leading-relaxed font-sans font-light">
-              {selectedEarthModal.description}
-            </p>
-
-            {/* Notable Characters */}
-            <div>
-              <span className="text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase block mb-2">
-                NOTABLE INHABITANTS & HEROES
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {selectedEarthModal.notableCharacters.map((hero) => (
-                  <span
-                    key={hero}
-                    className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-stone-900/90 border border-stone-800 text-stone-200"
-                  >
-                    {hero}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Featured MCU Movies */}
-            <div>
-              <span className="text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase block mb-2">
-                FEATURED IN MCU PRODUCTIONS
-              </span>
-              <div className="flex flex-col gap-1">
-                {selectedEarthModal.featuredMovies.map((movie) => (
-                  <div
-                    key={movie}
-                    className="text-xs font-mono text-stone-400 p-2 rounded-lg bg-black/40 border border-stone-900"
-                  >
-                    • {movie}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Close Button */}
-            <div className="pt-2 border-t border-stone-900 flex justify-end">
-              <button
-                onClick={() => setSelectedEarthModal(null)}
-                className="px-4 py-1.5 rounded-full bg-white text-black font-mono text-[10px] font-bold tracking-widest uppercase hover:bg-stone-200 transition-colors cursor-pointer"
-              >
-                CLOSE DOSSIER
-              </button>
-            </div>
-          </div>
-        </div>
+        <EarthDossierPage
+          earth={selectedEarthModal}
+          onClose={() => setSelectedEarthModal(null)}
+        />
       )}
     </>
   );
