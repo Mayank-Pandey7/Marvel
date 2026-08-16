@@ -76,7 +76,6 @@ export default function DeepMovieDetail({
   const [stage, setStage] = useState<"entering" | "expanded" | "closing">("entering");
 
   useEffect(() => {
-    // Cinematic entrance sequence
     setStage("entering");
     const t = setTimeout(() => {
       setStage("expanded");
@@ -115,7 +114,7 @@ export default function DeepMovieDetail({
       onMouseMove={(e) => e.stopPropagation()}
       onMouseUp={(e) => e.stopPropagation()}
       onWheel={(e) => e.stopPropagation()}
-      className={`fixed inset-0 w-screen h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-100 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed inset-0 w-screen h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-300 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isClosing
           ? "opacity-0 scale-98 pointer-events-none filter blur-sm"
           : isExpanded
@@ -128,15 +127,15 @@ export default function DeepMovieDetail({
         <img
           src={backdropSrc}
           alt={movie.title}
-          className={`w-full h-full object-cover object-center filter brightness-[0.75] contrast-[1.08] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`w-full h-full object-cover object-center filter brightness-[0.55] contrast-[1.10] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "scale-105 blur-0 opacity-100" : "scale-125 blur-lg opacity-0"
           }`}
         />
 
-        {/* Ambient Dark Atmospheric Gradient & Radial Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/95 via-[#020204]/75 to-[#020204]/45" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(2,2,4,0.85)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.92)_0%,transparent_25%,transparent_75%,rgba(2,2,4,0.95)_100%)]" />
+        {/* Cinematic Vignette & Atmospheric Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/90 via-[#020204]/55 to-[#020204]/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(2,2,4,0.92)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
       </div>
 
       {/* 2. MINIMALIST TOP HEADER */}
@@ -145,62 +144,66 @@ export default function DeepMovieDetail({
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
         }`}
       >
-        {/* Left: Clean Return Button (No Border, Plain Text with Arrow) */}
+        {/* Left: Clean Borderless Return Button */}
         <button
           onClick={handleClose}
-          className="group inline-flex items-center gap-2 px-0 py-1 bg-transparent hover:text-white text-stone-300 text-xs font-mono tracking-widest uppercase transition-all cursor-pointer"
-          title="Return to Universe Map"
+          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
         >
-          <ArrowLeft size={15} className="text-stone-400 group-hover:text-white group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
           <span>RETURN</span>
         </button>
 
         {/* Center: Brand Title */}
         <div className="text-center pointer-events-none">
-          <h1 className="font-sans uppercase text-white font-black text-sm sm:text-base tracking-[0.6em] drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
             M A R V E L
           </h1>
         </div>
 
-        {/* Right: Clean Spacer (No Icons / No Words on Right) */}
-        <div className="w-16" />
+        {/* Right side: Empty for clean balanced look */}
+        <div className="w-16 sm:w-20" />
       </header>
 
-      {/* 3. MAIN DOSSIER STAGE */}
-      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-6 flex flex-col lg:flex-row items-center justify-between gap-10 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      {/* 3. MAIN DOSSIER STAGE (NETFLIX DARK CINEMATIC LAYOUT) */}
+      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-6 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
-        {/* LEFT COLUMN: TITLE & NARRATIVE DOSSIER IN SOLID FROSTED GLASS CARD */}
+        {/* LEFT COLUMN: TITLE & NARRATIVE DOSSIER */}
         <div
-          className={`flex-1 max-w-2xl bg-[#06060a]/85 border border-white/15 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
-            isExpanded ? "opacity-100 translate-x-0 translate-y-0" : "opacity-0 -translate-x-12 translate-y-4"
+          className={`flex-1 max-w-2xl flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+            isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
           {/* Phase & Era Designation */}
-          <div className="flex items-center gap-3 text-xs font-mono tracking-wider text-stone-300 uppercase font-semibold">
-            <span className="text-white font-bold">PHASE {movie.phase}</span>
-            <span className="text-stone-500">•</span>
-            <span className="text-white font-bold">{movie.year}</span>
-            <span className="text-stone-500">•</span>
+          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.35em] text-stone-400 uppercase font-semibold">
+            <span>PHASE {movie.phase}</span>
+            <span>•</span>
+            <span>{movie.year}</span>
+            <span>•</span>
             <span>{movie.runtime} MIN</span>
-            <span className="text-stone-500">•</span>
-            <span className="text-amber-300">{movie.director}</span>
+            <span>•</span>
+            <span className="text-stone-300">{movie.director}</span>
           </div>
 
           {/* Large Cinematic Title */}
-          <h2 className="font-sans font-black text-2xl sm:text-4xl md:text-5xl text-white uppercase leading-tight mt-3 tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,1)]">
+          <h2
+            className={`font-mono font-light text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-tight mt-3 drop-shadow-[0_0_35px_rgba(255,255,255,0.25)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
+              isExpanded
+                ? "tracking-[0.15em] sm:tracking-[0.2em] opacity-100 scale-100"
+                : "tracking-[0.35em] opacity-0 scale-95"
+            }`}
+          >
             {movie.title}
           </h2>
 
-          {/* Narrative Synopsis */}
-          <div className="mt-5 text-sm sm:text-base text-stone-200 font-sans leading-relaxed">
-            <p className="font-normal">{movie.description}</p>
-            
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-stone-400 font-mono uppercase tracking-wider text-[11px] font-bold">LEAD:</span>
-              <span className="bg-white/10 border border-white/40 rounded-full px-3.5 py-1 text-white font-semibold">
+          {/* Narrative Synopsis with Dark-Style Circled Entities */}
+          <div className="mt-6 text-sm sm:text-base text-stone-300 font-sans font-light leading-relaxed">
+            <p>{movie.description}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-300">
+              <span className="text-stone-500 uppercase tracking-widest text-[10px]">LEAD CHARACTER:</span>
+              <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm">
                 {movie.leadCharacter}
               </span>
-              <span className="bg-black/50 border border-white/20 rounded-full px-3.5 py-1 text-stone-300">
+              <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-300">
                 {movie.heroAlias}
               </span>
             </div>
@@ -208,13 +211,13 @@ export default function DeepMovieDetail({
 
           {/* Famous Quote Glass Card */}
           {movie.quote && (
-            <div className="mt-5 p-4 rounded-2xl bg-black/60 border border-white/15 relative shadow-md">
-              <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-amber-400 rounded-l-2xl" />
-              <p className="text-sm font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
+            <div className="mt-6 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md relative max-w-lg shadow-lg">
+              <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
+              <p className="text-xs sm:text-sm font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
                 &ldquo;{movie.quote}&rdquo;
               </p>
               {movie.speaker && (
-                <p className="text-xs font-mono text-amber-300 uppercase tracking-wider mt-1.5 pl-2 font-bold">
+                <p className="text-[10px] font-mono text-stone-400 uppercase tracking-widest mt-1.5 pl-2 font-bold">
                   — {movie.speaker}
                 </p>
               )}
@@ -223,17 +226,17 @@ export default function DeepMovieDetail({
 
           {/* Key Relics & Artifacts */}
           {movie.keyRelics && movie.keyRelics.length > 0 && (
-            <div className="mt-5">
-              <span className="text-xs font-mono tracking-wider text-stone-400 uppercase block mb-2 font-bold">
+            <div className="mt-6">
+              <span className="text-[10px] font-mono tracking-[0.3em] text-stone-400 uppercase block mb-2 font-bold">
                 KEY RELICS & ARTIFACTS
               </span>
               <div className="flex flex-wrap gap-2">
                 {movie.keyRelics.map((relic) => (
                   <span
                     key={relic}
-                    className="inline-flex items-center gap-1.5 text-xs font-sans px-3.5 py-1.5 rounded-full bg-white/10 border border-white/25 text-white font-medium shadow-sm hover:border-white/60 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-mono px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/15 text-stone-200 shadow-sm hover:border-white/40 transition-colors"
                   >
-                    <Sparkles size={12} className="text-amber-400" />
+                    <Sparkles size={11} className="text-stone-400" />
                     <span>{relic}</span>
                   </span>
                 ))}
@@ -245,31 +248,31 @@ export default function DeepMovieDetail({
         {/* RIGHT COLUMN: FLOATING VERTICAL TIMELINE NODE & DIRECT CONNECTIONS */}
         <div
           className={`w-full lg:w-96 flex flex-col items-center lg:items-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
-            isExpanded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+            isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
           }`}
         >
           {/* Vertical Timeline Pin */}
           <div className="flex flex-col items-center mb-6">
-            <span className="text-xs font-mono tracking-widest uppercase text-stone-200 font-bold mb-1 drop-shadow-[0_2px_6px_rgba(0,0,0,1)]">
+            <span className="text-[11px] font-mono tracking-[0.35em] uppercase text-stone-400 font-bold mb-1">
               {movie.heroAlias}
             </span>
             <span className="text-base text-white animate-spin [animation-duration:16s]">✹</span>
-            <div className="w-[1.5px] h-8 bg-gradient-to-b from-white to-white/30" />
-            <span className="text-xs font-mono font-bold text-white tracking-widest bg-black/90 px-3 py-1 rounded-full border border-white/30 mt-1 shadow-xl">
+            <div className="w-[1.5px] h-8 bg-gradient-to-b from-white/80 to-white/20" />
+            <span className="text-xs font-mono font-bold text-white tracking-widest bg-black/60 px-2.5 py-0.5 rounded border border-white/20 mt-1 shadow-md">
               {movie.year}
             </span>
           </div>
 
           {/* Direct Connections Card List */}
-          <div className="w-full bg-[#06060a]/90 border border-white/15 rounded-3xl p-5 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)]">
-            <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-white/15">
+          <div className="w-full bg-black/50 border border-white/10 rounded-2xl p-4 backdrop-blur-xl shadow-2xl">
+            <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <Compass size={14} className="text-amber-400" />
-                <span className="text-xs font-mono tracking-wider uppercase text-white font-bold">
+                <Compass size={13} className="text-white" />
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-white font-bold">
                   DIRECT CONNECTIONS
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-stone-400">
+              <span className="text-[9px] font-mono text-stone-400">
                 {connectedMovies.length} LINKS
               </span>
             </div>
@@ -283,32 +286,32 @@ export default function DeepMovieDetail({
                   <button
                     key={target.id}
                     onClick={() => onNavigateToConnectedMovie(target)}
-                    className="group w-full flex items-center justify-between p-2.5 rounded-2xl border border-white/10 hover:border-white/50 bg-white/[0.04] hover:bg-white/[0.1] transition-all text-left cursor-pointer shadow-sm"
+                    className="group w-full flex items-center justify-between p-2.5 rounded-xl border border-white/10 hover:border-white/40 bg-white/[0.02] hover:bg-white/[0.08] transition-all text-left cursor-pointer"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl border border-white/20 group-hover:border-white/60 transition-colors overflow-hidden shrink-0 bg-black p-0.5 shadow-md">
-                        <NodeArtwork movieId={target.id} rounded="rounded-lg" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg border border-white/20 group-hover:border-white/50 transition-colors overflow-hidden shrink-0 bg-black/80 p-0.5">
+                        <NodeArtwork movieId={target.id} rounded="rounded-md" />
                       </div>
 
                       <div className="flex flex-col">
-                        <span className="text-xs font-sans font-bold text-white group-hover:text-amber-300 transition-colors">
+                        <span className="text-xs font-sans font-semibold text-stone-200 group-hover:text-white transition-colors">
                           {target.title}
                         </span>
-                        <span className="text-[11px] font-sans text-stone-300 line-clamp-1">
+                        <span className="text-[10px] font-mono text-stone-400 line-clamp-1">
                           {relationship}
                         </span>
                       </div>
                     </div>
 
-                    <ArrowRight size={14} className="text-stone-400 group-hover:text-white group-hover:translate-x-1 transition-all pl-1 shrink-0" />
+                    <ArrowRight size={13} className="text-stone-500 group-hover:text-white group-hover:translate-x-1 transition-all pl-1 shrink-0" />
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Coordinates */}
-          <div className="mt-4 text-[10px] font-mono text-stone-400 tracking-wider uppercase">
+          {/* Coordinates in Cosmic Space */}
+          <div className="mt-4 text-[9px] font-mono text-stone-500 tracking-[0.25em] uppercase">
             COSMIC POSITION: X:{movie.x} · Y:{movie.y}
           </div>
         </div>
