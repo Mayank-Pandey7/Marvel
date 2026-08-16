@@ -190,7 +190,7 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
 
   // Mouse & Touch Pan Handling
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, .dropdown-container")) return;
+    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .pointer-events-auto")) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
   };
@@ -257,34 +257,6 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
         className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
-
-      {/* 2. TOP HEADER (CLEAN ORIGINAL LAYOUT) */}
-      <header className="fixed top-0 inset-x-0 z-30 px-6 sm:px-10 py-4 flex items-center justify-between pointer-events-none">
-        {/* Left: Minimalist Menu & Return Button */}
-        <div className="flex items-center gap-3 pointer-events-auto">
-          <button
-            onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors p-2 cursor-pointer group flex items-center gap-2.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/40 backdrop-blur-md shadow-lg"
-            aria-label="Open Universe Navigation"
-            title="Open Universe Navigation"
-          >
-            <div className="w-5 flex flex-col gap-1.5">
-              <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
-              <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
-            </div>
-          </button>
-
-          {onReturn && (
-            <button
-              onClick={onReturn}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
-              title="Return to Timeline Selector"
-            >
-              <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-              <span className="hidden sm:inline">RETURN TO SELECTOR</span>
-            </button>
-          )}
-        </div>
 
       {/* CINEMATIC ASCENDING BRAND TITLE (Fades in center, then smoothly glides up to header) */}
       <div
@@ -447,7 +419,7 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
       <div
-        className="absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top-left"
+        className="absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top-left"
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}
@@ -485,7 +457,7 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
             <g
               key={`phase-divider-${p.id}`}
               onClick={() => directToPhase(p.id)}
-              className="cursor-pointer pointer-events-auto group"
+              className="cursor-pointer pointer-events-auto group phase-banner"
             >
               <rect
                 x="760"
@@ -582,7 +554,7 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
               onClick={() => focusOnMovie(movie)}
               onMouseEnter={() => setHoveredMovieId(movie.id)}
               onMouseLeave={() => setHoveredMovieId(null)}
-              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-500 ${
+              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-500 pointer-events-auto movie-node-card ${
                 isFaded ? "opacity-25 filter blur-[0.5px]" : "opacity-100"
               }`}
               style={{
