@@ -129,15 +129,15 @@ export default function DeepMovieDetail({
         <img
           src={backdropSrc}
           alt={movie.title}
-          className={`w-full h-full object-cover object-center filter brightness-[0.45] contrast-[1.15] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "scale-105 blur-0 opacity-100" : "scale-125 blur-lg opacity-0"
           }`}
         />
 
-        {/* Ambient Dark Atmospheric Gradient & Radial Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020204] via-[#020204]/75 to-[#020204]/85" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(2,2,4,0.92)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
+        {/* Ambient Atmospheric Gradient & Radial Vignette (Bright & Clear Background Artwork) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/90 via-[#020204]/35 to-[#020204]/65" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(2,2,4,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.80)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.90)_100%)]" />
       </div>
 
       {/* 2. MINIMALIST TOP HEADER */}
@@ -178,7 +178,7 @@ export default function DeepMovieDetail({
       </header>
 
       {/* 3. MAIN DOSSIER STAGE (NETFLIX DARK INSPIRED LAYOUT WITH STAGGERED ENTRANCE) */}
-      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-4 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-8 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
         {/* LEFT COLUMN: TITLE & NARRATIVE DOSSIER */}
         <div
@@ -329,48 +329,6 @@ export default function DeepMovieDetail({
           </div>
         </div>
       </main>
-
-      {/* 4. BOTTOM STATUS BAR */}
-      <footer
-        className={`relative z-20 w-full px-6 sm:px-12 py-5 flex items-center justify-between pointer-events-auto border-t border-white/5 bg-black/20 backdrop-blur-md transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        }`}
-      >
-        {/* Bottom Left: Dark Atmospheric Tagline */}
-        <div className="flex items-center gap-3">
-          <div className="w-2.5 h-4 rounded-full border border-stone-500 flex items-start justify-center p-0.5">
-            <span className="w-1 h-1 bg-stone-300 rounded-full animate-bounce" />
-          </div>
-          <span className="text-[10px] font-mono tracking-[0.35em] text-stone-400 uppercase">
-            THE SACRED TIMELINE
-          </span>
-        </div>
-
-        {/* Bottom Center: Movie Tagline */}
-        {movie.tagline && (
-          <p className="hidden md:block text-xs font-mono text-stone-400 italic tracking-wider">
-            &ldquo;{movie.tagline}&rdquo;
-          </p>
-        )}
-
-        {/* Bottom Right: Audio Indicator */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsAudioMuted(!isAudioMuted)}
-            className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors text-[10px] font-mono tracking-widest uppercase cursor-pointer"
-            title="Toggle Ambient Audio"
-          >
-            {isAudioMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
-            <span className="hidden sm:inline">{isAudioMuted ? "MUTED" : "AMBIENT"}</span>
-            <div className="flex items-center gap-0.5 h-3">
-              <span className={`w-0.5 bg-stone-400 rounded-full ${!isAudioMuted ? "h-3 animate-pulse" : "h-1"}`} />
-              <span className={`w-0.5 bg-stone-400 rounded-full ${!isAudioMuted ? "h-2 animate-pulse [animation-delay:150ms]" : "h-1"}`} />
-              <span className={`w-0.5 bg-stone-400 rounded-full ${!isAudioMuted ? "h-3.5 animate-pulse [animation-delay:300ms]" : "h-1"}`} />
-              <span className={`w-0.5 bg-stone-400 rounded-full ${!isAudioMuted ? "h-2 animate-pulse [animation-delay:450ms]" : "h-1"}`} />
-            </div>
-          </button>
-        </div>
-      </footer>
     </div>
   );
 }
