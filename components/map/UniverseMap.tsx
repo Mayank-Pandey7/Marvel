@@ -10,9 +10,17 @@ import DeepMovieDetail from "./DeepMovieDetail";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe } from "lucide-react";
 
-export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
+export default function UniverseMap({
+  onReturn,
+  initialPhase = 1,
+  targetMovieId,
+}: {
+  onReturn?: () => void;
+  initialPhase?: number;
+  targetMovieId?: string;
+}) {
   const { currentPhase, setCurrentPhase } = useTimelineState();
-  const [activePhase, setActivePhase] = useState<number>(currentPhase || 1);
+  const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
 
   // Universe Camera State (Pan & Zoom on a 2000px wide by 10500px tall vertical cosmic tree)
   const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.58 });
@@ -113,8 +121,23 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
   }, []);
 
   useEffect(() => {
-    directToPhase(1);
-  }, [directToPhase]);
+    if (targetMovieId) {
+      const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
+      if (targetMovie && containerRef.current) {
+        const { clientWidth, clientHeight } = containerRef.current;
+        const targetScale = 0.72;
+        const targetX = clientWidth / 2 - targetMovie.x * targetScale;
+        const targetY = clientHeight / 2 - targetMovie.y * targetScale;
+        setCamera({ x: targetX, y: targetY, scale: targetScale });
+        setActivePhase(targetMovie.phase);
+        setCurrentPhase(targetMovie.phase);
+        setSelectedMovie(null); // Keep modal closed so the tree section is visible!
+        setIsFullOverview(false);
+        return;
+      }
+    }
+    directToPhase(initialPhase || 1);
+  }, [initialPhase, targetMovieId, directToPhase, setCurrentPhase]);
 
   // Pan Camera to Center onto a Target Movie Node
   const focusOnMovie = useCallback((movie: MovieNode) => {

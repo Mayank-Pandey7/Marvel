@@ -100,7 +100,11 @@ export const PHASE_TRAILERS: Record<number, {
   },
 };
 
-export default function DarkIntroSelector({ onContinue }: { onContinue: () => void }) {
+export default function DarkIntroSelector({
+  onContinue,
+}: {
+  onContinue: (phase?: number, movieId?: string) => void;
+}) {
   const { currentPhase, setCurrentPhase, toggleSound } = useTimelineState();
   const [activePhase, setActivePhase] = useState<number>(currentPhase || 1);
   const [selectedMovieIndex, setSelectedMovieIndex] = useState<number>(0);
@@ -299,17 +303,17 @@ export default function DarkIntroSelector({ onContinue }: { onContinue: () => vo
     };
   }, []);
 
+  const currentPhaseMeta = PHASES[activePhase - 1] || PHASES[5];
+  const activeMovie = currentPhaseMovies[selectedMovieIndex] || currentPhaseMovies[0];
+  const activeTrailerConfig = PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6];
+
   const handleContinue = () => {
     setIsTransitioning(true);
     setCurrentPhase(activePhase);
     setTimeout(() => {
-      onContinue();
+      onContinue(activePhase, activeMovie?.id);
     }, 450);
   };
-
-  const currentPhaseMeta = PHASES[activePhase - 1] || PHASES[5];
-  const activeMovie = currentPhaseMovies[selectedMovieIndex] || currentPhaseMovies[0];
-  const activeTrailerConfig = PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6];
 
   return (
     <div
