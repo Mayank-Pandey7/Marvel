@@ -286,21 +286,86 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
           )}
         </div>
 
-        {/* Center: Brand Title (Border & Box Removed) */}
-        <div
-          className={`text-center pointer-events-none transition-all duration-1000 ${
-            introStep === "ready" || introStep === "revealing"
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-4"
+      {/* CINEMATIC ASCENDING BRAND TITLE (Fades in center, then smoothly glides up to header) */}
+      <div
+        className="fixed z-40 pointer-events-none transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center text-center w-full max-w-full px-4"
+        style={{
+          left: "50%",
+          top: introStep === "initial" || introStep === "centered" ? "50%" : "22px",
+          transform:
+            introStep === "initial"
+              ? "translate(-50%, -50%) scale(0.95)"
+              : introStep === "centered"
+              ? "translate(-50%, -50%) scale(1.05)"
+              : "translate(-50%, 0) scale(1)",
+          opacity: introStep === "initial" ? 0 : 1,
+        }}
+      >
+        <h1
+          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_18px_rgba(255,255,255,0.45)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            introStep === "centered"
+              ? "text-sm sm:text-base md:text-lg tracking-[0.55em] sm:tracking-[0.7em]"
+              : "text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em]"
           }`}
         >
-          <h1 className="text-xs sm:text-sm font-mono tracking-[0.45em] sm:tracking-[0.6em] uppercase text-stone-100 font-light drop-shadow-[0_0_14px_rgba(255,255,255,0.4)]">
-            M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
-          </h1>
-          <p className="text-[9px] font-mono tracking-[0.25em] uppercase text-stone-400 mt-0.5 font-bold">
-            {isFullOverview ? "EARTH-616 SACRED TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title} (${currentPhaseMeta.years})`}
-          </p>
+          M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
+        </h1>
+
+        <p
+          className={`font-mono uppercase transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            introStep === "centered"
+              ? "text-xs sm:text-sm tracking-[0.35em] text-white font-bold mt-2.5 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+              : "text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
+          }`}
+        >
+          {isFullOverview
+            ? "EARTH-616 SACRED TIMELINE TREE"
+            : introStep === "centered"
+            ? "EARTH-616 · SACRED TIMELINE TREE"
+            : `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title} (${currentPhaseMeta.years})`}
+        </p>
+
+        {introStep === "centered" && (
+          <div className="flex items-center gap-3 mt-2 text-[10px] sm:text-xs font-mono text-stone-400 tracking-[0.3em] uppercase animate-in fade-in duration-500">
+            <span>ALL 6 PHASES</span>
+            <span>•</span>
+            <span>2008 — 2027</span>
+          </div>
+        )}
+      </div>
+
+      {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
+      <header className={`fixed top-0 inset-x-0 z-30 px-6 sm:px-10 py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000 ${
+        introStep === "ready" ? "opacity-100" : "opacity-0"
+      }`}>
+        {/* Left: Minimalist Menu & Return Button */}
+        <div className="flex items-center gap-3 pointer-events-auto">
+          <button
+            onClick={() => setNavMenuOpen(true)}
+            className="text-stone-400 hover:text-white transition-colors p-2 cursor-pointer group flex items-center gap-2.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/40 backdrop-blur-md shadow-lg"
+            aria-label="Open Universe Navigation"
+            title="Open Universe Navigation"
+          >
+            <div className="w-5 flex flex-col gap-1.5">
+              <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
+              <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
+            </div>
+          </button>
+
+          {onReturn && (
+            <button
+              onClick={onReturn}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
+              title="Return to Timeline Selector"
+            >
+              <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
+              <span className="hidden sm:inline">RETURN TO SELECTOR</span>
+            </button>
+          )}
         </div>
+
+        {/* Center Space Reserved for Ascending Title */}
+        <div className="w-1" />
 
         {/* Right: Search Button */}
         <button
@@ -371,29 +436,13 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
         <span className="text-stone-300 font-semibold">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
       </div>
 
-      {/* 6. CINEMATIC OPENING INTRO */}
+      {/* 6. CINEMATIC OPENING BACKGROUND DISSOLVE */}
       {introStep !== "ready" && (
         <div
-          className={`fixed inset-0 z-50 pointer-events-none flex flex-col items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            introStep === "revealing"
-              ? "opacity-0 scale-105 pointer-events-none"
-              : "opacity-100 bg-[#020204]"
+          className={`fixed inset-0 z-30 pointer-events-none transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            introStep === "revealing" ? "opacity-0" : "opacity-100 bg-[#020204]"
           }`}
-        >
-          <div className="text-center px-4 flex flex-col items-center">
-            <p className="text-xs sm:text-sm font-mono tracking-[0.55em] uppercase text-stone-400 mb-2 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
-              M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
-            </p>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-black tracking-tight text-white uppercase mt-1">
-              VERTICAL TIMELINE TREE
-            </h2>
-            <div className="flex items-center gap-3 mt-3 text-xs sm:text-sm font-mono text-stone-400 tracking-[0.3em]">
-              <span>ALL 6 PHASES</span>
-              <span>•</span>
-              <span>2008 — 2027</span>
-            </div>
-          </div>
-        </div>
+        />
       )}
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
