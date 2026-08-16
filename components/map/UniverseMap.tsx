@@ -190,7 +190,7 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
 
   // Mouse & Touch Pan Handling
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .pointer-events-auto")) return;
+    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag")) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
   };
@@ -207,6 +207,10 @@ export default function UniverseMap({ onReturn }: { onReturn?: () => void }) {
   const handleMouseUp = () => setIsDragging(false);
 
   const handleWheel = (e: React.WheelEvent) => {
+    // If scrolling over an interactive panel (e.g. movie detail drawer, sidebar), don't zoom the background universe map
+    if ((e.target as HTMLElement).closest("aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable]")) {
+      return;
+    }
     e.preventDefault();
     const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
     const newScale = Math.min(Math.max(camera.scale * zoomFactor, 0.08), 2.2);

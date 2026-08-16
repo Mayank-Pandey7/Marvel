@@ -26,8 +26,16 @@ export default function DeepMovieDetail({
 
   return (
     <div className="fixed inset-x-0 bottom-0 top-0 z-40 flex items-center justify-end pointer-events-none p-4 sm:p-8 md:p-12 select-none">
-      {/* Right Drawer Card / Overlay Panel */}
-      <aside className="relative pointer-events-auto w-full max-w-lg bg-[#050508]/92 border border-stone-800/90 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-y-auto max-h-[90vh] animate-in slide-in-from-right-8 fade-in duration-500">
+      {/* Right Drawer Card / Overlay Panel (Isolated from Map Pan/Zoom) */}
+      <aside
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseMove={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        className="relative pointer-events-auto w-full max-w-lg bg-[#050508]/92 border border-stone-800/90 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-y-auto max-h-[90vh] animate-in slide-in-from-right-8 fade-in duration-500 movie-detail-card no-map-drag"
+      >
         
         {/* Top Control: Back to Universe */}
         <div>
