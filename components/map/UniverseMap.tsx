@@ -85,16 +85,16 @@ export default function UniverseMap({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [searchOpen, selectedMovie]);
 
-  // DIRECT TO SPECIFIC PHASE (Frames comfortably from the Phase Heading at top)
+  // DIRECT TO SPECIFIC PHASE (Frames comfortably with timeline tree trunk centered in viewport)
   const directToPhase = useCallback((phaseNum: number) => {
-    if (!containerRef.current) return;
-    const { clientWidth } = containerRef.current;
+    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
     const targetMeta = PHASES_CONFIG.find((p) => p.id === phaseNum) || PHASES_CONFIG[0];
     
     const targetScale = 0.58;
-    const targetX = clientWidth / 2 - 1000 * targetScale;
+    // Exactly center the 2000px wide timeline tree (trunk at X=1000) in middle of screen
+    const targetX = width / 2 - 1000 * targetScale;
     // Frame so the Phase Heading banner is clearly visible right at the top
-    const targetY = 115 - targetMeta.startY * targetScale;
+    const targetY = 120 - targetMeta.startY * targetScale;
 
     setCamera({ x: targetX, y: targetY, scale: targetScale });
     setActivePhase(phaseNum);
@@ -105,29 +105,31 @@ export default function UniverseMap({
 
   // EARTH-616 FULL TIMELINE OVERVIEW (Shows the entire vertical tree)
   const showFullEarth616Timeline = useCallback(() => {
-    if (!containerRef.current) return;
-    const { clientWidth, clientHeight } = containerRef.current;
+    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
+    const height = containerRef.current?.clientHeight || (typeof window !== "undefined" ? window.innerHeight : 900);
     
-    const scaleX = clientWidth / 2200;
-    const scaleY = clientHeight / 10600;
+    const scaleX = width / 2200;
+    const scaleY = height / 10600;
     const targetScale = Math.min(scaleX, scaleY) * 0.96;
 
-    const targetX = clientWidth / 2 - 1000 * targetScale;
-    const targetY = clientHeight / 2 - 5200 * targetScale;
+    const targetX = width / 2 - 1000 * targetScale;
+    const targetY = height / 2 - 5200 * targetScale;
 
     setCamera({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) });
     setSelectedMovie(null);
     setIsFullOverview(true);
   }, []);
 
+  // Frame Timeline Tree Perfectly Centered in Viewport on Initial Entry from Home/Continue
   useEffect(() => {
+    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
+    const targetScale = 0.58;
+    const targetX = width / 2 - 1000 * targetScale;
+
     if (targetMovieId) {
       const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
-      if (targetMovie && containerRef.current) {
-        const { clientWidth, clientHeight } = containerRef.current;
-        const targetScale = 0.72;
-        const targetX = clientWidth / 2 - targetMovie.x * targetScale;
-        const targetY = clientHeight / 2 - targetMovie.y * targetScale;
+      if (targetMovie) {
+        const targetY = 220 - targetMovie.y * targetScale;
         setCamera({ x: targetX, y: targetY, scale: targetScale });
         setActivePhase(targetMovie.phase);
         setCurrentPhase(targetMovie.phase);
@@ -136,8 +138,15 @@ export default function UniverseMap({
         return;
       }
     }
-    directToPhase(initialPhase || 1);
-  }, [initialPhase, targetMovieId, directToPhase, setCurrentPhase]);
+
+    const targetMeta = PHASES_CONFIG.find((p) => p.id === (initialPhase || 1)) || PHASES_CONFIG[0];
+    const targetY = 120 - targetMeta.startY * targetScale;
+    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    setActivePhase(initialPhase || 1);
+    setCurrentPhase(initialPhase || 1);
+    setSelectedMovie(null);
+    setIsFullOverview(false);
+  }, [initialPhase, targetMovieId, setCurrentPhase]);
 
   // Pan Camera to Center onto a Target Movie Node
   const focusOnMovie = useCallback((movie: MovieNode) => {
