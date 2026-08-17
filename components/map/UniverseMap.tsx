@@ -219,7 +219,7 @@ export default function UniverseMap({
   const touchStartRef = useRef<{ x: number; y: number; dist?: number }>({ x: 0, y: 0 });
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag")) return;
+    if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
   };
@@ -238,7 +238,7 @@ export default function UniverseMap({
   const handleMouseUp = () => setIsDragging(false);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag")) return;
+    if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
     if (e.touches.length === 1) {
       setIsDragging(true);
       setDragStart({ x: e.touches[0].clientX - camera.x, y: e.touches[0].clientY - camera.y });
@@ -284,8 +284,8 @@ export default function UniverseMap({
   };
 
   const handleWheel = (e: React.WheelEvent) => {
-    // If scrolling over an interactive panel (e.g. movie detail drawer, sidebar), don't zoom the background universe map
-    if ((e.target as HTMLElement).closest("aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable]")) {
+    // If search modal is open or scrolling over an interactive panel, don't zoom the background universe map
+    if (searchOpen || (e.target as HTMLElement).closest("aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container")) {
       return;
     }
     e.preventDefault();
