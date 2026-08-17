@@ -191,6 +191,9 @@ export function getCharacterBackdrop(characterId: string, eraId?: string, phase?
   if (phase && PHASE_DEFAULT_BACKDROPS[phase]) {
     return PHASE_DEFAULT_BACKDROPS[phase];
   }
-  // Default cinematic cosmic atmosphere
   return "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop";
+}
+
+export function hasCharacterBackdrop(characterId: string): boolean {
+  return Boolean(CHARACTER_BACKDROPS[characterId]);
 }
