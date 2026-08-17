@@ -123,7 +123,6 @@ export default function DarkIntroSelector({
   const [selectedMovieIndex, setSelectedMovieIndex] = useState<number>(0);
   const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
   const [hoveredMovieIndex, setHoveredMovieIndex] = useState<number | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isAudioActive, setIsAudioActive] = useState<boolean>(true);
   const [navOpen, setNavOpen] = useState(false);
 
@@ -337,57 +336,16 @@ export default function DarkIntroSelector({
   const activeTrailerConfig = activePhase ? PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6] : DOCTOR_DOOM_TRAILER;
 
   const handleContinue = () => {
-    setIsTransitioning(true);
     if (activePhase) {
       setCurrentPhase(activePhase);
     }
-    setTimeout(() => {
-      onContinue(activePhase || 1, activeMovie?.id);
-    }, 550);
+    onContinue(activePhase || 1, activeMovie?.id);
   };
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isTransitioning ? "scale-110 pointer-events-none" : "scale-100"
-      }`}
+      className="fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans"
     >
-      {/* CINEMATIC TIMELINE WARP JUMP OVERLAY */}
-      {isTransitioning && (
-        <div className="fixed inset-0 z-50 pointer-events-none flex flex-col items-center justify-center bg-black/95 backdrop-blur-2xl animate-in fade-in duration-200 overflow-hidden">
-          {/* Hyperspace Speed Lines Animation */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="absolute w-[2px] h-[70vh] bg-gradient-to-b from-transparent via-white/80 to-transparent rotate-0 animate-ping duration-500" />
-            <span className="absolute w-[2px] h-[70vh] bg-gradient-to-b from-transparent via-white/60 to-transparent rotate-45 animate-ping duration-700 delay-75" />
-            <span className="absolute w-[2px] h-[70vh] bg-gradient-to-b from-transparent via-white/80 to-transparent rotate-90 animate-ping duration-500 delay-100" />
-            <span className="absolute w-[2px] h-[70vh] bg-gradient-to-b from-transparent via-white/60 to-transparent rotate-[135deg] animate-ping duration-700 delay-150" />
-          </div>
-
-          {/* Expanding Quantum Energy Rings */}
-          <div className="absolute w-[180px] h-[180px] rounded-full border border-white/90 animate-ping duration-500 shadow-[0_0_60px_#ffffff]" />
-          <div className="absolute w-[400px] h-[400px] rounded-full border border-white/50 animate-ping duration-700 delay-100 shadow-[0_0_100px_rgba(255,255,255,0.6)]" />
-          <div className="absolute w-[800px] h-[800px] rounded-full border border-white/30 animate-ping duration-1000 delay-200" />
-
-          {/* Radial Cosmic Warp Core */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,rgba(0,0,0,0.85)_50%,black_100%)] animate-pulse duration-300" />
-
-          {/* Cinematic Telemetry HUD */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center gap-3 animate-in zoom-in-95 fade-in duration-300 px-4">
-            <span className="font-mono text-[9.5px] sm:text-xs tracking-[0.55em] uppercase text-stone-400">
-              INITIATING SACRED TIMELINE JUMP
-            </span>
-            <h2 className="font-mono text-lg sm:text-2xl md:text-3xl font-light tracking-[0.6em] uppercase text-white drop-shadow-[0_0_35px_rgba(255,255,255,1)]">
-              {currentPhaseMeta ? `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title}` : "SACRED TIMELINE"}
-            </h2>
-            <div className="flex items-center gap-3 font-mono text-[9px] sm:text-[10.5px] tracking-[0.35em] uppercase text-stone-400">
-              <span>EARTH-616</span>
-              <span>•</span>
-              <span>{currentPhaseMeta?.years || "2008 — 2027"}</span>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Cinematic Background Video Layer (Visual only - ALWAYS MUTED) */}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
