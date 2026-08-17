@@ -455,6 +455,14 @@ export const ARTIFACTS: Artifact[] = [
   }
 ];
 
-export function getArtifact(id: string) {
+export function getArtifact(id: string): Artifact | undefined {
   return ARTIFACTS.find((a) => a.id === id);
+}
+
+export function getArtifactsByCategory(category: ArtifactCategory): Artifact[] {
+  return ARTIFACTS.filter((a) => a.category === category);
+}
+
+export function getArtifactsByPhase(phase: number): Artifact[] {
+  return ARTIFACTS.filter((a) => a.phaseIntroduced <= phase);
 }
