@@ -1,6 +1,7 @@
 {
   "name": "mcuverse",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "Marvel Cinematic Universe — The Sacred Timeline Tree & Multiverse Map",
   "private": true,
   "scripts": {
     "dev": "next dev",
