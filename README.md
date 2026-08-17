@@ -1,11 +1,41 @@
-# Marvel Cinematic Universe — Interactive Timeline Tree & Multiverse Map
+# MCUVERSE — Marvel Cinematic Universe Sacred Timeline & Multiverse Tree
 
-A cinematic interactive Marvel Movie Timeline and Multiverse Explorer inspired by Netflix's Dark family tree aesthetics.
+A state-of-the-art cinematic Marvel interactive timeline, character archive, and multiversal relic provenance explorer built with Next.js App Router, React, TypeScript, and Tailwind CSS.
 
-## Features
-- **Dark Intro Flower Selector**: Interactive Betel leaf geometry phase scrubber with seamless trailer backdrop and audio sync.
-- **Vertical Sacred Timeline Tree (Earth-616)**: All 6 MCU Phases across 44 entries (2008 – 2027) on an interactive spatial canvas with smooth camera panning and zooming.
-- **Narrative Connections**: Dynamic glowing bezier arcs tracing inter-movie storylines and character arcs.
-- **Side Spine Earths & Accordion Roll-Out**: Explore all MCU parallel realities (Earth-616, Earth-838, Earth-10005, Earth-96283, Earth-120703, Earth-688, Battleworld) with smooth Phase roll-out on Earth-616.
-- **Search & Investigation**: Global instant search across all MCU entries with keyboard shortcuts (`/` or `Ctrl+K`).
-- **Official Artwork & Movie Dossiers**: High-definition official movie posters, quotes, relics, and cross-phase narrative threads.
+---
+
+## Key Highlights
+
+- **Dark Intro Scrubber & Dial**: 6-leaf flower dial selector with cinematic trailers, movie capsules, and phase telemetry.
+- **Vertical Sacred Timeline Tree (Earth-616)**: Complete 6-phase journey across 44 MCU canonical entries (2008–2027) on an interactive spatial canvas with pinch-to-zoom, touch drag, and dynamic bezier narrative threads.
+- **Multiverse Earths Catalogue**: Vertical side spine featuring Earth-616, Earth-838 (Illuminati), Earth-10005 (X-Men / Deadpool), Earth-96283 (Raimi Spider-Verse), Earth-120703 (Webb Spider-Verse), Earth-688 (Sonyverse), and Battleworld (Secret Wars).
+- **Cinematic Character Archives (`/characters`)**: Comprehensive archive of Avengers, Guardians, Multiversal Mutants (X-Men, Fantastic Four), Street-Level Heroes, Thunderbolts*, and Incursion Villains with cross-phase status records.
+- **Cosmic Relics & Artifacts Vault (`/artifacts`)**: Full catalog of Infinity Stones, Darkhold, Ten Rings, Quantum Bands, TVA Tech, and Asgardian/Wakandan armaments with chronological wielder provenance tracks.
+- **Full Mobile Responsiveness**: Touch gestures, adaptive typography, and borderless spatial design.
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS & Custom CSS Spatial Systems
+- **Icons**: Lucide React
+- **Canvas Rendering**: HTML5 2D Canvas Engine
+
+---
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
