@@ -36,8 +36,8 @@ export default function UniverseMap({
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [isFullOverview, setIsFullOverview] = useState(false);
 
-  // Intro Sequence Stages: "initial" -> "centered" -> "revealing" -> "ready"
-  const [introStep, setIntroStep] = useState<"initial" | "centered" | "revealing" | "ready">("initial");
+  // Direct ready state for instantaneous loading
+  const [introStep, setIntroStep] = useState<"initial" | "centered" | "revealing" | "ready">("ready");
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -53,18 +53,6 @@ export default function UniverseMap({
   const currentPhaseMeta = useMemo(() => {
     return PHASES_CONFIG.find((p) => p.id === activePhase) || PHASES_CONFIG[0];
   }, [activePhase]);
-
-  // Cinematic Intro Sequence
-  useEffect(() => {
-    const t1 = setTimeout(() => setIntroStep("centered"), 200);
-    const t2 = setTimeout(() => setIntroStep("revealing"), 1600);
-    const t3 = setTimeout(() => setIntroStep("ready"), 2800);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, []);
 
   // Global Keyboard Shortcuts (Press "/" or "Ctrl+K" for search, "Escape" to deselect)
   useEffect(() => {
@@ -221,6 +209,8 @@ export default function UniverseMap({
   }, []);
 
   // Mouse & Touch Pan Handling
+  const touchStartRef = useRef<{ x: number; y: number; dist?: number }>({ x: 0, y: 0 });
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag")) return;
     setIsDragging(true);
@@ -237,6 +227,51 @@ export default function UniverseMap({
   };
 
   const handleMouseUp = () => setIsDragging(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag")) return;
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.touches[0].clientX - camera.x, y: e.touches[0].clientY - camera.y });
+    } else if (e.touches.length === 2) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      touchStartRef.current = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+        dist,
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 1 && isDragging) {
+      setCamera((prev) => ({
+        ...prev,
+        x: e.touches[0].clientX - dragStart.x,
+        y: e.touches[0].clientY - dragStart.y,
+      }));
+    } else if (e.touches.length === 2 && touchStartRef.current.dist) {
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const factor = currentDist / touchStartRef.current.dist;
+      const newScale = Math.min(Math.max(camera.scale * factor, 0.08), 2.2);
+      setCamera((prev) => ({
+        ...prev,
+        scale: newScale,
+      }));
+      touchStartRef.current.dist = currentDist;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    touchStartRef.current.dist = undefined;
+  };
 
   const handleWheel = (e: React.WheelEvent) => {
     // If scrolling over an interactive panel (e.g. movie detail drawer, sidebar), don't zoom the background universe map
@@ -281,8 +316,12 @@ export default function UniverseMap({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onWheel={handleWheel}
-      className="fixed inset-0 w-screen h-screen bg-[#020204] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing"
+      className="fixed inset-0 w-screen h-screen bg-[#020204] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
     >
       {/* 1. Star Dust & Atmosphere Canvas Layer */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />

@@ -337,13 +337,10 @@ export default function DarkIntroSelector({
   const activeTrailerConfig = activePhase ? PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6] : DOCTOR_DOOM_TRAILER;
 
   const handleContinue = () => {
-    setIsTransitioning(true);
     if (activePhase) {
       setCurrentPhase(activePhase);
     }
-    setTimeout(() => {
-      onContinue(activePhase || 1, activeMovie?.id);
-    }, 450);
+    onContinue(activePhase || 1, activeMovie?.id);
   };
 
   return (
@@ -488,8 +485,8 @@ export default function DarkIntroSelector({
       }`}>
         
         {/* SACRED 6-BETEL-LEAF FLOWER (Placed lower initially when unselected, smoothly and slowly glides up to original position when clicked) */}
-        <div className={`relative w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 flex items-center justify-center my-0.5 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          activePhase === null ? "translate-y-6 sm:translate-y-8 scale-105" : "translate-y-0 scale-100"
+        <div className={`relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 flex items-center justify-center my-0.5 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          activePhase === null ? "translate-y-4 sm:translate-y-8 scale-105" : "translate-y-0 scale-100"
         }`}>
           <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
             <defs>

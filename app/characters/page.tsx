@@ -1,272 +1,311 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Users, Search, Shield, Zap, Sparkles, Filter, X, ArrowRight, Compass, Gem } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { CHARACTERS, type Character } from "@/data/characters";
+import { getCharacterBackdrop } from "@/data/characterBackdrops";
 
-const CATEGORIES = [
-  { id: "all", label: "All Entities" },
-  { id: "avengers", label: "Avengers" },
-  { id: "guardians", label: "Guardians" },
-  { id: "multiverse", label: "Multiverse & Mutants" },
-  { id: "street", label: "Street Level" },
-  { id: "thunderbolts", label: "Thunderbolts*" },
-  { id: "villains", label: "Villains & Threats" },
-  { id: "cosmic", label: "Cosmic & TVA" },
+const FACTIONS = [
+  { id: "all", label: "ALL" },
+  { id: "avengers", label: "AVENGERS" },
+  { id: "guardians", label: "GUARDIANS" },
+  { id: "multiverse", label: "MULTIVERSE & MUTANTS" },
+  { id: "street", label: "STREET LEVEL" },
+  { id: "thunderbolts", label: "THUNDERBOLTS*" },
+  { id: "villains", label: "VILLAINS & THREATS" },
+  { id: "cosmic", label: "COSMIC & TVA" },
 ];
 
-const UNIVERSES = [
-  { id: "all", label: "All Realities" },
-  { id: "616", label: "Earth-616" },
-  { id: "838", label: "Earth-838" },
-  { id: "10005", label: "Earth-10005 (Fox)" },
-  { id: "alt", label: "TVA / Citadel / Void" },
-];
+function CharactersContent() {
+  const searchParams = useSearchParams();
+  const paramFaction = searchParams.get("faction");
+  const paramQuery = searchParams.get("q");
 
-export default function CharactersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedUniverse, setSelectedUniverse] = useState("all");
+  const [searchQuery, setSearchQuery] = useState(paramQuery || "");
+  const [selectedFaction, setSelectedFaction] = useState(paramFaction || "all");
+
+  useEffect(() => {
+    if (paramFaction) {
+      setSelectedFaction(paramFaction);
+    } else {
+      setSelectedFaction("all");
+    }
+    if (paramQuery !== null) {
+      setSearchQuery(paramQuery);
+    }
+  }, [paramFaction, paramQuery]);
 
   const filteredCharacters = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+
     return CHARACTERS.filter((c) => {
-      // Search filter
-      const q = searchQuery.trim().toLowerCase();
-      const matchesSearch =
-        !q ||
-        c.name.toLowerCase().includes(q) ||
-        c.aliases.some((a) => a.toLowerCase().includes(q)) ||
-        c.role.toLowerCase().includes(q) ||
-        c.faction.toLowerCase().includes(q) ||
-        c.universe.toLowerCase().includes(q);
+      // 1. Precision Search Query Filter
+      if (q) {
+        const nameLower = c.name.toLowerCase();
+        const aliasesLower = c.aliases.map((a) => a.toLowerCase());
+        const idLower = c.id.toLowerCase();
 
-      if (!matchesSearch) return false;
+        // Direct name / alias / ID match
+        const nameMatch = nameLower.includes(q) || idLower.includes(q);
+        const aliasMatch = aliasesLower.some((a) => a.includes(q));
 
-      // Category filter
-      if (selectedCategory !== "all") {
+        // Word-boundary check for role & faction (so searching "gor" matches "Gorr" but NOT "Wundagore")
+        const queryWords = q.split(/\s+/).filter(Boolean);
+        const factionWords = c.faction.toLowerCase().split(/[\s/,-]+/).filter(Boolean);
+        const roleWords = c.role.toLowerCase().split(/[\s/,-]+/).filter(Boolean);
+
+        const factionMatch = queryWords.every((qw) =>
+          factionWords.some((fw) => fw.startsWith(qw) || fw === qw)
+        );
+
+        const roleMatch = queryWords.every((qw) =>
+          roleWords.some((rw) => rw.startsWith(qw) || rw === qw)
+        );
+
+        if (!nameMatch && !aliasMatch && !factionMatch && !roleMatch) {
+          return false;
+        }
+      }
+
+      // 2. Faction filter
+      if (selectedFaction !== "all") {
         const fac = c.faction.toLowerCase();
         const role = c.role.toLowerCase();
         const uni = c.universe.toLowerCase();
 
-        if (selectedCategory === "avengers" && !fac.includes("avenger")) return false;
-        if (selectedCategory === "guardians" && !fac.includes("guardian")) return false;
-        if (selectedCategory === "multiverse" && !fac.includes("x-men") && !fac.includes("spider-hero") && !fac.includes("fantastic four") && !uni.includes("838") && !uni.includes("10005") && !uni.includes("96283") && !uni.includes("120703")) return false;
-        if (selectedCategory === "street" && !fac.includes("defender") && !fac.includes("fisk") && !fac.includes("independent") && !c.id.includes("daredevil") && !c.id.includes("punisher") && !c.id.includes("kingpin")) return false;
-        if (selectedCategory === "thunderbolts" && !fac.includes("thunderbolts")) return false;
-        if (selectedCategory === "villains" && !role.includes("villain") && !role.includes("titan") && !role.includes("conqueror") && !role.includes("ai") && !role.includes("death") && !role.includes("god") && !c.id.includes("thanos") && !c.id.includes("kang") && !c.id.includes("doom") && !c.id.includes("ultron") && !c.id.includes("goblin") && !c.id.includes("doc-ock") && !c.id.includes("hela") && !c.id.includes("killmonger") && !c.id.includes("namor")) return false;
-        if (selectedCategory === "cosmic" && !fac.includes("tva") && !fac.includes("yggdrasil") && !fac.includes("watcher") && !fac.includes("masters") && !fac.includes("asgard") && !c.id.includes("loki") && !c.id.includes("watcher") && !c.id.includes("america-chavez")) return false;
-      }
-
-      // Universe filter
-      if (selectedUniverse !== "all") {
-        const uni = c.universe.toLowerCase();
-        if (selectedUniverse === "616" && !uni.includes("616")) return false;
-        if (selectedUniverse === "838" && !uni.includes("838")) return false;
-        if (selectedUniverse === "10005" && !uni.includes("10005")) return false;
-        if (selectedUniverse === "alt" && !uni.includes("tva") && !uni.includes("citadel") && !uni.includes("void") && !uni.includes("yggdrasil") && !uni.includes("nexus")) return false;
+        if (selectedFaction === "avengers" && !fac.includes("avenger")) return false;
+        if (selectedFaction === "guardians" && !fac.includes("guardian")) return false;
+        if (
+          selectedFaction === "multiverse" &&
+          !fac.includes("x-men") &&
+          !fac.includes("spider-hero") &&
+          !fac.includes("fantastic four") &&
+          !fac.includes("illuminati") &&
+          !fac.includes("brotherhood") &&
+          !fac.includes("void") &&
+          !role.includes("mutant") &&
+          !role.includes("elastic") &&
+          !role.includes("force field") &&
+          !uni.includes("838") &&
+          !uni.includes("10005") &&
+          !uni.includes("96283") &&
+          !uni.includes("120703") &&
+          !uni.includes("alternate")
+        )
+          return false;
+        if (
+          selectedFaction === "street" &&
+          !fac.includes("defender") &&
+          !fac.includes("fisk") &&
+          !fac.includes("independent") &&
+          !c.id.includes("daredevil") &&
+          !c.id.includes("punisher") &&
+          !c.id.includes("kingpin")
+        )
+          return false;
+        if (selectedFaction === "thunderbolts" && !fac.includes("thunderbolts")) return false;
+        if (selectedFaction === "villains") {
+          const isVillain =
+            role.includes("villain") ||
+            role.includes("titan") ||
+            role.includes("conqueror") ||
+            role.includes("warlord") ||
+            role.includes("sorcer") ||
+            role.includes("mastermind") ||
+            role.includes("zealot") ||
+            role.includes("geneticist") ||
+            fac.includes("hydra") ||
+            fac.includes("shadow realm") ||
+            fac.includes("orgocorp") ||
+            fac.includes("ten rings") ||
+            fac.includes("salem") ||
+            fac.includes("fisk") ||
+            fac.includes("kree") ||
+            fac.includes("void") ||
+            fac.includes("sentries") ||
+            fac.includes("black order") ||
+            [
+              "thanos", "kang-the-conqueror", "doctor-doom", "ultron", "green-goblin",
+              "doc-ock", "hela", "killmonger", "namor", "red-skull", "gorr", "mysterio",
+              "vulture", "wenwu", "agatha-harkness", "high-evolutionary", "kingpin",
+              "red-hulk", "zemo", "ronan", "cassandra-nova"
+            ].includes(c.id);
+          if (!isVillain) return false;
+        }
+        if (
+          selectedFaction === "cosmic" &&
+          !fac.includes("tva") &&
+          !fac.includes("yggdrasil") &&
+          !fac.includes("watcher") &&
+          !fac.includes("masters") &&
+          !fac.includes("asgard") &&
+          !c.id.includes("loki") &&
+          !c.id.includes("watcher") &&
+          !c.id.includes("america-chavez")
+        )
+          return false;
       }
 
       return true;
+    }).sort((a, b) => {
+      if (!q) return 0;
+      // Prioritize exact name start / match
+      const aNameStart = a.name.toLowerCase().startsWith(q) || a.aliases.some((al) => al.toLowerCase().startsWith(q));
+      const bNameStart = b.name.toLowerCase().startsWith(q) || b.aliases.some((al) => al.toLowerCase().startsWith(q));
+      if (aNameStart && !bNameStart) return -1;
+      if (!aNameStart && bNameStart) return 1;
+      return 0;
     });
-  }, [searchQuery, selectedCategory, selectedUniverse]);
+  }, [searchQuery, selectedFaction]);
 
   return (
-    <PageShell>
-      <section className="px-4 sm:px-8 py-10 max-w-7xl mx-auto font-sans">
+    <PageShell backHref="/timeline" backLabel="TIMELINE">
+      <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         
-        {/* Header Title Section */}
-        <div className="flex flex-col gap-3 mb-8 pb-6 border-b border-stone-900">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-stone-400 text-[10px] font-mono tracking-[0.25em] uppercase w-fit">
-            <Users size={12} className="text-stone-300" />
-            <span>PERSONNEL & MULTIVERSAL ENTITIES ARCHIVE</span>
-          </div>
+        {/* Subtle Ambient Cosmic Glow */}
+        <div className="fixed inset-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.25),rgba(255,255,255,0))]" />
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h1 className="text-3xl sm:text-5xl font-mono font-bold text-white tracking-[0.2em] uppercase">
-                C H A R A C T E R S
-              </h1>
-              <p className="text-xs sm:text-sm font-mono text-stone-400 max-w-2xl mt-2 tracking-wide leading-relaxed">
-                Investigative dossiers spanning heroes, conquerors, multiversal variants, and chronological timelines across the Marvel Cinematic Universe.
-              </p>
-            </div>
-
-            <div className="text-right">
-              <span className="text-[11px] font-mono tracking-widest text-stone-500 uppercase">
-                REGISTERED ENTITIES: <span className="text-stone-200 font-bold">{filteredCharacters.length}</span> / {CHARACTERS.length}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Filter Controls Bar */}
-        <div className="flex flex-col gap-4 mb-8 bg-[#000000] border border-stone-900 rounded-xl p-4 sm:p-5 shadow-2xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
           
-          {/* Top Row: Search Input */}
-          <div className="relative flex items-center border-b border-stone-800/80 pb-3 focus-within:border-white/60 transition-colors">
-            <Search size={16} className="text-stone-500 shrink-0 mr-3" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="SEARCH BY NAME, ALIAS, FACTION, OR UNIVERSE..."
-              className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-widest uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="text-stone-500 hover:text-stone-300 text-[10px] font-mono px-2 py-1 uppercase"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-
-          {/* Bottom Row: Category and Universe Pills */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+          {/* OPEN SPATIAL SEARCH & TEXT FILTERS (NO LINES) */}
+          <div className="flex flex-col gap-6 pb-2">
             
-            {/* Categories */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              {CATEGORIES.map((cat) => (
+            {/* Search Input with Clean Borderless Surface */}
+            <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
+              <Search size={15} className="text-stone-500 shrink-0 mr-3" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="SEARCH (NAME, ALIAS, FACTION)..."
+                className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-[0.2em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
+              />
+              {searchQuery && (
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3 py-1.5 text-[10px] font-mono tracking-wider uppercase rounded-lg border transition-all cursor-pointer ${
-                    selectedCategory === cat.id
-                      ? "bg-white/10 text-white border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.15)] font-semibold"
-                      : "bg-black/40 text-stone-500 border-stone-900 hover:border-stone-700 hover:text-stone-300"
-                  }`}
+                  onClick={() => setSearchQuery("")}
+                  className="text-stone-500 hover:text-stone-300 text-[10px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
                 >
-                  {cat.label}
+                  CLEAR
                 </button>
-              ))}
+              )}
             </div>
 
-            {/* Universes */}
-            <div className="flex flex-wrap items-center gap-1.5 border-t lg:border-t-0 border-stone-900 pt-3 lg:pt-0">
-              <span className="text-[10px] font-mono tracking-widest text-stone-600 uppercase mr-1 hidden sm:inline">
-                REALITY:
-              </span>
-              {UNIVERSES.map((u) => (
-                <button
-                  key={u.id}
-                  onClick={() => setSelectedUniverse(u.id)}
-                  className={`px-2.5 py-1 text-[9px] font-mono tracking-wider uppercase rounded border transition-colors cursor-pointer ${
-                    selectedUniverse === u.id
-                      ? "bg-stone-800 text-white border-stone-600 font-bold"
-                      : "bg-transparent text-stone-500 border-stone-900 hover:border-stone-800 hover:text-stone-400"
-                  }`}
-                >
-                  {u.label}
-                </button>
-              ))}
+            {/* Clean Minimal Text Filters */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              
+              {/* Factions (No numbers) */}
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
+                {FACTIONS.map((f) => (
+                  <button
+                    key={f.id}
+                    onClick={() => setSelectedFaction(f.id)}
+                    className={`transition-colors cursor-pointer py-1 ${
+                      selectedFaction === f.id
+                        ? "text-white font-bold"
+                        : "text-stone-500 hover:text-stone-300"
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+
             </div>
 
           </div>
+
+          {/* OPEN SPATIAL CINEMATIC GALLERY */}
+          {filteredCharacters.length === 0 ? (
+            <div className="text-center py-28">
+              <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
+                NO RECORDS FOUND
+              </h3>
+              <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
+                No record matches the active query parameters.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedFaction("all");
+                }}
+                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
+              >
+                RESET FILTERS
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {filteredCharacters.map((character) => {
+                const primaryAlias = character.aliases[0] || character.role.split(",")[0] || "OPERATIVE";
+                const backdropUrl = getCharacterBackdrop(character.id);
+
+                return (
+                  <Link
+                    key={character.id}
+                    href={`/characters/${character.id}`}
+                    className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
+                  >
+                    
+                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT */}
+                    <div className="relative w-full aspect-[16/11] overflow-hidden bg-stone-950">
+                      <img
+                        src={backdropUrl}
+                        alt={character.name}
+                        className="w-full h-full object-cover object-center filter brightness-85 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
+                      />
+
+                      {/* Smooth Vignette */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+                      {/* Role in Bottom Left of Image */}
+                      <div className="absolute bottom-2.5 left-3">
+                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-300">
+                          {primaryAlias}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* OPEN TEXT AREA */}
+                    <div className="flex flex-col gap-1">
+                      
+                      {/* Name */}
+                      <h2 className="text-base font-mono font-bold tracking-[0.16em] uppercase text-white group-hover:text-stone-200 transition-colors">
+                        {character.name}
+                      </h2>
+
+                      {/* Faction / Role */}
+                      <div className="text-[10px] font-mono tracking-wider uppercase text-stone-500 line-clamp-1">
+                        {character.faction.split("/")[0].trim()} · {character.role.split(",")[0].trim()}
+                      </div>
+
+                      {/* Action Link */}
+                      <div className="pt-1 flex items-center gap-1.5 text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
+                        <span>EXPLORE</span>
+                        <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
+
+                    </div>
+
+                  </Link>
+                );
+              })}
+            </div>
+          )}
 
         </div>
 
-        {/* Character Card Grid */}
-        {filteredCharacters.length === 0 ? (
-          <div className="text-center py-24 border border-dashed border-stone-900 rounded-2xl bg-black/40">
-            <Users size={32} className="mx-auto text-stone-700 mb-3" />
-            <h3 className="text-sm font-mono tracking-widest uppercase text-stone-400 font-bold">
-              NO CORRESPONDING ENTITIES FOUND
-            </h3>
-            <p className="text-xs font-mono text-stone-600 mt-1 max-w-sm mx-auto">
-              Adjust your search query or reset your category and reality filters.
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setSelectedUniverse("all");
-              }}
-              className="mt-4 px-4 py-2 bg-stone-900 hover:bg-stone-800 border border-stone-800 text-stone-300 text-xs font-mono tracking-widest uppercase rounded-lg transition-colors cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCharacters.map((character) => (
-              <Link
-                key={character.id}
-                href={`/characters/${character.id}`}
-                className="group relative bg-[#050508] border border-stone-900 hover:border-stone-700 rounded-xl p-5 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.8)] cursor-pointer"
-              >
-                <div>
-                  
-                  {/* Card Header: Color Orb, Universe & Era Count */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_8px_currentColor]"
-                        style={{ backgroundColor: character.color, color: character.color }}
-                      />
-                      <span className="text-[10px] font-mono tracking-wider uppercase text-stone-400 truncate">
-                        {character.universe}
-                      </span>
-                    </div>
-
-                    <span className="text-[9px] font-mono tracking-widest uppercase text-stone-400 bg-stone-900 border border-stone-800 px-2 py-0.5 rounded shrink-0">
-                      {character.eras.length} ERA{character.eras.length > 1 ? "S" : ""}
-                    </span>
-                  </div>
-
-                  {/* Character Name */}
-                  <h2 className="text-base sm:text-lg font-mono font-bold text-white tracking-wider group-hover:text-white transition-colors">
-                    {character.name}
-                  </h2>
-
-                  {/* Role Summary */}
-                  <p className="text-xs font-mono text-stone-400 mt-1 line-clamp-2 leading-relaxed tracking-normal">
-                    {character.role}
-                  </p>
-
-                  {/* Aliases Pills */}
-                  {character.aliases.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-3">
-                      {character.aliases.slice(0, 2).map((alias) => (
-                        <span
-                          key={alias}
-                          className="text-[9px] font-mono tracking-wider uppercase bg-stone-950 border border-stone-900 text-stone-500 px-2 py-0.5 rounded"
-                        >
-                          &ldquo;{alias}&rdquo;
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Relics Indicator if present */}
-                  {character.artifactsPossessed.length > 0 && (
-                    <div className="flex items-center gap-1.5 mt-3 pt-2 text-[10px] font-mono text-stone-500">
-                      <Gem size={11} className="text-cyan-400/80" />
-                      <span>{character.artifactsPossessed.length} Cosmic Relic{character.artifactsPossessed.length > 1 ? "s" : ""}</span>
-                    </div>
-                  )}
-
-                </div>
-
-                {/* Card Footer: Faction & Action Link */}
-                <div className="mt-5 pt-3 border-t border-stone-900 flex items-center justify-between text-[10px] font-mono tracking-widest uppercase">
-                  <span className="text-stone-500 truncate max-w-[60%]">
-                    {character.faction}
-                  </span>
-                  <span className="text-stone-300 group-hover:text-white flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                    <span>DOSSIER</span>
-                    <ArrowRight size={11} />
-                  </span>
-                </div>
-
-              </Link>
-            ))}
-          </div>
-        )}
-
-      </section>
+      </div>
     </PageShell>
+  );
+}
+
+export default function CharactersPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <CharactersContent />
+    </Suspense>
   );
 }

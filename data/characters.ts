@@ -562,35 +562,298 @@ export const CHARACTERS: Character[] = [
     linkedNexusEvents: ["nexus-deadpool-wolverine-save"],
     entries: ["deadpool-and-wolverine"]
   },
+  // --- THE FANTASTIC FOUR (MARVEL'S FIRST FAMILY) ---
   {
-    id: "fantastic-four",
+    id: "reed-richards",
     name: "Reed Richards",
     aliases: ["Mister Fantastic", "The Smartest Man Alive", "Leader of the Fantastic Four"],
-    universe: "Earth-616 (Phase 6 Retro-Future) / Earth-838",
+    universe: "Earth-616 Alternate (1960s Retro-Future) / Earth-838",
     faction: "Fantastic Four / The Illuminati",
     role: "World-renowned scientific genius capable of elastic molecular manipulation.",
-    overview: "Leader of Marvel's First Family. While his Earth-838 variant was spaghettified by Scarlet Witch, the prime Earth-616 Reed Richards leads the Fantastic Four in their 1960s retro-futuristic world facing Galactus.",
+    overview: "Leader of Marvel's First Family. While his Earth-838 variant was spaghettified by the Scarlet Witch, the prime Reed Richards leads the Fantastic Four in a 1960s retro-futuristic world preparing to confront Galactus.",
     firstAppearance: "Doctor Strange in the Multiverse of Madness (2022) / The Fantastic Four: First Steps (2025)",
     color: "#0284c7",
     statusByPhase: {
-      4: { status: "deceased", note: "Earth-838 variant spaghettified by the Scarlet Witch." },
-      5: { status: "alive", note: "Preparing for the arrival of Galactus in his home reality." },
-      6: { status: "alive", note: "Central protagonist of Fantastic Four: First Steps and Avengers: Doomsday." }
+      4: { status: "deceased", note: "Earth-838 Illuminati variant spaghettified by Scarlet Witch." },
+      5: { status: "alive", note: "Leading scientific breakthroughs in his retro-future reality." },
+      6: { status: "alive", note: "Central protagonist in Fantastic Four: First Steps and Avengers: Doomsday." }
     },
     eras: [
       {
         eraId: "reed-first-steps",
         phase: 6,
-        title: "The Fantastic Four: First Steps (1960s Retro-Future)",
-        year: "1960s Alternate / 2025",
+        title: "The Fantastic Four: First Steps",
+        year: "1960s / 2025",
         universe: "Earth-616 Alternate",
-        description: "Commands the Baxter Building and the Fantasticar alongside Sue, Johnny, and Ben as they defend Earth against Galactus.",
-        keyMoments: ["Constructed the Quantum Teleporter", "Defended Earth against Galactus", "Entered the prime MCU timeline"]
+        description: "Pilots the Fantasticar and commands the Baxter Building as Galactus descends upon his world.",
+        keyMoments: ["Constructed the Quantum Bridge", "Formulated defense strategy against Galactus", "Entered the Sacred Timeline"]
       }
     ],
     artifactsPossessed: ["ultimate-nullifier"],
     linkedNexusEvents: ["nexus-illuminati-massacre"],
     entries: ["doctor-strange-multiverse-of-madness", "fantastic-four-first-steps", "avengers-doomsday"]
+  },
+  {
+    id: "sue-storm",
+    name: "Sue Storm",
+    aliases: ["The Invisible Woman", "Susan Storm-Richards", "Protector of the Baxter Building"],
+    universe: "Earth-616 Alternate (1960s Retro-Future)",
+    faction: "Fantastic Four",
+    role: "Cosmically empowered matriarch capable of total invisibility and psionic force fields.",
+    overview: "The emotional core and most powerful powerhouse of the Fantastic Four, Sue Storm projects near-indestructible psionic force shields capable of containing cosmic-level cataclysms and cloaking entire city blocks.",
+    firstAppearance: "The Fantastic Four: First Steps (2025)",
+    color: "#38bdf8",
+    statusByPhase: {
+      5: { status: "alive", note: "Defending her reality with planetary psionic shielding." },
+      6: { status: "alive", note: "Frontline defender of the multiverse against Doom." }
+    },
+    eras: [
+      {
+        eraId: "sue-forcefield",
+        phase: 6,
+        title: "Sue Storm: Planetary Force Fields",
+        year: "1960s / 2025",
+        universe: "Earth-616 Alternate",
+        description: "Projects immense cosmic force barriers to shield the Baxter Building and civilian populations from atmospheric incursions.",
+        keyMoments: ["Created city-wide force barrier against cosmic debris", "Cloaked the entire Baxter Building in total invisibility"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["fantastic-four-first-steps", "avengers-doomsday"]
+  },
+  {
+    id: "johnny-storm",
+    name: "Johnny Storm",
+    aliases: ["The Human Torch", "Flame On!", "Captain America Lookalike (Void)"],
+    universe: "Earth-10005 / The Void / Earth-616 Alternate",
+    faction: "Fantastic Four / Void Outcasts",
+    role: "Pyrokinetic hothead mutant/cosmic flyer who turns into living plasma.",
+    overview: "The charismatic, daredevil younger brother of Sue Storm, Johnny can ignite his entire body into blazing plasma and fly at supersonic speeds. In The Void, his fiery attitude led to a fatal confrontation with Cassandra Nova.",
+    firstAppearance: "Fantastic Four (2005) / Deadpool & Wolverine (2024) / The Fantastic Four: First Steps (2025)",
+    color: "#f97316",
+    statusByPhase: {
+      5: { status: "deceased", note: "Earth-10005 variant stripped of skin by Cassandra Nova in The Void after Deadpool quoted him." },
+      6: { status: "alive", note: "Prime retro-future Johnny Storm blazing across the skies in First Steps." }
+    },
+    eras: [
+      {
+        eraId: "johnny-void",
+        phase: 5,
+        title: "Johnny Storm: Flame On in The Void (2024)",
+        year: "2024",
+        universe: "The Void",
+        description: "Tricked Deadpool into thinking he was Captain America before shouting 'Flame On!' and battling Cassandra's raiders.",
+        keyMoments: ["'Flame On!' reveal in front of Deadpool and Wolverine", "Delivered profanity-laced rant about Cassandra Nova", "Skin removed by Cassandra Nova"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["deadpool-and-wolverine", "fantastic-four-first-steps"]
+  },
+  {
+    id: "ben-grimm",
+    name: "Ben Grimm",
+    aliases: ["The Thing", "The Ever-Lovin' Blue-Eyed Thing", "It's Clobberin' Time!"],
+    universe: "Earth-616 Alternate (1960s Retro-Future)",
+    faction: "Fantastic Four",
+    role: "Rock-armored titan of near-infinite physical strength and unyielding loyalty.",
+    overview: "Transformed by cosmic radiation into a massive, orange rock-armored powerhouse, Ben Grimm's golden heart and immense physical durability make him the unstoppable muscle of the Fantastic Four.",
+    firstAppearance: "The Fantastic Four: First Steps (2025)",
+    color: "#ea580c",
+    statusByPhase: {
+      5: { status: "alive", note: "Piloting space expeditions for the Baxter Foundation." },
+      6: { status: "alive", note: "The frontline tank battling cosmic invaders in Secret Wars." }
+    },
+    eras: [
+      {
+        eraId: "ben-clobberin",
+        phase: 6,
+        title: "The Thing: It's Clobberin' Time!",
+        year: "1960s / 2025",
+        universe: "Earth-616 Alternate",
+        description: "Exchanges earth-shattering punches with alien behemoths and cosmic heralds.",
+        keyMoments: ["'It's Clobberin' Time!'", "Held up a collapsing launch structure with bare rock hands"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["fantastic-four-first-steps", "avengers-doomsday"]
+  },
+  {
+    id: "galactus",
+    name: "Galactus",
+    aliases: ["The Devourer of Worlds", "Galan of Taa", "The Cosmic Entity"],
+    universe: "Cosmic Multiverse",
+    faction: "Cosmic Entities / World Devourers",
+    role: "Ancient cosmic entity that consumes the life energy of entire planets to sustain the universe.",
+    overview: "A primordial cosmic force of nature that predates the Big Bang, Galactus wanders the cosmos consuming planets to stave off an endless hunger, heralding his arrival through silver heralds like Shalla-Bal.",
+    firstAppearance: "The Fantastic Four: First Steps (2025)",
+    color: "#9333ea",
+    statusByPhase: {
+      6: { status: "alive", note: "Descending upon Earth in The Fantastic Four: First Steps." }
+    },
+    eras: [
+      {
+        eraId: "galactus-descent",
+        phase: 6,
+        title: "Galactus: The Descent on Earth",
+        year: "1960s Alternate / 2025",
+        universe: "Earth-616 Alternate",
+        description: "Envelops the planetary sky as his colossal cosmic armor towers over Earth's atmosphere.",
+        keyMoments: ["Sent Shalla-Bal as the Silver Surfer herald", "Blocked out the Sun above the Baxter Building"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["fantastic-four-first-steps"]
+  },
+
+  // --- X-MEN & MUTANTS ---
+  {
+    id: "professor-x",
+    name: "Charles Xavier",
+    aliases: ["Professor X", "Leader of the Illuminati", "Founder of the X-Men"],
+    universe: "Earth-838 / Earth-10005",
+    faction: "X-Men / The Illuminati",
+    role: "World's most powerful telepath and mutant visionary.",
+    overview: "Founder of Xavier's School for Gifted Youngsters and leader of Earth-838's Illuminati. Rolling in his classic yellow hoverchair, Charles entered Wanda Maximoff's fractured subconscious to rescue the real Wanda before his neck was snapped.",
+    firstAppearance: "Doctor Strange in the Multiverse of Madness (2022)",
+    color: "#eab308",
+    statusByPhase: {
+      4: { status: "deceased", note: "Earth-838 Illuminati variant killed inside Wanda's mental mindscape." },
+      5: { status: "unknown", note: "Echoes of his dream inspire mutant sanctuary across timelines." },
+      6: { status: "ascended", note: "The ideological cornerstone of mutant existence in the Multiverse." }
+    },
+    eras: [
+      {
+        eraId: "xavier-illuminati",
+        phase: 4,
+        title: "Professor X: The Illuminati Judgement (2024)",
+        year: "2024",
+        universe: "Earth-838",
+        description: "Hovered into the Illuminati chamber and projected himself directly into Scarlet Witch's psyche.",
+        keyMoments: ["'Just because someone stumbles and loses their path doesn't mean they can't be saved'", "Astral confrontation against the Red Chaos Demon inside Wanda's mind"]
+      }
+    ],
+    artifactsPossessed: ["cerebro"],
+    linkedNexusEvents: ["nexus-illuminati-massacre"],
+    entries: ["doctor-strange-multiverse-of-madness"]
+  },
+  {
+    id: "magneto",
+    name: "Erik Lehnsherr",
+    aliases: ["Magneto", "Master of Magnetism", "Leader of the Brotherhood"],
+    universe: "Earth-10005 / Multiverse",
+    faction: "Brotherhood of Mutants / Mutant Liberation",
+    role: "Alpha-level mutant commander with absolute mastery over magnetic fields and metals.",
+    overview: "A Holocaust survivor who witnessed the depths of human cruelty, Erik believes mutants are the rightful successors to humanity, wielding magnetic pulses to tear apart bridges, sentinels, and entire naval armadas.",
+    firstAppearance: "X-Men (2000) / Deadpool & Wolverine (Mention)",
+    color: "#dc2626",
+    statusByPhase: {
+      5: { status: "unknown", note: "Legacy and helmet preserved in The Void." },
+      6: { status: "alive", note: "Leading mutant factions in multiversal battlegrounds." }
+    },
+    eras: [
+      {
+        eraId: "magneto-golden-gate",
+        phase: 5,
+        title: "Magneto: The Master of Magnetism",
+        year: "Timeless",
+        universe: "Earth-10005",
+        description: "Ripped the Golden Gate Bridge from its foundations and bent subatomic metals with absolute will.",
+        keyMoments: ["Levitated the Golden Gate Bridge", "Crushed Sentinel fleets with redirected ballistic steel"]
+      }
+    ],
+    artifactsPossessed: ["magneto-helmet"],
+    linkedNexusEvents: [],
+    entries: ["deadpool-and-wolverine"]
+  },
+  {
+    id: "gambit",
+    name: "Remy LeBeau",
+    aliases: ["Gambit", "The Ragin' Cajun", "Master of Kinetic Energy"],
+    universe: "The Void / Unmade Reality",
+    faction: "Void Resistance / The Others",
+    role: "Card-throwing kinetic mutant master from New Orleans.",
+    overview: "Born in The Void without ever knowing his original universe, Gambit wields charged kinetic playing cards and an explosive bo staff, finally earning his heroic purpose alongside Blade, Elektra, and Laura Kinney.",
+    firstAppearance: "Deadpool & Wolverine (2024)",
+    color: "#ec4899",
+    statusByPhase: {
+      5: { status: "ascended", note: "Sacrificed himself charging Juggernaut's helmet with kinetic energy in The Void: 'I made 'em know my name!'" }
+    },
+    eras: [
+      {
+        eraId: "gambit-void-battle",
+        phase: 5,
+        title: "Gambit: The Last Stand in The Void (2024)",
+        year: "2024",
+        universe: "The Void",
+        description: "Annihilated dozens of Cassandra Nova's raiders with explosive kinetic card flurries and a supercharged staff blast.",
+        keyMoments: ["'Wooimbouttomakeanameformyselfhere'", "Kinetic-charged playing cards shredding raider trucks", "Charged and detonated Juggernaut in mid-air"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: ["nexus-deadpool-wolverine-save"],
+    entries: ["deadpool-and-wolverine"]
+  },
+  {
+    id: "x-23",
+    name: "Laura Kinney",
+    aliases: ["X-23", "Wolverine's Daughter", "The Mutant Anchor"],
+    universe: "Earth-10005 (Pruned to The Void, Rescued)",
+    faction: "X-Men / Void Resistance",
+    role: "Adamantium-clawed mutant prodigy and emotional heart of Logan.",
+    overview: "Cloned from Logan's DNA, Laura survived the mutant extinction in 2029 before being pruned to The Void. She put on her pink sunglasses, fought alongside Deadpool and Wolverine, and returned as a co-anchor being of Earth-10005.",
+    firstAppearance: "Logan (2017) / Deadpool & Wolverine (2024)",
+    color: "#a855f7",
+    statusByPhase: {
+      5: { status: "alive", note: "Rescued from The Void by Hunter B-15 and dining with Logan and Wade in Earth-10005." },
+      6: { status: "alive", note: "Next generation Wolverine defending the timeline." }
+    },
+    eras: [
+      {
+        eraId: "x23-void-return",
+        phase: 5,
+        title: "Laura Kinney: The Return of X-23 (2024)",
+        year: "2024",
+        universe: "The Void / Earth-10005",
+        description: "Convinced Logan to forgive himself and fought Cassandra's army with foot and hand adamantium claws.",
+        keyMoments: ["Slipped on her iconic pink sunglasses", "'You were always the wrong guy. Until you weren't.'", "Decapitated Juggernaut with foot claws"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: ["nexus-deadpool-wolverine-save"],
+    entries: ["deadpool-and-wolverine"]
+  },
+  {
+    id: "beast",
+    name: "Dr. Hank McCoy",
+    aliases: ["Beast", "Chief Medical Officer of the X-Men", "Dr. McCoy"],
+    universe: "Earth-TBD (Alternate Mutant Reality)",
+    faction: "X-Men / Xavier Institute",
+    role: "Genius genetic biochemist mutant with superhuman agility and blue fur.",
+    overview: "Chief medical scientist of the X-Men in an alternate parallel universe, Dr. McCoy discovered Monica Rambeau in their medical lab after she sealed the interdimensional rift, revealing that Charles Xavier was waiting for her.",
+    firstAppearance: "The Marvels (2023)",
+    color: "#2563eb",
+    statusByPhase: {
+      5: { status: "alive", note: "Treating Monica Rambeau inside the X-Men medical bay." },
+      6: { status: "alive", note: "Scientific bridge between the MCU and the X-Men universe." }
+    },
+    eras: [
+      {
+        eraId: "beast-x-mansion-lab",
+        phase: 5,
+        title: "Dr. Hank McCoy: The Medical Bay Anomaly (2026)",
+        year: "2026",
+        universe: "Earth-Alternate Mutant",
+        description: "Scanned Monica Rambeau's quantum biometrics and confirmed her arrival in the X-Men reality.",
+        keyMoments: ["Revealed CGI comic-accurate blue-furred Beast look", "'Charles asked for an update. How is our patient doing?'"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["the-marvels"]
   },
 
   // --- STREET LEVEL & DEFENDERS ---
@@ -1438,9 +1701,340 @@ export const CHARACTERS: Character[] = [
     artifactsPossessed: ["infinity-stones-multiverse"],
     linkedNexusEvents: ["nexus-guardians-of-multiverse"],
     entries: ["what-if-s1", "what-if-s2"]
+  },
+
+  // --- EXPANDED ICONIC VILLAINS ROSTER ---
+  {
+    id: "red-skull",
+    name: "Johann Schmidt",
+    aliases: ["Red Skull", "Head of Hydra", "Keeper of the Soul Stone", "Stonekeeper"],
+    universe: "Earth-616",
+    faction: "Hydra / Vormir Soul Stone Watchers",
+    role: "Hydra founder who was cursed to guard the Soul Stone on Vormir for eternity.",
+    overview: "Obsessed with Norse mythology and occult superweapons, Schmidt weaponized the Tesseract during World War II before being banished by the Space Stone to the desolate planet Vormir.",
+    firstAppearance: "Captain America: The First Avenger (2011)",
+    color: "#dc2626",
+    statusByPhase: {
+      1: { status: "alive", note: "Banished across the cosmos by the unstable Tesseract portal in 1945." },
+      2: { status: "unknown", note: "Guiding souls on Vormir in total isolation." },
+      3: { status: "ascended", note: "Guided Thanos and Hawkeye/Black Widow through the tragic Soul Stone sacrifice ritual." },
+      4: { status: "unknown", note: "Freed from his curse after the stones were returned to the timeline." },
+      5: { status: "unknown", note: "Cosmic wraith wandering the stars." },
+      6: { status: "unknown", note: "Echoes in the history of Hydra." }
+    },
+    eras: [
+      {
+        eraId: "red-skull-ww2",
+        phase: 1,
+        title: "Red Skull: The Hydra War Machine (1942–1945)",
+        year: "1942–1945",
+        universe: "Earth-616",
+        description: "Built Hydra's advanced fortress in the Alps and launched the Valkyrie super-bomber toward America.",
+        keyMoments: ["Extracted the Tesseract from Tønsberg church", "Tore off human mask to reveal the crimson skull", "Banished into space by the Tesseract"]
+      },
+      {
+        eraId: "red-skull-vormir",
+        phase: 3,
+        title: "The Stonekeeper on Vormir (2018–2023)",
+        year: "2018–2023",
+        universe: "Earth-616 / Vormir",
+        description: "Enthroned as the spectral Stonekeeper, guiding seekers to the edge of the sacrificial cliff.",
+        keyMoments: ["'A soul for a soul'", "Named Thanos 'Son of Alars'", "Witnessed Natasha Romanoff's sacrifice"]
+      }
+    ],
+    artifactsPossessed: ["space-stone", "soul-stone"],
+    linkedNexusEvents: [],
+    entries: ["captain-america-first-avenger", "avengers-infinity-war", "avengers-endgame"]
+  },
+  {
+    id: "gorr",
+    name: "Gorr the God Butcher",
+    aliases: ["Gorr", "The God Butcher", "Wielder of the Necrosword"],
+    universe: "Earth-616 / Shadow Realm",
+    faction: "Shadow Realm / God Killers",
+    role: "Grief-stricken father on a cosmic crusade to exterminate all gods in existence.",
+    overview: "After his dying prayers went mocked by his careless deity Rapu, Gorr bonded with the dark All-Black Necrosword, vowing to slaughter every god in the universe and reach Eternity to wish for their total extinction.",
+    firstAppearance: "Thor: Love and Thunder (2022)",
+    color: "#e2e8f0",
+    statusByPhase: {
+      4: { status: "deceased", note: "Surrendered his hatred at the altar of Eternity; resurrected his daughter Love before dying in peace." }
+    },
+    eras: [
+      {
+        eraId: "gorr-necrosword",
+        phase: 4,
+        title: "Gorr: The Cosmic Crusade Against the Gods (2025)",
+        year: "2025",
+        universe: "Earth-616 / Shadow Realm / Eternity",
+        description: "Decapitated celestial deities across the cosmos, dragged Asgardian children into the Shadow Realm, and unlocked the gates of Eternity.",
+        keyMoments: ["Decapitated Rapu with the All-Black Necrosword", "Drained the color from the Shadow Realm", "Chose Love over the extinction of all gods"]
+      }
+    ],
+    artifactsPossessed: ["necrosword", "stormbreaker"],
+    linkedNexusEvents: [],
+    entries: ["thor-love-and-thunder"]
+  },
+  {
+    id: "mysterio",
+    name: "Quentin Beck",
+    aliases: ["Mysterio", "Master of Illusion", "Hero from Earth-833 (Fraud)"],
+    universe: "Earth-616",
+    faction: "Ex-Stark Industries Employees",
+    role: "Disgruntled holographic genius who framed Spider-Man and shattered his identity.",
+    overview: "A fired Stark Industries scientist who invented B.A.R.F. holographics, Beck fabricated a fake multiverse story and artificial elemental monster attacks to steal Tony Stark's orbital EDITH drone defense system.",
+    firstAppearance: "Spider-Man: Far From Home (2019)",
+    color: "#10b981",
+    statusByPhase: {
+      3: { status: "deceased", note: "Shot by his own misdirected combat drone in London; released Peter Parker's identity video in death." }
+    },
+    eras: [
+      {
+        eraId: "mysterio-london",
+        phase: 3,
+        title: "Mysterio: The Illusion Matrix & EDITH Heist (2024)",
+        year: "2024",
+        universe: "Earth-616",
+        description: "Manipulated Nick Fury and Peter Parker with hyper-realistic combat drones across Europe before executing the London Tower Bridge attack.",
+        keyMoments: ["Trapped Spider-Man inside a nightmarish holographic graveyard", "Tricked Peter into giving up EDITH glasses in Prague", "'Spider-Man's real name is Peter Parker!'"]
+      }
+    ],
+    artifactsPossessed: ["edith-glasses"],
+    linkedNexusEvents: [],
+    entries: ["spider-man-far-from-home"]
+  },
+  {
+    id: "vulture",
+    name: "Adrian Toomes",
+    aliases: ["The Vulture", "Toomes", "Scavenger of New York"],
+    universe: "Earth-616 (Displaced to Earth-688)",
+    faction: "Bestman Salvage / Underground Arms Syndicate",
+    role: "Blue-collar salvage contractor who turned alien Chitauri scrap into lethal black-market flight suits.",
+    overview: "After Damage Control and Stark Industries drove his salvage company out of business following the Battle of New York, Toomes built high-tech flight harnesses and energy weapons to provide for his family.",
+    firstAppearance: "Spider-Man: Homecoming (2017)",
+    color: "#84cc16",
+    statusByPhase: {
+      3: { status: "alive", note: "Imprisoned in federal penitentiary; refused to reveal Spider-Man's identity to Mac Gargan." },
+      4: { status: "variant", note: "Displaced into the Sony universe by Doctor Strange's multiverse containment spell." }
+    },
+    eras: [
+      {
+        eraId: "vulture-plane-heist",
+        phase: 3,
+        title: "The Vulture: Stark Cargo Plane Heist (2016)",
+        year: "2016",
+        universe: "Earth-616",
+        description: "Hijacked the invisible Stark cargo plane carrying Avengers Tower equipment before crashing onto Coney Island beach.",
+        keyMoments: ["Drove Peter Parker to the Homecoming dance in tense car confrontation", "Crushed Spider-Man beneath a warehouse ceiling", "Saved by Spider-Man from exploding turbine wings"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["spider-man-homecoming"]
+  },
+  {
+    id: "wenwu",
+    name: "Xu Wenwu",
+    aliases: ["The Mandarin", "Leader of the Ten Rings", "The Immortal Warlord"],
+    universe: "Earth-616",
+    faction: "The Ten Rings Syndicate",
+    role: "Thousand-year-old warrior conqueror wielding the mystical Ten Rings.",
+    overview: "For over a millennium, Wenwu shaped world history from the shadows with the mystical Ten Rings. Grieving the murder of his wife Jiang Li, he was deceived by the Dweller-in-Darkness into attacking the mythical realm of Ta Lo.",
+    firstAppearance: "Shang-Chi and the Legend of the Ten Rings (2021)",
+    color: "#3b82f6",
+    statusByPhase: {
+      4: { status: "deceased", note: "Soul consumed by the Dweller-in-Darkness after bequeathing the Ten Rings to his son Shang-Chi." }
+    },
+    eras: [
+      {
+        eraId: "wenwu-ten-rings",
+        phase: 4,
+        title: "Wenwu: The Millennium of the Ten Rings",
+        year: "1000–2024",
+        universe: "Earth-616 / Ta Lo",
+        description: "Conquered empires for 1,000 years, raised Shang-Chi into an elite assassin, and breached the Dark Gate of Ta Lo.",
+        keyMoments: ["Conquered ancient dynasties with golden projectile energy rings", "Met Jiang Li in the enchanted bamboo forest", "Passed the Ten Rings to Shang-Chi in his final moments"]
+      }
+    ],
+    artifactsPossessed: ["ten-rings"],
+    linkedNexusEvents: [],
+    entries: ["shang-chi-and-the-legend-of-the-ten-rings"]
+  },
+  {
+    id: "agatha-harkness",
+    name: "Agatha Harkness",
+    aliases: ["Agnes", "The Salem Witch", "Wielder of the Darkhold", "Ghost of the Witches' Road"],
+    universe: "Earth-616",
+    faction: "Salem Coven (Ancient) / Westview Hex Infiltrators",
+    role: "Centuries-old sorceress and master of soul-draining dark magic.",
+    overview: "Having drained her own mother and Salem coven of their magic in 1693, Agatha infiltrated Wanda Maximoff's Westview Hex under the guise of nosy neighbor Agnes to steal the Scarlet Witch's Chaos Magic.",
+    firstAppearance: "WandaVision (2021) / Agatha All Along (2024)",
+    color: "#a855f7",
+    statusByPhase: {
+      4: { status: "alive", note: "Trapped in the persona of 'Agnes' by Wanda's memory spell in Westview." },
+      5: { status: "ascended", note: "Walked the Witches' Road, broke free from the spell, and ascended as a spectral guide for Billy Maximoff." }
+    },
+    eras: [
+      {
+        eraId: "agatha-all-along",
+        phase: 4,
+        title: "Agatha: The Westview Hex Infiltration (2023)",
+        year: "2023",
+        universe: "Earth-616 / Westview",
+        description: "Killed Sparky the dog, puppeteered fake Pietro, and revealed her true nature in the basement of Westview.",
+        keyMoments: ["'It was Agatha All Along!'", "Revealed the prophecy of the Scarlet Witch from the Darkhold", "Defeated by Wanda's protective runes in the sky"]
+      }
+    ],
+    artifactsPossessed: ["darkhold"],
+    linkedNexusEvents: [],
+    entries: ["wandavision", "agatha-all-along"]
+  },
+  {
+    id: "high-evolutionary",
+    name: "The High Evolutionary",
+    aliases: ["Herbert Wyndham", "Creator of Counter-Earth", "Lord of the Orgocorp"],
+    universe: "Earth-616",
+    faction: "Orgocorp / Counter-Earth Architects",
+    role: "Sociopathic cybernetic geneticist obsessed with engineering a flawless species.",
+    overview: "Disgusted by nature's imperfections, the High Evolutionary subjected countless sentient creatures to agonizing genetic experiments, creating Rocket Raccoon, the Sovereign, and an entire Counter-Earth civilization.",
+    firstAppearance: "Guardians of the Galaxy Vol. 3 (2023)",
+    color: "#8b5cf6",
+    statusByPhase: {
+      5: { status: "alive", note: "Defeated and face-plate ripped off by Rocket; imprisoned on Knowhere by the Guardians." }
+    },
+    eras: [
+      {
+        eraId: "high-evo-counter-earth",
+        phase: 5,
+        title: "The High Evolutionary: Destruction of Counter-Earth (2026)",
+        year: "2026",
+        universe: "Earth-616 / Counter-Earth",
+        description: "Detonated his own artificial planet Counter-Earth and attacked the Bowie ship to extract Rocket's brain.",
+        keyMoments: ["Created Batch 89 with Rocket, Lylla, Teefs, and Floor", "Detonated Counter-Earth when it failed his perfection standard", "'There is no God! That's why I stepped in!'"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy-vol-3"]
+  },
+  {
+    id: "red-hulk",
+    name: "Thaddeus 'Thunderbolt' Ross",
+    aliases: ["Red Hulk", "President Ross", "General Ross", "Secretary of State"],
+    universe: "Earth-616",
+    faction: "US Government / White House / Department of State",
+    role: "US President transformed into the rampaging, superheated Red Hulk.",
+    overview: "The architect of the Sokovia Accords and lifelong pursuer of gamma mutants, President Thaddeus Ross attempts to weaponize Adamantium before mutating into the fiery, unstoppable Red Hulk.",
+    firstAppearance: "The Incredible Hulk (2008) / Captain America: Brave New World (2025)",
+    color: "#ef4444",
+    statusByPhase: {
+      1: { status: "alive", note: "General leading military operations against Bruce Banner in Harlem." },
+      3: { status: "alive", note: "Secretary of State who enforced the Sokovia Accords and fractured the Avengers." },
+      5: { status: "alive", note: "Elected President of the United States; mutates into the Red Hulk during global summit." }
+    },
+    eras: [
+      {
+        eraId: "red-hulk-white-house",
+        phase: 5,
+        title: "President Ross: Transformation into Red Hulk (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Engages Sam Wilson's Captain America in a catastrophic clash outside the White House.",
+        keyMoments: ["Signed the Sokovia Accords in 2016", "Elected 47th President of the United States", "Transformed into Red Hulk on the White House South Lawn"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["the-incredible-hulk", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame", "captain-america-brave-new-world"]
+  },
+  {
+    id: "zemo",
+    name: "Helmut Zemo",
+    aliases: ["Baron Zemo", "Baron of Sokovia"],
+    universe: "Earth-616",
+    faction: "Sokovian EKO Scorpion / Anti-Super Soldier Crusade",
+    role: "Sokovian intelligence mastermind who successfully broke the Avengers from within.",
+    overview: "Grieving his family killed during the Battle of Sokovia, Zemo framed the Winter Soldier, bombed the UN summit, and showed Tony Stark the video of his parents' murder, permanently fracturing the Avengers without superpowers.",
+    firstAppearance: "Captain America: Civil War (2016)",
+    color: "#7c3aed",
+    statusByPhase: {
+      3: { status: "alive", note: "Imprisoned at the Joint Counter Terrorist Centre after breaking the Avengers." },
+      4: { status: "alive", note: "Escaped prison with Bucky and Sam; executed the Flag Smasher super soldiers from The Raft." }
+    },
+    eras: [
+      {
+        eraId: "zemo-siberia",
+        phase: 3,
+        title: "Baron Zemo: The Siberia Decapitation (2016)",
+        year: "2016",
+        universe: "Earth-616",
+        description: "Triggered the Winter Soldier with the Russian trigger words and lured Iron Man and Captain America into the Siberian bunker.",
+        keyMoments: ["'Longing. Rusted. Seventeen. Daybreak...'", "Screened December 16, 1991 assassination tape", "'An empire toppled by its enemies can rise again. But one that crumbles from within? That's dead. Forever.'"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["captain-america-civil-war", "the-falcon-and-the-winter-soldier"]
+  },
+  {
+    id: "ronan",
+    name: "Ronan the Accuser",
+    aliases: ["The Accuser", "Kree Fanatic", "Wielder of the Cosmi-Rod"],
+    universe: "Earth-616",
+    faction: "Kree Empire Zealots",
+    role: "Kree radical zealot who betrayed Thanos to destroy Xandar with the Power Stone.",
+    overview: "A genocidal Kree commander who refused the peace treaty with Xandar, Ronan made a deal with Thanos to wipe out the Nova Corps before embedding the purple Power Stone directly into his warhammer.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#6b7280",
+    statusByPhase: {
+      1: { status: "alive", note: "Leading Kree Starforce operations in 1995 against Captain Marvel." },
+      2: { status: "deceased", note: "Disintegrated on Xandar when the Guardians of the Galaxy united to channel the Power Stone." }
+    },
+    eras: [
+      {
+        eraId: "ronan-xandar",
+        phase: 2,
+        title: "Ronan: The Siege of Xandar (2014)",
+        year: "2014",
+        universe: "Earth-616",
+        description: "Embedded the Power Stone into his Cosmi-Rod and crashed the Dark Aster onto Xandar.",
+        keyMoments: ["Betrayed Thanos: 'I will bathe the starways in your blood!'", "Distracted by Star-Lord's dance-off on Xandar beach", "Obliterated by the united Guardians of the Galaxy"]
+      }
+    ],
+    artifactsPossessed: ["power-stone"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "captain-marvel"]
+  },
+  {
+    id: "cassandra-nova",
+    name: "Cassandra Nova",
+    aliases: ["The Void Queen", "Twin Sister of Charles Xavier", "Mummudrai"],
+    universe: "The Void (End of Time)",
+    faction: "Void Outcasts / Xavier Bloodline",
+    role: "Telepathic reality-manipulating mutant ruler of the Void.",
+    overview: "The parasitic twin sister of Charles Xavier, Cassandra was pruned by the TVA to The Void, where she used her terrifying telepathic ability to enter minds physically and feed mutants to Alioth.",
+    firstAppearance: "Deadpool & Wolverine (2024)",
+    color: "#fbbf24",
+    statusByPhase: {
+      5: { status: "deceased", note: "Disintegrated by the overloaded Time Ripper reactor when Deadpool and Wolverine joined hands." }
+    },
+    eras: [
+      {
+        eraId: "cassandra-void",
+        phase: 5,
+        title: "Cassandra Nova: Queen of the Void (2024)",
+        year: "2024",
+        universe: "The Void",
+        description: "Ruled over the severed corpse of giant Ant-Man and attempted to destroy all timelines with the Time Ripper.",
+        keyMoments: ["Physically inserted hands through human skulls to read thoughts", "Stripped Johnny Storm of his skin in seconds", "Disintegrated by the overloaded Time Ripper"]
+      }
+    ],
+    artifactsPossessed: ["time-ripper", "sling-ring"],
+    linkedNexusEvents: [],
+    entries: ["deadpool-and-wolverine"]
   }
 ];
 
 export function getCharacter(id: string): Character | undefined {
   return CHARACTERS.find((c) => c.id === id);
 }
+

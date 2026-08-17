@@ -6,7 +6,15 @@ import { ArrowLeft, Search, Menu } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
 import SlideNavMenu from "./dark/SlideNavMenu";
 
-export default function PageShell({ children }: { children: React.ReactNode }) {
+export default function PageShell({ 
+  children,
+  backHref = "/timeline",
+  backLabel = "TIMELINE"
+}: { 
+  children: React.ReactNode;
+  backHref?: string;
+  backLabel?: string;
+}) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
 
@@ -23,48 +31,62 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020204] text-stone-100 flex flex-col font-sans relative selection:bg-white selection:text-black">
-      {/* Sleek Top Bar */}
-      <header className="w-full px-4 sm:px-8 py-5 max-w-7xl mx-auto flex items-center justify-between z-30">
-        <div className="flex items-center gap-3">
+    <div className="min-h-screen bg-[#000000] text-stone-100 flex flex-col font-sans relative selection:bg-white selection:text-black">
+      
+      {/* Transparent Fixed Top Bar with Subtle Blur */}
+      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-3 sm:py-4 flex items-center justify-between z-50 bg-transparent backdrop-blur-sm transition-colors">
+        
+        {/* Left: Drawer Menu Toggle */}
+        <div className="flex items-center">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="inline-flex items-center gap-2 p-2 rounded-full bg-white/5 border border-white/20 hover:border-white/60 text-stone-300 hover:text-white transition-all cursor-pointer group"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
             title="Open Menu Drawer"
             aria-label="Open Menu Drawer"
           >
-            <Menu size={14} className="text-stone-400 group-hover:text-white transition-colors" />
+            <Menu size={16} />
           </button>
-          
-          <Link
-            href="/timeline"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/20 hover:border-white/60 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer shadow-[0_0_12px_rgba(255,255,255,0.05)]"
+        </div>
+
+        {/* Center: Spaced MARVEL Brand Logo */}
+        <div className="flex items-center justify-center">
+          <Link 
+            href="/" 
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.45em] sm:pl-[0.55em]"
           >
-            <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">RETURN TO SACRED TIMELINE</span>
-            <span className="sm:hidden">TIMELINE</span>
+            MARVEL
           </Link>
         </div>
 
-        {/* Minimalist Search Button */}
-        <button
-          onClick={() => setSearchOpen(true)}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/20 hover:border-white/60 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer shadow-[0_0_12px_rgba(255,255,255,0.06)]"
-          title="Search MCU (Ctrl+K)"
-        >
-          <Search size={13} className="text-stone-400 group-hover:text-white transition-colors" />
-          <span>SEARCH</span>
-          <kbd className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.5 bg-stone-900 border border-stone-800 rounded text-stone-400 ml-1">
-            ⌘K
-          </kbd>
-        </button>
+        {/* Right: Return Link in Front of Search Button */}
+        <div className="flex items-center gap-3 sm:gap-6">
+          <Link
+            href={backHref}
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
+          >
+            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
+            <span>{backLabel}</span>
+          </Link>
+
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            title="Search MCU (Ctrl+K)"
+          >
+            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <span className="hidden sm:inline">SEARCH</span>
+            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+              /
+            </kbd>
+          </button>
+        </div>
       </header>
 
       {/* Slide Navigation Drawer */}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-      {/* Main Page Content */}
-      <main className="flex-1 pb-16">{children}</main>
+      {/* Main Page Content Offset by Fixed Header Height */}
+      <main className="flex-1 pt-16">{children}</main>
 
       {/* Global Search Modal Overlay */}
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
