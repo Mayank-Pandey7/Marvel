@@ -343,13 +343,13 @@ export default function DarkIntroSelector({
     }
     setTimeout(() => {
       onContinue(activePhase || 1, activeMovie?.id);
-    }, 220);
+    }, 240);
   };
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-300 overflow-hidden font-sans transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isTransitioning ? "opacity-0 scale-110 blur-[4px] pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isTransitioning ? "opacity-0 scale-105 blur-[3px] pointer-events-none" : "opacity-100 scale-100"
       }`}
     >
       {/* Hyperspace Transition Energy Pulse */}
