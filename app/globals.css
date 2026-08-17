@@ -50,26 +50,25 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   border-radius: 9999px;
 }
 
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+:root {
+  --bg-deep-space: #020204;
+  --text-pure: #ffffff;
+  --text-muted: #a8a29e;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-surface: rgba(10, 10, 15, 0.65);
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 4s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@layer utilities {
+  .bg-glass {
+    background-color: var(--glass-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .border-glass {
+    border-color: var(--glass-border);
+  }
+  .mask-radial-vignette {
+    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
   }
 }
