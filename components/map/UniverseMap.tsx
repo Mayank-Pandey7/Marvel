@@ -490,9 +490,14 @@ export default function UniverseMap({
         />
       )}
 
+      {/* Cosmic Arrival Energy Glow */}
+      <div className="fixed inset-0 pointer-events-none z-10 animate-out fade-out duration-700 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
+
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
       <div
-        className="absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top-left"
+        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left ${
+          isDragging ? "transition-none" : "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        }`}
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}

@@ -337,18 +337,28 @@ export default function DarkIntroSelector({
   const activeTrailerConfig = activePhase ? PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6] : DOCTOR_DOOM_TRAILER;
 
   const handleContinue = () => {
+    setIsTransitioning(true);
     if (activePhase) {
       setCurrentPhase(activePhase);
     }
-    onContinue(activePhase || 1, activeMovie?.id);
+    setTimeout(() => {
+      onContinue(activePhase || 1, activeMovie?.id);
+    }, 220);
   };
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-300 overflow-hidden font-sans transition-opacity duration-500 ${
-        isTransitioning ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#020204] text-stone-300 overflow-hidden font-sans transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isTransitioning ? "opacity-0 scale-110 blur-[4px] pointer-events-none" : "opacity-100 scale-100"
       }`}
     >
+      {/* Hyperspace Transition Energy Pulse */}
+      {isTransitioning && (
+        <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center animate-out fade-out duration-300">
+          <div className="w-[120vw] h-[120vh] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.25)_0%,rgba(120,119,198,0.15)_40%,transparent_70%)] animate-ping duration-300" />
+        </div>
+      )}
+
       {/* Cinematic Background Video Layer (Visual only - ALWAYS MUTED) */}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
