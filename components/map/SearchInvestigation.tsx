@@ -57,15 +57,15 @@ export default function SearchInvestigation({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 select-none animate-in fade-in duration-200">
       {/* Pitch-Black Backdrop with High-Blur */}
       <div
-        className="fixed inset-0 bg-black/90 backdrop-blur-xl transition-opacity"
+        className="fixed inset-0 bg-black/90 backdrop-blur-2xl transition-opacity"
         onClick={onClose}
       />
 
-      {/* Sleek Spatial Modal Container */}
-      <div className="relative z-10 w-full max-w-3xl bg-[#050508]/95 border border-stone-800/60 shadow-2xl p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200">
+      {/* 100% Borderless Sleek Spatial Modal Container */}
+      <div className="relative z-10 w-full max-w-3xl bg-[#000000]/95 p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200">
         
         {/* Borderless Search Input Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-stone-800/80">
+        <div className="flex items-center justify-between pb-4 border-b border-stone-800/40">
           <div className="flex items-center gap-3.5 flex-1 mr-2">
             <Search size={16} className="text-stone-500 shrink-0" />
             <input
@@ -115,7 +115,7 @@ export default function SearchInvestigation({
                   onSelectMovie(movie);
                   onClose();
                 }}
-                className="group w-full flex items-center justify-between p-3 sm:p-3.5 hover:bg-white/[0.04] transition-all text-left cursor-pointer border-b border-stone-900/60 last:border-b-0"
+                className="group w-full flex items-center justify-between p-3 sm:p-3.5 hover:bg-white/[0.04] transition-all text-left cursor-pointer border-b border-stone-900/40 last:border-b-0"
               >
                 <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 pr-3">
                   {/* Miniature Node Icon */}
@@ -151,7 +151,7 @@ export default function SearchInvestigation({
         </div>
 
         {/* Footer Hint */}
-        <div className="pt-3 border-t border-stone-900/80 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-stone-500 tracking-[0.2em] uppercase">
+        <div className="pt-3 border-t border-stone-900/40 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-stone-500 tracking-[0.2em] uppercase">
           <div className="flex items-center gap-1.5">
             <span>PRESS</span>
             <kbd className="px-1.5 py-0.5 bg-stone-900/80 border border-stone-800 text-stone-400">ESC</kbd>
