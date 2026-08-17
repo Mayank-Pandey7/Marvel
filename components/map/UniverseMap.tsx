@@ -36,21 +36,11 @@ export default function UniverseMap({
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [isFullOverview, setIsFullOverview] = useState(false);
 
-  // Intro Sequence Stages for Cinematic Marvel Ascending Animation
-  const [introStep, setIntroStep] = useState<"centered" | "revealing" | "ready">("centered");
+  // Direct ready state so title never overlaps the timeline tree
+  const [introStep, setIntroStep] = useState<"ready">("ready");
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  // Cinematic Ascending Title Sequence on Mount
-  useEffect(() => {
-    const t1 = setTimeout(() => setIntroStep("revealing"), 80);
-    const t2 = setTimeout(() => setIntroStep("ready"), 850);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, []);
 
   // Sync with timeline context
   useEffect(() => {
@@ -347,34 +337,24 @@ export default function UniverseMap({
       />
 
       {/* CINEMATIC ASCENDING BRAND TITLE (GPU Compositor Accelerated Smooth Ascent) */}
+      {/* CINEMATIC BRAND TITLE (Cleanly Docked at Top, Never Overlapping the Tree) */}
       <div
-        className="fixed z-40 pointer-events-none transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hidden md:flex flex-col items-center justify-center text-center w-full max-w-full px-4"
+        className="fixed z-40 pointer-events-none hidden md:flex flex-col items-center justify-center text-center w-full max-w-full px-4 animate-in fade-in duration-500"
         style={{
           left: "50%",
           top: "22px",
-          transform:
-            introStep === "centered"
-              ? "translate3d(-50%, 38vh, 0) scale(1.18)"
-              : "translate3d(-50%, 0, 0) scale(1)",
+          transform: "translate3d(-50%, 0, 0)",
           opacity: 1,
         }}
       >
         <h1
-          className={`font-mono uppercase text-stone-100 font-light transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-block ${
-            introStep === "centered"
-              ? "text-base md:text-xl tracking-[0.65em] drop-shadow-[0_0_35px_rgba(255,255,255,0.85)]"
-              : "text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
-          }`}
+          className="font-mono uppercase text-stone-100 font-light inline-block text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
         >
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </h1>
 
         <p
-          className={`font-mono uppercase transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            introStep === "centered"
-              ? "text-xs tracking-[0.35em] text-white font-bold mt-2 drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]"
-              : "text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
-          }`}
+          className="font-mono uppercase text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
         >
           {isFullOverview
             ? "EARTH-616 SACRED TIMELINE TREE"
