@@ -333,60 +333,35 @@ export default function UniverseMap({
         aria-hidden="true"
       />
 
-      {/* CINEMATIC ASCENDING BRAND TITLE (Original proportion with increased vertical letter height) */}
+      {/* CINEMATIC ASCENDING BRAND TITLE (Preserved 100% on desktop, hidden on small screens) */}
       <div
-        className="fixed z-40 pointer-events-none transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center text-center w-full max-w-full px-4"
+        className="fixed z-40 pointer-events-none transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] hidden md:flex flex-col items-center justify-center text-center w-full max-w-full px-4"
         style={{
           left: "50%",
-          top: introStep === "initial" || introStep === "centered" ? "50%" : "22px",
-          transform:
-            introStep === "initial"
-              ? "translate(-50%, -50%) scale(0.95, 1.3)"
-              : introStep === "centered"
-              ? "translate(-50%, -50%) scale(1.05, 1.45)"
-              : "translate(-50%, 0) scale(1, 1)",
-          opacity: introStep === "initial" ? 0 : 1,
+          top: "22px",
+          transform: "translate(-50%, 0) scale(1, 1)",
+          opacity: 1,
         }}
       >
         <h1
-          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-block ${
-            introStep === "centered"
-              ? "text-sm sm:text-base md:text-lg tracking-[0.55em] sm:tracking-[0.7em]"
-              : "text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em]"
-          }`}
+          className="font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] inline-block text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em]"
         >
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </h1>
 
         <p
-          className={`font-mono uppercase transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            introStep === "centered"
-              ? "text-xs sm:text-sm tracking-[0.35em] text-white font-bold mt-2.5 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
-              : "text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
-          }`}
+          className="font-mono uppercase text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
         >
           {isFullOverview
             ? "EARTH-616 SACRED TIMELINE TREE"
-            : introStep === "centered"
-            ? "EARTH-616 · SACRED TIMELINE TREE"
             : `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title} (${currentPhaseMeta.years})`}
         </p>
-
-        {introStep === "centered" && (
-          <div className="flex items-center gap-3 mt-2 text-[10px] sm:text-xs font-mono text-stone-400 tracking-[0.3em] uppercase animate-in fade-in duration-500">
-            <span>ALL 6 PHASES</span>
-            <span>•</span>
-            <span>2008 — 2027</span>
-          </div>
-        )}
       </div>
 
       {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
-      <header className={`fixed top-0 inset-x-0 z-30 px-6 sm:px-10 py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000 ${
-        introStep === "ready" ? "opacity-100" : "opacity-0"
-      }`}>
+      <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-6 md:px-10 py-3 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
         {/* Left: Minimalist Menu & Return Button */}
-        <div className="flex items-center gap-3 pointer-events-auto">
+        <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-400 hover:text-white transition-colors p-2 cursor-pointer group flex items-center gap-2.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/40 backdrop-blur-md shadow-lg"
@@ -402,26 +377,36 @@ export default function UniverseMap({
           {onReturn && (
             <button
               onClick={onReturn}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-black/40 md:bg-transparent border border-stone-800/80 md:border-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md md:backdrop-blur-none"
               title="Return to Timeline Selector"
             >
               <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-              <span>RETURN</span>
+              <span className="hidden sm:inline">RETURN</span>
             </button>
           )}
         </div>
 
-        {/* Center Space Reserved for Ascending Title */}
-        <div className="w-1" />
+        {/* Mobile Center Brand (shown only on mobile <md) */}
+        <div className="flex md:hidden flex-col items-center justify-center text-center pointer-events-auto">
+          <span className="text-[11px] font-mono font-bold tracking-[0.4em] uppercase text-white">
+            MARVEL
+          </span>
+          <span className="text-[8px] font-mono tracking-[0.2em] uppercase text-stone-400">
+            {isFullOverview ? "TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
+          </span>
+        </div>
+
+        {/* Center Space Reserved for Ascending Title on Desktop */}
+        <div className="hidden md:block w-1" />
 
         {/* Right: Search Button */}
         <button
           onClick={() => setSearchOpen(true)}
-          className="pointer-events-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
+          className="pointer-events-auto inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
           title="Search All Timeline Nodes (/ or Ctrl+K)"
         >
           <Search size={12} className="text-stone-400 group-hover:text-white transition-colors" />
-          <span>SEARCH</span>
+          <span className="hidden sm:inline">SEARCH</span>
           <kbd className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.2 bg-stone-900 border border-stone-800 rounded text-stone-400 ml-1">
             /
           </kbd>
@@ -437,43 +422,44 @@ export default function UniverseMap({
       />
 
       {/* 4. Bottom Left Minimalist Controls (Zoom, Pan, Earth-616 Full Tree) */}
-      <div className="fixed bottom-6 left-6 sm:left-10 z-30 flex items-center gap-2 pointer-events-auto">
+      <div className="fixed bottom-4 sm:bottom-6 left-4 sm:left-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.2, 2.2) }))}
-          className="w-8 h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
-          <ZoomIn size={14} />
+          <ZoomIn size={13} />
         </button>
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.08) }))}
-          className="w-8 h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
-          <ZoomOut size={14} />
+          <ZoomOut size={13} />
         </button>
         <button
           onClick={showFullEarth616Timeline}
-          className={`w-8 h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
             isFullOverview
               ? "bg-white text-black border-white"
               : "bg-black/60 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
           }`}
           title="Earth-616 Full Timeline Overview"
         >
-          <Globe size={13} />
+          <Globe size={12} />
         </button>
         <button
           onClick={() => directToPhase(1)}
-          className="w-8 h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Direct to Phase I"
         >
-          <RotateCcw size={13} />
+          <RotateCcw size={12} />
         </button>
       </div>
 
       {/* 5. Bottom Right Timeline Status */}
-      <div className="fixed bottom-6 right-6 sm:right-10 z-30 pointer-events-none text-right font-mono text-[10px] text-stone-400 tracking-[0.25em] uppercase">
+      {/* Desktop text */}
+      <div className="hidden md:block fixed bottom-6 right-10 z-30 pointer-events-none text-right font-mono text-[10px] text-stone-400 tracking-[0.25em] uppercase">
         <span className="text-white font-bold">
           {isFullOverview ? "EARTH-616 TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
         </span>
@@ -481,6 +467,15 @@ export default function UniverseMap({
         <span>{isFullOverview ? "2008 — 2027" : currentPhaseMeta.years}</span>
         <span className="mx-2">•</span>
         <span className="text-stone-300 font-semibold">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
+      </div>
+
+      {/* Mobile compact badge */}
+      <div className="md:hidden fixed bottom-4 right-4 z-30 pointer-events-none font-mono text-[8.5px] text-stone-400 tracking-wider uppercase bg-black/70 px-2.5 py-1 rounded-full border border-stone-800/80 backdrop-blur-md">
+        <span className="text-white font-bold">
+          {isFullOverview ? "ALL PHASES" : `PHASE ${currentPhaseMeta.roman}`}
+        </span>
+        <span className="mx-1.5">•</span>
+        <span>{isFullOverview ? "2008–27" : currentPhaseMeta.years}</span>
       </div>
 
       {/* 6. CINEMATIC OPENING BACKGROUND DISSOLVE */}
