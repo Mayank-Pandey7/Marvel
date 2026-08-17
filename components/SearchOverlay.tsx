@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { X, ChevronRight, User, Gem, Zap, Globe, Film } from "lucide-react";
+import { X, ChevronRight, User, Gem, Zap, Film, Search } from "lucide-react";
 import { MCU } from "@/data/mcu";
 import { CHARACTERS } from "@/data/characters";
 import { ARTIFACTS } from "@/data/artifacts";
 import { NEXUS_EVENTS } from "@/data/timelineTree";
-import { UNIVERSES } from "@/data/universes";
 import { useTimelineState } from "@/context/TimelineStateContext";
 
 export default function SearchOverlay({ onClose }: { onClose: () => void }) {
@@ -28,7 +27,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
 
   const searchResults = useMemo(() => {
     if (!q.trim()) return [];
-    const s = q.toLowerCase();
+    const s = q.toLowerCase().trim();
 
     const matchedCharacters = CHARACTERS.filter(
       (c) =>
@@ -41,9 +40,8 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       title: c.name,
       subtitle: c.role,
       action: () => {
-        setSelectedNodeId(`character:${c.id}`);
         onClose();
-        router.push("/#graph");
+        router.push(`/characters?search=${encodeURIComponent(c.name)}`);
       }
     }));
 
@@ -55,9 +53,8 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       title: a.name,
       subtitle: a.origin,
       action: () => {
-        setSelectedNodeId(`artifact:${a.id}`);
         onClose();
-        router.push("/#graph");
+        router.push(`/artifacts?search=${encodeURIComponent(a.name)}`);
       }
     }));
 
@@ -69,9 +66,8 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       title: n.title,
       subtitle: `Culprit: ${n.culprit} · ${n.year}`,
       action: () => {
-        setSelectedNodeId(`nexus:${n.id}`);
         onClose();
-        router.push("/#graph");
+        router.push("/timeline");
       }
     }));
 
@@ -87,68 +83,122 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       subtitle: `Phase ${m.phase} · ${m.year}`,
       action: () => {
         onClose();
-        router.push(`/movie/${m.id}`);
+        router.push(`/timeline?phase=${m.phase}&movie=${encodeURIComponent(m.id)}`);
       }
     }));
 
-    return [...matchedCharacters, ...matchedArtifacts, ...matchedNexus, ...matchedProjects].slice(0, 12);
-  }, [q, onClose, router, setSelectedNodeId]);
+    return [...matchedCharacters, ...matchedArtifacts, ...matchedNexus, ...matchedProjects].slice(0, 16);
+  }, [q, onClose, router]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center pt-20 sm:pt-28 px-4">
-      <button
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 select-none animate-in fade-in duration-200">
+      {/* Dark Dim Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/90 backdrop-blur-xl transition-opacity"
         onClick={onClose}
-        className="absolute top-5 right-5 text-stone-400 hover:text-white p-2 rounded-lg hover:bg-stone-900 transition-colors"
-        aria-label="Close search"
-      >
-        <X size={22} />
-      </button>
+      />
 
-      <div className="w-full max-w-2xl">
-        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-stone-500 mb-2">
-          <span>Cosmic Database Query</span>
-          <span>·</span>
-          <span>Spoiler Barrier: Phase {currentPhase}</span>
+      {/* Sleek Spatial Modal Container */}
+      <div className="relative z-10 w-full max-w-3xl bg-[#050508]/95 border border-stone-800/60 shadow-2xl p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200">
+        
+        {/* Borderless Search Input Header */}
+        <div className="flex items-center justify-between pb-4 border-b border-stone-800/80">
+          <div className="flex items-center gap-3.5 flex-1 mr-2">
+            <Search size={16} className="text-stone-500 shrink-0" />
+            <input
+              ref={inputRef}
+              type="text"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="SEARCH (CHARACTERS, RELICS, MOVIES, PHASES)..."
+              className="w-full bg-transparent text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-white placeholder-stone-600 focus:outline-none"
+            />
+          </div>
+
+          {q && (
+            <button
+              onClick={() => setQ("")}
+              className="text-stone-500 hover:text-stone-300 text-[10px] font-mono uppercase tracking-widest mr-2 cursor-pointer transition-colors"
+            >
+              CLEAR
+            </button>
+          )}
+
+          <button
+            onClick={onClose}
+            className="text-stone-500 hover:text-white transition-colors p-1 cursor-pointer"
+            aria-label="Close search"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        <input
-          ref={inputRef}
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search characters, Infinity Stones, nexus points, timelines..."
-          className="w-full bg-stone-950/80 border border-stone-800 focus:border-amber-500/80 rounded-xl px-4 py-3.5 outline-none text-white text-lg sm:text-xl placeholder-stone-600 shadow-2xl transition-colors font-sans"
-        />
+        {/* Results Stream with Clean Custom Scrollbar */}
+        <div className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+          <div className="flex items-center justify-between text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase px-2 mb-2">
+            <span>{searchResults.length} DATABASE MATCHES</span>
+            {q && <span>FILTERED</span>}
+          </div>
 
-        <div className="mt-4 flex flex-col divide-y divide-stone-800/60 max-h-[60vh] overflow-y-auto pr-1">
-          {searchResults.map((item) => (
-            <button
-              key={item.id}
-              onClick={item.action}
-              className="flex items-center justify-between py-3.5 px-3 rounded-lg text-left hover:bg-stone-900/60 transition-colors group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-stone-950 border border-stone-800 text-stone-400 group-hover:text-amber-300 transition-colors">
-                  {item.type === "character" && <User size={16} />}
-                  {item.type === "artifact" && <Gem size={16} />}
-                  {item.type === "nexus" && <Zap size={16} />}
-                  {item.type === "movie" && <Film size={16} />}
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-white group-hover:text-amber-300 transition-colors">
-                    {item.title}
-                  </div>
-                  <div className="text-xs text-stone-400">{item.subtitle}</div>
-                </div>
-              </div>
-              <ChevronRight size={14} className="text-stone-600 group-hover:text-amber-400 transition-colors" />
-            </button>
-          ))}
-
-          {q && searchResults.length === 0 && (
-            <div className="text-stone-500 text-sm text-center py-8 font-mono">
-              No anomalies found for &ldquo;{q}&rdquo; in the active timeline sector.
+          {searchResults.length === 0 ? (
+            <div className="py-16 text-center text-xs font-mono text-stone-500 tracking-[0.2em] uppercase">
+              {q ? `No anomalies found for "${q}" in the multiverse database.` : "Enter query to search characters, artifacts, and timeline nodes."}
             </div>
+          ) : (
+            searchResults.map((item) => (
+              <button
+                key={item.id}
+                onClick={item.action}
+                className="group w-full flex items-center justify-between p-3 sm:p-3.5 hover:bg-white/[0.04] transition-all text-left cursor-pointer border-b border-stone-900/60 last:border-b-0"
+              >
+                <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 pr-3">
+                  <div className="p-2 bg-stone-900/60 border border-stone-800 text-stone-400 group-hover:text-white transition-colors shrink-0">
+                    {item.type === "character" && <User size={14} />}
+                    {item.type === "artifact" && <Gem size={14} />}
+                    {item.type === "nexus" && <Zap size={14} />}
+                    {item.type === "movie" && <Film size={14} />}
+                  </div>
+
+                  <div className="flex flex-col min-w-0">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <span className="text-xs sm:text-sm font-mono font-medium text-white group-hover:text-white tracking-wider truncate">
+                        {item.title}
+                      </span>
+                      <span className="text-[9px] sm:text-[10px] font-mono text-stone-400 tracking-widest uppercase">
+                        {item.type.toUpperCase()}
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] sm:text-[11px] font-mono text-stone-500 group-hover:text-stone-400 transition-colors mt-0.5 truncate max-w-xl">
+                      {item.subtitle}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-stone-600 group-hover:text-white transition-colors shrink-0">
+                  <span className="text-[9px] font-mono uppercase tracking-[0.2em] hidden sm:inline text-stone-500 group-hover:text-white transition-colors">
+                    EXPLORE
+                  </span>
+                  <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+            ))
           )}
+        </div>
+
+        {/* Footer Hint */}
+        <div className="pt-3 border-t border-stone-900/80 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-stone-500 tracking-[0.2em] uppercase">
+          <div className="flex items-center gap-1.5">
+            <span>PRESS</span>
+            <kbd className="px-1.5 py-0.5 bg-stone-900/80 border border-stone-800 text-stone-400">ESC</kbd>
+            <span>TO CLOSE</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-1.5">
+            <span>PRESS</span>
+            <kbd className="px-1.5 py-0.5 bg-stone-900/80 border border-stone-800 text-stone-400">CTRL+K</kbd>
+            <span>TO SEARCH</span>
+          </div>
         </div>
       </div>
     </div>
