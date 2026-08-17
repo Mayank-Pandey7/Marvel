@@ -294,7 +294,7 @@ export default function UniverseMap({
         aria-hidden="true"
       />
 
-      {/* CINEMATIC ASCENDING BRAND TITLE (Fades in center, then smoothly glides up to header) */}
+      {/* CINEMATIC ASCENDING BRAND TITLE (Original proportion with increased vertical letter height) */}
       <div
         className="fixed z-40 pointer-events-none transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center text-center w-full max-w-full px-4"
         style={{
@@ -302,15 +302,15 @@ export default function UniverseMap({
           top: introStep === "initial" || introStep === "centered" ? "50%" : "22px",
           transform:
             introStep === "initial"
-              ? "translate(-50%, -50%) scale(0.95)"
+              ? "translate(-50%, -50%) scale(0.95, 1.3)"
               : introStep === "centered"
-              ? "translate(-50%, -50%) scale(1.05)"
-              : "translate(-50%, 0) scale(1)",
+              ? "translate(-50%, -50%) scale(1.05, 1.45)"
+              : "translate(-50%, 0) scale(1, 1)",
           opacity: introStep === "initial" ? 0 : 1,
         }}
       >
         <h1
-          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_18px_rgba(255,255,255,0.45)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-block ${
             introStep === "centered"
               ? "text-sm sm:text-base md:text-lg tracking-[0.55em] sm:tracking-[0.7em]"
               : "text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em]"

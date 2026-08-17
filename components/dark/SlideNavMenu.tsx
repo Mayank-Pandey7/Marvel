@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { X, Film, Users, Gem, Globe, ShieldAlert, Bookmark, Share2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { X, ChevronDown } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 
 interface SlideNavMenuProps {
@@ -10,55 +11,19 @@ interface SlideNavMenuProps {
   onClose: () => void;
 }
 
-const MENU_ITEMS = [
-  {
-    href: "/",
-    label: "SACRED TIMELINE & MOVIES",
-    desc: "Chronological Phase journey & films",
-    icon: Film,
-  },
-  {
-    href: "/characters",
-    label: "CHARACTER DOSSIERS",
-    desc: "Heroes, villains, variants & lineages",
-    icon: Users,
-  },
-  {
-    href: "/artifacts",
-    label: "COSMIC RELICS VAULT",
-    desc: "Infinity stones, Darkhold & divine relics",
-    icon: Gem,
-  },
-  {
-    href: "/multiverse",
-    label: "MULTIVERSE MAP & REALITIES",
-    desc: "Branching timelines, Earth-616, 838 & TVA",
-    icon: Globe,
-  },
-  {
-    href: "/doomsday",
-    label: "DOOMSDAY HORIZON",
-    desc: "Secret Wars countdown & incursion nexus",
-    icon: ShieldAlert,
-  },
-  {
-    href: "/watchlist",
-    label: "YOUR SAGA WATCHLIST",
-    desc: "Track completed movies and series",
-    icon: Bookmark,
-  },
-  {
-    href: "/web",
-    label: "INTERACTIVE COSMIC WEB",
-    desc: "Full entanglement graph and node web",
-    icon: Share2,
-  },
-];
+export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
+  const router = useRouter();
+  const { currentPhase, setCurrentPhase } = useTimelineState();
 
-export default function SlideNavMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const { currentPhase } = useTimelineState();
+  // Accordion open states
+  const [openSection, setOpenSection] = useState<"who" | "what" | "when" | null>(null);
 
-  // Close on escape key
+  // Toggle accordion sections
+  const toggleSection = (section: "who" | "what" | "when") => {
+    setOpenSection((prev) => (prev === section ? null : section));
+  };
+
+  // Close on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) onClose();
@@ -70,75 +35,215 @@ export default function SlideNavMenu({ isOpen, onClose }: { isOpen: boolean; onC
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex select-none">
+    <div className="fixed inset-0 z-50 flex select-none animate-in fade-in duration-200">
       {/* Dark backdrop */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300 animate-in fade-in"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Slide-out Menu Panel */}
-      <aside className="relative z-10 w-full max-w-sm sm:max-w-md bg-[#050508]/95 border-r border-stone-800/80 h-full flex flex-col justify-between p-6 sm:p-8 shadow-2xl animate-in slide-in-from-left duration-300">
+      <aside className="relative z-10 w-full max-w-[360px] sm:max-w-[400px] bg-[#000000] border-r border-stone-900/90 h-full flex flex-col justify-between p-6 sm:p-8 shadow-[10px_0_40px_rgba(0,0,0,0.9)] animate-in slide-in-from-left duration-300 overflow-y-auto">
         
-        {/* Header */}
+        {/* Top Header */}
         <div>
-          <div className="flex items-center justify-between pb-6 border-b border-stone-800/80">
-            <div>
-              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-stone-500">
-                NAVIGATION
-              </p>
-              <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-white font-bold mt-1">
-                MARVEL CINEMATIC UNIVERSE
-              </h2>
-            </div>
+          {/* Close Button X */}
+          <div className="flex justify-end items-center mb-8">
             <button
               onClick={onClose}
-              className="text-stone-500 hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/5 cursor-pointer"
-              aria-label="Close Navigation"
+              className="text-stone-400 hover:text-white transition-colors p-1 rounded-sm cursor-pointer"
+              aria-label="Close Navigation Menu"
             >
-              <X size={18} />
+              <X size={20} strokeWidth={1.5} />
             </button>
           </div>
 
-          {/* Current Phase Indicator */}
-          <div className="mt-5 mb-4 px-3 py-2 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between text-xs font-mono">
-            <span className="text-stone-400">ACTIVE TIMELINE POINT</span>
-            <span className="text-white font-bold">PHASE {currentPhase}</span>
+          {/* Primary Accordion Navigation Sections */}
+          <div className="border-t border-stone-900 flex flex-col">
+            
+            {/* WHO SECTION */}
+            <div className="border-b border-stone-900">
+              <button
+                onClick={() => toggleSection("who")}
+                className="w-full py-5 flex items-center justify-between text-left group cursor-pointer"
+              >
+                <span className="font-mono text-sm tracking-[0.4em] uppercase text-stone-300 group-hover:text-white transition-colors">
+                  W H O
+                </span>
+                <ChevronDown
+                  size={16}
+                  strokeWidth={1.5}
+                  className={`text-stone-500 group-hover:text-stone-300 transition-transform duration-300 ${
+                    openSection === "who" ? "rotate-180 text-white" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Submenu Links for WHO */}
+              {openSection === "who" && (
+                <div className="pb-4 pl-2 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
+                  <Link
+                    href="/characters"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Characters
+                  </Link>
+                  <Link
+                    href="/characters"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Earth-616 Avengers
+                  </Link>
+                  <Link
+                    href="/characters"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Guardians & Cosmic Entities
+                  </Link>
+                  <Link
+                    href="/characters"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Multiversal Variants
+                  </Link>
+                  <Link
+                    href="/characters"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Incursion Villains & Threats
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* WHAT SECTION */}
+            <div className="border-b border-stone-900">
+              <button
+                onClick={() => toggleSection("what")}
+                className="w-full py-5 flex items-center justify-between text-left group cursor-pointer"
+              >
+                <span className="font-mono text-sm tracking-[0.4em] uppercase text-stone-300 group-hover:text-white transition-colors">
+                  W H A T
+                </span>
+                <ChevronDown
+                  size={16}
+                  strokeWidth={1.5}
+                  className={`text-stone-500 group-hover:text-stone-300 transition-transform duration-300 ${
+                    openSection === "what" ? "rotate-180 text-white" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Submenu Links for WHAT */}
+              {openSection === "what" && (
+                <div className="pb-4 pl-2 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
+                  <Link
+                    href="/artifacts"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Cosmic Relics Vault
+                  </Link>
+                  <Link
+                    href="/artifacts"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Infinity Stones & Relics
+                  </Link>
+                  <Link
+                    href="/multiverse"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Multiverse Map & Realities
+                  </Link>
+                  <Link
+                    href="/web"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
+                  >
+                    • Interactive Cosmic Web
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* WHEN SECTION */}
+            <div className="border-b border-stone-900">
+              <button
+                onClick={() => toggleSection("when")}
+                className="w-full py-5 flex items-center justify-between text-left group cursor-pointer"
+              >
+                <span className="font-mono text-sm tracking-[0.4em] uppercase text-stone-300 group-hover:text-white transition-colors">
+                  W H E N
+                </span>
+                <ChevronDown
+                  size={16}
+                  strokeWidth={1.5}
+                  className={`text-stone-500 group-hover:text-stone-300 transition-transform duration-300 ${
+                    openSection === "when" ? "rotate-180 text-white" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Submenu Links for WHEN */}
+              {openSection === "when" && (
+                <div className="pb-4 pl-2 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
+                  <Link
+                    href="/timeline"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center justify-between"
+                  >
+                    <span>• Sacred Timeline Map</span>
+                    <span className="text-[10px] text-stone-500">2008–2027</span>
+                  </Link>
+                  <Link
+                    href="/"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center justify-between text-amber-400/90 hover:text-amber-300"
+                  >
+                    <span>• Phase Selector Intro</span>
+                    <span className="text-[9px] bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded text-amber-300">HOME</span>
+                  </Link>
+                  {[1, 2, 3, 4, 5, 6].map((phaseNum) => (
+                    <Link
+                      key={phaseNum}
+                      href={`/timeline?phase=${phaseNum}`}
+                      onClick={() => {
+                        setCurrentPhase(phaseNum);
+                        onClose();
+                      }}
+                      className="text-left text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={currentPhase === phaseNum ? "text-white font-bold" : ""}>
+                        • Phase {phaseNum} {phaseNum === 1 ? "Assemble" : phaseNum === 2 ? "Age of Heroes" : phaseNum === 3 ? "Infinity War" : phaseNum === 4 ? "Multiverse" : phaseNum === 5 ? "Kang Dynasty" : "Secret Wars"}
+                      </span>
+                      {currentPhase === phaseNum && (
+                        <span className="text-[9px] bg-white/10 px-1.5 py-0.5 rounded text-white">ACTIVE</span>
+                      )}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/doomsday"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center justify-between text-rose-400/90 hover:text-rose-300"
+                  >
+                    <span>• Doomsday Horizon</span>
+                    <span className="text-[9px] bg-rose-950 border border-rose-800/60 px-1.5 py-0.5 rounded text-rose-300">ALERT</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
           </div>
-
-          {/* Navigation Items List */}
-          <nav className="flex flex-col gap-2 mt-4">
-            {MENU_ITEMS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={onClose}
-                  className="group flex items-start gap-3.5 p-3 rounded-xl border border-stone-900/60 hover:border-white/30 bg-stone-950/40 hover:bg-white/5 transition-all"
-                >
-                  <div className="p-2 rounded-lg bg-stone-900 border border-stone-800 group-hover:border-white/40 text-stone-400 group-hover:text-white transition-colors mt-0.5 shrink-0">
-                    <Icon size={16} />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-mono tracking-wider font-semibold text-stone-200 group-hover:text-white transition-colors">
-                      {item.label}
-                    </span>
-                    <span className="text-[10px] font-mono text-stone-500 group-hover:text-stone-400 transition-colors mt-0.5">
-                      {item.desc}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </nav>
         </div>
 
-        {/* Footer */}
-        <div className="pt-6 border-t border-stone-800/80 flex items-center justify-between text-[10px] font-mono tracking-widest uppercase text-stone-500">
-          <span>THE SACRED TIMELINE</span>
-          <span className="text-stone-400">MCU 2008 – 2027</span>
-        </div>
       </aside>
     </div>
   );

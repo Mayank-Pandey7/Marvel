@@ -25,10 +25,10 @@ export default function MovieDetail({
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10">
       <Link
-        href="/"
+        href={`/timeline?phase=${entry.phase}&movie=${encodeURIComponent(entry.id)}`}
         className="inline-flex items-center gap-1 text-xs font-mono tracking-wider uppercase text-stone-400 hover:text-white mb-6 transition-colors"
       >
-        <ChevronLeft size={14} /> Back to Cosmic Web
+        <ChevronLeft size={14} /> Back to Cosmic Timeline
       </Link>
 
       <Reveal>
@@ -57,11 +57,11 @@ export default function MovieDetail({
 
         <div className="flex flex-wrap items-center gap-4">
           <Link
-            href="/"
+            href={`/timeline?phase=${entry.phase}&movie=${encodeURIComponent(entry.id)}`}
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-mono tracking-wider uppercase rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
           >
             <Share2 size={13} />
-            <span>Inspect in Cosmic Web</span>
+            <span>Inspect in Timeline Tree</span>
           </Link>
         </div>
       </Reveal>

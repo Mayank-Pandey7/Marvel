@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
+import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
 const NAV_LINKS = [
-  { href: "/", label: "The Cosmic Web" },
-  { href: "/characters", label: "Dossiers" },
+  { href: "/timeline", label: "The Cosmic Web" },
+  { href: "/characters", label: "Characters" },
   { href: "/artifacts", label: "Cosmic Relics" },
   { href: "/multiverse", label: "Multiverse Map" },
   { href: "/doomsday", label: "Doomsday" },
@@ -85,31 +86,19 @@ export default function Navbar({ onSearch }: { onSearch: () => void }) {
           <span className="hidden sm:inline text-[11px] tracking-wider uppercase">Search Cosmos</span>
         </button>
 
-        {/* Mobile Menu Toggle */}
+        {/* Menu Drawer Toggle */}
         <button
-          className="md:hidden text-stone-300 hover:text-white p-1"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          aria-label="Toggle Navigation Menu"
+          className="text-stone-300 hover:text-white p-1 cursor-pointer transition-colors"
+          onClick={() => setMobileMenuOpen(true)}
+          aria-label="Open Navigation Drawer"
+          title="Menu"
         >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <Menu size={20} />
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
-      {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 md:hidden bg-[#030305]/95 backdrop-blur-2xl border-t border-stone-800 p-4 flex flex-col gap-2 shadow-2xl">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-4 py-2.5 text-xs font-mono tracking-widest uppercase text-stone-300 hover:text-white hover:bg-stone-900 rounded-lg"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-      )}
+      {/* Slide Navigation Drawer */}
+      <SlideNavMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </nav>
   );
 }

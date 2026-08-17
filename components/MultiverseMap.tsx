@@ -132,10 +132,10 @@ export default function MultiverseMap() {
         <div className="mt-8 pt-4 border-t border-stone-800 flex items-center justify-between text-xs font-mono">
           <span className="text-stone-500">Sacred Multiverse Coordinate Mapping</span>
           <Link
-            href="/"
+            href="/timeline"
             className="text-amber-400 hover:text-amber-300 flex items-center gap-1 uppercase tracking-wider"
           >
-            Explore in Cosmic Web →
+            Explore in Timeline Tree →
           </Link>
         </div>
       </div>
