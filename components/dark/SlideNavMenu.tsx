@@ -35,7 +35,12 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex select-none animate-in fade-in duration-200">
+    <div 
+      role="dialog" 
+      aria-modal="true" 
+      aria-label="Universe Navigation Menu"
+      className="fixed inset-0 z-50 flex select-none animate-in fade-in duration-200"
+    >
       {/* Dark backdrop */}
       <div
         className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
