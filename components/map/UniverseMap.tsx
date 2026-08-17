@@ -38,9 +38,16 @@ export default function UniverseMap({
 
   // Direct ready state so title never overlaps the timeline tree
   const [introStep, setIntroStep] = useState<"ready">("ready");
+  const [isTreeVisible, setIsTreeVisible] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Smooth Cinematic Tree Entrance on Mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsTreeVisible(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Sync with timeline context
   useEffect(() => {
@@ -485,8 +492,10 @@ export default function UniverseMap({
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
       <div
         className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left ${
-          isDragging ? "transition-none" : "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-        }`}
+          isDragging
+            ? "transition-none"
+            : "transition-[transform,opacity] duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+        } ${isTreeVisible ? "opacity-100" : "opacity-0"}`}
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}
