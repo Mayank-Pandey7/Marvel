@@ -343,19 +343,40 @@ export default function DarkIntroSelector({
     }
     setTimeout(() => {
       onContinue(activePhase || 1, activeMovie?.id);
-    }, 240);
+    }, 480);
   };
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isTransitioning ? "opacity-0 scale-105 blur-[3px] pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isTransitioning ? "scale-105 pointer-events-none" : "scale-100"
       }`}
     >
-      {/* Hyperspace Transition Energy Pulse */}
+      {/* CINEMATIC TIMELINE WARP JUMP OVERLAY */}
       {isTransitioning && (
-        <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center animate-out fade-out duration-300">
-          <div className="w-[120vw] h-[120vh] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.25)_0%,rgba(120,119,198,0.15)_40%,transparent_70%)] animate-ping duration-300" />
+        <div className="fixed inset-0 z-50 pointer-events-none flex flex-col items-center justify-center bg-black/95 backdrop-blur-md animate-in fade-in duration-200 overflow-hidden">
+          {/* Expanding Quantum Energy Rings */}
+          <div className="absolute w-[180px] h-[180px] rounded-full border border-white/80 animate-ping duration-500 shadow-[0_0_50px_#ffffff]" />
+          <div className="absolute w-[360px] h-[360px] rounded-full border border-white/40 animate-ping duration-700 delay-100 shadow-[0_0_80px_rgba(255,255,255,0.5)]" />
+          <div className="absolute w-[700px] h-[700px] rounded-full border border-white/20 animate-ping duration-1000 delay-200" />
+
+          {/* Radial Cosmic Warp Core */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0.85)_60%,black_100%)] animate-pulse duration-300" />
+
+          {/* Cinematic Telemetry HUD */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center gap-2.5 animate-in zoom-in-95 fade-in duration-300 px-4">
+            <span className="font-mono text-[10px] sm:text-xs tracking-[0.45em] uppercase text-stone-400">
+              INITIATING SACRED TIMELINE JUMP
+            </span>
+            <h2 className="font-mono text-base sm:text-xl md:text-2xl font-light tracking-[0.55em] uppercase text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.9)]">
+              {currentPhaseMeta ? `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title}` : "SACRED TIMELINE"}
+            </h2>
+            <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-stone-500">
+              <span>EARTH-616</span>
+              <span>•</span>
+              <span>{currentPhaseMeta?.years || "2008 — 2027"}</span>
+            </div>
+          </div>
         </div>
       )}
 
