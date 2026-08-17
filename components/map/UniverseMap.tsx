@@ -219,10 +219,12 @@ export default function UniverseMap({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
+    const newX = e.clientX - dragStart.x;
+    const newY = e.clientY - dragStart.y;
     setCamera((prev) => ({
       ...prev,
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
+      x: newX,
+      y: newY,
     }));
   };
 
@@ -248,21 +250,22 @@ export default function UniverseMap({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (e.touches.length === 1 && isDragging) {
+      const newX = e.touches[0].clientX - dragStart.x;
+      const newY = e.touches[0].clientY - dragStart.y;
       setCamera((prev) => ({
         ...prev,
-        x: e.touches[0].clientX - dragStart.x,
-        y: e.touches[0].clientY - dragStart.y,
+        x: newX,
+        y: newY,
       }));
     } else if (e.touches.length === 2 && touchStartRef.current.dist) {
       const currentDist = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
-      const factor = currentDist / touchStartRef.current.dist;
-      const newScale = Math.min(Math.max(camera.scale * factor, 0.08), 2.2);
+      const scaleFactor = currentDist / touchStartRef.current.dist;
       setCamera((prev) => ({
         ...prev,
-        scale: newScale,
+        scale: Math.min(Math.max(prev.scale * scaleFactor, 0.08), 2.2),
       }));
       touchStartRef.current.dist = currentDist;
     }
