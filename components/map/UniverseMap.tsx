@@ -334,15 +334,15 @@ export default function UniverseMap({
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
       onWheel={handleWheel}
-      className="fixed inset-0 w-screen h-screen bg-[#020204] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
+      className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
     >
       {/* 1. Star Dust & Atmosphere Canvas Layer */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(2,2,4,0.92)_100%)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
       {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (TIGHT & COMPACT) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
@@ -501,18 +501,6 @@ export default function UniverseMap({
         <span className="mx-1.5">•</span>
         <span>{isFullOverview ? "2008–27" : currentPhaseMeta.years}</span>
       </div>
-
-      {/* 6. CINEMATIC OPENING BACKGROUND DISSOLVE */}
-      {introStep !== "ready" && (
-        <div
-          className={`fixed inset-0 z-30 pointer-events-none transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            introStep === "revealing" ? "opacity-0" : "opacity-100 bg-[#020204]"
-          }`}
-        />
-      )}
-
-      {/* Cosmic Arrival Energy Glow */}
-      <div className="fixed inset-0 pointer-events-none z-10 animate-out fade-out duration-700 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
       <div

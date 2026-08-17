@@ -164,10 +164,6 @@ function CharactersContent() {
   return (
     <PageShell backHref="/timeline" backLabel="TIMELINE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
-        
-        {/* Subtle Ambient Cosmic Glow */}
-        <div className="fixed inset-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.25),rgba(255,255,255,0))]" />
-
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
           
           {/* OPEN SPATIAL SEARCH & TEXT FILTERS (NO LINES) */}
