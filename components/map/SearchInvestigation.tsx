@@ -55,14 +55,14 @@ export default function SearchInvestigation({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 select-none animate-in fade-in duration-200">
-      {/* Pitch-Black Backdrop with High-Blur */}
+      {/* Transparent Dim Backdrop with Subtle Blur */}
       <div
-        className="fixed inset-0 bg-black/90 backdrop-blur-2xl transition-opacity"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
-      {/* 100% Borderless Sleek Spatial Modal Container */}
-      <div className="relative z-10 w-full max-w-3xl bg-[#000000]/95 p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200">
+      {/* Transparent Glass Spatial Modal Container */}
+      <div className="relative z-10 w-full max-w-3xl bg-black/50 backdrop-blur-md p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200">
         
         {/* Borderless Search Input Header */}
         <div className="flex items-center justify-between pb-4 border-b border-stone-800/40">
