@@ -410,15 +410,15 @@ export default function UniverseMap({
         {/* Center Space Reserved for Ascending Title on Desktop */}
         <div className="hidden md:block w-1" />
 
-        {/* Right: Search Button */}
+        {/* Right: Search Button (Clean borderless aesthetic) */}
         <button
           onClick={() => setSearchOpen(true)}
-          className="pointer-events-auto inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/50 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
+          className="pointer-events-auto inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 bg-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-colors group cursor-pointer"
           title="Search All Timeline Nodes (/ or Ctrl+K)"
         >
           <Search size={12} className="text-stone-400 group-hover:text-white transition-colors" />
           <span className="hidden sm:inline">SEARCH</span>
-          <kbd className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.2 bg-stone-900 border border-stone-800 rounded text-stone-400 ml-1">
+          <kbd className="hidden sm:inline-block text-[9px] font-mono text-stone-500 ml-1">
             /
           </kbd>
         </button>
