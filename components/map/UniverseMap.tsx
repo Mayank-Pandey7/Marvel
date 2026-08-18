@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { UNIFIED_MCU_TREE, PHASES_CONFIG, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
-import NodeArtwork from "./NodeArtwork";
+import NodeArtwork, { MCU_POSTER_MAP } from "./NodeArtwork";
 import PhaseSpine from "./PhaseSpine";
 import SearchInvestigation from "./SearchInvestigation";
 import DeepMovieDetail from "./DeepMovieDetail";
@@ -631,35 +631,104 @@ export default function UniverseMap({
               onMouseEnter={() => setHoveredMovieId(movie.id)}
               onMouseLeave={() => setHoveredMovieId(null)}
               className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-500 pointer-events-auto movie-node-card ${
-                isFaded ? "opacity-25 filter blur-[0.5px]" : "opacity-100"
+                isFaded ? "opacity-25 filter blur-[0.6px]" : "opacity-100"
               }`}
               style={{
                 left: `${movie.x}px`,
                 top: `${movie.y}px`,
+                zIndex: isSelected ? 45 : isHovered ? 40 : 10,
               }}
             >
-              {/* Circular Universe Node Core */}
+              {/* Minimalist TVA Cinematic Dossier Popover on Hover */}
+              {isHovered && !isSelected && (
+                <div className="absolute bottom-[115%] left-1/2 -translate-x-1/2 mb-3 w-[340px] pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200 ease-out">
+                  <div className="p-3.5 rounded-2xl bg-[#09090b]/95 border border-white/15 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_0_25px_rgba(255,255,255,0.06)] flex gap-3.5 text-left">
+                    {/* Official Movie Poster Thumbnail */}
+                    <div className="w-20 aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 shrink-0 shadow-xl border border-white/15 relative">
+                      <img
+                        src={MCU_POSTER_MAP[movie.id]?.poster || ""}
+                        alt={movie.title}
+                        loading="eager"
+                        className="w-full h-full object-cover object-center"
+                      />
+                      <div className="absolute inset-0 border border-white/10 rounded-xl pointer-events-none" />
+                    </div>
+
+                    {/* Movie Information Column */}
+                    <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
+                      {/* Header Row: Phase Badge + Year + Runtime */}
+                      <div className="flex items-center justify-between text-[9px] font-mono tracking-wider uppercase">
+                        <div className="flex items-center gap-1.5">
+                          <span className="px-2 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/10">
+                            PHASE {movie.phase}
+                          </span>
+                          <span className="text-stone-400 font-semibold">{movie.year}</span>
+                        </div>
+                        <span className="text-stone-500 font-medium">{movie.runtime} MIN</span>
+                      </div>
+
+                      {/* Title & Protagonist */}
+                      <div className="my-1.5">
+                        <h4 className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-tight line-clamp-1 drop-shadow-sm">
+                          {movie.title}
+                        </h4>
+                        <p className="text-[9.5px] font-mono tracking-wide uppercase text-stone-400 line-clamp-1 mt-0.5">
+                          {movie.heroAlias} {movie.leadCharacter && `· ${movie.leadCharacter}`}
+                        </p>
+                      </div>
+
+                      {/* Tagline / Narrative Quote */}
+                      <p className="text-[10px] font-sans italic text-stone-300 line-clamp-2 leading-snug">
+                        &ldquo;{movie.tagline || movie.quote || movie.description}&rdquo;
+                      </p>
+
+                      {/* Footer: Links & Action Prompt */}
+                      <div className="pt-2 mt-1 border-t border-white/10 flex items-center justify-between text-[8.5px] font-mono tracking-widest uppercase">
+                        <span className="text-stone-400 font-medium">
+                          {movie.connections.length} {movie.connections.length === 1 ? "CONNECTION" : "CONNECTIONS"}
+                        </span>
+                        <span className="text-white font-bold flex items-center gap-1">
+                          EXPLORE <span className="text-[10px]">→</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Clean Subtle Glow Tip */}
+                  <div className="w-3 h-3 bg-[#09090b]/95 border-r border-b border-white/15 rotate-45 mx-auto -mt-1.5 shadow-lg" />
+                </div>
+              )}
+
+              {/* Circular Universe Node Core (Clean Minimal Monochrome) */}
               <div
-                className={`relative rounded-full flex items-center justify-center transition-all duration-500 ${
+                className={`relative rounded-full flex items-center justify-center transition-all duration-300 ${
                   isSelected
-                    ? "w-28 h-28 sm:w-32 sm:h-32 shadow-[0_0_50px_rgba(255,255,255,0.4)] scale-110"
+                    ? "w-28 h-28 sm:w-32 sm:h-32 scale-110 shadow-[0_0_40px_rgba(255,255,255,0.7)]"
                     : isHovered
-                    ? "w-24 h-24 sm:w-28 sm:h-28 shadow-[0_0_35px_rgba(255,255,255,0.25)] scale-105"
-                    : "w-20 h-20 sm:w-24 sm:h-24 shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+                    ? "w-24 h-24 sm:w-28 sm:h-28 scale-110 shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                    : "w-20 h-20 sm:w-24 sm:h-24 shadow-[0_0_15px_rgba(0,0,0,0.8)]"
                 }`}
               >
-                {/* Clean Glowing Aura Ring when Selected or Hovered */}
+                {/* Clean Dotted Orbit Ring on Hover or Select */}
                 {(isSelected || isHovered) && (
-                  <span className="absolute -inset-2 rounded-full border border-white/60 animate-[spin_8s_linear_infinite]" />
+                  <span className="absolute -inset-2 rounded-full border border-dotted border-white/70 animate-[spin_8s_linear_infinite]" />
                 )}
 
                 {/* Node Artwork Emblem */}
-                <div className="w-full h-full rounded-full border border-stone-800 group-hover:border-white/80 transition-colors p-1 bg-black/80 backdrop-blur-md overflow-hidden">
+                <div
+                  className={`w-full h-full rounded-full border transition-colors p-0.5 bg-black overflow-hidden ${
+                    isSelected || isHovered ? "border-white" : "border-stone-800"
+                  }`}
+                >
                   <NodeArtwork movieId={movie.id} isActive={isSelected || isHovered} />
                 </div>
 
                 {/* Release Year Badge */}
-                <div className="absolute -bottom-2 bg-black/90 border border-stone-800 px-2 py-0.5 rounded-full text-[9px] font-mono text-stone-300 group-hover:text-white group-hover:border-white/40 transition-colors shadow-md">
+                <div
+                  className={`absolute -bottom-2 bg-black/95 border px-2 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-md ${
+                    isSelected || isHovered ? "border-white text-white font-bold" : "border-stone-800 text-stone-400"
+                  }`}
+                >
                   {movie.year}
                 </div>
               </div>
@@ -667,17 +736,19 @@ export default function UniverseMap({
               {/* Node Title & Hero Metadata */}
               <div
                 className={`mt-4 flex flex-col items-center text-center transition-all duration-300 ${
-                  isSelected ? "scale-105" : ""
+                  isSelected || isHovered ? "scale-105" : ""
                 }`}
               >
                 <h3
-                  className={`font-mono text-xs sm:text-sm uppercase tracking-[0.2em] font-bold transition-colors ${
-                    isSelected || isHovered ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" : "text-stone-300"
+                  className={`font-mono text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
+                    isSelected || isHovered
+                      ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                      : "text-stone-300"
                   }`}
                 >
                   {movie.title}
                 </h3>
-                <span className="text-[10px] font-mono text-stone-500 tracking-wider mt-0.5">
+                <span className="text-[9px] font-mono text-stone-500 tracking-wider mt-0.5 uppercase">
                   PHASE {movie.phase} · {movie.heroAlias}
                 </span>
               </div>

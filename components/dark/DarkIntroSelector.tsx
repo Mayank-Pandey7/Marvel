@@ -5,6 +5,7 @@ import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
 import { Volume2, VolumeX } from "lucide-react";
 import SlideNavMenu from "./SlideNavMenu";
+import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
 // Edge-to-Edge Non-Overlapping Betel Leaf Geometry
 const EDGE_JOINED_BETEL_PATH = "M 100 100 Q 88 80 78 62 C 78 44, 90 28, 100 20 C 110 28, 122 44, 122 62 Q 112 80 100 100 Z";
@@ -607,6 +608,7 @@ export default function DarkIntroSelector({
                   const isSelected = idx === selectedMovieIndex;
                   const isHovered = idx === hoveredMovieIndex;
                   const movieNum = idx + 1;
+                  const posterData = MCU_POSTER_MAP[movie.id];
 
                   return (
                     <button
@@ -615,15 +617,44 @@ export default function DarkIntroSelector({
                       onClick={() => handleSelectMovie(idx)}
                       onMouseEnter={() => setHoveredMovieIndex(idx)}
                       onMouseLeave={() => setHoveredMovieIndex(null)}
-                      className={`relative z-20 shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-colors duration-400 overflow-visible bg-transparent ${
+                      className={`relative z-20 shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-all duration-300 overflow-visible bg-transparent ${
                         isSelected
-                          ? "text-white font-bold"
+                          ? "text-white font-bold scale-110"
                           : isHovered
-                          ? "text-white"
+                          ? "text-white font-semibold scale-120 shadow-[0_0_15px_rgba(255,255,255,0.6)]"
                           : "text-stone-400 hover:text-stone-200"
                       }`}
                       title={movie.title}
                     >
+                      {/* Rich Floating Movie Preview Popover on Hover (Borderless) */}
+                      {isHovered && (
+                        <div className="absolute bottom-[135%] left-1/2 -translate-x-1/2 pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200">
+                          <div className="p-2.5 rounded-xl bg-black/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center gap-3 w-64 text-left">
+                            {/* Mini Poster Thumbnail */}
+                            <div className="w-11 h-15 rounded overflow-hidden bg-stone-900 shrink-0">
+                              <img
+                                src={posterData?.poster || `https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg`}
+                                alt={movie.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            {/* Movie Details */}
+                            <div className="flex flex-col min-w-0 flex-1">
+                              <span className="text-[8px] font-mono tracking-widest uppercase text-stone-400 font-semibold">
+                                PHASE {movie.phase} · {movie.year}
+                              </span>
+                              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-white line-clamp-1 mt-0.5">
+                                {movie.title}
+                              </h5>
+                              <p className="text-[9px] font-mono text-stone-400 line-clamp-1 mt-0.5">
+                                {movie.type.toUpperCase()} · {movie.importance.toUpperCase()}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="w-2 h-2 bg-black/95 rotate-45 mx-auto -mt-1 shadow-lg" />
+                        </div>
+                      )}
+
                       {movieNum}
                     </button>
                   );
@@ -631,16 +662,27 @@ export default function DarkIntroSelector({
               </div>
             </div>
 
-            {/* ACTIVE MOVIE / SAGA CHRONOLOGY SUBTITLE */}
-            <div className="text-center my-0.5 min-h-[34px] flex flex-col items-center justify-center px-4">
-              <div className="text-[11px] sm:text-xs font-mono tracking-[0.2em] text-stone-100 uppercase font-bold flex items-center gap-2">
-                <span>{String(selectedMovieIndex + 1).padStart(2, "0")} · {activeMovie?.title?.toUpperCase() || currentPhaseMeta?.title}</span>
-                <span className="text-stone-500 font-normal">({activeMovie?.year || currentPhaseMeta?.years})</span>
-              </div>
-              <div className="text-[10px] text-stone-400 font-mono tracking-wider max-w-md line-clamp-1 mt-0.5">
-                PHASE {currentPhaseMeta?.roman} · {currentPhaseMeta?.title}
-              </div>
-            </div>
+            {/* ACTIVE / HOVERED MOVIE CHRONOLOGY SUBTITLE */}
+            {(() => {
+              const displayIndex = hoveredMovieIndex !== null ? hoveredMovieIndex : selectedMovieIndex;
+              const displayMovie = currentPhaseMovies[displayIndex] || currentPhaseMovies[0];
+
+              return (
+                <div className="text-center my-0.5 min-h-[34px] flex flex-col items-center justify-center px-4 transition-all duration-200">
+                  <div className="text-[11px] sm:text-xs font-mono tracking-[0.2em] text-stone-100 uppercase font-bold flex items-center gap-2">
+                    <span>
+                      {String(displayIndex + 1).padStart(2, "0")} · {displayMovie?.title?.toUpperCase() || currentPhaseMeta?.title}
+                    </span>
+                    <span className="text-stone-500 font-normal">
+                      ({displayMovie?.year || currentPhaseMeta?.years})
+                    </span>
+                  </div>
+                  <div className="text-[10px] text-stone-400 font-mono tracking-wider max-w-md line-clamp-1 mt-0.5">
+                    PHASE {currentPhaseMeta?.roman} · {currentPhaseMeta?.title}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 

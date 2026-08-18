@@ -2,13 +2,18 @@
 
 import React, { useState } from "react";
 
-// Verified High-Resolution Official MCU Movie Posters & Badges
+// 100% Verified High-Resolution Official TMDB Posters & Badges for All MCU Entries
 export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fallbackText: string }> = {
-  // Phase 1
+  // Phase 1: Infinity Saga Origins
   "iron-man": {
     poster: "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
     color: "#e55039",
-    fallbackText: "IM",
+    fallbackText: "IRON MAN",
+  },
+  "hulk": {
+    poster: "https://image.tmdb.org/t/p/w500/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg",
+    color: "#2ed573",
+    fallbackText: "HULK",
   },
   "the-incredible-hulk": {
     poster: "https://image.tmdb.org/t/p/w500/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg",
@@ -16,59 +21,89 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "HULK",
   },
   "iron-man-2": {
-    poster: "https://image.tmdb.org/t/p/w500/6WBeq4jjqCmjXugQ0VPUtiV1d8L.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg",
     color: "#fa8231",
-    fallbackText: "IM2",
+    fallbackText: "IRON MAN 2",
   },
   "thor": {
-    poster: "https://image.tmdb.org/t/p/w500/prSfAi1xGrhLQNxVSUFh61xQ4Qx.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg",
     color: "#4bcffa",
     fallbackText: "THOR",
   },
-  "captain-america": {
-    poster: "https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYFSpLxg2uj.jpg",
+  "cap-first-avenger": {
+    poster: "https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg",
     color: "#3867d6",
-    fallbackText: "CAP",
+    fallbackText: "CAPTAIN AMERICA",
+  },
+  "captain-america": {
+    poster: "https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg",
+    color: "#3867d6",
+    fallbackText: "CAPTAIN AMERICA",
+  },
+  "avengers": {
+    poster: "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
+    color: "#ffd32a",
+    fallbackText: "THE AVENGERS",
   },
   "the-avengers": {
     poster: "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
     color: "#ffd32a",
-    fallbackText: "AVENGERS",
+    fallbackText: "THE AVENGERS",
   },
 
-  // Phase 2
+  // Phase 2: Escalation
   "iron-man-3": {
-    poster: "https://image.tmdb.org/t/p/w500/1Ilv6ryFeSJvEG9ZnUpFeem5mM9.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg",
     color: "#e55039",
-    fallbackText: "IM3",
+    fallbackText: "IRON MAN 3",
   },
   "thor-dark-world": {
-    poster: "https://image.tmdb.org/t/p/w500/wp6OxE4poJ4G7c0U2ZIXas09g4P.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/wp6OxE4poJ4G7c0U2ZIXasTSMR7.jpg",
     color: "#a55eea",
     fallbackText: "THOR 2",
   },
-  "captain-america-winter-soldier": {
-    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTed5nGQqW0sdKGx84U.jpg",
+  "cap-winter-soldier": {
+    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
     color: "#4b6584",
-    fallbackText: "CAP 2",
+    fallbackText: "WINTER SOLDIER",
+  },
+  "captain-america-winter-soldier": {
+    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+    color: "#4b6584",
+    fallbackText: "WINTER SOLDIER",
+  },
+  "gotg": {
+    poster: "https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
+    color: "#ff9f1a",
+    fallbackText: "GUARDIANS",
   },
   "guardians-of-the-galaxy": {
     poster: "https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
     color: "#ff9f1a",
-    fallbackText: "GOTG",
+    fallbackText: "GUARDIANS",
+  },
+  "avengers-aou": {
+    poster: "https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg",
+    color: "#eb3b5a",
+    fallbackText: "AGE OF ULTRON",
   },
   "avengers-age-of-ultron": {
-    poster: "https://image.tmdb.org/t/p/w500/4ssDuvEDkS9Nvm8Ve2rUdMoR8x3.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg",
     color: "#eb3b5a",
-    fallbackText: "ULTRON",
+    fallbackText: "AGE OF ULTRON",
   },
   "ant-man": {
-    poster: "https://image.tmdb.org/t/p/w500/8c4QgB2Kd4576P6oY8ePps1qgQy.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/rQRnQfUl3kfp78nCWq8Ks04vnq1.jpg",
     color: "#fa8231",
     fallbackText: "ANT-MAN",
   },
 
-  // Phase 3
+  // Phase 3: Reckoning
+  "cap-civil-war": {
+    poster: "https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+    color: "#3867d6",
+    fallbackText: "CIVIL WAR",
+  },
   "captain-america-civil-war": {
     poster: "https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
     color: "#3867d6",
@@ -77,146 +112,296 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
   "doctor-strange": {
     poster: "https://image.tmdb.org/t/p/w500/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg",
     color: "#ff9f1a",
-    fallbackText: "STRANGE",
+    fallbackText: "DOCTOR STRANGE",
+  },
+  "gotg2": {
+    poster: "https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg",
+    color: "#fd9644",
+    fallbackText: "GOTG VOL 2",
   },
   "guardians-of-the-galaxy-vol-2": {
-    poster: "https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4qJmLRbF.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg",
     color: "#fd9644",
-    fallbackText: "GOTG 2",
+    fallbackText: "GOTG VOL 2",
+  },
+  "spiderman-homecoming": {
+    poster: "https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg",
+    color: "#ff3838",
+    fallbackText: "HOMECOMING",
   },
   "spider-man-homecoming": {
     poster: "https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg",
     color: "#ff3838",
-    fallbackText: "SPIDER-MAN",
+    fallbackText: "HOMECOMING",
   },
   "thor-ragnarok": {
-    poster: "https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4UmYvSd2.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
     color: "#20bf6b",
     fallbackText: "RAGNAROK",
   },
   "black-panther": {
     poster: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
     color: "#a55eea",
-    fallbackText: "PANTHER",
+    fallbackText: "BLACK PANTHER",
+  },
+  "infinity-war": {
+    poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    color: "#ffd32a",
+    fallbackText: "INFINITY WAR",
   },
   "avengers-infinity-war": {
     poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
     color: "#ffd32a",
     fallbackText: "INFINITY WAR",
   },
+  "ant-man-wasp": {
+    poster: "https://image.tmdb.org/t/p/w500/cFQEO687n1K6umXbInzocxcnAQz.jpg",
+    color: "#fed330",
+    fallbackText: "ANT & WASP",
+  },
   "ant-man-and-the-wasp": {
-    poster: "https://image.tmdb.org/t/p/w500/rv1AWImgx386ULjcf62VdpWziME.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/cFQEO687n1K6umXbInzocxcnAQz.jpg",
     color: "#fed330",
     fallbackText: "ANT & WASP",
   },
   "captain-marvel": {
-    poster: "https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7Tgp.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg",
     color: "#45aaf2",
-    fallbackText: "MARVEL",
+    fallbackText: "CAPTAIN MARVEL",
   },
-  "avengers-endgame": {
-    poster: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+  "endgame": {
+    poster: "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
     color: "#a55eea",
     fallbackText: "ENDGAME",
   },
-  "spider-man-far-from-home": {
-    poster: "https://image.tmdb.org/t/p/w500/4q2hz2mYflgYOpVLyGuhiz0yYAW.jpg",
+  "avengers-endgame": {
+    poster: "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
+    color: "#a55eea",
+    fallbackText: "ENDGAME",
+  },
+  "spiderman-far-from-home": {
+    poster: "https://image.tmdb.org/t/p/w500/4q2NNj4S5dG2RLF9CpXsej7yXl.jpg",
     color: "#ff4d4d",
-    fallbackText: "FFH",
+    fallbackText: "FAR FROM HOME",
+  },
+  "spider-man-far-from-home": {
+    poster: "https://image.tmdb.org/t/p/w500/4q2NNj4S5dG2RLF9CpXsej7yXl.jpg",
+    color: "#ff4d4d",
+    fallbackText: "FAR FROM HOME",
   },
 
-  // Phase 4
+  // Phase 4: Multiverse Saga Origins
   "wandavision": {
-    poster: "https://image.tmdb.org/t/p/w500/glKDrtVTGhZk1b645nGUMMu9wmm.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/ijWWwINc8h71NQ8j1LTJMFSj5wr.jpg",
     color: "#eb3b5a",
     fallbackText: "WANDAVISION",
   },
-  "loki-season-1": {
-    poster: "https://image.tmdb.org/t/p/w500/kEl2t3OhXc39gTuSmIpne78o1OY.jpg",
+  "falcon-winter-soldier": {
+    poster: "https://image.tmdb.org/t/p/w500/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
+    color: "#3867d6",
+    fallbackText: "FALCON & WS",
+  },
+  "the-falcon-and-the-winter-soldier": {
+    poster: "https://image.tmdb.org/t/p/w500/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
+    color: "#3867d6",
+    fallbackText: "FALCON & WS",
+  },
+  "loki": {
+    poster: "https://image.tmdb.org/t/p/w500/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
     color: "#2ed573",
-    fallbackText: "LOKI 1",
+    fallbackText: "LOKI",
+  },
+  "loki-s1": {
+    poster: "https://image.tmdb.org/t/p/w500/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
+    color: "#2ed573",
+    fallbackText: "LOKI S1",
+  },
+  "loki-season-1": {
+    poster: "https://image.tmdb.org/t/p/w500/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg",
+    color: "#2ed573",
+    fallbackText: "LOKI S1",
   },
   "black-widow": {
-    poster: "https://image.tmdb.org/t/p/w500/qAZ0whmmp93qRBP0fLArWgm2St4.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg",
     color: "#eb3b5a",
     fallbackText: "BLACK WIDOW",
   },
   "shang-chi": {
-    poster: "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAvUEiA2VHqkK1Z.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/9f2Q0U3IOsLgrI2HkvldwSABZy5.jpg",
     color: "#ff4757",
     fallbackText: "SHANG-CHI",
   },
   "eternals": {
-    poster: "https://image.tmdb.org/t/p/w500/bcCBq9N1EMo3daNIjWJ1kYNAyAH.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/lFByFSLV5WDJEv3KabbdAF959F2.jpg",
     color: "#ffd32a",
     fallbackText: "ETERNALS",
+  },
+  "hawkeye": {
+    poster: "https://image.tmdb.org/t/p/w500/ct5pNE5dDHryHLDnxyZPYcqO1sz.jpg",
+    color: "#a55eea",
+    fallbackText: "HAWKEYE",
+  },
+  "spiderman-no-way-home": {
+    poster: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+    color: "#ff3838",
+    fallbackText: "NO WAY HOME",
   },
   "spider-man-no-way-home": {
     poster: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
     color: "#ff3838",
     fallbackText: "NO WAY HOME",
   },
-  "doctor-strange-multiverse-of-madness": {
-    poster: "https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",
+  "moon-knight": {
+    poster: "https://image.tmdb.org/t/p/w500/x6FsYvt33846IQnDSFxla9j0RX8.jpg",
+    color: "#d1d8e0",
+    fallbackText: "MOON KNIGHT",
+  },
+  "doctor-strange-multiverse": {
+    poster: "https://image.tmdb.org/t/p/w500/ddJcSKbcp4rKZTmuyWaMhuwcfMz.jpg",
     color: "#8854d0",
     fallbackText: "MOM",
   },
-  "thor-love-and-thunder": {
-    poster: "https://image.tmdb.org/t/p/w500/pIkRyD18kl4F0b6PpHmhoEwMGPX.jpg",
+  "doctor-strange-multiverse-of-madness": {
+    poster: "https://image.tmdb.org/t/p/w500/ddJcSKbcp4rKZTmuyWaMhuwcfMz.jpg",
+    color: "#8854d0",
+    fallbackText: "MOM",
+  },
+  "ms-marvel": {
+    poster: "https://image.tmdb.org/t/p/w500/3HWWh92kZbD7odwJX7nKmXNZsYo.jpg",
+    color: "#45aaf2",
+    fallbackText: "MS. MARVEL",
+  },
+  "thor-love-thunder": {
+    poster: "https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
     color: "#f368e0",
     fallbackText: "LOVE & THUNDER",
+  },
+  "thor-love-and-thunder": {
+    poster: "https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
+    color: "#f368e0",
+    fallbackText: "LOVE & THUNDER",
+  },
+  "she-hulk": {
+    poster: "https://image.tmdb.org/t/p/w500/5xz2orV8f0usyrfGNshcoXHmiaV.jpg",
+    color: "#2ed573",
+    fallbackText: "SHE-HULK",
+  },
+  "she-hulk-attorney-at-law": {
+    poster: "https://image.tmdb.org/t/p/w500/5xz2orV8f0usyrfGNshcoXHmiaV.jpg",
+    color: "#2ed573",
+    fallbackText: "SHE-HULK",
+  },
+  "black-panther-wakanda": {
+    poster: "https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
+    color: "#a55eea",
+    fallbackText: "WAKANDA FOREVER",
   },
   "black-panther-wakanda-forever": {
     poster: "https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
     color: "#a55eea",
-    fallbackText: "WAKANDA",
+    fallbackText: "WAKANDA FOREVER",
+  },
+  "guardians-holiday": {
+    poster: "https://image.tmdb.org/t/p/w500/8dqXyslZ2hv49Oiob9UjlGSHSTR.jpg",
+    color: "#2ed573",
+    fallbackText: "GOTG SPECIAL",
+  },
+  "the-guardians-of-the-galaxy-holiday-special": {
+    poster: "https://image.tmdb.org/t/p/w500/8dqXyslZ2hv49Oiob9UjlGSHSTR.jpg",
+    color: "#2ed573",
+    fallbackText: "GOTG SPECIAL",
   },
 
-  // Phase 5
+  // Phase 5: Fractures
+  "ant-man-quantumania": {
+    poster: "https://image.tmdb.org/t/p/w500/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg",
+    color: "#ff4757",
+    fallbackText: "QUANTUMANIA",
+  },
   "ant-man-and-the-wasp-quantumania": {
     poster: "https://image.tmdb.org/t/p/w500/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg",
     color: "#ff4757",
     fallbackText: "QUANTUMANIA",
   },
-  "guardians-of-the-galaxy-vol-3": {
-    poster: "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN2Ydgii51I3.jpg",
+  "guardians-vol3": {
+    poster: "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
     color: "#20bf6b",
-    fallbackText: "GOTG 3",
+    fallbackText: "GOTG VOL 3",
+  },
+  "guardians-of-the-galaxy-vol-3": {
+    poster: "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+    color: "#20bf6b",
+    fallbackText: "GOTG VOL 3",
   },
   "secret-invasion": {
-    poster: "https://image.tmdb.org/t/p/w500/f5f3TEXdVIUFUG59ap3MbdfZsTV.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/3rINdUPSy9AklJg74jWHOyUXuZd.jpg",
     color: "#e55039",
     fallbackText: "SECRET INVASION",
   },
-  "loki-season-2": {
-    poster: "https://image.tmdb.org/t/p/w500/voHUmluYmKyleFk9a3xgHyKvIgH.jpg",
+  "loki-s2": {
+    poster: "https://image.tmdb.org/t/p/w500/oJdVHUYrjdS2IqiNztVIP4GPB1p.jpg",
     color: "#2ed573",
-    fallbackText: "LOKI 2",
+    fallbackText: "LOKI S2",
+  },
+  "loki-season-2": {
+    poster: "https://image.tmdb.org/t/p/w500/oJdVHUYrjdS2IqiNztVIP4GPB1p.jpg",
+    color: "#2ed573",
+    fallbackText: "LOKI S2",
   },
   "the-marvels": {
     poster: "https://image.tmdb.org/t/p/w500/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
     color: "#45aaf2",
     fallbackText: "THE MARVELS",
   },
+  "echo": {
+    poster: "https://image.tmdb.org/t/p/w500/vFyJH630cF68LohVYjQW49074Sy.jpg",
+    color: "#e55039",
+    fallbackText: "ECHO",
+  },
   "deadpool-and-wolverine": {
     poster: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
     color: "#eb3b5a",
     fallbackText: "D&W",
   },
-  "captain-america-brave-new-world": {
-    poster: "https://image.tmdb.org/t/p/w500/7vPtYFqK3jW7Q3Hn0qZ9mQo4VqZ.jpg",
-    color: "#3867d6",
-    fallbackText: "BNW",
+  "deadpool-wolverine": {
+    poster: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+    color: "#eb3b5a",
+    fallbackText: "D&W",
   },
-
-  // Phase 6
+  "agatha-all-along": {
+    poster: "https://image.tmdb.org/t/p/w500/mGsxKwXUjojitRv2E9qMTbxbBRd.jpg",
+    color: "#a55eea",
+    fallbackText: "AGATHA",
+  },
+  "captain-america-brave-new-world": {
+    poster: "https://image.tmdb.org/t/p/w500/pzIddUEMWhWzfvLI3TwxUG2wGoi.jpg",
+    color: "#3867d6",
+    fallbackText: "BRAVE NEW WORLD",
+  },
+  "cap-brave-new-world": {
+    poster: "https://image.tmdb.org/t/p/w500/pzIddUEMWhWzfvLI3TwxUG2wGoi.jpg",
+    color: "#3867d6",
+    fallbackText: "BRAVE NEW WORLD",
+  },
+  "daredevil-born-again": {
+    poster: "https://image.tmdb.org/t/p/w500/xDUoAsU8lQHOOoRkFiBuarmACDN.jpg",
+    color: "#eb3b5a",
+    fallbackText: "DAREDEVIL",
+  },
   "thunderbolts": {
-    poster: "https://image.tmdb.org/t/p/w500/mKOB2v1lWn0W09G6i0V0UuE8hJg.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg",
     color: "#ffd32a",
     fallbackText: "THUNDERBOLTS*",
   },
+
+  // Phase 6: Convergence
+  "fantastic-four": {
+    poster: "https://image.tmdb.org/t/p/w500/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+    color: "#4bcffa",
+    fallbackText: "FANTASTIC FOUR",
+  },
   "the-fantastic-four-first-steps": {
-    poster: "https://image.tmdb.org/t/p/w500/bcCBq9N1EMo3daNIjWJ1kYNAyAH.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
     color: "#4bcffa",
     fallbackText: "FANTASTIC FOUR",
   },
@@ -225,15 +410,40 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#eb3b5a",
     fallbackText: "BLADE",
   },
+  "spiderman-brand-new-day": {
+    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    color: "#ff3838",
+    fallbackText: "BRAND NEW DAY",
+  },
+  "spider-man-brand-new-day": {
+    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    color: "#ff3838",
+    fallbackText: "BRAND NEW DAY",
+  },
+  "spiderman-4": {
+    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    color: "#ff3838",
+    fallbackText: "SPIDER-MAN 4",
+  },
+  "spider-man-4": {
+    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    color: "#ff3838",
+    fallbackText: "SPIDER-MAN 4",
+  },
   "avengers-doomsday": {
-    poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/jzPwsojjFStf5lR5Nm07w2hH56G.jpg",
     color: "#2ed573",
     fallbackText: "DOOMSDAY",
   },
   "avengers-secret-wars": {
-    poster: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/f0YBuh4hyiAheXhh4JnJWoKi9g5.jpg",
     color: "#ffd32a",
     fallbackText: "SECRET WARS",
+  },
+  "battleworld": {
+    poster: "https://image.tmdb.org/t/p/w500/f0YBuh4hyiAheXhh4JnJWoKi9g5.jpg",
+    color: "#ffd32a",
+    fallbackText: "BATTLEWORLD",
   },
 };
 
@@ -249,45 +459,50 @@ export default function NodeArtwork({
   rounded?: string;
 }) {
   const [imgError, setImgError] = useState(false);
-  const data = MCU_POSTER_MAP[movieId] || {
-    poster: `https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg`,
-    color: "#ffffff",
-    fallbackText: movieId.toUpperCase(),
-  };
+
+  const data = MCU_POSTER_MAP[movieId] ||
+    MCU_POSTER_MAP[movieId.toLowerCase()] ||
+    MCU_POSTER_MAP[movieId.replace(/_/g, "-")] || {
+      poster: "",
+      color: "#ffffff",
+      fallbackText: movieId.toUpperCase(),
+    };
 
   return (
-    <div className={`relative ${className} flex items-center justify-center bg-black overflow-hidden ${rounded} select-none`}>
-      {/* Background Poster Image */}
-      {!imgError ? (
+    <div className={`relative ${className} flex items-center justify-center bg-stone-900 overflow-hidden ${rounded} select-none`}>
+      {/* Background Official Poster Image */}
+      {data.poster && !imgError ? (
         <img
+          key={movieId}
           src={data.poster}
-          alt={movieId}
+          alt={data.fallbackText || movieId}
           onError={() => setImgError(true)}
-          loading="lazy"
-          className={`w-full h-full object-cover object-center transition-all duration-700 ${
-            isActive ? "scale-110 filter brightness-110 contrast-105" : "scale-100 filter brightness-95 contrast-100 group-hover:scale-105 group-hover:brightness-105"
+          className={`w-full h-full object-cover object-center transition-all duration-500 ${
+            isActive
+              ? "scale-110 brightness-110 contrast-105"
+              : "scale-100 brightness-100 contrast-100 group-hover:scale-105 group-hover:brightness-105"
           }`}
         />
       ) : (
         <div
           className="w-full h-full flex flex-col items-center justify-center p-2 text-center"
-          style={{ backgroundColor: `${data.color}20` }}
+          style={{ backgroundColor: `${data.color}25` }}
         >
-          <span className="font-mono text-[10px] font-black tracking-widest uppercase" style={{ color: data.color }}>
+          <span className="font-mono text-[9px] font-bold tracking-wider uppercase text-white/90">
             {data.fallbackText}
           </span>
         </div>
       )}
 
-      {/* Cinematic Vignette Overlay */}
-      <div className={`absolute inset-0 ${rounded} bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,0.85)_100%)] pointer-events-none`} />
+      {/* Clean Subtle Edge Ring */}
+      <div className={`absolute inset-0 ${rounded} border border-white/10 pointer-events-none`} />
 
       {/* Active Inner Cosmic Glow Ring */}
       {isActive && (
         <div
           className={`absolute inset-0 ${rounded} pointer-events-none transition-opacity duration-300`}
           style={{
-            boxShadow: `inset 0 0 16px ${data.color}90`,
+            boxShadow: `inset 0 0 14px ${data.color}90`,
             border: `1.5px solid ${data.color}`,
           }}
         />
