@@ -12,10 +12,12 @@ import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe } from "lucide-rea
 
 export default function UniverseMap({
   onReturn,
+  onSwitchToFamilyTree,
   initialPhase = 1,
   targetMovieId,
 }: {
   onReturn?: () => void;
+  onSwitchToFamilyTree?: () => void;
   initialPhase?: number;
   targetMovieId?: string;
 }) {
@@ -384,6 +386,17 @@ export default function UniverseMap({
               <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
             </div>
           </button>
+
+          {onSwitchToFamilyTree && (
+            <button
+              onClick={onSwitchToFamilyTree}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-stone-800 hover:border-white/50 hover:bg-white/10 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
+              title="Switch to Dark-Style Character & Family Tree"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <span>FAMILY TREE</span>
+            </button>
+          )}
 
           {onReturn && (
             <button
