@@ -438,13 +438,19 @@ export default function DarkFamilyTree({
   }, [selectedNode]);
 
   // Helper to compute Orthogonal Line SVG Paths
-  const computeOrthogonalPath = (conn: OrthogonalConnection) => {
+  const computeOrthogonalPath = (
+    conn: OrthogonalConnection
+  ): {
+    path: string;
+    junction?: { x: number; y: number; symbol: string };
+    arrow?: { x: number; y: number; dir: "down" | "right" | "left" | "up" };
+  } | null => {
     const fromNode = visibleNodes.find((n) => n.id === conn.fromId);
     const toNode = visibleNodes.find((n) => n.id === conn.toId);
     if (!fromNode || !toNode) return null;
 
-    const w = CARD_W; // 84
-    const h = CARD_H; // 108
+    const w = CARD_W; // 110
+    const h = CARD_H; // 142
     const fromCenterX = fromNode.x + w / 2;
     const fromCenterY = fromNode.y + h / 2;
     const toCenterX = toNode.x + w / 2;
@@ -497,7 +503,7 @@ export default function DarkFamilyTree({
           path: `M ${startX} ${startY} V ${endY}`,
           arrow:
             conn.hasArrow !== false
-              ? { x: endX, y: endY - 3, dir: "down" as const }
+              ? { x: endX, y: endY - 3, dir: "down" }
               : undefined,
         };
       }
@@ -508,7 +514,7 @@ export default function DarkFamilyTree({
         path: `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`,
         arrow:
           conn.hasArrow !== false
-            ? { x: endX, y: endY - 3, dir: "down" as const }
+            ? { x: endX, y: endY - 3, dir: "down" }
             : undefined,
       };
     }
@@ -532,7 +538,7 @@ export default function DarkFamilyTree({
             ? {
                 x: isLeft ? endX - 3 : endX + 3,
                 y,
-                dir: (isLeft ? "right" : "left") as const,
+                dir: isLeft ? "right" : "left",
               }
             : undefined,
         };
@@ -552,7 +558,7 @@ export default function DarkFamilyTree({
           arrow: {
             x: isFromRight ? endX + 4 : endX - 4,
             y: endY,
-            dir: isFromRight ? ("left" as const) : ("right" as const),
+            dir: isFromRight ? "left" : "right",
           },
         };
       }
@@ -567,7 +573,7 @@ export default function DarkFamilyTree({
       return {
         path: `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`,
         arrow: conn.hasArrow
-          ? { x: endX, y: endY - 3, dir: "down" as const }
+          ? { x: endX, y: endY - 3, dir: "down" }
           : undefined,
       };
     }
@@ -577,7 +583,7 @@ export default function DarkFamilyTree({
       path: `M ${fromCenterX} ${fromNode.y + h} V ${
         (fromNode.y + h + toNode.y) / 2
       } H ${toCenterX} V ${toNode.y}`,
-      arrow: { x: toCenterX, y: toNode.y - 3, dir: "down" as const },
+      arrow: { x: toCenterX, y: toNode.y - 3, dir: "down" },
     };
   };
 
