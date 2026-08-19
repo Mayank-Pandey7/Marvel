@@ -7,11 +7,11 @@ import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
 const NAV_LINKS = [
-  { href: "/timeline", label: "The Cosmic Web" },
+  { href: "/timeline?mode=family", label: "Family Tree" },
+  { href: "/timeline?mode=timeline", label: "Timeline Map" },
   { href: "/characters", label: "Characters" },
   { href: "/artifacts", label: "Cosmic Relics" },
   { href: "/multiverse", label: "Multiverse Map" },
-  { href: "/doomsday", label: "Doomsday" },
 ];
 
 export default function Navbar({ onSearch }: { onSearch: () => void }) {

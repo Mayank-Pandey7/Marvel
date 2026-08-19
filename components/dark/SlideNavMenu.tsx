@@ -88,6 +88,13 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
               {openSection === "who" && (
                 <div className="pb-4 pl-2 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
                   <Link
+                    href="/timeline?mode=family"
+                    onClick={onClose}
+                    className="text-xs font-mono tracking-[0.2em] uppercase text-white font-bold hover:translate-x-1 transition-all py-1 flex items-center gap-1.5"
+                  >
+                    • Sacred Family Tree (Dark Style)
+                  </Link>
+                  <Link
                     href="/characters"
                     onClick={onClose}
                     className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1"
