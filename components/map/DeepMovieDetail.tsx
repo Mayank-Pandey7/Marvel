@@ -164,20 +164,20 @@ export default function DeepMovieDetail({
           : "opacity-0 scale-105 pointer-events-none"
       }`}
     >
-      {/* 1. CINEMATIC AMBIENT BACKDROP IMAGE (SOFT & BLURRED) */}
+      {/* 1. CINEMATIC AMBIENT BACKDROP IMAGE (CLEAR & VIBRANT) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <img
           src={backdropSrc}
           alt={movie.title}
-          className={`w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.10] blur-md transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isExpanded ? "scale-105 opacity-40" : "scale-125 opacity-0"
+          className={`w-full h-full object-cover object-center filter brightness-[0.85] contrast-[1.15] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isExpanded ? "scale-105 opacity-70" : "scale-125 opacity-0"
           }`}
         />
 
         {/* Cinematic Vignette & Atmospheric Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-black/60" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.7)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.6)_0%,transparent_25%,transparent_75%,rgba(0,0,0,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/75" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.75)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
       </div>
 
       {/* 2. MINIMALIST TOP HEADER */}
