@@ -7,8 +7,9 @@ import AmbientAudio from "@/components/dark/AmbientAudio";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#020204",
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#000000",
 };
 
 export const metadata: Metadata = {

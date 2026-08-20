@@ -8,7 +8,8 @@ import PhaseSpine from "./PhaseSpine";
 import SearchInvestigation from "./SearchInvestigation";
 import DeepMovieDetail from "./DeepMovieDetail";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
-import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe } from "lucide-react";
+import Link from "next/link";
+import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe, Menu, Users } from "lucide-react";
 
 export default function UniverseMap({
   onReturn,
@@ -63,9 +64,17 @@ export default function UniverseMap({
     return PHASES_CONFIG.find((p) => p.id === activePhase) || PHASES_CONFIG[0];
   }, [activePhase]);
 
-  // Global Keyboard Shortcuts (Press "/" or "Ctrl+K" for search, "Escape" to deselect)
+  // Global Keyboard Shortcuts & Browser Page Zoom Interceptor
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent whole-page browser zoom on Ctrl + / Ctrl - / Ctrl 0
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        (e.key === "+" || e.key === "-" || e.key === "=" || e.key === "0" || e.key === "_")
+      ) {
+        e.preventDefault();
+      }
+
       if (e.key === "/" && !searchOpen) {
         e.preventDefault();
         setSearchOpen(true);
@@ -78,8 +87,20 @@ export default function UniverseMap({
         if (selectedMovie) setSelectedMovie(null);
       }
     };
+
+    const handleWheelZoomPrevent = (e: WheelEvent) => {
+      // Prevent browser whole-page zoom on Ctrl + Wheel
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("wheel", handleWheelZoomPrevent, { passive: false });
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("wheel", handleWheelZoomPrevent);
+    };
   }, [searchOpen, selectedMovie]);
 
   // DIRECT TO SPECIFIC PHASE (Frames comfortably with timeline tree trunk centered in viewport)
@@ -287,12 +308,18 @@ export default function UniverseMap({
 
   const handleWheel = (e: React.WheelEvent) => {
     // If search modal is open or scrolling over an interactive panel, don't zoom the background universe map
-    if (searchOpen || (e.target as HTMLElement).closest("aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container")) {
+    if (
+      searchOpen ||
+      (e.target as HTMLElement).closest(
+        "aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container"
+      )
+    ) {
       return;
     }
     e.preventDefault();
-    const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
-    const newScale = Math.min(Math.max(camera.scale * zoomFactor, 0.08), 2.2);
+    const delta = Math.max(Math.min(e.deltaY, 120), -120);
+    const zoomFactor = Math.exp(-delta * 0.0016);
+    const newScale = Math.min(Math.max(camera.scale * zoomFactor, 0.18), 1.65);
 
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -303,6 +330,28 @@ export default function UniverseMap({
     const newY = mouseY - (mouseY - camera.y) * (newScale / camera.scale);
 
     setCamera({ x: newX, y: newY, scale: newScale });
+    setIsFullOverview(false);
+  };
+
+  // Double Click Canvas Zoom In
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    if (
+      (e.target as HTMLElement).closest(
+        "button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .phase-banner"
+      )
+    ) {
+      return;
+    }
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const targetScale = Math.min(camera.scale * 1.35, 1.65);
+    const newX = mouseX - (mouseX - camera.x) * (targetScale / camera.scale);
+    const newY = mouseY - (mouseY - camera.y) * (targetScale / camera.scale);
+
+    setCamera({ x: newX, y: newY, scale: targetScale });
     setIsFullOverview(false);
   };
 
@@ -333,6 +382,7 @@ export default function UniverseMap({
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
       onWheel={handleWheel}
+      onDoubleClick={handleDoubleClick}
       className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
     >
       {/* 1. Star Dust & Atmosphere Canvas Layer */}
@@ -345,96 +395,89 @@ export default function UniverseMap({
         aria-hidden="true"
       />
 
-      {/* CINEMATIC ASCENDING BRAND TITLE (GPU Compositor Accelerated Smooth Ascent) */}
-      {/* CINEMATIC BRAND TITLE (Cleanly Docked at Top, Never Overlapping the Tree) */}
-      <div
-        className="fixed z-40 pointer-events-none hidden md:flex flex-col items-center justify-center text-center w-full max-w-full px-4 animate-in fade-in duration-500"
-        style={{
-          left: "50%",
-          top: "22px",
-          transform: "translate3d(-50%, 0, 0)",
-          opacity: 1,
-        }}
-      >
-        <h1
-          className="font-mono uppercase text-stone-100 font-light inline-block text-xs sm:text-sm md:text-base tracking-[0.45em] sm:tracking-[0.6em] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
-        >
-          M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
-        </h1>
 
-        <p
-          className="font-mono uppercase text-[9px] sm:text-[10px] tracking-[0.25em] text-stone-400 font-bold mt-1"
-        >
-          {isFullOverview
-            ? "EARTH-616 SACRED TIMELINE TREE"
-            : `PHASE ${currentPhaseMeta.roman} · ${currentPhaseMeta.title} (${currentPhaseMeta.years})`}
-        </p>
-      </div>
 
       {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
-      <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-6 md:px-10 py-3 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
-        {/* Left: Minimalist Menu & Return Button */}
-        <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
+      {/* ------------------------------------------------------------- */}
+      {/* TOP HEADER: RESPONSIVE MATCH WITH DARKFAMILYTREE              */}
+      {/* ------------------------------------------------------------- */}
+      <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
+        {/* Left: Minimalist Menu & Mode Switcher (Matching RETURN typography) */}
+        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors p-2 cursor-pointer group flex items-center gap-2.5 rounded-full bg-black/50 border border-stone-800/80 hover:border-white/40 backdrop-blur-md shadow-lg"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
             aria-label="Open Universe Navigation"
             title="Open Universe Navigation"
           >
-            <div className="w-5 flex flex-col gap-1.5">
-              <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
-              <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
-            </div>
+            <Menu size={16} />
           </button>
 
-          {onSwitchToFamilyTree && (
+          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest) */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {onSwitchToFamilyTree && (
+              <button
+                onClick={onSwitchToFamilyTree}
+                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
+                title="Switch to Sacred Family Tree Lineage View"
+              >
+                FAMILY TREE
+              </button>
+            )}
+            <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
             <button
-              onClick={onSwitchToFamilyTree}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-stone-800 hover:border-white/50 hover:bg-white/10 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md shadow-lg"
-              title="Switch to Dark-Style Character & Family Tree"
+              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
+              title="Sacred Timeline Map View"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              <span>FAMILY TREE</span>
+              TIMELINE MAP
             </button>
-          )}
+          </div>
+        </div>
 
+        {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
+          <Link 
+            href="/timeline" 
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
+            title="MCU Timeline Map"
+          >
+            MARVEL
+          </Link>
+          <span className="text-stone-600 font-mono text-xs select-none">|</span>
+          <Link
+            href="/doomsday"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none"
+            title="Explore Road to Doomsday Prelude Timeline"
+          >
+            DOOMSDAY
+          </Link>
+        </div>
+
+        {/* Right: Return + Search Button */}
+        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           {onReturn && (
             <button
               onClick={onReturn}
-              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-black/40 md:bg-transparent border border-stone-800/80 md:border-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all group cursor-pointer backdrop-blur-md md:backdrop-blur-none"
+              className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
               title="Return to Timeline Selector"
             >
-              <ArrowLeft size={12} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
+              <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
               <span className="hidden sm:inline">RETURN</span>
             </button>
           )}
+
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            title="Search All Timeline Nodes (/ or Ctrl+K)"
+          >
+            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <span className="hidden sm:inline">SEARCH</span>
+            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+              /
+            </kbd>
+          </button>
         </div>
-
-        {/* Mobile Center Brand (shown only on mobile <md) */}
-        <div className="flex md:hidden flex-col items-center justify-center text-center pointer-events-auto">
-          <span className="text-[11px] font-mono font-bold tracking-[0.4em] uppercase text-white">
-            MARVEL
-          </span>
-          <span className="text-[8px] font-mono tracking-[0.2em] uppercase text-stone-400">
-            {isFullOverview ? "TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
-          </span>
-        </div>
-
-        {/* Center Space Reserved for Ascending Title on Desktop */}
-        <div className="hidden md:block w-1" />
-
-        {/* Right: Search Button (Clean borderless aesthetic) */}
-        <button
-          onClick={() => setSearchOpen(true)}
-          className="pointer-events-auto inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 bg-transparent hover:bg-white/5 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-colors group cursor-pointer"
-          title="Search All Timeline Nodes (/ or Ctrl+K)"
-        >
-          <Search size={12} className="text-stone-400 group-hover:text-white transition-colors" />
-          <span className="hidden sm:inline">SEARCH</span>
-          <kbd className="hidden sm:inline-block text-[9px] font-mono text-stone-500 ml-1">
-            /
-          </kbd>
-        </button>
       </header>
 
       {/* 3. Phase Spine Side Indicator (With Earth-616 Root at Top and All MCU Earths Catalogue) */}
@@ -445,18 +488,18 @@ export default function UniverseMap({
         onSelectEarth616={showFullEarth616Timeline}
       />
 
-      {/* 4. Bottom Left Minimalist Controls (Zoom, Pan, Earth-616 Full Tree) */}
-      <div className="fixed bottom-4 sm:bottom-6 left-4 sm:left-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
+      {/* 4. Bottom Controls (Zoom In/Out, Earth-616 Overview, Reset) - Positioned safely away from left PhaseSpine */}
+      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.2, 2.2) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.25, 1.65) }))}
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.08) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.18) }))}
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
           <ZoomOut size={13} />
@@ -466,7 +509,7 @@ export default function UniverseMap({
           className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
             isFullOverview
               ? "bg-white text-black border-white"
-              : "bg-black/60 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
+              : "bg-black/80 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
           }`}
           title="Earth-616 Full Timeline Overview"
         >
@@ -474,16 +517,15 @@ export default function UniverseMap({
         </button>
         <button
           onClick={() => directToPhase(1)}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Direct to Phase I"
         >
           <RotateCcw size={12} />
         </button>
       </div>
 
-      {/* 5. Bottom Right Timeline Status */}
-      {/* Desktop text */}
-      <div className="hidden md:block fixed bottom-6 right-10 z-30 pointer-events-none text-right font-mono text-[10px] text-stone-400 tracking-[0.25em] uppercase">
+      {/* 5. Bottom Timeline Status (Shifted safely above or next to controls) */}
+      <div className="hidden lg:block fixed bottom-16 right-10 z-30 pointer-events-none text-right font-mono text-[9.5px] text-stone-400 tracking-[0.25em] uppercase">
         <span className="text-white font-bold">
           {isFullOverview ? "EARTH-616 TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
         </span>

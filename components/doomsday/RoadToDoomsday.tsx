@@ -1,0 +1,633 @@
+"use client";
+
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import Link from "next/link";
+import {
+  DOOMSDAY_WATCHLIST,
+  type DoomsdayWatchlistItem,
+} from "@/data/doomsdayWatchlist";
+import { useWatched } from "@/context/WatchedContext";
+import SlideNavMenu from "@/components/dark/SlideNavMenu";
+import SearchOverlay from "@/components/SearchOverlay";
+import {
+  CheckCircle2,
+  Circle,
+  ArrowRight,
+  ArrowLeft,
+  Volume2,
+  VolumeX,
+  Menu,
+  Search,
+  X,
+  Zap,
+  Flame,
+  Globe,
+  Radio,
+  ExternalLink,
+} from "lucide-react";
+
+export default function RoadToDoomsday() {
+  const { isWatched, toggleWatched } = useWatched();
+  const [activeItem, setActiveItem] = useState<DoomsdayWatchlistItem | null>(null);
+  const [isAudioMuted, setIsAudioMuted] = useState(true);
+  const [navMenuOpen, setNavMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const filteredItems = DOOMSDAY_WATCHLIST;
+
+  const treeContainerRef = useRef<HTMLDivElement | null>(null);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [snakePathD, setSnakePathD] = useState<string>("");
+
+  // Calculate Progress
+  const watchedCount = useMemo(() => {
+    return DOOMSDAY_WATCHLIST.filter((item) => isWatched(item.id)).length;
+  }, [isWatched]);
+
+  const progressPercent = Math.round(
+    (watchedCount / DOOMSDAY_WATCHLIST.length) * 100
+  );
+
+  // Dynamic S-Curve Snake Spine Path Generation
+  useEffect(() => {
+    const updateSnakePath = () => {
+      if (!treeContainerRef.current) return;
+      const containerRect = treeContainerRef.current.getBoundingClientRect();
+      const isMobile = window.innerWidth < 768;
+
+      const points: { x: number; y: number }[] = [];
+
+      // Start at top center
+      points.push({
+        x: isMobile ? 16 : containerRect.width / 2,
+        y: 0,
+      });
+
+      nodeRefs.current.forEach((nodeEl, idx) => {
+        if (!nodeEl) return;
+        const nodeRect = nodeEl.getBoundingClientRect();
+        const relativeY = nodeRect.top - containerRect.top + nodeRect.height / 2;
+        // Waving offset for snake effect
+        const xOffset = isMobile ? 0 : (idx % 2 === 0 ? -36 : 36);
+        const relativeX = isMobile ? 16 : containerRect.width / 2 + xOffset;
+
+        points.push({ x: relativeX, y: relativeY });
+      });
+
+      // Destination point at bottom
+      const destEl = document.getElementById("doomsday-destination");
+      if (destEl) {
+        const destRect = destEl.getBoundingClientRect();
+        points.push({
+          x: isMobile ? 16 : containerRect.width / 2,
+          y: destRect.top - containerRect.top + 20,
+        });
+      }
+
+      if (points.length < 2) return;
+
+      // Build smooth cubic bezier curve
+      let d = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p0 = points[i];
+        const p1 = points[i + 1];
+        const midY = (p0.y + p1.y) / 2;
+        d += ` C ${p0.x} ${midY}, ${p1.x} ${midY}, ${p1.x} ${p1.y}`;
+      }
+
+      setSnakePathD(d);
+    };
+
+    updateSnakePath();
+    window.addEventListener("resize", updateSnakePath);
+    const timer = setTimeout(updateSnakePath, 250);
+
+    return () => {
+      window.removeEventListener("resize", updateSnakePath);
+      clearTimeout(timer);
+    };
+  }, [filteredItems]);
+
+  // Keyboard shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/" && !searchOpen) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+      if (e.key === "Escape") {
+        if (activeItem) setActiveItem(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [searchOpen, activeItem]);
+
+  // Ambient Star Particles Canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const stars: {
+      x: number;
+      y: number;
+      radius: number;
+      alpha: number;
+      speed: number;
+    }[] = [];
+
+    for (let i = 0; i < 60; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.4 + 0.1,
+        speed: Math.random() * 0.15 + 0.05,
+      });
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      stars.forEach((s) => {
+        s.y -= s.speed;
+        if (s.y < 0) {
+          s.y = height;
+          s.x = Math.random() * width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
+
+  return (
+    <main className="relative min-h-screen bg-[#000000] text-stone-200 overflow-x-hidden selection:bg-white selection:text-black">
+      {/* ------------------------------------------------------------- */}
+      {/* BACKGROUND DOCTOR DOOM CINEMATIC IMAGE & AMBIENT AURA         */}
+      {/* ------------------------------------------------------------- */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* User-provided Doctor Doom Artwork (Richly Visible) */}
+        <img
+          src="/images/doomsday-bg.jpg"
+          alt="Doctor Doom"
+          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-70 filter brightness-100 contrast-105 select-none"
+        />
+        <video
+          ref={videoRef}
+          src="/trailers/doctor-doom.3840x2160.mp4"
+          autoPlay
+          loop
+          muted={isAudioMuted}
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-15 filter brightness-75 contrast-125 mix-blend-screen"
+        />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/55 to-[#000000]/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#000000_90%)]" />
+      </div>
+
+      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (Matching Timeline) */}
+      <div
+        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        aria-hidden="true"
+      />
+
+      {/* ------------------------------------------------------------- */}
+      {/* TOP HEADER                                                    */}
+      {/* ------------------------------------------------------------- */}
+      <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
+        {/* Left: Minimalist Drawer Menu Toggle */}
+        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+          <button
+            onClick={() => setNavMenuOpen(true)}
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
+            title="Open Universe Navigation"
+            aria-label="Open Universe Navigation"
+          >
+            <Menu size={16} />
+          </button>
+        </div>
+
+        {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
+          <Link
+            href="/timeline"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
+            title="MCU Timeline Map"
+          >
+            MARVEL
+          </Link>
+          <span className="text-stone-600 font-mono text-xs select-none">|</span>
+          <Link
+            href="/doomsday"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none"
+            title="Road to Doomsday"
+          >
+            DOOMSDAY
+          </Link>
+        </div>
+
+        {/* Right: Return + Search Button */}
+        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
+          <button
+            onClick={() => setIsAudioMuted((prev) => !prev)}
+            className="text-stone-500 hover:text-white transition-colors p-1 cursor-pointer"
+            title={isAudioMuted ? "Enable Atmospheric Audio" : "Mute Sound"}
+          >
+            {!isAudioMuted ? <Volume2 size={14} className="text-white" /> : <VolumeX size={14} />}
+          </button>
+
+          <Link
+            href="/timeline"
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
+            title="Return to Timeline"
+          >
+            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
+            <span className="hidden sm:inline">RETURN</span>
+          </Link>
+
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            title="Search All MCU Entries (/ or Ctrl+K)"
+          >
+            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <span className="hidden sm:inline">SEARCH</span>
+            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">/</kbd>
+          </button>
+        </div>
+      </header>
+
+      {/* ------------------------------------------------------------- */}
+      {/* HERO SECTION: NARRATIVE TITLE & WATCH PROGRESS TRACKER        */}
+      {/* ------------------------------------------------------------- */}
+      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-24 pb-8 text-center">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono uppercase tracking-[0.22em] font-light text-white">
+          ROAD TO DOOMSDAY
+        </h1>
+        <p className="mt-3 text-xs sm:text-[13.5px] font-mono text-stone-400 max-w-2xl mx-auto leading-relaxed">
+          «All universes die. The question is what survives in the fire of Victor von Doom.»
+        </p>
+
+        {/* Progress Tracker */}
+        <div className="mt-6 max-w-md mx-auto py-2 px-4 flex items-center justify-between gap-4">
+          <span className="text-[9px] font-mono tracking-widest uppercase text-stone-400">
+            CHRONOLOGY STATUS:
+          </span>
+          <div className="flex-1 h-1 bg-stone-900 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-white transition-all duration-500 rounded-full"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+          <span className="text-[10px] font-mono text-white font-bold tracking-wider shrink-0">
+            {watchedCount} / {DOOMSDAY_WATCHLIST.length}
+          </span>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------- */}
+      {/* GRAND VISUAL TIMELINE TREE (SNAKE CURVE TREE SPINE)           */}
+      {/* ------------------------------------------------------------- */}
+      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-4 pb-36">
+        <div ref={treeContainerRef} className="relative">
+          
+          {/* Continuous Clean Non-Glowing S-Curve Snake Timeline Spine */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
+            {snakePathD ? (
+              <path
+                d={snakePathD}
+                fill="none"
+                stroke="#57534e"
+                strokeWidth="1.5"
+                strokeDasharray="5 6"
+                strokeLinecap="round"
+                className="opacity-70"
+              />
+            ) : (
+              <line
+                x1="50%"
+                y1="0"
+                x2="50%"
+                y2="100%"
+                stroke="#57534e"
+                strokeWidth="1.5"
+                strokeDasharray="5 6"
+                className="opacity-70"
+              />
+            )}
+          </svg>
+
+          {/* Timeline Tree Nodes */}
+          <div className="flex flex-col gap-12 sm:gap-16 relative z-10">
+            {filteredItems.map((item, idx) => {
+              const isEven = idx % 2 === 0;
+              const isItemWatched = isWatched(item.id);
+              const isSelected = activeItem?.id === item.id;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`relative flex items-center w-full ${
+                    isEven
+                      ? "md:flex-row pl-12 md:pl-0"
+                      : "md:flex-row-reverse pl-12 md:pl-0"
+                  }`}
+                >
+                  {/* Central Node Badge on the Snake Spine */}
+                  <div
+                    ref={(el) => {
+                      nodeRefs.current[idx] = el;
+                    }}
+                    className={`absolute flex items-center justify-center z-20 ${
+                      isEven
+                        ? "left-4 md:left-[calc(50%-2.25rem)]"
+                        : "left-4 md:left-[calc(50%+2.25rem)]"
+                    } -translate-x-1/2`}
+                  >
+                    <button
+                      onClick={() => setActiveItem(item)}
+                      className={`w-8 h-8 rounded-full border flex items-center justify-center font-mono text-[10px] font-bold transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-white text-black border-white scale-110"
+                          : isItemWatched
+                          ? "bg-stone-900 border-white text-white"
+                          : "bg-black border-stone-700 text-stone-400 hover:border-white hover:text-white"
+                      }`}
+                      title={`Chapter #${item.order} · ${item.title}`}
+                    >
+                      <span>{String(item.order).padStart(2, "0")}</span>
+                    </button>
+                  </div>
+
+                  {/* Left or Right Tree Card Branch (Clean Borderless & Transparent) */}
+                  <div className={`w-full md:w-[calc(50%-4rem)] ${isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"}`}>
+                    <div
+                      onClick={() => setActiveItem(item)}
+                      className={`group relative p-2 sm:p-3 transition-all duration-200 cursor-pointer ${
+                        isSelected ? "scale-[1.02]" : "hover:opacity-100 opacity-90"
+                      }`}
+                    >
+                      {/* Horizontal Tree Connector Arm (Desktop) */}
+                      <div
+                        className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-6 h-[1px] ${
+                          isEven ? "-right-6" : "-left-6"
+                        } ${isSelected ? "bg-white" : "bg-stone-700 group-hover:bg-stone-400"}`}
+                      />
+
+                      <div className={`flex items-start gap-3.5 ${isEven ? "md:flex-row-reverse" : "md:flex-row"}`}>
+                        
+                        {/* Movie Poster Artwork (Prominent & High-Res) */}
+                        <div className={`relative w-18 h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-md overflow-hidden bg-stone-950 shrink-0 border transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8)] ${
+                          isSelected ? "border-white ring-2 ring-white/50 scale-105" : "border-stone-800/90 group-hover:border-stone-400 group-hover:scale-105"
+                        }`}>
+                          <img
+                            src={item.posterUrl}
+                            alt={item.title}
+                            referrerPolicy="no-referrer"
+                            loading="lazy"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            onError={(e) => {
+                              // Intelligent fallback to high-contrast cinematic placeholder
+                              (e.target as HTMLImageElement).src = "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                            }}
+                          />
+                          <div className="absolute inset-0 ring-1 ring-inset ring-white/15 pointer-events-none rounded-md" />
+                          <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                        </div>
+
+                        {/* Node Card Details */}
+                        <div className="flex-1 min-w-0">
+                          <div className={`flex items-center gap-1.5 flex-wrap text-[8.5px] font-mono uppercase tracking-wider mb-0.5 ${
+                            isEven ? "md:justify-end" : "md:justify-start"
+                          }`}>
+                            <span className="text-stone-400 font-semibold">{item.year}</span>
+                            <span className="text-stone-700">•</span>
+                            <span className="text-stone-500">{item.universe}</span>
+                          </div>
+
+                          <h3 className={`text-sm sm:text-base font-mono uppercase tracking-[0.14em] font-bold truncate transition-colors ${
+                            isSelected ? "text-white" : "text-stone-300 group-hover:text-white"
+                          }`}>
+                            {item.title}
+                          </h3>
+
+                          <p className="text-[11px] font-sans text-stone-400 line-clamp-2 mt-0.5 font-light leading-relaxed">
+                            {item.tagline}
+                          </p>
+
+                          {/* Card Meta & Watched Toggle */}
+                          <div className={`flex items-center gap-3 mt-2.5 ${
+                            isEven ? "md:justify-end" : "md:justify-start"
+                          }`}>
+                            <span className="text-[8px] font-mono tracking-widest uppercase text-stone-500">
+                              {item.incursionThreat}
+                            </span>
+
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleWatched(item.id);
+                              }}
+                              className={`flex items-center gap-1 text-[8.5px] font-mono tracking-wider uppercase px-2 py-0.5 rounded-full transition-all cursor-pointer ${
+                                isItemWatched
+                                  ? "bg-white text-black font-bold"
+                                  : "text-stone-400 hover:text-white"
+                              }`}
+                            >
+                              {isItemWatched ? (
+                                <>
+                                  <CheckCircle2 size={10} className="text-black" />
+                                  <span>WATCHED</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Circle size={10} />
+                                  <span>MARK WATCHED</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Empty Spacer Column for Alternating Grid */}
+                  <div className="hidden md:block w-[calc(50%-4rem)]" />
+                </div>
+              );
+            })}
+
+            {/* ------------------------------------------------------------- */}
+            {/* GRAND TIMELINE DESTINATION: AVENGERS DOOMSDAY & SECRET WARS   */}
+            {/* ------------------------------------------------------------- */}
+            <div id="doomsday-destination" className="relative flex flex-col items-center justify-center text-center pt-8 pl-12 md:pl-0">
+              <div className="max-w-xl w-full p-4 text-center">
+                <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-stone-400 font-bold block mb-1">
+                  THE MULTIVERSAL CONVERGENCE · MAY 2026 — MAY 2027
+                </span>
+                <h3 className="text-lg sm:text-2xl font-mono uppercase tracking-[0.2em] font-black text-white">
+                  AVENGERS: DOOMSDAY &amp; SECRET WARS
+                </h3>
+                <p className="mt-2 text-xs text-stone-300 font-sans font-light leading-relaxed max-w-lg mx-auto">
+                  All 15 multiversal timeline branches collide under catastrophic incursions. Victor von Doom ascends the throne to forge Battleworld from the dying ashes of reality.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------- */}
+      {/* INTERACTIVE CHAPTER DOSSIER MODAL / INSPECTOR DRAWER          */}
+      {/* ------------------------------------------------------------- */}
+      {activeItem && (
+        <div
+          onClick={() => setActiveItem(null)}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl bg-[#08080c] border border-stone-700 rounded-sm p-6 sm:p-8 backdrop-blur-2xl shadow-[0_25px_70px_rgba(0,0,0,0.95)] flex flex-col gap-5 max-h-[90vh] overflow-y-auto"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setActiveItem(null)}
+              className="absolute top-4 right-4 p-1.5 rounded-sm border border-stone-800 hover:border-stone-600 text-stone-400 hover:text-white bg-stone-950 transition-colors cursor-pointer"
+            >
+              <X size={15} />
+            </button>
+
+            {/* Movie Backdrop & Title */}
+            <div className="relative rounded-sm overflow-hidden border border-stone-800 aspect-video bg-stone-950 shrink-0">
+              <img
+                src={activeItem.backdropUrl || activeItem.posterUrl}
+                alt={activeItem.title}
+                referrerPolicy="no-referrer"
+                loading="lazy"
+                className="w-full h-full object-cover brightness-75"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = activeItem.posterUrl;
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#08080c] via-transparent to-black/40" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                <div>
+                  <span className="text-[9px] font-mono tracking-[0.25em] text-stone-400 uppercase font-semibold block mb-1">
+                    CHAPTER #{String(activeItem.order).padStart(2, "0")} · {activeItem.year} · {activeItem.universe}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-mono font-bold uppercase text-white tracking-tight">
+                    {activeItem.title}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            {/* Doom & Incursion Link */}
+            <div className="bg-[#0e0e16] border border-stone-800 rounded-sm p-4">
+              <div className="flex items-center gap-2 text-[9.5px] font-mono font-bold tracking-[0.25em] uppercase text-white mb-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                <span>DOOM &amp; INCURSION CONNECTION</span>
+              </div>
+              <p className="text-xs sm:text-[13px] font-sans text-stone-200 leading-relaxed font-light">
+                {activeItem.doomConnection}
+              </p>
+            </div>
+
+            {/* Narrative Foundation */}
+            <div>
+              <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-stone-500 font-semibold block mb-1">
+                NARRATIVE FOUNDATION
+              </span>
+              <p className="text-xs text-stone-400 leading-relaxed font-sans font-light">
+                {activeItem.whyItMatters}
+              </p>
+            </div>
+
+            {/* Key Characters */}
+            <div>
+              <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-stone-500 font-semibold block mb-2">
+                KEY CHARACTERS
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {activeItem.keyCharacters.map((char) => (
+                  <span
+                    key={char}
+                    className="text-[9.5px] font-mono px-2.5 py-1 rounded-sm bg-stone-900 border border-stone-800 text-stone-300"
+                  >
+                    {char}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Footer */}
+            <div className="pt-3 border-t border-stone-800 flex items-center justify-between gap-3">
+              <button
+                onClick={() => toggleWatched(activeItem.id)}
+                className={`flex-1 py-2.5 rounded-sm font-mono text-[10.5px] font-bold tracking-widest uppercase transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                  isWatched(activeItem.id)
+                    ? "bg-white text-black font-bold shadow-md"
+                    : "bg-stone-900 border border-stone-700 text-stone-300 hover:bg-stone-800 hover:text-white"
+                }`}
+              >
+                <CheckCircle2 size={13} />
+                <span>{isWatched(activeItem.id) ? "COMPLETED" : "MARK VIEWED"}</span>
+              </button>
+
+              <Link
+                href={activeItem.phase ? `/movie/${activeItem.id}` : "/timeline"}
+                className="py-2.5 px-4 rounded-sm bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white border border-stone-800 text-[10.5px] font-mono tracking-widest uppercase transition-colors flex items-center gap-1.5"
+              >
+                <span>EXPLORE ENTRY</span>
+                <ArrowRight size={12} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
+      {/* Drawer & Search Modals */}
+      <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
+      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
+    </main>
+  );
+}

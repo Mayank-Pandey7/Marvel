@@ -7,8 +7,7 @@ import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
 const NAV_LINKS = [
-  { href: "/timeline?mode=family", label: "Family Tree" },
-  { href: "/timeline?mode=timeline", label: "Timeline Map" },
+  { href: "/doomsday", label: "Road to Doomsday" },
   { href: "/characters", label: "Characters" },
   { href: "/artifacts", label: "Cosmic Relics" },
   { href: "/multiverse", label: "Multiverse Map" },
@@ -33,15 +32,22 @@ export default function Navbar({ onSearch }: { onSearch: () => void }) {
           : "py-4 bg-transparent"
       }`}
     >
-      {/* Brand Logo: MARVEL CINEMATIC UNIVERSE */}
-      <div className="flex items-center gap-3">
-        <Link href="/" className="font-mono tracking-[0.3em] uppercase text-white text-xs sm:text-sm font-light flex items-center gap-2 group">
+      {/* Brand Logo: MARVEL | DOOMSDAY */}
+      <div className="flex items-center gap-2.5 sm:gap-3">
+        <Link href="/timeline" className="font-mono tracking-[0.25em] uppercase text-white text-xs sm:text-sm font-light flex items-center gap-2 group">
           <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff] group-hover:scale-125 transition-transform" />
-          <span className="font-semibold tracking-[0.25em]">MARVEL CINEMATIC UNIVERSE</span>
+          <span className="font-semibold tracking-[0.25em]">MARVEL</span>
+        </Link>
+        <span className="text-stone-600 font-mono text-xs select-none">|</span>
+        <Link
+          href="/doomsday"
+          className="font-mono tracking-[0.25em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)] text-xs sm:text-sm font-semibold transition-all"
+        >
+          DOOMSDAY
         </Link>
 
         {/* Phase Pill in Navbar */}
-        <span className="hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono uppercase bg-white/5 border border-white/15 text-stone-300 px-2.5 py-0.5 rounded-full">
+        <span className="hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono uppercase bg-white/5 border border-white/15 text-stone-300 px-2.5 py-0.5 rounded-full ml-1">
           <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]" />
           Phase {currentPhase}
         </span>

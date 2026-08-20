@@ -482,98 +482,94 @@ export default function DarkIntroSelector({
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
         
-        {/* SACRED 6-BETEL-LEAF FLOWER (Placed lower initially when unselected, smoothly and slowly glides up to original position when clicked) */}
-        <div className={`relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 flex items-center justify-center my-0.5 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          activePhase === null ? "translate-y-4 sm:translate-y-8 scale-105" : "translate-y-0 scale-100"
-        }`}>
-          <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
-            <defs>
-              <filter id="dark-triquetra-glow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              {/* Charcoal Gray smoke fill above number with bright glowing white border */}
-              <radialGradient id="smoky-leaf" cx="50%" cy="28%" r="75%">
-                <stop offset="0%" stopColor="rgba(140, 140, 150, 0.45)" />
-                <stop offset="48%" stopColor="rgba(80, 80, 90, 0.22)" />
-                <stop offset="100%" stopColor="rgba(10, 10, 15, 0.0)" />
-              </radialGradient>
-
-              {/* Unified Clockwise Rotating Dotted Keyframe Animations */}
-              <style>{`
-                @keyframes flowDotsClockwise {
-                  0% { stroke-dashoffset: 0; }
-                  100% { stroke-dashoffset: 50; }
-                }
-                .flowing-dots {
-                  animation: flowDotsClockwise 8s linear infinite;
-                }
-                .flowing-dots-active {
-                  animation: flowDotsClockwise 5s linear infinite;
-                }
-              `}</style>
-            </defs>
-
-            {/* Render 6 Edge-Joined Betel Leaves */}
-            {BETEL_LEAVES.map((leaf) => {
-              const isSelected = leaf.phase === activePhase;
-              const isHovered = leaf.phase === hoveredPhase;
-
-              return (
-                <g
-                  key={leaf.phase}
-                  onClick={() => handleSelectPhase(leaf.phase)}
-                  onMouseEnter={() => setHoveredPhase(leaf.phase)}
-                  onMouseLeave={() => setHoveredPhase(null)}
-                  className="cursor-pointer group"
-                >
-                  <path
-                    d={EDGE_JOINED_BETEL_PATH}
-                    transform={`rotate(${leaf.angle} 100 100)`}
-                    fill={isSelected ? "url(#smoky-leaf)" : isHovered ? "rgba(255, 255, 255, 0.08)" : "transparent"}
-                    stroke={isSelected ? "#ffffff" : isHovered ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.35)"}
-                    strokeWidth={isSelected ? "1.6" : "1.0"}
-                    strokeDasharray={isSelected ? "2.5, 3.5" : "1.8, 2.8"}
-                    filter={isSelected ? "url(#dark-triquetra-glow)" : undefined}
-                    className={`transition-all duration-300 ${isSelected ? "flowing-dots-active" : "flowing-dots"}`}
-                  />
-
-                  {/* Upright Phase Number */}
-                  <text
-                    x={leaf.textX}
-                    y={leaf.textY}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fill={isSelected ? "#ffffff" : isHovered ? "#e4e4e7" : "#8e8e93"}
-                    fontSize={isSelected ? "15" : "13"}
-                    fontFamily="sans-serif"
-                    fontWeight={isSelected ? "600" : "400"}
-                    className="select-none pointer-events-none transition-all drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                  >
-                    {leaf.phase}
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
-        </div>
-
-        {/* CONDITIONAL CONTROLS: UNSELECTED STATE vs SELECTED PHASE STATE */}
+        {/* CONDITIONAL CONTROLS */}
         {activePhase === null ? (
-          /* UNSELECTED PHASE PROMPT */
+          /* UNSELECTED PHASE PROMPT — click to directly show Phase 1 with trailer, flower & movies */
           <div className="flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
-            <span className="text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-100 uppercase font-light drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] block leading-relaxed py-1">
+            <button
+              onClick={() => handleSelectPhase(1)}
+              className="group relative text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-100 uppercase font-light drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] leading-relaxed py-1 px-4 cursor-pointer bg-transparent border-none outline-none hover:text-white transition-colors hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+            >
               SELECT PHASE &amp; MOVIE
-            </span>
+            </button>
           </div>
         ) : (
-          /* SELECTED PHASE: DYNAMIC PROGRESS CAPSULE TRACK + ACTIVE MOVIE CHRONOLOGY (Staggered Soft Reveal) */
-          <div className="flex flex-col items-center w-full animate-in fade-in duration-700 delay-300">
-            {/* DYNAMIC PROGRESS CAPSULE TRACK */}
+          /* SELECTED PHASE: FLOWER + MOVIE TRACK */
+          <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200">
+            {/* Flower with increased size and animated glowing effects */}
+            <div className="relative w-44 h-44 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
+                <defs>
+                  <filter id="dark-triquetra-glow-sel" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <radialGradient id="smoky-leaf-sel" cx="50%" cy="28%" r="75%">
+                    <stop offset="0%" stopColor="rgba(160, 160, 175, 0.55)" />
+                    <stop offset="48%" stopColor="rgba(90, 90, 105, 0.28)" />
+                    <stop offset="100%" stopColor="rgba(10, 10, 15, 0.0)" />
+                  </radialGradient>
+                  <style>{`
+                    @keyframes flowDotsClockwise {
+                      0% { stroke-dashoffset: 0; }
+                      100% { stroke-dashoffset: 50; }
+                    }
+                    @keyframes petalBreathe {
+                      0%, 100% { opacity: 0.9; }
+                      50% { opacity: 1; filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)); }
+                    }
+                    .flowing-dots {
+                      animation: flowDotsClockwise 8s linear infinite;
+                    }
+                    .flowing-dots-active {
+                      animation: flowDotsClockwise 4.5s linear infinite, petalBreathe 3s ease-in-out infinite;
+                    }
+                  `}</style>
+                </defs>
+                {BETEL_LEAVES.map((leaf) => {
+                  const isSelected = leaf.phase === activePhase;
+                  const isHovered = leaf.phase === hoveredPhase;
+                  return (
+                    <g
+                      key={leaf.phase}
+                      onClick={() => handleSelectPhase(leaf.phase)}
+                      onMouseEnter={() => setHoveredPhase(leaf.phase)}
+                      onMouseLeave={() => setHoveredPhase(null)}
+                      className="cursor-pointer group"
+                    >
+                      <path
+                        d={EDGE_JOINED_BETEL_PATH}
+                        transform={`rotate(${leaf.angle} 100 100)`}
+                        fill={isSelected ? "url(#smoky-leaf-sel)" : isHovered ? "rgba(255, 255, 255, 0.12)" : "transparent"}
+                        stroke={isSelected ? "#ffffff" : isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.35)"}
+                        strokeWidth={isSelected ? "1.8" : isHovered ? "1.4" : "1.0"}
+                        strokeDasharray={isSelected ? "2.5, 3.5" : "1.8, 2.8"}
+                        filter={isSelected ? "url(#dark-triquetra-glow-sel)" : undefined}
+                        className={`transition-all duration-300 ${isSelected ? "flowing-dots-active" : "flowing-dots"}`}
+                      />
+                      <text
+                        x={leaf.textX}
+                        y={leaf.textY}
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fill={isSelected ? "#ffffff" : isHovered ? "#ffffff" : "#8e8e93"}
+                        fontSize={isSelected ? "15" : "13"}
+                        fontFamily="sans-serif"
+                        fontWeight={isSelected ? "600" : "400"}
+                        className="select-none pointer-events-none transition-all drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]"
+                      >
+                        {leaf.phase}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+
+            {/* DYNAMIC PROGRESS CAPSULE TRACK — movies within selected phase */}
             <div className="flex items-center justify-center my-1.5 select-none overflow-visible w-full max-w-full px-2">
               <div ref={containerRef} className="relative inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-3 py-1.5 overflow-visible">
                 {/* 1. Dynamic Progress Capsule Pill */}
@@ -621,40 +617,11 @@ export default function DarkIntroSelector({
                         isSelected
                           ? "text-white font-bold scale-110"
                           : isHovered
-                          ? "text-white font-semibold scale-120 shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+                          ? "text-white font-semibold scale-110 shadow-[inset_0_0_12px_rgba(255,255,255,0.5)]"
                           : "text-stone-400 hover:text-stone-200"
                       }`}
                       title={movie.title}
                     >
-                      {/* Rich Floating Movie Preview Popover on Hover (Borderless) */}
-                      {isHovered && (
-                        <div className="absolute bottom-[135%] left-1/2 -translate-x-1/2 pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200">
-                          <div className="p-2.5 rounded-xl bg-black/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center gap-3 w-64 text-left">
-                            {/* Mini Poster Thumbnail */}
-                            <div className="w-11 h-15 rounded overflow-hidden bg-stone-900 shrink-0">
-                              <img
-                                src={posterData?.poster || `https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg`}
-                                alt={movie.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            {/* Movie Details */}
-                            <div className="flex flex-col min-w-0 flex-1">
-                              <span className="text-[8px] font-mono tracking-widest uppercase text-stone-400 font-semibold">
-                                PHASE {movie.phase} · {movie.year}
-                              </span>
-                              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-white line-clamp-1 mt-0.5">
-                                {movie.title}
-                              </h5>
-                              <p className="text-[9px] font-mono text-stone-400 line-clamp-1 mt-0.5">
-                                {movie.type.toUpperCase()} · {movie.importance.toUpperCase()}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="w-2 h-2 bg-black/95 rotate-45 mx-auto -mt-1 shadow-lg" />
-                        </div>
-                      )}
-
                       {movieNum}
                     </button>
                   );

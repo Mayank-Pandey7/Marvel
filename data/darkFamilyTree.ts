@@ -333,8 +333,8 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "rogers",
     clusterLabel: "SUPER SOLDIER COVENANT",
     phaseIntroduced: 1,
-    x: 2480,
-    y: 560,
+    x: 2700,
+    y: 340,
     characterId: "red-skull",
     bio: "HYDRA commander warped by Erskine's prototype serum, cursed to guide seekers on Vormir."
   },
@@ -647,9 +647,9 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     subtitle: "The Thing",
     photoUrl: "/images/characters/ben-grimm.jpg",
     cluster: "richards",
-    clusterLabel: "FANTASTIC FOUR & DOOM",
+    clusterLabel: "FANTASTIC FOUR & LATVERIA",
     phaseIntroduced: 6,
-    x: 1860,
+    x: 780,
     y: 1880,
     characterId: "ben-grimm",
     bio: "'It's Clobberin' Time!' Loyal pilot transformed into an indestructible rock-armored titan."
@@ -785,7 +785,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "romanoff",
     clusterLabel: "RED ROOM SISTERHOOD",
     phaseIntroduced: 4,
-    x: 3340,
+    x: 3120,
     y: 1040,
     bio: "Veteran Black Widow scientist and surrogate mother to Natasha and Yelena."
   },
@@ -797,7 +797,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "romanoff",
     clusterLabel: "RED ROOM SISTERHOOD",
     phaseIntroduced: 4,
-    x: 3120,
+    x: 3340,
     y: 1040,
     bio: "Soviet super soldier and surrogate father to Natasha and Yelena."
   },
@@ -1266,8 +1266,8 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "guardians",
     clusterLabel: "GUARDIANS & RAVAGERS",
     phaseIntroduced: 3,
-    x: 2860,
-    y: 560,
+    x: 5000,
+    y: 1880,
     bio: "Empath daughter of Ego and half-sister of Peter Quill who controls cosmic feelings and minds."
   },
 
@@ -1295,7 +1295,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "defenders",
     clusterLabel: "DEFENDERS & UNDERWORLD",
     phaseIntroduced: 4,
-    x: 3660,
+    x: 3440,
     y: 1880,
     characterId: "kingpin",
     bio: "Ruthless criminal syndicate overlord who weaponized political power to outlaw vigilantes in NYC."
@@ -1308,8 +1308,8 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "defenders",
     clusterLabel: "DEFENDERS & UNDERWORLD",
     phaseIntroduced: 5,
-    x: 3440,
-    y: 1880,
+    x: 3220,
+    y: 2100,
     bio: "Lethal vigilante executing criminal operations with relentless tactical warfare."
   },
   {
@@ -1320,7 +1320,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "defenders",
     clusterLabel: "DEFENDERS & UNDERWORLD",
     phaseIntroduced: 5,
-    x: 3660,
+    x: 3440,
     y: 2100,
     bio: "Deaf Choctaw warrior empowered by ancestral spirits who healed Wilson Fisk's childhood trauma."
   },
@@ -1337,7 +1337,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     clusterLabel: "ETERNALS OF EARTH",
     phaseIntroduced: 4,
     x: 2000,
-    y: 2680,
+    y: 2460,
     bio: "Communicator with the Celestial Arishem who chose to protect humanity rather than allow the Emergence."
   },
   {
@@ -1494,8 +1494,8 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Steve -> Bucky Barnes (Lifelong Brothers)
-  { id: "c_steve_bucky", fromId: "steve-rogers", toId: "bucky-barnes", type: "child", label: "Brothers", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
+  // Bucky Barnes <-> Steve Rogers (Brothers in Arms)
+  { id: "c_steve_bucky", fromId: "bucky-barnes", toId: "steve-rogers", type: "variant", label: "Brothers in Arms", phaseRevealed: 1, hasArrow: false },
   // Steve -> Sam Wilson (Shield Inheritor)
   { id: "c_steve_sam", fromId: "steve-rogers", toId: "sam-wilson", type: "mentor", label: "Shield Mantle", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
 
@@ -1573,9 +1573,9 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     phaseRevealed: 4,
   },
   // Sue + Johnny (Siblings)
-  { id: "c_sue_johnny", fromId: "sue-storm", toId: "johnny-storm", type: "child", label: "Siblings", phaseRevealed: 5, hasArrow: true, arrowDir: "right" },
+  { id: "c_sue_johnny", fromId: "sue-storm", toId: "johnny-storm", type: "variant", label: "Siblings", phaseRevealed: 5, hasArrow: false },
   // Reed + Ben (Best Friends)
-  { id: "c_reed_ben", fromId: "reed-richards", toId: "ben-grimm", type: "mentor", label: "Founding", phaseRevealed: 6, hasArrow: true, arrowDir: "right" },
+  { id: "c_reed_ben", fromId: "reed-richards", toId: "ben-grimm", type: "variant", label: "Founding", phaseRevealed: 6, hasArrow: false },
   // Reed+Sue -> Franklin Richards
   { id: "c_reed_franklin", fromId: "reed-richards", toId: "franklin-richards", type: "child", phaseRevealed: 6, hasArrow: true, arrowDir: "down" },
   // Reed <-> Doctor Doom (Eternal Rivals)
@@ -1587,16 +1587,17 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     id: "c_charles_erik",
     fromId: "charles-xavier",
     toId: "erik-lehnsherr",
-    type: "partner",
+    type: "variant",
     label: "Mutant Founders",
     phaseRevealed: 4,
+    hasArrow: false
   },
   // Wolverine -> Laura / X-23 (Genetic Daughter)
-  { id: "c_logan_laura", fromId: "wolverine", toId: "x-23", type: "child", label: "Genetic Daughter", phaseRevealed: 5, hasArrow: true, arrowDir: "right" },
-  // Wolverine + Deadpool (Anchor Pair)
-  { id: "c_logan_deadpool", fromId: "wolverine", toId: "deadpool", type: "partner", label: "Anchor Beings", phaseRevealed: 5, hasArrow: true, arrowDir: "left" },
-  // Laura -> Gambit (Void Survivors)
-  { id: "c_laura_gambit", fromId: "x-23", toId: "gambit", type: "child", label: "Void Resistance", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
+  { id: "c_logan_laura", fromId: "wolverine", toId: "x-23", type: "child", label: "Genetic Daughter", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
+  // Wolverine + Deadpool (Anchor Duo)
+  { id: "c_logan_deadpool", fromId: "wolverine", toId: "deadpool", type: "variant", label: "Anchor Beings", phaseRevealed: 5, hasArrow: false },
+  // Deadpool <-> Gambit (Void Survivors)
+  { id: "c_laura_gambit", fromId: "deadpool", toId: "gambit", type: "variant", label: "Void Resistance", phaseRevealed: 5, hasArrow: false },
 
   // --- RED ROOM SISTERHOOD ---
   // Dreykov -> Melina & Alexei
@@ -1613,8 +1614,8 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
   { id: "c_parents_natasha", fromId: "melina-vostokoff", toId: "natasha-romanoff", type: "child", label: "Surrogate", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
   // Melina+Alexei -> Yelena
   { id: "c_parents_yelena", fromId: "melina-vostokoff", toId: "yelena-belova", type: "child", label: "Surrogate", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Natasha -> Yelena (Sisters)
-  { id: "c_natasha_yelena", fromId: "natasha-romanoff", toId: "yelena-belova", type: "child", label: "Sisters", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
+  // Natasha <-> Yelena (Sisters)
+  { id: "c_natasha_yelena", fromId: "natasha-romanoff", toId: "yelena-belova", type: "variant", label: "Sisters", phaseRevealed: 4, hasArrow: false },
 
   // --- COSMIC TITAN DYNASTY ---
   // A'Lars -> Thanos
@@ -1662,13 +1663,13 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
   // T'Chaka -> Killmonger (Uncle / Bloodline)
   { id: "c_tchaka_killmonger", fromId: "tchaka", toId: "killmonger", type: "child", label: "Nephew", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
   // Shuri <-> Namor (Alliance / Rivals)
-  { id: "c_shuri_namor", fromId: "shuri", toId: "namor", type: "partner", label: "Truce", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
+  { id: "c_shuri_namor", fromId: "shuri", toId: "namor", type: "variant", label: "Truce", phaseRevealed: 4, hasArrow: false },
 
   // --- MASTERS OF THE MYSTIC ARTS ---
   // Ancient One -> Stephen Strange
   { id: "c_ancient_strange", fromId: "ancient-one", toId: "doctor-strange", type: "mentor", label: "Sorcerer Mantle", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
   // Strange <-> Wong
-  { id: "c_strange_wong", fromId: "doctor-strange", toId: "wong", type: "partner", label: "Supreme Ally", phaseRevealed: 3, hasArrow: true, arrowDir: "right" },
+  { id: "c_strange_wong", fromId: "doctor-strange", toId: "wong", type: "variant", label: "Supreme Ally", phaseRevealed: 3, hasArrow: false },
   // Strange -> America Chavez
   { id: "c_strange_america", fromId: "doctor-strange", toId: "america-chavez", type: "mentor", label: "Multiverse Mentor", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
   // Strange + Clea
@@ -1690,14 +1691,12 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
 
   // --- GUARDIANS & RAVAGERS ---
   // Yondu -> Peter Quill
-  { id: "c_yondu_quill", fromId: "yondu-udonta", toId: "peter-quill", type: "mentor", label: "Surrogate Father", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Rocket + Groot
-  { id: "c_rocket_groot", fromId: "rocket-raccoon", toId: "groot", type: "partner", label: "Brothers", phaseRevealed: 2, hasArrow: true, arrowDir: "right" },
+    // Rocket + Groot
+  { id: "c_rocket_groot", fromId: "rocket-raccoon", toId: "groot", type: "variant", label: "Brothers", phaseRevealed: 2, hasArrow: false },
   // Drax + Mantis
-  { id: "c_drax_mantis", fromId: "drax", toId: "mantis", type: "partner", label: "Best Friends", phaseRevealed: 3, hasArrow: true, arrowDir: "right" },
+  { id: "c_drax_mantis", fromId: "drax", toId: "mantis", type: "variant", label: "Best Friends", phaseRevealed: 3, hasArrow: false },
   // Ego -> Mantis (Empath Daughter)
-  { id: "c_ego_mantis", fromId: "ego", toId: "mantis", type: "child", label: "Daughter", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-
+  
   // --- DEFENDERS & UNDERWORLD ---
   // Matt Murdock <-> Wilson Fisk
   { id: "c_matt_fisk", fromId: "matt-murdock", toId: "wilson-fisk", type: "enemy", label: "Arch-Nemesis", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },

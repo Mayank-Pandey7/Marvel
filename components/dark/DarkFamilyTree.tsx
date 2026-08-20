@@ -40,8 +40,6 @@ export default function DarkFamilyTree({
 
   // Camera Pan & Zoom State (World coordinates 0..5000, 0..3000)
   const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.75 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   // Touch Gesture Tracking (1-finger pan & 2-finger pinch)
   const touchStartRef = useRef<{
@@ -64,11 +62,25 @@ export default function DarkFamilyTree({
   const [activeCluster, setActiveCluster] = useState<string>("all");
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const contentLayerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cameraRef = useRef({ x: 0, y: 0, scale: 0.58 });
 
-  // Global Keyboard Shortcuts (Ctrl+K or / for Search, Escape to deselect)
+  useEffect(() => {
+    cameraRef.current = camera;
+  }, [camera]);
+
+  // Global Keyboard Shortcuts & Browser Page Zoom Interceptor
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent browser whole-page zoom on Ctrl + / Ctrl - / Ctrl 0
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        (e.key === "+" || e.key === "-" || e.key === "=" || e.key === "0" || e.key === "_")
+      ) {
+        e.preventDefault();
+      }
+
       if (e.key === "/" && !searchOpen) {
         e.preventDefault();
         setSearchOpen(true);
@@ -81,8 +93,20 @@ export default function DarkFamilyTree({
         if (selectedNode) setSelectedNode(null);
       }
     };
+
+    const handleWheelZoomPrevent = (e: WheelEvent) => {
+      // Prevent browser whole-page zoom on Ctrl + Wheel
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("wheel", handleWheelZoomPrevent, { passive: false });
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("wheel", handleWheelZoomPrevent);
+    };
   }, [searchOpen, selectedNode]);
 
   // Sync spoilerPhase with context
@@ -96,6 +120,22 @@ export default function DarkFamilyTree({
   const visibleNodes = useMemo(() => {
     return DARK_TREE_NODES.filter((n) => n.phaseIntroduced <= spoilerPhase);
   }, [spoilerPhase]);
+
+  // Available Dynasty Clusters strictly present in the current phase
+  const availableDynastyClusters = useMemo(() => {
+    const activeClusterIds = new Set(visibleNodes.map((n) => n.cluster));
+    return DYNASTY_CLUSTERS.filter(
+      (dynasty) => dynasty.id === "all" || activeClusterIds.has(dynasty.id)
+    );
+  }, [visibleNodes]);
+
+  // Auto-reset active cluster to "all" if selected family is not present in active phase
+  useEffect(() => {
+    if (activeCluster !== "all") {
+      const exists = availableDynastyClusters.some((d) => d.id === activeCluster);
+      if (!exists) setActiveCluster("all");
+    }
+  }, [availableDynastyClusters, activeCluster]);
 
   // Visible Connections based on Spoiler Phase & Visible Nodes
   const visibleConnections = useMemo(() => {
@@ -138,9 +178,7 @@ export default function DarkFamilyTree({
           }
         }
       });
-    }
-
-    if (hoveredConnId) {
+    } else if (hoveredConnId) {
       cIds.add(hoveredConnId);
       const hoveredConn = visibleConnections.find((c) => c.id === hoveredConnId);
       if (hoveredConn) {
@@ -152,9 +190,9 @@ export default function DarkFamilyTree({
     return { connectedNodeIds: nIds, connectedConnectionIds: cIds };
   }, [activeFocusId, hoveredConnId, visibleConnections]);
 
-  // Pan Camera to Focus on Coordinates with Responsive Scaling
+  // Pan Camera to Focus on Coordinates with Smooth Cinematic Transition
   const focusOnCoordinates = useCallback(
-    (targetX: number, targetY: number, customScale?: number) => {
+    (targetX: number, targetY: number, customScale?: number, isSmooth: boolean = true) => {
       if (!containerRef.current) return;
       const width = containerRef.current.clientWidth || window.innerWidth;
       const height = containerRef.current.clientHeight || window.innerHeight;
@@ -169,13 +207,29 @@ export default function DarkFamilyTree({
       const newX = width / 2 - targetX * targetScale;
       const newY = height / 2 - targetY * targetScale;
 
+      cameraRef.current = { x: newX, y: newY, scale: targetScale };
+      if (contentLayerRef.current) {
+        if (isSmooth) {
+          contentLayerRef.current.style.transition = "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)";
+        } else {
+          contentLayerRef.current.style.transition = "none";
+        }
+        contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${targetScale})`;
+      }
       setCamera({ x: newX, y: newY, scale: targetScale });
     },
     []
   );
 
   const focusOnNode = useCallback(
-    (node: DarkTreeNode) => {
+    (node: DarkTreeNode, e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      if (selectedNode?.id === node.id) {
+        // Clicking the same character card again toggles off selection and unlocks view
+        setSelectedNode(null);
+        setHoveredNodeId(null);
+        return;
+      }
       setSelectedNode(node);
       const isMobile = (typeof window !== "undefined" ? window.innerWidth : 1000) < 640;
       focusOnCoordinates(
@@ -184,7 +238,7 @@ export default function DarkFamilyTree({
         isMobile ? 0.85 : 0.95
       );
     },
-    [focusOnCoordinates]
+    [selectedNode, focusOnCoordinates]
   );
 
   const focusOnCluster = useCallback(
@@ -193,37 +247,87 @@ export default function DarkFamilyTree({
       setSelectedNode(null);
       setHoveredNodeId(null);
       const width = typeof window !== "undefined" ? window.innerWidth : 1200;
+      const height = typeof window !== "undefined" ? window.innerHeight : 800;
       const isMobile = width < 640;
+      const isTablet = width >= 640 && width < 1024;
 
       if (clusterId === "all") {
-        focusOnCoordinates(1500, 1000, isMobile ? 0.26 : 0.38);
+        const nodesToFrame = visibleNodes.length > 0 ? visibleNodes : DARK_TREE_NODES;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        nodesToFrame.forEach((n) => {
+          if (n.x < minX) minX = n.x;
+          if (n.x > maxX) maxX = n.x;
+          if (n.y < minY) minY = n.y;
+          if (n.y > maxY) maxY = n.y;
+        });
+
+        const centerX = (minX + maxX + CARD_W) / 2;
+        const centerY = (minY + maxY + CARD_H) / 2;
+        const totalW = maxX - minX + CARD_W;
+        const totalH = maxY - minY + CARD_H;
+
+        // Auto-scale to dynamically frame the active Phase with exact panoramic fitting
+        const scaleX = (width - (isMobile ? 40 : 140)) / (totalW + 120);
+        const scaleY = (height - (isMobile ? 120 : 190)) / (totalH + 120);
+        const overviewScale = Math.min(scaleX, scaleY);
+
+        focusOnCoordinates(centerX, centerY, Math.min(Math.max(overviewScale, 0.25), 0.75));
         return;
       }
-      const clusterMeta = DYNASTY_CLUSTERS.find((c) => c.id === clusterId);
-      if (clusterMeta && "focusX" in clusterMeta) {
-        // Smooth, focused framing on the selected dynasty
-        focusOnCoordinates(
-          clusterMeta.focusX,
-          clusterMeta.focusY,
-          isMobile ? 0.78 : 0.92
-        );
+
+      // Dynamically calculate the exact bounding center of the chosen dynasty cluster
+      const clusterNodes = DARK_TREE_NODES.filter((n) => n.cluster === clusterId);
+      if (clusterNodes.length > 0) {
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        clusterNodes.forEach((n) => {
+          if (n.x < minX) minX = n.x;
+          if (n.x > maxX) maxX = n.x;
+          if (n.y < minY) minY = n.y;
+          if (n.y > maxY) maxY = n.y;
+        });
+
+        const centerX = (minX + maxX + CARD_W) / 2;
+        const centerY = (minY + maxY + CARD_H) / 2;
+        const clusterW = maxX - minX + CARD_W;
+        const clusterH = maxY - minY + CARD_H;
+
+        // Auto-compute framing scale so the entire family cluster fits centered with breathing margin
+        const scaleX = (width - (isMobile ? 40 : 120)) / (clusterW + 60);
+        const scaleY = (height - (isMobile ? 120 : 180)) / (clusterH + 60);
+        const autoScale = Math.min(scaleX, scaleY);
+
+        focusOnCoordinates(centerX, centerY, Math.min(Math.max(autoScale, 0.45), 0.95));
       }
     },
-    [focusOnCoordinates]
+    [focusOnCoordinates, visibleNodes]
   );
 
-  // Responsive Initial Frame on Mount & Window Resize
+  // Responsive Initial Frame on Mount & Window Resize (Auto-fit all active Phase characters)
   useEffect(() => {
     const handleViewportResize = () => {
       const width = window.innerWidth;
-      if (width < 640) {
-        // Mobile: Frame on House of Odin & Stark Dynasty prominently
-        focusOnCoordinates(980, 330, 0.68);
-      } else if (width < 1024) {
-        focusOnCoordinates(1150, 600, 0.48);
-      } else {
-        focusOnCoordinates(1200, 850, 0.58);
-      }
+      const height = window.innerHeight;
+      const isMobile = width < 640;
+
+      const nodesToFrame = visibleNodes.length > 0 ? visibleNodes : DARK_TREE_NODES;
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      nodesToFrame.forEach((n) => {
+        if (n.x < minX) minX = n.x;
+        if (n.x > maxX) maxX = n.x;
+        if (n.y < minY) minY = n.y;
+        if (n.y > maxY) maxY = n.y;
+      });
+
+      const centerX = (minX + maxX + CARD_W) / 2;
+      const centerY = (minY + maxY + CARD_H) / 2;
+      const totalW = maxX - minX + CARD_W;
+      const totalH = maxY - minY + CARD_H;
+
+      const scaleX = (width - (isMobile ? 40 : 140)) / (totalW + 120);
+      const scaleY = (height - (isMobile ? 120 : 190)) / (totalH + 120);
+      const overviewScale = Math.min(scaleX, scaleY);
+
+      focusOnCoordinates(centerX, centerY, Math.min(Math.max(overviewScale, 0.25), 0.75));
     };
 
     handleViewportResize();
@@ -233,7 +337,7 @@ export default function DarkFamilyTree({
       window.removeEventListener("resize", handleViewportResize);
       window.removeEventListener("orientationchange", handleViewportResize);
     };
-  }, [focusOnCoordinates]);
+  }, [focusOnCoordinates, visibleNodes]);
 
   // Ambient Star Dust Particle Canvas Animation
   useEffect(() => {
@@ -253,13 +357,13 @@ export default function DarkFamilyTree({
     };
     window.addEventListener("resize", handleResize);
 
-    const particles = Array.from({ length: 40 }, () => ({
+    const particles = Array.from({ length: 48 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.12,
       vy: (Math.random() - 0.5) * 0.12,
       radius: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.35 + 0.08,
+      alpha: Math.random() * 0.4 + 0.1,
     }));
 
     const render = () => {
@@ -289,9 +393,11 @@ export default function DarkFamilyTree({
     };
   }, []);
 
-  const rafRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Mouse Pan Handling
+  // Mouse Pan Handling (Instantaneous 120fps GPU Transform with Zero Re-renders)
   const handleMouseDown = (e: React.MouseEvent) => {
     if (
       (e.target as HTMLElement).closest(
@@ -299,47 +405,105 @@ export default function DarkFamilyTree({
       )
     )
       return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
+    isDraggingRef.current = true;
+    dragStartRef.current = {
+      x: e.clientX - cameraRef.current.x,
+      y: e.clientY - cameraRef.current.y,
+    };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const nextX = e.clientX - dragStart.x;
-    const nextY = e.clientY - dragStart.y;
+    if (!isDraggingRef.current) return;
+    const nextX = e.clientX - dragStartRef.current.x;
+    const nextY = e.clientY - dragStartRef.current.y;
+    cameraRef.current.x = nextX;
+    cameraRef.current.y = nextY;
 
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      setCamera((prev) => ({
-        ...prev,
-        x: nextX,
-        y: nextY,
-      }));
-    });
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${cameraRef.current.scale})`;
+    }
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      setCamera({ ...cameraRef.current });
+    }
+    const dist = Math.hypot(
+      e.clientX - (dragStartRef.current.x + cameraRef.current.x),
+      e.clientY - (dragStartRef.current.y + cameraRef.current.y)
+    );
+    if (dist < 5) {
+      if (!(e.target as HTMLElement).closest('[data-node="true"]')) {
+        setSelectedNode(null);
+        setHoveredNodeId(null);
+      }
+    }
   };
 
-  // Wheel Zoom Handling (Smooth Focal Point Zooming)
+  // Wheel Zoom Handling (Exponential Cursor-Pinned Zoom with GPU Interpolation)
   const handleWheel = (e: React.WheelEvent) => {
+    if (
+      (e.target as HTMLElement).closest(
+        "aside, nav, header, .dossier-card, .search-overlay, [data-scrollable]"
+      )
+    )
+      return;
+
     e.preventDefault();
-    const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
-    setCamera((prev) => {
-      const nextScale = Math.min(Math.max(prev.scale * zoomFactor, 0.15), 1.8);
-      if (!containerRef.current) return { ...prev, scale: nextScale };
+    // Continuous exponential zoom factor (adapts to precision trackpads and discrete wheel mice)
+    const delta = Math.max(Math.min(e.deltaY, 120), -120);
+    const zoomFactor = Math.exp(-delta * 0.0016);
+    const nextScale = Math.min(Math.max(cameraRef.current.scale * zoomFactor, 0.35), 1.65);
+    if (!containerRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+    const rect = containerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-      const newX = mouseX - (mouseX - prev.x) * (nextScale / prev.scale);
-      const newY = mouseY - (mouseY - prev.y) * (nextScale / prev.scale);
+    // Pin the exact world point directly under the cursor
+    const newX = mouseX - (mouseX - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+    const newY = mouseY - (mouseY - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
 
-      return { x: newX, y: newY, scale: nextScale };
-    });
+    cameraRef.current = { x: newX, y: newY, scale: nextScale };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
+    }
+
+    if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+    wheelTimeoutRef.current = setTimeout(() => {
+      setCamera({ ...cameraRef.current });
+    }, 80);
+  };
+
+  // Double Click Canvas Zoom In
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    if (
+      (e.target as HTMLElement).closest(
+        "button, a, input, aside, nav, header, [role='button'], .dossier-card, [data-node='true']"
+      )
+    )
+      return;
+
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const targetScale = Math.min(cameraRef.current.scale * 1.35, 1.65);
+    const newX = mouseX - (mouseX - cameraRef.current.x) * (targetScale / cameraRef.current.scale);
+    const newY = mouseY - (mouseY - cameraRef.current.y) * (targetScale / cameraRef.current.scale);
+
+    cameraRef.current = { x: newX, y: newY, scale: targetScale };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${targetScale})`;
+    }
+    setCamera({ x: newX, y: newY, scale: targetScale });
   };
 
   // Touch Gestures: 1-Finger Smooth Pan & 2-Finger Responsive Pinch-to-Zoom
@@ -351,14 +515,18 @@ export default function DarkFamilyTree({
     )
       return;
 
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+    }
+
     if (e.touches.length === 1) {
-      setIsDragging(true);
+      isDraggingRef.current = true;
       touchStartRef.current = {
-        x: e.touches[0].clientX - camera.x,
-        y: e.touches[0].clientY - camera.y,
+        x: e.touches[0].clientX - cameraRef.current.x,
+        y: e.touches[0].clientY - cameraRef.current.y,
       };
     } else if (e.touches.length === 2) {
-      setIsDragging(true);
+      isDraggingRef.current = true;
       const t1 = e.touches[0];
       const t2 = e.touches[1];
       const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
@@ -366,10 +534,10 @@ export default function DarkFamilyTree({
       const midY = (t1.clientY + t2.clientY) / 2;
 
       touchStartRef.current = {
-        x: midX - camera.x,
-        y: midY - camera.y,
+        x: midX - cameraRef.current.x,
+        y: midY - cameraRef.current.y,
         dist,
-        initialScale: camera.scale,
+        initialScale: cameraRef.current.scale,
         midX,
         midY,
       };
@@ -377,42 +545,45 @@ export default function DarkFamilyTree({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
 
     if (e.touches.length === 1) {
-      const newX = e.touches[0].clientX - touchStartRef.current.x;
-      const newY = e.touches[0].clientY - touchStartRef.current.y;
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        setCamera((prev) => ({ ...prev, x: newX, y: newY }));
-      });
+      const nextX = e.touches[0].clientX - touchStartRef.current.x;
+      const nextY = e.touches[0].clientY - touchStartRef.current.y;
+      cameraRef.current.x = nextX;
+      cameraRef.current.y = nextY;
+
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${cameraRef.current.scale})`;
+      }
     } else if (e.touches.length === 2 && touchStartRef.current.dist) {
       const t1 = e.touches[0];
       const t2 = e.touches[1];
       const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
       const zoomRatio = dist / touchStartRef.current.dist;
       const nextScale = Math.min(
-        Math.max((touchStartRef.current.initialScale || 0.6) * zoomRatio, 0.15),
+        Math.max((touchStartRef.current.initialScale || 0.58) * zoomRatio, 0.15),
         1.8
       );
 
       const midX = (t1.clientX + t2.clientX) / 2;
       const midY = (t1.clientY + t2.clientY) / 2;
 
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        setCamera((prev) => {
-          const newX = midX - (touchStartRef.current.x || 0);
-          const newY = midY - (touchStartRef.current.y || 0);
-          return { x: newX, y: newY, scale: nextScale };
-        });
-      });
+      const nextX = midX - (midX - touchStartRef.current.x) * (nextScale / (touchStartRef.current.initialScale || 0.58));
+      const nextY = midY - (midY - touchStartRef.current.y) * (nextScale / (touchStartRef.current.initialScale || 0.58));
+
+      cameraRef.current = { x: nextX, y: nextY, scale: nextScale };
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${nextScale})`;
+      }
     }
   };
 
   const handleTouchEnd = () => {
-    setIsDragging(false);
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      setCamera({ ...cameraRef.current });
+    }
   };
 
   // Zoom Button Controls
@@ -427,8 +598,7 @@ export default function DarkFamilyTree({
       scale: Math.max(prev.scale * 0.8, 0.15),
     }));
   const resetView = () => {
-    const isMobile = (typeof window !== "undefined" ? window.innerWidth : 1200) < 640;
-    focusOnCoordinates(1500, 1000, isMobile ? 0.26 : 0.38);
+    focusOnCluster("all");
   };
 
   // Selected Character Details from Full DB
@@ -508,10 +678,15 @@ export default function DarkFamilyTree({
         };
       }
 
-      // Stepped 90° Manhattan line through the channel between parent and child rows
-      const midY = conn.midY || fromNode.y + h + 22;
+      // Smooth organic tree branch through the clear corridor between row tiers (never touching names!)
+      const midY = conn.midY || (fromNode.y + h + toNode.y) / 2;
+      const r = 10;
+      const dirX = endX > startX ? 1 : -1;
+
+      const path = `M ${startX} ${startY} V ${midY - r} Q ${startX} ${midY} ${startX + dirX * r} ${midY} H ${endX - dirX * r} Q ${endX} ${midY} ${endX} ${midY + r} V ${endY}`;
+
       return {
-        path: `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`,
+        path,
         arrow:
           conn.hasArrow !== false
             ? { x: endX, y: endY - 3, dir: "down" }
@@ -525,7 +700,7 @@ export default function DarkFamilyTree({
       conn.type === "mentor" ||
       conn.type === "paradox"
     ) {
-      // If horizontally aligned on same tier
+      // If horizontally aligned on same tier (e.g. Bucky <-> Steve)
       if (Math.abs(fromNode.y - toNode.y) < 30) {
         const isLeft = fromNode.x < toNode.x;
         const startX = isLeft ? fromNode.x + w : fromNode.x;
@@ -552,9 +727,14 @@ export default function DarkFamilyTree({
         const endX = isFromRight ? toNode.x + w : toNode.x;
         const endY = toNode.y + h * 0.45;
         const channelX = (startX + endX) / 2;
+        const r = 8;
+        const dirY = endY > startY ? 1 : -1;
+        const dirX = endX > channelX ? 1 : -1;
+
+        const path = `M ${startX} ${startY} H ${channelX - (isFromRight ? -r : r)} Q ${channelX} ${startY} ${channelX} ${startY + dirY * r} V ${endY - dirY * r} Q ${channelX} ${endY} ${channelX + dirX * r} ${endY} H ${endX}`;
 
         return {
-          path: `M ${startX} ${startY} H ${channelX} V ${endY} H ${endX}`,
+          path,
           arrow: {
             x: isFromRight ? endX + 4 : endX - 4,
             y: endY,
@@ -563,26 +743,29 @@ export default function DarkFamilyTree({
         };
       }
 
-      // Otherwise stepped down from bottom to top
+      // Otherwise stepped down from bottom to top through clear mid-corridor
       const startX = fromCenterX;
       const startY = fromNode.y + h;
       const endX = toCenterX;
       const endY = toNode.y;
-      const midY = conn.midY || startY + 22;
+      const midY = conn.midY || (fromNode.y + h + toNode.y) / 2;
+      const r = 10;
+      const dirX = endX > startX ? 1 : -1;
 
       return {
-        path: `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`,
+        path: `M ${startX} ${startY} V ${midY - r} Q ${startX} ${midY} ${startX + dirX * r} ${midY} H ${endX - dirX * r} Q ${endX} ${midY} ${endX} ${midY + r} V ${endY}`,
         arrow: conn.hasArrow
           ? { x: endX, y: endY - 3, dir: "down" }
           : undefined,
       };
     }
 
-    // Default 90° step
+    // Default smooth tree step
+    const midY = (fromNode.y + h + toNode.y) / 2;
+    const r = 10;
+    const dirX = toCenterX > fromCenterX ? 1 : -1;
     return {
-      path: `M ${fromCenterX} ${fromNode.y + h} V ${
-        (fromNode.y + h + toNode.y) / 2
-      } H ${toCenterX} V ${toNode.y}`,
+      path: `M ${fromCenterX} ${fromNode.y + h} V ${midY - r} Q ${fromCenterX} ${midY} ${fromCenterX + dirX * r} ${midY} H ${toCenterX - dirX * r} Q ${toCenterX} ${midY} ${toCenterX} ${midY + r} V ${toNode.y}`,
       arrow: { x: toCenterX, y: toNode.y - 3, dir: "down" },
     };
   };
@@ -606,73 +789,84 @@ export default function DarkFamilyTree({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onWheel={handleWheel}
-      className="relative w-screen h-screen overflow-hidden bg-[#000000] text-stone-100 select-none cursor-grab active:cursor-grabbing font-sans touch-none"
+      onDoubleClick={handleDoubleClick}
+      className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
       style={{ touchAction: "none" }}
     >
-      {/* Background Animated Mist Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-0 opacity-30"
-      />
+      {/* 1. Star Dust & Atmosphere Canvas Layer */}
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {/* Atmospheric Vignette Overlay */}
-      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(12,12,18,0.2)_0%,rgba(0,0,0,0.92)_100%)]" />
+      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (TIGHT & COMPACT) */}
+      <div
+        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        aria-hidden="true"
+      />
 
       {/* ------------------------------------------------------------- */}
       {/* TOP HEADER: RESPONSIVE MATCH WITH PAGESHELL & UNIVERSEMAP    */}
       {/* ------------------------------------------------------------- */}
-      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent backdrop-blur-sm transition-colors pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-3 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
         
-        {/* Left: Drawer Menu Toggle + Mode Switcher */}
-        <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
+        {/* Left: Drawer Menu Toggle + Mode Switcher (Matching RETURN typography) */}
+        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5 rounded-full bg-black/50 border border-stone-800/80 backdrop-blur-md shadow-lg"
-            title="Open Menu Drawer"
-            aria-label="Open Menu Drawer"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
+            title="Open Universe Navigation"
+            aria-label="Open Universe Navigation"
           >
-            <Menu size={15} />
+            <Menu size={16} />
           </button>
 
-          {/* View Mode Toggle Pill */}
-          <div className="flex items-center bg-black/60 border border-stone-800/80 rounded-full p-0.5 backdrop-blur-md shadow-lg">
+          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest) */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
-              className="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-mono tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold bg-white text-black shadow-sm transition-all"
+              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
               title="Sacred Family Tree Lineage View"
             >
               FAMILY TREE
             </button>
+            <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
             {onSwitchToTimeline && (
               <button
                 onClick={onSwitchToTimeline}
-                className="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-mono tracking-[0.15em] sm:tracking-[0.2em] uppercase text-stone-400 hover:text-white transition-all flex items-center gap-1"
+                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
                 title="Switch to MCU Chronological Timeline Map"
               >
-                <GitBranch size={10} />
-                <span className="hidden sm:inline">TIMELINE MAP</span>
+                TIMELINE MAP
               </button>
             )}
           </div>
         </div>
 
-        {/* Center: Spaced MARVEL Brand Logo */}
-        <div className="flex items-center justify-center pointer-events-auto">
+        {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
           <Link 
-            href="/" 
-            className="text-[10px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.35em] sm:tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.35em] sm:pl-[0.55em]"
+            href="/timeline" 
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
+            title="MCU Timeline Map"
           >
             MARVEL
           </Link>
+          <span className="text-stone-600 font-mono text-xs select-none">|</span>
+          <Link
+            href="/doomsday"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none"
+            title="Explore Road to Doomsday Prelude Timeline"
+          >
+            DOOMSDAY
+          </Link>
         </div>
 
-        {/* Right: Phase Filter + Return Link + Search Trigger */}
-        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
-          {/* Phase Spoiler Selector Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 border border-stone-800/80 backdrop-blur-md shadow-lg">
-            <span className="text-[8.5px] font-mono uppercase tracking-widest text-stone-400">
+        {/* Right: Phase Filter + Return Link + Search Trigger (Matching RETURN typography) */}
+        <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
+          {/* Phase Selector (Matching RETURN style) */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
+            <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-500">
               PHASE:
             </span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {[1, 2, 3, 4, 5, 6].map((p) => (
                 <button
                   key={p}
@@ -680,10 +874,12 @@ export default function DarkFamilyTree({
                     setSpoilerPhase(p);
                     setCurrentPhase(p);
                   }}
-                  className={`w-4.5 h-4.5 rounded-full text-[8.5px] font-mono flex items-center justify-center transition-all cursor-pointer ${
-                    spoilerPhase >= p
-                      ? "bg-white text-black font-bold shadow-[0_0_6px_rgba(255,255,255,0.6)]"
-                      : "bg-stone-900 text-stone-600 hover:text-stone-300"
+                  className={`text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                    spoilerPhase === p
+                      ? "text-white font-bold"
+                      : spoilerPhase > p
+                      ? "text-stone-300 hover:text-white"
+                      : "text-stone-600 hover:text-stone-400"
                   }`}
                   title={`Unlock Phase ${p}`}
                 >
@@ -722,12 +918,13 @@ export default function DarkFamilyTree({
       {/* 2D SPATIAL ZOOMABLE CANVAS                                   */}
       {/* ------------------------------------------------------------- */}
       <div
+        ref={contentLayerRef}
         className="absolute inset-0 origin-top-left pointer-events-auto"
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
           width: "5000px",
           height: "3000px",
-          transition: isDragging ? "none" : "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+          transition: "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
           willChange: "transform",
         }}
       >
@@ -737,16 +934,6 @@ export default function DarkFamilyTree({
           viewBox="0 0 5000 3000"
           style={{ overflow: "visible" }}
         >
-          <defs>
-            <filter id="dark-line-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
           {/* Render All Orthogonal Line Connections */}
           {visibleConnections.map((conn) => {
             const data = pathMap.get(conn.id);
@@ -757,7 +944,6 @@ export default function DarkFamilyTree({
             const isDynastyIsolated = activeCluster !== "all";
             const connInActiveDynasty = !isDynastyIsolated || (fromNode?.cluster === activeCluster && toNode?.cluster === activeCluster);
 
-            // Lines ONLY glow when directly hovered or when connected to the hovered/selected character!
             const isDirectlyHovered = hoveredConnId === conn.id;
             const isConnectedToFocus = connectedConnectionIds.has(conn.id);
             const isHighlighted = isDirectlyHovered || isConnectedToFocus;
@@ -768,8 +954,8 @@ export default function DarkFamilyTree({
             return (
               <g
                 key={conn.id}
-                className={`transition-all duration-300 pointer-events-auto ${
-                  isDimmed ? "opacity-10 filter blur-[1px]" : "opacity-100"
+                className={`transition-opacity duration-200 pointer-events-auto ${
+                  isDimmed ? "opacity-10" : "opacity-100"
                 }`}
                 onMouseEnter={() => setHoveredConnId(conn.id)}
                 onMouseLeave={() => setHoveredConnId(null)}
@@ -779,29 +965,16 @@ export default function DarkFamilyTree({
                   d={data.path}
                   fill="none"
                   stroke="transparent"
-                  strokeWidth="14"
+                  strokeWidth="16"
                   className="cursor-pointer pointer-events-auto"
                 />
 
-                {/* Radiant Bloom Line Glow - ONLY visible on hover / active focus */}
-                {isHighlighted && (
-                  <path
-                    d={data.path}
-                    fill="none"
-                    stroke="#ffffff"
-                    strokeWidth="3.5"
-                    filter="url(#dark-line-glow)"
-                    opacity="0.9"
-                    className="pointer-events-none transition-opacity duration-200"
-                  />
-                )}
-
-                {/* Primary Orthogonal Manhattan Line */}
+                {/* Primary Crisp Clean Matte Line (No Glow) */}
                 <path
                   d={data.path}
                   fill="none"
-                  stroke={isHighlighted ? "#ffffff" : "rgba(255, 255, 255, 0.18)"}
-                  strokeWidth={isHighlighted ? "2" : "1"}
+                  stroke={isHighlighted ? "#ffffff" : "rgba(255, 255, 255, 0.28)"}
+                  strokeWidth={isHighlighted ? "1.75" : "1"}
                   strokeDasharray={
                     conn.type === "variant" ||
                     conn.type === "paradox" ||
@@ -809,7 +982,7 @@ export default function DarkFamilyTree({
                       ? "4 4"
                       : undefined
                   }
-                  className="transition-colors duration-200 pointer-events-none"
+                  className="transition-colors duration-150 pointer-events-none"
                 />
 
                 {/* Marriage / Partnership Junction Node Cross */}
@@ -866,24 +1039,6 @@ export default function DarkFamilyTree({
                   />
                 )}
 
-                {/* Connection Label Tag on Highlight */}
-                {conn.label && isHighlighted && (
-                  <text
-                    x={
-                      (visibleNodes.find((n) => n.id === conn.fromId)?.x || 0) + 40
-                    }
-                    y={
-                      (visibleNodes.find((n) => n.id === conn.fromId)?.y || 0) + 70
-                    }
-                    fill="#ffffff"
-                    fontSize="8"
-                    fontFamily="monospace"
-                    letterSpacing="0.15em"
-                    className="select-none uppercase"
-                  >
-                    {conn.label}
-                  </text>
-                )}
               </g>
             );
           })}
@@ -896,36 +1051,46 @@ export default function DarkFamilyTree({
           const isSelected = selectedNode?.id === node.id;
           const isHovered = hoveredNodeId === node.id;
           const isConnected = connectedNodeIds.has(node.id);
-          const isDynastyIsolated = activeCluster !== "all";
-          const inActiveDynasty = !isDynastyIsolated || node.cluster === activeCluster;
-          const isDimmed = activeFocusId ? !isConnected : !inActiveDynasty;
+
+          // Active Dynasty Cluster Focus
+          const focusNode = activeFocusId ? visibleNodes.find((n) => n.id === activeFocusId) : null;
+          const activeFamilyCluster = activeCluster !== "all" ? activeCluster : focusNode?.cluster || null;
+
+          // Same Family Guarantee: All characters in the active family stay 100% unblurred
+          const isInSameFamily = activeFamilyCluster ? node.cluster === activeFamilyCluster : true;
+          const isOutsideActiveFamily = activeFamilyCluster ? !isInSameFamily : false;
 
           return (
             <div
               key={node.id}
-              onClick={() => focusOnNode(node)}
+              data-node="true"
+              onClick={(e) => focusOnNode(node, e)}
               onMouseEnter={() => setHoveredNodeId(node.id)}
-              onMouseLeave={() => setHoveredNodeId(null)}
-              className={`absolute cursor-pointer flex flex-col items-center group transition-all duration-300 ${
-                isDimmed
-                  ? "opacity-10 pointer-events-none scale-95 select-none z-0"
-                  : "opacity-100 scale-100 pointer-events-auto"
+              onMouseLeave={() => setHoveredNodeId((prev) => (prev === node.id ? null : prev))}
+              className={`absolute cursor-pointer flex flex-col items-center group transition-all duration-500 ease-out ${
+                isOutsideActiveFamily
+                  ? "opacity-25 blur-[3px] pointer-events-auto select-none z-0 hover:opacity-100 hover:blur-0"
+                  : isConnected || !activeFocusId
+                  ? "opacity-100 blur-0 pointer-events-auto z-10"
+                  : "opacity-65 blur-0 pointer-events-auto z-10"
               }`}
               style={{
-                left: `${node.x}px`,
+                left: `${node.x - 25}px`,
                 top: `${node.y}px`,
-                width: `${CARD_W}px`,
-                zIndex: isSelected ? 40 : isHovered ? 35 : isDimmed ? 0 : 10,
+                width: `160px`,
+                zIndex: isSelected ? 40 : isHovered ? 35 : isOutsideActiveFamily ? 1 : 10,
+                contentVisibility: "auto",
+                containIntrinsicSize: "160px 190px",
               }}
             >
               {/* Vertical Rectangular Character Portrait Card */}
               <div
-                className={`relative w-[110px] h-[142px] bg-[#09090d] rounded-sm border transition-all duration-300 overflow-hidden shadow-2xl ${
+                className={`relative w-[110px] h-[142px] bg-[#09090d] rounded-sm border transition-colors duration-200 overflow-hidden ${
                   isSelected
-                    ? "border-white ring-2 ring-white/40 shadow-[0_0_25px_rgba(255,255,255,0.7)] scale-105"
+                    ? "border-white ring-1 ring-white"
                     : isHovered
-                    ? "border-white shadow-[0_0_18px_rgba(255,255,255,0.4)] scale-105"
-                    : "border-stone-800 group-hover:border-stone-500"
+                    ? "border-stone-200"
+                    : "border-stone-800 group-hover:border-stone-400"
                 }`}
               >
                 {node.isMystery ? (
@@ -952,38 +1117,39 @@ export default function DarkFamilyTree({
                     </div>
 
                     <img
-                      src={node.photoUrl || ""}
+                      src={node.photoUrl ? `${node.photoUrl}?v=202608` : ""}
                       alt={node.name}
                       loading="lazy"
                       referrerPolicy="no-referrer"
-                      className="absolute inset-0 w-full h-full object-cover object-top grayscale contrast-125 brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-500 z-10"
+                      className="absolute inset-0 w-full h-full object-cover object-[center_15%] brightness-100 contrast-105 transition-opacity duration-300 z-10"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = "none";
                       }}
                     />
 
-                    {/* Gradient Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none z-20" />
+                    {/* Subtle Edge Inset Vignette */}
+                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none z-20" />
 
                     {/* Phase Indicator Dot */}
-                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/40 group-hover:bg-white transition-colors z-20" />
+                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/60 group-hover:bg-white shadow-[0_0_4px_rgba(255,255,255,0.6)] transition-colors z-20" />
                   </div>
                 )}
               </div>
 
-              {/* Character Name & Subtitle Beneath Card */}
-              <div className="mt-2.5 flex flex-col items-center text-center w-[150px] -ml-[20px]">
+              {/* Character Name & Subtitle Beneath Card (100% Unclipped) */}
+              <div className="mt-2.5 flex flex-col items-center text-center w-full max-w-[160px] px-1 pointer-events-none">
                 <h3
-                  className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold leading-tight line-clamp-1 transition-colors ${
+                  className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 w-full transition-colors ${
                     isSelected || isHovered
-                      ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+                      ? "text-white"
                       : "text-stone-300"
                   }`}
+                  title={node.name}
                 >
                   {node.name}
                 </h3>
                 {node.subtitle && (
-                  <p className="text-[8px] sm:text-[8.5px] font-mono tracking-widest uppercase text-stone-400 line-clamp-1 mt-0.5">
+                  <p className="text-[8px] sm:text-[8.5px] font-mono tracking-widest uppercase text-stone-400 line-clamp-1 w-full mt-0.5">
                     {node.subtitle}
                   </p>
                 )}
@@ -997,8 +1163,8 @@ export default function DarkFamilyTree({
       {/* BOTTOM DYNASTY CLUSTER NAVIGATION TABS (Fluid Ribbon)        */}
       {/* ------------------------------------------------------------- */}
       <footer className="fixed bottom-3 sm:bottom-4 left-0 right-0 z-30 flex items-center justify-center px-2 sm:px-4 pointer-events-none">
-        <div className="no-map-drag pointer-events-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-full sm:max-w-5xl py-1.5 sm:py-2 px-2.5 sm:px-3 bg-black/80 border border-stone-800/80 rounded-full backdrop-blur-xl shadow-2xl no-scrollbar">
-          {DYNASTY_CLUSTERS.map((dynasty) => {
+        <div className="no-map-drag pointer-events-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-full sm:max-w-5xl py-1.5 sm:py-2 px-2.5 sm:px-3 bg-black/85 rounded-full backdrop-blur-xl shadow-2xl no-scrollbar">
+          {availableDynastyClusters.map((dynasty) => {
             const isActive = activeCluster === dynasty.id;
             return (
               <button
