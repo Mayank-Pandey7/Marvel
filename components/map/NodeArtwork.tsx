@@ -445,6 +445,26 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#ffd32a",
     fallbackText: "BATTLEWORLD",
   },
+  "x-men": {
+    poster: "/images/posters/x-men-2000.jpg",
+    color: "#4bcffa",
+    fallbackText: "X-MEN",
+  },
+  "x-men-2000": {
+    poster: "/images/posters/x-men-2000.jpg",
+    color: "#4bcffa",
+    fallbackText: "X-MEN",
+  },
+  "x2": {
+    poster: "/images/posters/x2-2003.jpg",
+    color: "#a55eea",
+    fallbackText: "X2",
+  },
+  "x2-2003": {
+    poster: "/images/posters/x2-2003.jpg",
+    color: "#a55eea",
+    fallbackText: "X2",
+  },
 };
 
 export default function NodeArtwork({

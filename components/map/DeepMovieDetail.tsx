@@ -88,6 +88,13 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "avengers-doomsday": "https://image.tmdb.org/t/p/w1280/s4v0UX1anfXm0UvloLsTTJ4v222.jpg",
   "avengers-secret-wars": "https://image.tmdb.org/t/p/w1280/rytc6Lf4447C0CDncwFa4gxe0vY.jpg",
   "battleworld": "https://image.tmdb.org/t/p/w1280/rytc6Lf4447C0CDncwFa4gxe0vY.jpg",
+  "x-men": "https://image.tmdb.org/t/p/w1280/9iRRSD8dHZZ7mep9mEbgA6a4qJ5.jpg",
+  "x-men-2000": "https://image.tmdb.org/t/p/w1280/9iRRSD8dHZZ7mep9mEbgA6a4qJ5.jpg",
+  "x2": "https://image.tmdb.org/t/p/w1280/8I37NtDffNV7AZlDa7uYvvqJhU1.jpg",
+  "x2-2003": "https://image.tmdb.org/t/p/w1280/8I37NtDffNV7AZlDa7uYvvqJhU1.jpg",
+  "the-fantastic-four-first-steps": "https://image.tmdb.org/t/p/w1280/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+  "fantastic-four": "https://image.tmdb.org/t/p/w1280/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+  "captain-america-the-first-avenger": "https://image.tmdb.org/t/p/w1280/yFuKvT4Vm3sKHdFY4eG6I4ldAnn.jpg",
 };
 
 export default function DeepMovieDetail({
@@ -119,21 +126,25 @@ export default function DeepMovieDetail({
   if (!movie) return null;
 
   // Resolve connected movie objects across all phases
-  const connectedMovies = movie.connections
+  const connectedMovies = (movie.connections || [])
     .map((conn) => {
-      const target = UNIFIED_MCU_TREE.find((m) => m.id === conn.toId);
-      return target ? { target, relationship: conn.relationship, type: conn.type } : null;
+      const target = UNIFIED_MCU_TREE.find((m) => m.id === (typeof conn === "string" ? conn : conn.toId));
+      return target ? { target, relationship: (conn as any).relationship || "Related Storyline", type: (conn as any).type || "Narrative" } : null;
     })
     .filter(Boolean);
 
   const posterSrc =
+    (movie as any).posterUrl ||
     MCU_POSTER_MAP[movie.id]?.poster ||
     MCU_POSTER_MAP[movie.id.toLowerCase()]?.poster ||
     MCU_POSTER_MAP[movie.id.replace(/_/g, "-")]?.poster ||
-    "";
+    "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
 
   const backdropSrc =
+    (movie as any).backdropUrl ||
     MCU_BACKDROP_MAP[movie.id] ||
+    MCU_BACKDROP_MAP[movie.id.toLowerCase()] ||
+    MCU_BACKDROP_MAP[movie.id.replace(/_/g, "-")] ||
     posterSrc;
 
   const isExpanded = stage === "expanded";
