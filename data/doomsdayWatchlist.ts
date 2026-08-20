@@ -1,5 +1,6 @@
 export interface DoomsdayWatchlistItem {
   id: string;
+  slug: string;
   order: number;
   title: string;
   year: number;
@@ -20,6 +21,7 @@ export interface DoomsdayWatchlistItem {
 export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   {
     id: "x-men-2000",
+    slug: "x-men",
     order: 1,
     title: "X-Men",
     year: 2000,
@@ -37,6 +39,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "x2-2003",
+    slug: "x2",
     order: 2,
     title: "X2: X-Men United",
     year: 2003,
@@ -54,6 +57,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "captain-america-first-avenger",
+    slug: "captain-america-the-first-avenger",
     order: 3,
     title: "Captain America: The First Avenger",
     year: 2011,
@@ -72,6 +76,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "the-avengers",
+    slug: "the-avengers",
     order: 4,
     title: "The Avengers",
     year: 2012,
@@ -90,6 +95,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "avengers-infinity-war",
+    slug: "avengers-infinity-war",
     order: 5,
     title: "Avengers: Infinity War",
     year: 2018,
@@ -108,6 +114,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "avengers-endgame",
+    slug: "avengers-endgame",
     order: 6,
     title: "Avengers: Endgame",
     year: 2019,
@@ -126,6 +133,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "loki-season-1",
+    slug: "loki-season-1",
     order: 7,
     title: "Loki",
     year: 2021,
@@ -144,6 +152,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "shang-chi",
+    slug: "shang-chi-and-the-legend-of-the-ten-rings",
     order: 8,
     title: "Shang-Chi and the Legend of the Ten Rings",
     year: 2021,
@@ -162,6 +171,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "spider-man-no-way-home",
+    slug: "spider-man-no-way-home",
     order: 9,
     title: "Spider-Man: No Way Home",
     year: 2021,
@@ -180,6 +190,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "doctor-strange-multiverse-of-madness",
+    slug: "doctor-strange-in-the-multiverse-of-madness",
     order: 10,
     title: "Doctor Strange in the Multiverse of Madness",
     year: 2022,
@@ -198,6 +209,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "black-panther-wakanda-forever",
+    slug: "black-panther-wakanda-forever",
     order: 11,
     title: "Black Panther: Wakanda Forever",
     year: 2022,
@@ -216,6 +228,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "deadpool-and-wolverine",
+    slug: "deadpool-and-wolverine",
     order: 12,
     title: "Deadpool & Wolverine",
     year: 2024,
@@ -234,6 +247,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "captain-america-brave-new-world",
+    slug: "captain-america-brave-new-world",
     order: 13,
     title: "Captain America: Brave New World",
     year: 2025,
@@ -252,6 +266,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "thunderbolts",
+    slug: "thunderbolts",
     order: 14,
     title: "Thunderbolts*",
     year: 2025,
@@ -270,6 +285,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
   },
   {
     id: "the-fantastic-four-first-steps",
+    slug: "the-fantastic-four-first-steps",
     order: 15,
     title: "The Fantastic Four: First Steps",
     year: 2025,

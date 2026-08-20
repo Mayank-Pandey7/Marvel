@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { MCU } from "@/data/mcu";
+import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import MovieSlugDetail from "@/components/map/MovieSlugDetail";
 
 // Comprehensive alias dictionary to support short and alternate movie slugs
@@ -126,7 +127,16 @@ export const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "spider-man-4": "spider-man-4",
   "avengers-doomsday": "avengers-doomsday",
   "avengers-secret-wars": "avengers-secret-wars",
-  "secret-wars": "avengers-secret-wars",
+  "x-men": "x-men-2000",
+  "xmen": "x-men-2000",
+  "x-men-1": "x-men-2000",
+  "xmen-1": "x-men-2000",
+  "x-men-2000": "x-men-2000",
+  "x2": "x2-2003",
+  "x-men-2": "x2-2003",
+  "xmen-2": "x2-2003",
+  "x2-2003": "x2-2003",
+  "x2-x-men-united": "x2-2003",
 };
 
 // Helper function to resolve any slug or alias to a canonical MovieNode
@@ -159,7 +169,38 @@ function resolveMovieNode(slug: string): MovieNode | null {
     if (treeMatch) return treeMatch;
   }
 
-  // 4. Fuzzy title match (e.g. "the incredible hulk" -> "the-incredible-hulk")
+  // 4. Check DOOMSDAY_WATCHLIST (X-Men 2000, X2, Doomsday milestones)
+  const doomsdayItem = DOOMSDAY_WATCHLIST.find(
+    (d) =>
+      d.id.toLowerCase() === normalizedSlug ||
+      d.slug.toLowerCase() === normalizedSlug ||
+      (aliasedId && (d.id.toLowerCase() === aliasedId.toLowerCase() || d.slug.toLowerCase() === aliasedId.toLowerCase())) ||
+      d.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===
+        normalizedSlug.replace(/[^a-z0-9]/g, "")
+  );
+  if (doomsdayItem) {
+    // Try to find if this doomsday movie is also in UNIFIED_MCU_TREE
+    const treeMatch = UNIFIED_MCU_TREE.find(
+      (m) =>
+        m.id.toLowerCase() === doomsdayItem.slug.toLowerCase() ||
+        m.id.toLowerCase() === doomsdayItem.id.toLowerCase()
+    );
+    if (treeMatch) return treeMatch;
+
+    return {
+      id: doomsdayItem.slug || doomsdayItem.id,
+      title: doomsdayItem.title,
+      phase: doomsdayItem.phase || 1,
+      year: doomsdayItem.year,
+      type: doomsdayItem.category === "Series" ? "series" : "movie",
+      tagline: doomsdayItem.tagline,
+      description: doomsdayItem.whyItMatters + "\n\n" + doomsdayItem.doomConnection,
+      coordinates: { x: 0, y: 0 },
+      connections: ["avengers-doomsday"],
+    } as unknown as MovieNode;
+  }
+
+  // 5. Fuzzy title match (e.g. "the incredible hulk" -> "the-incredible-hulk")
   const titleMatch = UNIFIED_MCU_TREE.find(
     (m) =>
       m.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===

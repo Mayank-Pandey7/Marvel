@@ -378,8 +378,8 @@ export default function RoadToDoomsday() {
                         : "left-4 md:left-[calc(50%+2.25rem)]"
                     } -translate-x-1/2`}
                   >
-                    <button
-                      onClick={() => setActiveItem(item)}
+                    <Link
+                      href={`/${item.slug || item.id}`}
                       className={`w-8 h-8 rounded-full border flex items-center justify-center font-mono text-[10px] font-bold transition-all cursor-pointer ${
                         isSelected
                           ? "bg-white text-black border-white scale-110"
@@ -387,33 +387,29 @@ export default function RoadToDoomsday() {
                           ? "bg-stone-900 border-white text-white"
                           : "bg-black border-stone-700 text-stone-400 hover:border-white hover:text-white"
                       }`}
-                      title={`Chapter #${item.order} · ${item.title}`}
+                      title={`Open ${item.title} (${item.year})`}
                     >
                       <span>{String(item.order).padStart(2, "0")}</span>
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Left or Right Tree Card Branch (Clean Borderless & Transparent) */}
                   <div className={`w-full md:w-[calc(50%-4rem)] ${isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"}`}>
-                    <div
-                      onClick={() => setActiveItem(item)}
-                      className={`group relative p-2 sm:p-3 transition-all duration-200 cursor-pointer ${
-                        isSelected ? "scale-[1.02]" : "hover:opacity-100 opacity-90"
-                      }`}
+                    <Link
+                      href={`/${item.slug || item.id}`}
+                      className="group block relative p-2 sm:p-3 transition-all duration-200 cursor-pointer hover:opacity-100 opacity-90"
                     >
                       {/* Horizontal Tree Connector Arm (Desktop) */}
                       <div
                         className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-6 h-[1px] ${
                           isEven ? "-right-6" : "-left-6"
-                        } ${isSelected ? "bg-white" : "bg-stone-700 group-hover:bg-stone-400"}`}
+                        } bg-stone-700 group-hover:bg-stone-400`}
                       />
 
                       <div className={`flex items-start gap-3.5 ${isEven ? "md:flex-row-reverse" : "md:flex-row"}`}>
                         
                         {/* Movie Poster Artwork (Prominent & High-Res) */}
-                        <div className={`relative w-18 h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-md overflow-hidden bg-stone-950 shrink-0 border transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8)] ${
-                          isSelected ? "border-white ring-2 ring-white/50 scale-105" : "border-stone-800/90 group-hover:border-stone-400 group-hover:scale-105"
-                        }`}>
+                        <div className="relative w-18 h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-md overflow-hidden bg-stone-950 shrink-0 border border-stone-800/90 group-hover:border-stone-400 group-hover:scale-105 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                           <img
                             src={item.posterUrl}
                             alt={item.title}
@@ -439,9 +435,7 @@ export default function RoadToDoomsday() {
                             <span className="text-stone-500">{item.universe}</span>
                           </div>
 
-                          <h3 className={`text-sm sm:text-base font-mono uppercase tracking-[0.14em] font-bold truncate transition-colors ${
-                            isSelected ? "text-white" : "text-stone-300 group-hover:text-white"
-                          }`}>
+                          <h3 className="text-sm sm:text-base font-mono uppercase tracking-[0.14em] font-bold truncate text-stone-300 group-hover:text-white transition-colors">
                             {item.title}
                           </h3>
 
@@ -458,7 +452,9 @@ export default function RoadToDoomsday() {
                             </span>
 
                             <button
+                              type="button"
                               onClick={(e) => {
+                                e.preventDefault();
                                 e.stopPropagation();
                                 toggleWatched(item.id);
                               }}
@@ -484,7 +480,7 @@ export default function RoadToDoomsday() {
                         </div>
 
                       </div>
-                    </div>
+                    </Link>
                   </div>
 
                   {/* Empty Spacer Column for Alternating Grid */}

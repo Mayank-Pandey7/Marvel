@@ -13,7 +13,11 @@ export default function MovieSlugDetail({ movie }: { movie: MovieNode }) {
       <DeepMovieDetail
         movie={movie}
         onClose={() => {
-          router.push(`/timeline?phase=${movie.phase}&movie=${movie.id}`);
+          if (typeof window !== "undefined" && window.history.length > 1) {
+            router.back();
+          } else {
+            router.push(`/timeline?phase=${movie.phase || 1}&movie=${movie.id}`);
+          }
         }}
         onNavigateToConnectedMovie={(target) => {
           router.push(`/${target.id}`);
