@@ -199,24 +199,15 @@ export default function RoadToDoomsday() {
       {/* BACKGROUND DOCTOR DOOM CINEMATIC IMAGE & AMBIENT AURA         */}
       {/* ------------------------------------------------------------- */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* User-provided Doctor Doom Artwork (Richly Visible) */}
+        {/* User-provided Doctor Doom Artwork (Richly & Clearly Visible) */}
         <img
           src="/images/doomsday-bg.jpg"
           alt="Doctor Doom"
-          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-70 filter brightness-100 contrast-105 select-none"
-        />
-        <video
-          ref={videoRef}
-          src="/trailers/doctor-doom.3840x2160.mp4"
-          autoPlay
-          loop
-          muted={isAudioMuted}
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-15 filter brightness-75 contrast-125 mix-blend-screen"
+          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-85 filter brightness-105 contrast-110 select-none"
         />
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/55 to-[#000000]/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#000000_90%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-[#000000]/20" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
 
       {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (Matching Timeline) */}

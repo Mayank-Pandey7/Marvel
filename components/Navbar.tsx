@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Search, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
+import { useDoomsdayTransition } from "@/components/doomsday/DoomsdayTransition";
 
 const NAV_LINKS = [
-  { href: "/doomsday", label: "Road to Doomsday" },
   { href: "/characters", label: "Characters" },
   { href: "/artifacts", label: "Cosmic Relics" },
   { href: "/multiverse", label: "Multiverse Map" },
@@ -15,6 +15,7 @@ const NAV_LINKS = [
 
 export default function Navbar({ onSearch }: { onSearch: () => void }) {
   const { currentPhase, soundEnabled, toggleSound } = useTimelineState();
+  const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -39,12 +40,12 @@ export default function Navbar({ onSearch }: { onSearch: () => void }) {
           <span className="font-semibold tracking-[0.25em]">MARVEL</span>
         </Link>
         <span className="text-stone-600 font-mono text-xs select-none">|</span>
-        <Link
-          href="/doomsday"
-          className="font-mono tracking-[0.25em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)] text-xs sm:text-sm font-semibold transition-all"
+        <button
+          onClick={triggerDoomsdayTransition}
+          className="font-mono tracking-[0.25em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)] text-xs sm:text-sm font-semibold transition-all cursor-pointer bg-transparent border-none"
         >
           DOOMSDAY
-        </Link>
+        </button>
 
         {/* Phase Pill in Navbar */}
         <span className="hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono uppercase bg-white/5 border border-white/15 text-stone-300 px-2.5 py-0.5 rounded-full ml-1">

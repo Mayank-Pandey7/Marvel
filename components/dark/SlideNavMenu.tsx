@@ -62,14 +62,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
               >
                 MARVEL
               </Link>
-              <span className="text-stone-600 font-mono text-xs select-none">|</span>
-              <Link
-                href="/doomsday"
-                onClick={onClose}
-                className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)] transition-all"
-              >
-                DOOMSDAY
-              </Link>
             </div>
 
             <button
@@ -178,13 +170,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                     className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
                   >
                     <span className="text-stone-600">•</span> Interactive Multiverse Web
-                  </Link>
-                  <Link
-                    href="/doomsday"
-                    onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-emerald-400 hover:text-emerald-300 hover:translate-x-1 transition-all py-1 flex items-center gap-2 font-bold"
-                  >
-                    <span className="text-stone-600">•</span> Road to Doomsday (15 Chapters)
                   </Link>
                 </div>
               )}

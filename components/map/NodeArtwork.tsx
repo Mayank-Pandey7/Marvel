@@ -41,12 +41,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "CAPTAIN AMERICA",
   },
   "avengers": {
-    poster: "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
+    poster: "/images/posters/the-avengers.jpg",
     color: "#ffd32a",
     fallbackText: "THE AVENGERS",
   },
   "the-avengers": {
-    poster: "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
+    poster: "/images/posters/the-avengers.jpg",
     color: "#ffd32a",
     fallbackText: "THE AVENGERS",
   },

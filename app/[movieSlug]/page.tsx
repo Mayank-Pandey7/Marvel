@@ -6,7 +6,7 @@ import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import MovieSlugDetail from "@/components/map/MovieSlugDetail";
 
 // Comprehensive alias dictionary to support short and alternate movie slugs
-export const MOVIE_SLUG_ALIASES: Record<string, string> = {
+const MOVIE_SLUG_ALIASES: Record<string, string> = {
   // Phase 1
   "hulk": "the-incredible-hulk",
   "the-hulk": "the-incredible-hulk",
@@ -185,7 +185,13 @@ function resolveMovieNode(slug: string): MovieNode | null {
         m.id.toLowerCase() === doomsdayItem.slug.toLowerCase() ||
         m.id.toLowerCase() === doomsdayItem.id.toLowerCase()
     );
-    if (treeMatch) return treeMatch;
+    if (treeMatch) {
+      return {
+        ...treeMatch,
+        posterUrl: doomsdayItem.posterUrl,
+        backdropUrl: doomsdayItem.backdropUrl,
+      } as unknown as MovieNode;
+    }
 
     return {
       id: doomsdayItem.slug || doomsdayItem.id,
@@ -197,6 +203,8 @@ function resolveMovieNode(slug: string): MovieNode | null {
       description: doomsdayItem.whyItMatters + "\n\n" + doomsdayItem.doomConnection,
       coordinates: { x: 0, y: 0 },
       connections: ["avengers-doomsday"],
+      posterUrl: doomsdayItem.posterUrl,
+      backdropUrl: doomsdayItem.backdropUrl,
     } as unknown as MovieNode;
   }
 

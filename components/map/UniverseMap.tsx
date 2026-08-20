@@ -9,6 +9,7 @@ import SearchInvestigation from "./SearchInvestigation";
 import DeepMovieDetail from "./DeepMovieDetail";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import Link from "next/link";
+import { useDoomsdayTransition } from "@/components/doomsday/DoomsdayTransition";
 import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe, Menu, Users } from "lucide-react";
 
 export default function UniverseMap({
@@ -23,6 +24,7 @@ export default function UniverseMap({
   targetMovieId?: string;
 }) {
   const { currentPhase, setCurrentPhase } = useTimelineState();
+  const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
 
   // Universe Camera State (Pan & Zoom on a 2000px wide by 10500px tall vertical cosmic tree)
@@ -444,13 +446,13 @@ export default function UniverseMap({
             MARVEL
           </Link>
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
-          <Link
-            href="/doomsday"
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none"
-            title="Explore Road to Doomsday Prelude Timeline"
+          <button
+            onClick={triggerDoomsdayTransition}
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
-          </Link>
+          </button>
         </div>
 
         {/* Right: Return + Search Button */}

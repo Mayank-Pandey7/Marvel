@@ -13,6 +13,7 @@ import { CHARACTERS } from "@/data/characters";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
+import { useDoomsdayTransition } from "@/components/doomsday/DoomsdayTransition";
 import {
   ZoomIn,
   ZoomOut,
@@ -36,6 +37,7 @@ export default function DarkFamilyTree({
   onSwitchToTimeline?: () => void;
 }) {
   const { currentPhase, setCurrentPhase } = useTimelineState();
+  const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [spoilerPhase, setSpoilerPhase] = useState<number>(currentPhase || 6);
 
   // Camera Pan & Zoom State (World coordinates 0..5000, 0..3000)
@@ -667,10 +669,10 @@ export default function DarkFamilyTree({
       const endX = toCenterX;
       const endY = toNode.y; // Top edge of child card
 
-      // If vertically aligned: pure straight vertical drop
-      if (Math.abs(startX - endX) < 6) {
+      // If vertically aligned (within tolerance): pure straight vertical drop with zero jogs
+      if (Math.abs(startX - endX) <= 15) {
         return {
-          path: `M ${startX} ${startY} V ${endY}`,
+          path: `M ${endX} ${startY} V ${endY}`,
           arrow:
             conn.hasArrow !== false
               ? { x: endX, y: endY - 3, dir: "down" }
@@ -680,7 +682,7 @@ export default function DarkFamilyTree({
 
       // Smooth organic tree branch through the clear corridor between row tiers (never touching names!)
       const midY = conn.midY || (fromNode.y + h + toNode.y) / 2;
-      const r = 10;
+      const r = Math.min(12, Math.abs(endX - startX) / 2, Math.abs(endY - midY) / 2);
       const dirX = endX > startX ? 1 : -1;
 
       const path = `M ${startX} ${startY} V ${midY - r} Q ${startX} ${midY} ${startX + dirX * r} ${midY} H ${endX - dirX * r} Q ${endX} ${midY} ${endX} ${midY + r} V ${endY}`;
@@ -850,13 +852,13 @@ export default function DarkFamilyTree({
             MARVEL
           </Link>
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
-          <Link
-            href="/doomsday"
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none"
-            title="Explore Road to Doomsday Prelude Timeline"
+          <button
+            onClick={triggerDoomsdayTransition}
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
-          </Link>
+          </button>
         </div>
 
         {/* Right: Phase Filter + Return Link + Search Trigger (Matching RETURN typography) */}

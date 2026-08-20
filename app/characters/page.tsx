@@ -245,20 +245,20 @@ function CharactersContent() {
                     className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
                     
-                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT */}
-                    <div className="relative w-full aspect-[16/11] overflow-hidden bg-stone-950">
+                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT (PORTRAIT ORIENTED FOR PERFECT FACE FRAMING) */}
+                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-lg">
                       <img
                         src={backdropUrl}
                         alt={character.name}
-                        className="w-full h-full object-cover object-center filter brightness-85 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
+                        className="w-full h-full object-cover object-[center_15%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
 
                       {/* Smooth Vignette */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
 
                       {/* Role in Bottom Left of Image */}
-                      <div className="absolute bottom-2.5 left-3">
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-300">
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-300 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
                           {primaryAlias}
                         </span>
                       </div>

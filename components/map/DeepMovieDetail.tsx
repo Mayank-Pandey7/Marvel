@@ -13,9 +13,11 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "iron-man-2": "https://image.tmdb.org/t/p/w1280/7lmBufEG7P7Y1HClYK3gCxYrkgS.jpg",
   "thor": "https://image.tmdb.org/t/p/w1280/cDJ61O1STtbWNBwefuqVrRe3d7l.jpg",
   "captain-america": "https://image.tmdb.org/t/p/w1280/yFuKvT4Vm3sKHdFY4eG6I4ldAnn.jpg",
+  "captain-america-the-first-avenger": "/images/backdrops/captain-america-first-avenger.jpg",
+  "captain-america-first-avenger": "/images/backdrops/captain-america-first-avenger.jpg",
   "cap-first-avenger": "https://image.tmdb.org/t/p/w1280/yFuKvT4Vm3sKHdFY4eG6I4ldAnn.jpg",
-  "the-avengers": "https://image.tmdb.org/t/p/w1280/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg",
-  "avengers": "https://image.tmdb.org/t/p/w1280/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg",
+  "the-avengers": "/images/backdrops/the-avengers.jpg",
+  "avengers": "/images/backdrops/the-avengers.jpg",
   "iron-man-3": "https://image.tmdb.org/t/p/w1280/iVped1djsF0tvGkvnHbzsE3ZPTF.jpg",
   "thor-dark-world": "https://image.tmdb.org/t/p/w1280/5QEOy0QEpad9QsXeMxuGHPXMale.jpg",
   "captain-america-winter-soldier": "https://image.tmdb.org/t/p/w1280/1RWLMyC9KcFfcaoViMiJGSSZzzr.jpg",
@@ -34,37 +36,40 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "spiderman-homecoming": "https://image.tmdb.org/t/p/w1280/fn4n6uOYcB6Uh89nbNPoU2w80RV.jpg",
   "thor-ragnarok": "https://image.tmdb.org/t/p/w1280/vLmHH8jAy8Jq8uBsLucd3592WGh.jpg",
   "black-panther": "https://image.tmdb.org/t/p/w1280/b6ZJZHUdMEFECvGiDpJjlfUWela.jpg",
-  "avengers-infinity-war": "https://image.tmdb.org/t/p/w1280/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
-  "infinity-war": "https://image.tmdb.org/t/p/w1280/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
+  "avengers-infinity-war": "/images/backdrops/avengers-infinity-war.jpg",
+  "infinity-war": "/images/backdrops/avengers-infinity-war.jpg",
   "ant-man-and-the-wasp": "https://image.tmdb.org/t/p/w1280/iYdgEUE2W2aJkgqfSjf1x3gFfuV.jpg",
   "ant-man-wasp": "https://image.tmdb.org/t/p/w1280/iYdgEUE2W2aJkgqfSjf1x3gFfuV.jpg",
   "captain-marvel": "https://image.tmdb.org/t/p/w1280/qAzYK4YPSWDc7aa4R43LcwRIAyb.jpg",
-  "avengers-endgame": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
-  "endgame": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+  "avengers-endgame": "/images/backdrops/avengers-endgame.jpg",
+  "endgame": "/images/backdrops/avengers-endgame.jpg",
   "spider-man-far-from-home": "https://image.tmdb.org/t/p/w1280/vamhMTvh9m9zFHDoR0v1nRtf6T4.jpg",
   "spiderman-far-from-home": "https://image.tmdb.org/t/p/w1280/vamhMTvh9m9zFHDoR0v1nRtf6T4.jpg",
   "wandavision": "https://image.tmdb.org/t/p/w1280/lOr9NKxh4vMweufMOUDJjJhCRHW.jpg",
   "the-falcon-and-the-winter-soldier": "https://image.tmdb.org/t/p/w1280/aTjbqMONy77fHJrIYu14g1F0d5h.jpg",
   "falcon-winter-soldier": "https://image.tmdb.org/t/p/w1280/aTjbqMONy77fHJrIYu14g1F0d5h.jpg",
-  "loki-season-1": "https://image.tmdb.org/t/p/w1280/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
-  "loki-s1": "https://image.tmdb.org/t/p/w1280/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
-  "loki": "https://image.tmdb.org/t/p/w1280/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
+  "loki-season-1": "/images/backdrops/loki.jpg",
+  "loki-s1": "/images/backdrops/loki.jpg",
+  "loki-1": "/images/backdrops/loki.jpg",
+  "loki": "/images/backdrops/loki.jpg",
   "black-widow": "https://image.tmdb.org/t/p/w1280/keIxh0wPr2Ymj0Btjh4gW7JJ89e.jpg",
-  "shang-chi": "https://image.tmdb.org/t/p/w1280/r7K6Xt0RX4Mw0cAbZVw5cyb1Tux.jpg",
+  "shang-chi": "/images/backdrops/shang-chi.jpg",
+  "shang-chi-and-the-legend-of-the-ten-rings": "/images/backdrops/shang-chi.jpg",
   "eternals": "https://image.tmdb.org/t/p/w1280/c6H7Z4u73ir3cIoCteuhJh7UCAR.jpg",
   "hawkeye": "https://image.tmdb.org/t/p/w1280/9QNv2Al3GfCND8BwuLmu2GwVht7.jpg",
-  "spider-man-no-way-home": "https://image.tmdb.org/t/p/w1280/uyrOU4BDm2kbVxFsMiDFIHDhc4d.jpg",
-  "spiderman-no-way-home": "https://image.tmdb.org/t/p/w1280/uyrOU4BDm2kbVxFsMiDFIHDhc4d.jpg",
+  "spider-man-no-way-home": "/images/backdrops/spider-man-no-way-home.jpg",
+  "spiderman-no-way-home": "/images/backdrops/spider-man-no-way-home.jpg",
   "moon-knight": "https://image.tmdb.org/t/p/w1280/1uegR4uAxRxiMyX4nQnpzbXhrTw.jpg",
-  "doctor-strange-multiverse-of-madness": "https://image.tmdb.org/t/p/w1280/lv3TXqhpaIxkclIHbhN2MRMOemQ.jpg",
-  "doctor-strange-multiverse": "https://image.tmdb.org/t/p/w1280/lv3TXqhpaIxkclIHbhN2MRMOemQ.jpg",
+  "doctor-strange-in-the-multiverse-of-madness": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "doctor-strange-multiverse-of-madness": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "doctor-strange-multiverse": "/images/backdrops/doctor-strange-multiverse.jpg",
   "ms-marvel": "https://image.tmdb.org/t/p/w1280/mfcLUWASJghU8MTNK38eYktfE83.jpg",
   "thor-love-and-thunder": "https://image.tmdb.org/t/p/w1280/jsoz1HlxczSuTx0mDl2h0lxy36l.jpg",
   "thor-love-thunder": "https://image.tmdb.org/t/p/w1280/jsoz1HlxczSuTx0mDl2h0lxy36l.jpg",
   "she-hulk-attorney-at-law": "https://image.tmdb.org/t/p/w1280/eljErfkQUcFUgQkI4I1soZcH8MW.jpg",
   "she-hulk": "https://image.tmdb.org/t/p/w1280/eljErfkQUcFUgQkI4I1soZcH8MW.jpg",
-  "black-panther-wakanda-forever": "https://image.tmdb.org/t/p/w1280/83H0C66AcvkwpG2738VCTHMY9uv.jpg",
-  "black-panther-wakanda": "https://image.tmdb.org/t/p/w1280/83H0C66AcvkwpG2738VCTHMY9uv.jpg",
+  "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
+  "black-panther-wakanda": "/images/backdrops/black-panther-wakanda-forever.jpg",
   "the-guardians-of-the-galaxy-holiday-special": "https://image.tmdb.org/t/p/w1280/rfnmMYuZ6EKOBvQLp2wqP21v7sI.jpg",
   "guardians-holiday": "https://image.tmdb.org/t/p/w1280/rfnmMYuZ6EKOBvQLp2wqP21v7sI.jpg",
   "ant-man-and-the-wasp-quantumania": "https://image.tmdb.org/t/p/w1280/m8JTwHFwX7I7JY5fPe4SjqejWag.jpg",
@@ -72,29 +77,28 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "guardians-of-the-galaxy-vol-3": "https://image.tmdb.org/t/p/w1280/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg",
   "guardians-vol3": "https://image.tmdb.org/t/p/w1280/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg",
   "secret-invasion": "https://image.tmdb.org/t/p/w1280/kwronSXO1ogMqHHFvY2eBxfFLdn.jpg",
-  "loki-season-2": "https://image.tmdb.org/t/p/w1280/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
-  "loki-s2": "https://image.tmdb.org/t/p/w1280/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
+  "loki-season-2": "/images/backdrops/loki.jpg",
+  "loki-s2": "/images/backdrops/loki.jpg",
   "the-marvels": "https://image.tmdb.org/t/p/w1280/feSiISwgEpVzR1v3zv2n2AU4ANJ.jpg",
   "echo": "https://image.tmdb.org/t/p/w1280/jIyEmnBrZtl6SEWyBoMO2hZnzMa.jpg",
-  "deadpool-and-wolverine": "https://image.tmdb.org/t/p/w1280/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg",
-  "deadpool-wolverine": "https://image.tmdb.org/t/p/w1280/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg",
+  "deadpool-and-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "deadpool-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
   "agatha-all-along": "https://image.tmdb.org/t/p/w1280/tYLXJW1sZQU09VWY1BhSVPKGIwc.jpg",
-  "captain-america-brave-new-world": "https://image.tmdb.org/t/p/w1280/ce3prrjh9ZehEl5JinNqr4jIeaB.jpg",
-  "cap-brave-new-world": "https://image.tmdb.org/t/p/w1280/ce3prrjh9ZehEl5JinNqr4jIeaB.jpg",
+  "captain-america-brave-new-world": "/images/backdrops/captain-america-brave-new-world.jpg",
+  "cap-brave-new-world": "/images/backdrops/captain-america-brave-new-world.jpg",
   "daredevil-born-again": "https://image.tmdb.org/t/p/w1280/mAJ84W6I8I272Da87qplS2Dp9ST.jpg",
-  "thunderbolts": "https://image.tmdb.org/t/p/w1280/rthMuZfFv4fqEU4JVbgSW9wQ8rs.jpg",
+  "thunderbolts": "/images/backdrops/thunderbolts.jpg",
   "blade": "https://image.tmdb.org/t/p/w1280/s94NjfKkcSczZ1FembwmQZwsuwY.jpg",
   "spiderman-brand-new-day": "https://image.tmdb.org/t/p/w1280/uyrOU4BDm2kbVxFsMiDFIHDhc4d.jpg",
   "avengers-doomsday": "https://image.tmdb.org/t/p/w1280/s4v0UX1anfXm0UvloLsTTJ4v222.jpg",
   "avengers-secret-wars": "https://image.tmdb.org/t/p/w1280/rytc6Lf4447C0CDncwFa4gxe0vY.jpg",
   "battleworld": "https://image.tmdb.org/t/p/w1280/rytc6Lf4447C0CDncwFa4gxe0vY.jpg",
-  "x-men": "https://image.tmdb.org/t/p/w1280/9iRRSD8dHZZ7mep9mEbgA6a4qJ5.jpg",
-  "x-men-2000": "https://image.tmdb.org/t/p/w1280/9iRRSD8dHZZ7mep9mEbgA6a4qJ5.jpg",
-  "x2": "https://image.tmdb.org/t/p/w1280/8I37NtDffNV7AZlDa7uYvvqJhU1.jpg",
-  "x2-2003": "https://image.tmdb.org/t/p/w1280/8I37NtDffNV7AZlDa7uYvvqJhU1.jpg",
-  "the-fantastic-four-first-steps": "https://image.tmdb.org/t/p/w1280/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
-  "fantastic-four": "https://image.tmdb.org/t/p/w1280/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
-  "captain-america-the-first-avenger": "https://image.tmdb.org/t/p/w1280/yFuKvT4Vm3sKHdFY4eG6I4ldAnn.jpg",
+  "x-men": "/images/backdrops/x-men-2000.jpg",
+  "x-men-2000": "/images/backdrops/x-men-2000.jpg",
+  "x2": "/images/backdrops/x2-2003.jpg",
+  "x2-2003": "/images/backdrops/x2-2003.jpg",
+  "the-fantastic-four-first-steps": "/images/backdrops/the-fantastic-four-first-steps.jpg",
+  "fantastic-four": "/images/backdrops/the-fantastic-four-first-steps.jpg",
 };
 
 export default function DeepMovieDetail({
@@ -133,15 +137,21 @@ export default function DeepMovieDetail({
     })
     .filter(Boolean);
 
+  const posterCandidate = (movie as any).posterUrl;
+  const isPosterCandidateValid = posterCandidate && !posterCandidate.startsWith("/posters/");
+
   const posterSrc =
-    (movie as any).posterUrl ||
+    (isPosterCandidateValid ? posterCandidate : null) ||
     MCU_POSTER_MAP[movie.id]?.poster ||
     MCU_POSTER_MAP[movie.id.toLowerCase()]?.poster ||
     MCU_POSTER_MAP[movie.id.replace(/_/g, "-")]?.poster ||
     "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
 
+  const backdropCandidate = (movie as any).backdropUrl;
+  const isBackdropCandidateValid = backdropCandidate && !backdropCandidate.startsWith("/backdrops/");
+
   const backdropSrc =
-    (movie as any).backdropUrl ||
+    (isBackdropCandidateValid ? backdropCandidate : null) ||
     MCU_BACKDROP_MAP[movie.id] ||
     MCU_BACKDROP_MAP[movie.id.toLowerCase()] ||
     MCU_BACKDROP_MAP[movie.id.replace(/_/g, "-")] ||
@@ -169,6 +179,11 @@ export default function DeepMovieDetail({
         <img
           src={backdropSrc}
           alt={movie.title}
+          onError={(e) => {
+            if (posterSrc && (e.target as HTMLImageElement).src !== posterSrc) {
+              (e.target as HTMLImageElement).src = posterSrc;
+            }
+          }}
           className={`w-full h-full object-cover object-center filter brightness-[0.85] contrast-[1.15] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "scale-105 opacity-70" : "scale-125 opacity-0"
           }`}
@@ -221,6 +236,12 @@ export default function DeepMovieDetail({
               src={posterSrc}
               alt={movie.title}
               loading="eager"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (!target.src.includes("image.tmdb.org")) {
+                  target.src = "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                }
+              }}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
@@ -253,15 +274,33 @@ export default function DeepMovieDetail({
             {/* Narrative Synopsis */}
             <div className="mt-4 text-sm text-stone-300 font-sans font-light leading-relaxed">
               <p>{movie.description}</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-300">
-                <span className="text-stone-500 uppercase tracking-widest text-[10px]">LEAD CHARACTER:</span>
-                <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm">
-                  {movie.leadCharacter}
-                </span>
-                <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-300">
-                  {movie.heroAlias}
-                </span>
-              </div>
+              {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-300">
+                  <span className="text-stone-500 uppercase tracking-widest text-[10px]">
+                    {(movie as any).keyCharacters?.length > 1 ? "KEY CHARACTERS:" : "LEAD CHARACTER:"}
+                  </span>
+                  {(movie as any).keyCharacters?.length > 0 ? (
+                    (movie as any).keyCharacters.slice(0, 4).map((char: string) => (
+                      <span key={char} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px]">
+                        {char}
+                      </span>
+                    ))
+                  ) : (
+                    <>
+                      {movie.leadCharacter && (
+                        <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm">
+                          {movie.leadCharacter}
+                        </span>
+                      )}
+                      {movie.heroAlias && (
+                        <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-300">
+                          {movie.heroAlias}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Famous Quote Glass Card */}
@@ -385,11 +424,6 @@ export default function DeepMovieDetail({
                 );
               })}
             </div>
-          </div>
-
-          {/* Coordinates in Cosmic Space */}
-          <div className="mt-3.5 text-[9px] font-mono text-stone-500 tracking-[0.25em] uppercase">
-            COSMIC POSITION: X:{movie.x} · Y:{movie.y}
           </div>
         </div>
       </main>

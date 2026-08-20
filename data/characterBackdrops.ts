@@ -1,199 +1,196 @@
-// Curated cinematic high-resolution backdrops for MCU Characters and each of their timeline phases
-export const CHARACTER_BACKDROPS: Record<
-  string, 
-  { 
-    main: string; 
-    eras?: Record<string, string>; 
-    phaseBackdrops?: Record<number, string>;
-    entanglements?: string;
-  }
-> = {
-  "iron-man": {
-    main: "https://images.unsplash.com/photo-1635863138275-d9b33299680b?q=80&w=2560&auto=format&fit=crop", // Mark I / Tony in workshop
-    eras: {
-      "iron-man-origin": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop", // Battle of NY / Phase 1
-      "iron-man-endgame": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop", // Nano Gauntlet Snap / Phase 3
-    },
-    phaseBackdrops: {
-      1: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-      2: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-    },
-    entanglements: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "captain-america": {
-    main: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-    eras: {
-      "cap-ww2": "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-      "cap-worthy": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2560&auto=format&fit=crop",
-    },
-    phaseBackdrops: {
-      1: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-      2: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-    },
-    entanglements: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "thor": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      1: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-      2: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-      4: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "loki": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      1: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-      2: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-      4: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-      5: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "wanda": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      2: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-      4: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "doctor-strange": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      3: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-      4: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-      5: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "spider-man": {
-    main: "https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      3: "https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?q=80&w=2560&auto=format&fit=crop",
-      4: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "thanos": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-    phaseBackdrops: {
-      1: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-      2: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-      3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "doctor-doom": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "deadpool": {
-    main: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-  },
-  "wolverine": {
-    main: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-  },
-  "red-skull": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-    eras: {
-      "red-skull-ww2": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-      "red-skull-vormir": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-    },
-  },
-  "gorr": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "mysterio": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "vulture": {
-    main: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-  },
-  "wenwu": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-  },
-  "agatha-harkness": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "high-evolutionary": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "kingpin": {
-    main: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-  },
-  "red-hulk": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "zemo": {
-    main: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-  },
-  "ronan": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "cassandra-nova": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-  },
-  "reed-richards": {
-    main: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-  },
-  "sue-storm": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
-  "johnny-storm": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-  },
-  "ben-grimm": {
-    main: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-  },
-  "galactus": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "professor-x": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "magneto": {
-    main: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  },
-  "gambit": {
-    main: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-  },
-  "x-23": {
-    main: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-  },
-  "beast": {
-    main: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  },
+// Official Marvel Studios & MCU Character portraits and cinematic backdrops
+export const CHARACTER_IMAGE_MAP: Record<string, string> = {
+  // Original 6 Avengers & Core
+  "iron-man": "/images/characters/tony-stark.jpg",
+  "captain-america": "/images/characters/steve-rogers.jpg",
+  "thor": "/images/characters/thor.jpg",
+  "hulk": "/images/characters/hulk.jpg",
+  "bruce-banner": "/images/characters/bruce-banner.jpg",
+  "black-widow": "/images/characters/natasha-romanoff.jpg",
+  "hawkeye": "/images/characters/hawkeye.jpg",
+
+  // Spider-Heroes
+  "spider-man": "/images/characters/peter-parker.jpg",
+  "spiderman": "/images/characters/peter-parker.jpg",
+  "spider-man-maguire": "/images/characters/spider-man-tobey.jpg",
+  "spider-man-garfield": "/images/characters/spider-man-andrew.jpg",
+  "may-parker": "/images/characters/may-parker.jpg",
+
+  // Sorcerers & Mystics
+  "doctor-strange": "/images/characters/doctor-strange.jpg",
+  "wong": "/images/characters/wong.jpg",
+  "ancient-one": "/images/characters/ancient-one.jpg",
+  "clea": "/images/characters/clea.jpg",
+  "america-chavez": "/images/characters/america-chavez.jpg",
+
+  // Maximoff & Vision Lineage
+  "wanda": "/images/characters/wanda-maximoff.jpg",
+  "scarlet-witch": "/images/characters/wanda-maximoff.jpg",
+  "vision": "/images/characters/vision.jpg",
+  "white-vision": "/images/characters/white-vision.jpg",
+  "pietro-maximoff": "/images/characters/pietro-maximoff.jpg",
+  "quicksilver": "/images/characters/pietro-maximoff.jpg",
+  "billy-maximoff": "/images/characters/billy-maximoff.jpg",
+  "tommy-maximoff": "/images/characters/tommy-maximoff.jpg",
+  "agatha-harkness": "/images/characters/agatha-harkness.jpg",
+
+  // Super Soldiers & Shield
+  "bucky-barnes": "/images/characters/bucky-barnes.jpg",
+  "winter-soldier": "/images/characters/bucky-barnes.jpg",
+  "sam-wilson": "/images/characters/sam-wilson.jpg",
+  "falcon": "/images/characters/sam-wilson.jpg",
+  "peggy-carter": "/images/characters/peggy-carter.jpg",
+  "abraham-erskine": "/images/characters/abraham-erskine.jpg",
+  "red-guardian": "/images/characters/alexei-shostakov.jpg",
+  "alexei-shostakov": "/images/characters/alexei-shostakov.jpg",
+  "yelena-belova": "/images/characters/yelena-belova.jpg",
+  "melina-vostokoff": "/images/characters/melina-vostokoff.jpg",
+  "taskmaster": "/images/characters/dreykov.jpg",
+
+  // Stark & Armor Lineage
+  "war-machine": "/images/characters/howard-stark.jpg",
+  "howard-stark": "/images/characters/howard-stark.jpg",
+  "maria-stark": "/images/characters/maria-stark.jpg",
+  "pepper-potts": "/images/characters/pepper-potts.jpg",
+  "morgan-stark": "/images/characters/morgan-stark.jpg",
+
+  // Pym & Ant-Family
+  "ant-man": "/images/characters/scott-lang.jpg",
+  "wasp": "/images/characters/hope-van-dyne.jpg",
+  "hank-pym": "/images/characters/hank-pym.jpg",
+  "janet-van-dyne": "/images/characters/janet-van-dyne.jpg",
+  "cassie-lang": "/images/characters/cassie-lang.jpg",
+
+  // Wakanda & Talokan
+  "black-panther": "/images/characters/tchalla.jpg",
+  "tchalla": "/images/characters/tchalla.jpg",
+  "shuri": "/images/characters/shuri.jpg",
+  "ramonda": "/images/characters/ramonda.jpg",
+  "nakia": "/images/characters/nakia.jpg",
+  "tchaka": "/images/characters/tchaka.jpg",
+  "toussaint": "/images/characters/toussaint.jpg",
+  "namor": "/images/characters/namor.jpg",
+  "killmonger": "/images/characters/killmonger.jpg",
+
+  // Cosmic & Marvels
+  "captain-marvel": "/images/characters/captain-marvel.jpg",
+  "ms-marvel": "/images/characters/ms-marvel.jpg",
+  "the-watcher": "/images/characters/the-watcher.jpg",
+
+  // Guardians of the Galaxy
+  "peter-quill": "/images/characters/peter-quill.jpg",
+  "star-lord": "/images/characters/peter-quill.jpg",
+  "gamora": "/images/characters/gamora.jpg",
+  "drax": "/images/characters/drax.jpg",
+  "rocket-raccoon": "/images/characters/rocket-raccoon.jpg",
+  "groot": "/images/characters/groot.jpg",
+  "mantis": "/images/characters/mantis.jpg",
+  "nebula": "/images/characters/nebula.jpg",
+  "yondu": "/images/characters/yondu-udonta.jpg",
+  "yondu-udonta": "/images/characters/yondu-udonta.jpg",
+  "ego": "/images/characters/ego.jpg",
+  "meredith-quill": "/images/characters/meredith-quill.jpg",
+
+  // Asgardian Pantheon
+  "odin": "/images/characters/odin.jpg",
+  "frigga": "/images/characters/frigga.jpg",
+  "bor": "/images/characters/bor.jpg",
+  "hela": "/images/characters/hela.jpg",
+  "laufey": "/images/characters/laufey.jpg",
+  "jane-foster": "/images/characters/jane-foster.jpg",
+  "love": "/images/characters/love.jpg",
+
+  // TVA & Multiverse
+  "loki": "/images/characters/loki.jpg",
+  "sylvie": "/images/characters/sylvie.jpg",
+  "he-who-remains": "/images/characters/he-who-remains.jpg",
+  "victor-timely": "/images/characters/victor-timely.jpg",
+  "kang-the-conqueror": "/images/characters/kang-the-conqueror.jpg",
+  "immortus": "/images/characters/immortus.jpg",
+  "ravonna-renslayer": "/images/characters/ravonna-renslayer.jpg",
+
+  // Mutants & Fox Reality
+  "deadpool": "/images/characters/deadpool.jpg",
+  "wolverine": "/images/characters/wolverine.jpg",
+  "charles-xavier": "/images/characters/charles-xavier.jpg",
+  "professor-x": "/images/characters/charles-xavier.jpg",
+  "erik-lehnsherr": "/images/characters/erik-lehnsherr.jpg",
+  "magneto": "/images/characters/erik-lehnsherr.jpg",
+  "gambit": "/images/characters/gambit.jpg",
+  "x-23": "/images/characters/x-23.jpg",
+  "beast": "/images/characters/beast.jpg",
+  "cassandra-nova": "/images/characters/cassandra-nova.jpg",
+
+  // Fantastic Four
+  "reed-richards": "/images/characters/reed-richards.jpg",
+  "mister-fantastic": "/images/characters/reed-richards.jpg",
+  "sue-storm": "/images/characters/sue-storm.jpg",
+  "invisible-woman": "/images/characters/sue-storm.jpg",
+  "johnny-storm": "/images/characters/johnny-storm.jpg",
+  "human-torch": "/images/characters/johnny-storm.jpg",
+  "ben-grimm": "/images/characters/ben-grimm.jpg",
+  "the-thing": "/images/characters/ben-grimm.jpg",
+  "franklin-richards": "/images/characters/franklin-richards.jpg",
+  "galactus": "/images/characters/galactus.jpg",
+  "doctor-doom": "/images/characters/doctor-doom.jpg",
+
+  // Villains & Cosmic Antagonists
+  "thanos": "/images/characters/thanos.jpg",
+  "alars": "/images/characters/alars.jpg",
+  "eros": "/images/characters/eros.jpg",
+  "ultron": "/images/characters/ultron.jpg",
+  "green-goblin": "/images/characters/green-goblin.jpg",
+  "doc-ock": "/images/characters/doc-ock.jpg",
+  "doctor-octopus": "/images/characters/doc-ock.jpg",
+  "red-skull": "/images/characters/red-skull.jpg",
+  "gorr": "/images/characters/gorr.jpg",
+  "mysterio": "/images/characters/mysterio.jpg",
+  "vulture": "/images/characters/vulture.jpg",
+  "high-evolutionary": "/images/characters/high-evolutionary.jpg",
+  "red-hulk": "/images/characters/red-hulk.jpg",
+  "zemo": "/images/characters/zemo.jpg",
+  "ronan": "/images/characters/ronan.jpg",
+
+  // Ten Rings & Ta Lo
+  "shang-chi": "/images/characters/shang-chi.jpg",
+  "wenwu": "/images/characters/xu-wenwu.jpg",
+  "xu-wenwu": "/images/characters/xu-wenwu.jpg",
+  "xialing": "/images/characters/xu-xialing.jpg",
+  "xu-xialing": "/images/characters/xu-xialing.jpg",
+  "ying-li": "/images/characters/ying-li.jpg",
+
+  // Street Level Vigilantes
+  "matt-murdock": "/images/characters/matt-murdock.jpg",
+  "daredevil": "/images/characters/matt-murdock.jpg",
+  "frank-castle": "/images/characters/frank-castle.jpg",
+  "punisher": "/images/characters/frank-castle.jpg",
+  "wilson-fisk": "/images/characters/wilson-fisk.jpg",
+  "kingpin": "/images/characters/wilson-fisk.jpg",
+  "maya-lopez": "/images/characters/maya-lopez.jpg",
+  "echo": "/images/characters/maya-lopez.jpg",
+  "moon-knight": "/images/characters/moon-knight.jpg",
+
+  // Eternals
+  "ikaris": "/images/characters/ikaris.jpg",
+  "sersi": "/images/characters/sersi.jpg",
+  "thena": "/images/characters/thena.jpg",
+  "ajak": "/images/characters/ajak.jpg",
+  "gilgamesh": "/images/characters/gilgamesh.jpg"
 };
 
-const PHASE_DEFAULT_BACKDROPS: Record<number, string> = {
-  1: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=2560&auto=format&fit=crop",
-  2: "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2560&auto=format&fit=crop",
-  3: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=2560&auto=format&fit=crop",
-  4: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop",
-  5: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop",
-  6: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop",
-};
-
-export function getCharacterBackdrop(characterId: string, eraId?: string, phase?: number): string {
-  const charBackdrop = CHARACTER_BACKDROPS[characterId];
-  if (charBackdrop) {
-    if (eraId && charBackdrop.eras && charBackdrop.eras[eraId]) {
-      return charBackdrop.eras[eraId];
-    }
-    if (phase && charBackdrop.phaseBackdrops && charBackdrop.phaseBackdrops[phase]) {
-      return charBackdrop.phaseBackdrops[phase];
-    }
-    if (phase && PHASE_DEFAULT_BACKDROPS[phase]) {
-      return PHASE_DEFAULT_BACKDROPS[phase];
-    }
-    return charBackdrop.main;
+export function getCharacterBackdrop(characterId: string, _eraId?: string, _phase?: number): string {
+  const normId = characterId.toLowerCase().trim();
+  if (CHARACTER_IMAGE_MAP[normId]) {
+    return CHARACTER_IMAGE_MAP[normId];
   }
-  if (phase && PHASE_DEFAULT_BACKDROPS[phase]) {
-    return PHASE_DEFAULT_BACKDROPS[phase];
+  const stripped = normId.replace(/[^a-z0-9]/g, "-");
+  if (CHARACTER_IMAGE_MAP[stripped]) {
+    return CHARACTER_IMAGE_MAP[stripped];
   }
-  return "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2560&auto=format&fit=crop";
+  return `/images/characters/${normId}.jpg`;
 }
 
 export function hasCharacterBackdrop(characterId: string): boolean {
-  return Boolean(CHARACTER_BACKDROPS[characterId]);
+  const normId = characterId.toLowerCase().trim();
+  return Boolean(CHARACTER_IMAGE_MAP[normId] || CHARACTER_IMAGE_MAP[normId.replace(/[^a-z0-9]/g, "-")]);
 }

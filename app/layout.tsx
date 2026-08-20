@@ -30,14 +30,18 @@ export const metadata: Metadata = {
   },
 };
 
+import { DoomsdayTransitionProvider } from "@/components/doomsday/DoomsdayTransition";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-[#020204] text-stone-100 antialiased min-h-screen selection:bg-white selection:text-black">
         <TimelineStateProvider>
           <WatchedProvider>
-            <AmbientAudio />
-            {children}
+            <DoomsdayTransitionProvider>
+              <AmbientAudio />
+              {children}
+            </DoomsdayTransitionProvider>
           </WatchedProvider>
         </TimelineStateProvider>
       </body>

@@ -350,7 +350,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "maximoff",
     clusterLabel: "MAXIMOFF LINEAGE",
     phaseIntroduced: 4,
-    x: 1140,
+    x: 1130,
     y: 1040,
     bio: "Father of Wanda and Pietro, killed by a Stark Industries mortar in Novi Grad."
   },
@@ -362,7 +362,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "maximoff",
     clusterLabel: "MAXIMOFF LINEAGE",
     phaseIntroduced: 4,
-    x: 1360,
+    x: 1350,
     y: 1040,
     bio: "Mother of the Maximoff twins, instilled in Wanda a love for American television sitcoms."
   },
@@ -926,7 +926,7 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     cluster: "cosmic",
     clusterLabel: "COSMIC DYNASTIES",
     phaseIntroduced: 2,
-    x: 3080,
+    x: 2970,
     y: 560,
     characterId: "star-lord",
     bio: "Half-human, half-Celestial leader of the Guardians who fell in love with Gamora."
@@ -1626,8 +1626,10 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
   { id: "c_thanos_gamora", fromId: "thanos", toId: "gamora", type: "child", label: "Adopted", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
   // Thanos -> Nebula (Adopted)
   { id: "c_thanos_nebula", fromId: "thanos", toId: "nebula", type: "child", label: "Adopted", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
+  // Ego + Meredith Quill
+  { id: "c_ego_meredith", fromId: "ego", toId: "meredith-quill", type: "partner", label: "Union", phaseRevealed: 2, hasArrow: false },
   // Ego -> Peter Quill
-  { id: "c_ego_quill", fromId: "ego", toId: "peter-quill", type: "child", label: "Celestial Son", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
+  { id: "c_ego_quill", fromId: "ego", toId: "peter-quill", type: "child", label: "Celestial Son", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
   // Peter Quill + Gamora
   {
     id: "c_quill_gamora",

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
-import { Volume2, VolumeX } from "lucide-react";
 import SlideNavMenu from "./SlideNavMenu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
@@ -19,112 +18,16 @@ const BETEL_LEAVES = [
   { phase: 6, angle: 300, textX: 60.2, textY: 77 },
 ];
 
-// Exact Video Sources, Start Times & Marvel Studios Logo Stop Times
-export const PHASE_TRAILERS: Record<number, {
-  title: string;
-  year: number;
-  sources: string[];
-  startTime: number;
-  logoEndTime: number;
-}> = {
-  1: {
-    title: "Avengers: Endgame (2019)",
-    year: 2019,
-    sources: [
-      "/trailers/avengers-endgame.mp4",
-      "/trailers/endgame-intro.mp4",
-      "/media/trailers/avengers-endgame.mp4",
-      "/media/trailers/Avengers_ Endgame _ Marvel Intro _ 2019 _ HD(1080P_60FPS).mp4",
-    ],
-    startTime: 2.0,
-    logoEndTime: 36.2, // Marvel Studios Logo resolution
-  },
-  2: {
-    title: "Avengers: Age of Ultron (2015)",
-    year: 2015,
-    sources: [
-      "/trailers/Avengers_ Age of Ultron _ Marvel Intro _ 2015 _ HD(1080P_60FPS).mp4",
-      "/media/trailers/Avengers_ Age of Ultron _ Marvel Intro _ 2015 _ HD(1080P_60FPS).mp4",
-      "/trailers/avengers-age-of-ultron.mp4",
-      "/media/trailers/avengers-age-of-ultron.mp4",
-    ],
-    startTime: 2.0,
-    logoEndTime: 31.0, // Marvel Studios Logo resolution
-  },
-  3: {
-    title: "Avengers: Infinity War (2018)",
-    year: 2018,
-    sources: [
-      "/trailers/Avengers_ Infinity War _ Marvel Intro _ 2018 _ HD(1080P_60FPS).mp4",
-      "/media/trailers/Avengers_ Infinity War _ Marvel Intro _ 2018 _ HD(1080P_60FPS).mp4",
-      "/trailers/avengers-infinity-war.mp4",
-      "/media/trailers/avengers-infinity-war.mp4",
-    ],
-    startTime: 2.0,
-    logoEndTime: 35.0, // Marvel Studios Logo resolution
-  },
-  4: {
-    title: "Black Panther: Wakanda Forever (2022)",
-    year: 2022,
-    sources: [
-      "/trailers/Black Panther_ Wakanda Forever _ Marvel Intro _ 2022 _ 4K(1080P_60FPS).mp4",
-      "/media/trailers/Black Panther_ Wakanda Forever _ Marvel Intro _ 2022 _ 4K(1080P_60FPS).mp4",
-      "/trailers/black-panther.mp4",
-      "/media/trailers/black-panther.mp4",
-    ],
-    startTime: 7.0, // Starts from 0:07
-    logoEndTime: 35.0, // Marvel Studios Logo resolution
-  },
-  5: {
-    title: "Thunderbolts* (2025)",
-    year: 2025,
-    sources: [
-      "/trailers/Thunderbolts_ _ The New Avengers _ Marvel Intro _ 2025 _ HD(1080P_60FPS).mp4",
-      "/media/trailers/Thunderbolts_ _ The New Avengers _ Marvel Intro _ 2025 _ HD(1080P_60FPS).mp4",
-      "/trailers/thunderbolts.mp4",
-      "/media/trailers/thunderbolts.mp4",
-    ],
-    startTime: 2.0,
-    logoEndTime: 36.8, // Marvel Studios Logo resolution
-  },
-  6: {
-    title: "Avengers: Endgame (2019)",
-    year: 2019,
-    sources: [
-      "/trailers/avengers-endgame.mp4",
-      "/trailers/endgame-intro.mp4",
-      "/media/trailers/Avengers_ Endgame _ Marvel Intro _ 2019 _ HD(1080P_60FPS).mp4",
-      "/media/trailers/avengers-endgame.mp4",
-    ],
-    startTime: 2.0,
-    logoEndTime: 36.2, // Marvel Studios Logo resolution
-  },
-};
-
-// Default Home Screen Trailer when no phase is selected (Doctor Doom / Avengers: Doomsday)
-export const DOCTOR_DOOM_TRAILER = {
-  title: "Avengers: Doomsday · Doctor Doom (2026)",
-  year: 2026,
-  sources: [
-    "/trailers/doctor-doom.3840x2160.mp4",
-    "/media/trailers/doctor-doom.3840x2160.mp4",
-  ],
-  startTime: 0.0,
-  logoEndTime: 0,
-  isLoop: true,
-};
-
 export default function DarkIntroSelector({
   onContinue,
 }: {
   onContinue: (phase?: number, movieId?: string) => void;
 }) {
-  const { currentPhase, setCurrentPhase, toggleSound } = useTimelineState();
+  const { setCurrentPhase } = useTimelineState();
   const [activePhase, setActivePhase] = useState<number | null>(null);
   const [selectedMovieIndex, setSelectedMovieIndex] = useState<number>(0);
   const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
   const [hoveredMovieIndex, setHoveredMovieIndex] = useState<number | null>(null);
-  const [isAudioActive, setIsAudioActive] = useState<boolean>(true);
   const [navOpen, setNavOpen] = useState(false);
 
   // Cinematic opening sequence stages: initial -> centered -> ascending -> ready
@@ -147,10 +50,7 @@ export default function DarkIntroSelector({
   
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const audioRef = useRef<HTMLVideoElement | null>(null);
 
   // Movies for the currently CLICKED active phase
   const currentPhaseMovies: MCUEntry[] = useMemo(() => {
@@ -190,78 +90,11 @@ export default function DarkIntroSelector({
     return () => window.removeEventListener("resize", updateBounds);
   }, [selectedMovieIndex, activePhase, currentPhaseMovies.length]);
 
-  // Switch phase trailer video silently without interrupting the single continuous soundtrack
   const handleSelectPhase = (p: number) => {
     setActivePhase(p);
     setCurrentPhase(p);
     setSelectedMovieIndex(0);
-
-    const config = PHASE_TRAILERS[p] || PHASE_TRAILERS[6];
-    const targetStart = config.startTime ?? 2.0;
-
-    if (videoRef.current) {
-      videoRef.current.load();
-      videoRef.current.currentTime = targetStart;
-      videoRef.current.play().catch(() => {});
-    }
-
-    // Play single continuous soundtrack once a phase is selected
-    if (audioRef.current && isAudioActive) {
-      audioRef.current.muted = false;
-      audioRef.current.volume = 1.0;
-      audioRef.current.play().catch(() => {});
-    }
   };
-
-  // Play audio only when a phase is active; pause on home unselected state
-  useEffect(() => {
-    if (!activePhase) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    } else {
-      if (audioRef.current && isAudioActive) {
-        audioRef.current.muted = false;
-        audioRef.current.volume = 1.0;
-        audioRef.current.play().catch(() => {});
-      }
-    }
-  }, [activePhase, isAudioActive]);
-
-  const handleToggleAudio = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    const nextState = !isAudioActive;
-    setIsAudioActive(nextState);
-    if (audioRef.current) {
-      audioRef.current.muted = !nextState;
-      if (nextState) {
-        audioRef.current.volume = 1.0;
-        if (activePhase) {
-          audioRef.current.play().catch(() => {});
-        }
-      } else {
-        audioRef.current.pause();
-      }
-    }
-    toggleSound();
-  };
-
-  // Unmute audio on first user interaction if a phase is active
-  useEffect(() => {
-    const enableAudioOnInteraction = () => {
-      if (audioRef.current && isAudioActive && activePhase) {
-        audioRef.current.muted = false;
-        audioRef.current.volume = 1.0;
-        audioRef.current.play().catch(() => {});
-      }
-    };
-    window.addEventListener("click", enableAudioOnInteraction, { once: true });
-    window.addEventListener("keydown", enableAudioOnInteraction, { once: true });
-    return () => {
-      window.removeEventListener("click", enableAudioOnInteraction);
-      window.removeEventListener("keydown", enableAudioOnInteraction);
-    };
-  }, [isAudioActive, activePhase]);
 
   const handleSelectMovie = (idx: number) => {
     setSelectedMovieIndex(idx);
@@ -334,7 +167,6 @@ export default function DarkIntroSelector({
 
   const currentPhaseMeta = activePhase ? PHASES[activePhase - 1] || PHASES[0] : null;
   const activeMovie = activePhase && currentPhaseMovies.length > 0 ? currentPhaseMovies[selectedMovieIndex] || currentPhaseMovies[0] : null;
-  const activeTrailerConfig = activePhase ? PHASE_TRAILERS[activePhase] || PHASE_TRAILERS[6] : DOCTOR_DOOM_TRAILER;
 
   const handleContinue = () => {
     if (activePhase) {
@@ -347,73 +179,23 @@ export default function DarkIntroSelector({
     <div
       className="fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans"
     >
-      {/* Cinematic Background Video Layer (Visual only - ALWAYS MUTED) */}
+      {/* Cinematic Background Doctor Doom Live Video Layer */}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
       }`}>
         <video
-          key={activePhase ? `phase-${activePhase}` : "doctor-doom"}
-          ref={videoRef}
           autoPlay
-          loop={!activePhase}
-          muted={true}
+          loop
+          muted
           playsInline
-          preload="auto"
-          onLoadedMetadata={(e) => {
-            const vid = e.currentTarget;
-            vid.currentTime = activeTrailerConfig.startTime ?? 0.0;
-            vid.muted = true;
-          }}
-          onCanPlay={(e) => {
-            const vid = e.currentTarget;
-            vid.muted = true;
-          }}
-          onEnded={(e) => {
-            const vid = e.currentTarget;
-            if (!activePhase) {
-              vid.play().catch(() => {});
-              return;
-            }
-            vid.pause();
-            if (activeTrailerConfig.logoEndTime) {
-              vid.currentTime = activeTrailerConfig.logoEndTime;
-            }
-          }}
-          onTimeUpdate={(e) => {
-            const vid = e.currentTarget;
-            if (!activePhase) return;
-            const targetLogoEnd = activeTrailerConfig.logoEndTime ?? (vid.duration ? vid.duration - 0.4 : 0);
-            if (targetLogoEnd > 0 && vid.currentTime >= targetLogoEnd) {
-              vid.pause();
-              vid.currentTime = targetLogoEnd;
-            }
-          }}
-          className="w-full h-full object-cover opacity-60 filter brightness-95 contrast-125 transition-opacity duration-700"
+          poster="/images/doomsday-bg.jpg"
+          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-90 filter brightness-105 contrast-110 select-none"
         >
-          {activeTrailerConfig.sources.map((src) => (
-            <source key={src} src={src} type="video/mp4" />
-          ))}
+          <source src="/trailers/doctor-doom.3840x2160.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020204] via-transparent to-[#020204]/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-[#000000]/25" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
-
-      {/* Single Continuous Soundtrack Layer from WhatsApp Video - Plays only when Phase is selected, never restarts across phase changes */}
-      <video
-        ref={audioRef}
-        loop
-        playsInline
-        preload="auto"
-        muted={!isAudioActive}
-        className="hidden pointer-events-none w-0 h-0 opacity-0 absolute"
-        onLoadedMetadata={(e) => {
-          e.currentTarget.volume = 1.0;
-        }}
-      >
-        <source src="/trailers/marvel-theme-soundtrack.mp4" type="video/mp4" />
-        <source src="/trailers/whatsapp-audio.mp4" type="video/mp4" />
-        <source src="/trailers/WhatsApp%20Video%202026-08-17%20at%2010.11.32%20AM.mp4" type="video/mp4" />
-        <source src="/trailers/avengers-2012.mp4" type="video/mp4" />
-      </video>
 
       {/* Dynamic Background Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
@@ -673,63 +455,11 @@ export default function DarkIntroSelector({
       <footer className={`relative z-10 w-full px-6 sm:px-14 py-3 sm:py-4 flex items-center justify-end text-[9px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
         introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-4"
       }`}>
-        <style>{`
-          @keyframes eqBar1 {
-            0% { height: 2px; }
-            50% { height: 11px; }
-            100% { height: 4px; }
-          }
-          @keyframes eqBar2 {
-            0% { height: 13px; }
-            50% { height: 4px; }
-            100% { height: 14px; }
-          }
-          @keyframes eqBar3 {
-            0% { height: 3px; }
-            50% { height: 10px; }
-            100% { height: 3px; }
-          }
-          @keyframes eqBar4 {
-            0% { height: 9px; }
-            50% { height: 2px; }
-            100% { height: 12px; }
-          }
-          .eq-anim-1 { animation: eqBar1 0.75s ease-in-out infinite alternate; }
-          .eq-anim-2 { animation: eqBar2 0.65s ease-in-out infinite alternate; }
-          .eq-anim-3 { animation: eqBar3 0.85s ease-in-out infinite alternate; }
-          .eq-anim-4 { animation: eqBar4 0.6s ease-in-out infinite alternate; }
-        `}</style>
-        
-        <button
-          onClick={handleToggleAudio}
-          className="group flex items-center gap-2 text-stone-400 hover:text-white transition-colors cursor-pointer select-none bg-transparent p-0 border-none outline-none"
-          title={isAudioActive ? "Pause Sacred Timeline Soundtrack" : "Play Sacred Timeline Soundtrack"}
-          aria-label={isAudioActive ? "Pause Soundtrack" : "Play Soundtrack"}
-        >
-          <span className={`tracking-[0.25em] font-mono text-[9px] sm:text-[10px] transition-colors ${
-            isAudioActive ? "text-stone-300 group-hover:text-white" : "text-stone-600 group-hover:text-stone-400"
-          }`}>
+        <div className="flex items-center gap-2 text-stone-400 select-none">
+          <span className="tracking-[0.25em] font-mono text-[9px] sm:text-[10px] text-stone-400 font-bold uppercase">
             THE SACRED TIMELINE
           </span>
-          <div className="flex items-end gap-[2.5px] h-3.5 ml-1.5 overflow-hidden">
-            <span
-              className={`w-[1px] bg-white/70 ${isAudioActive ? "eq-anim-1" : "h-[3px] opacity-40"}`}
-              style={{ animationPlayState: isAudioActive ? "running" : "paused" }}
-            />
-            <span
-              className={`w-[1px] bg-white shadow-[0_0_6px_#ffffff] ${isAudioActive ? "eq-anim-2" : "h-[5px] opacity-40"}`}
-              style={{ animationPlayState: isAudioActive ? "running" : "paused" }}
-            />
-            <span
-              className={`w-[1px] bg-white/60 ${isAudioActive ? "eq-anim-3" : "h-[2px] opacity-40"}`}
-              style={{ animationPlayState: isAudioActive ? "running" : "paused" }}
-            />
-            <span
-              className={`w-[1px] bg-white/90 ${isAudioActive ? "eq-anim-4" : "h-[4px] opacity-40"}`}
-              style={{ animationPlayState: isAudioActive ? "running" : "paused" }}
-            />
-          </div>
-        </button>
+        </div>
       </footer>
 
       {/* Slide-out Navigation Drawer Menu */}
