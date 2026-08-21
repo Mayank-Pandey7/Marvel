@@ -623,10 +623,9 @@ export default function DarkFamilyTree({
 
     const w = CARD_W; // 110
     const h = CARD_H; // 142
+    const totalH = CARD_H + 44; // 186px (includes 10px margin + name + subtitle)
     const fromCenterX = fromNode.x + w / 2;
-    const fromCenterY = fromNode.y + h / 2;
     const toCenterX = toNode.x + w / 2;
-    const toCenterY = toNode.y + h / 2;
 
     // 1. PARTNER (Marriage / Couple Horizontal Bridge)
     if (conn.type === "partner") {
@@ -652,7 +651,7 @@ export default function DarkFamilyTree({
       );
 
       let startX = fromCenterX;
-      let startY = fromNode.y + h; // Bottom edge of parent card
+      let startY = fromNode.y + totalH; // Originates safely below character name & subtitle labels
 
       // If parent is married, originate the child lineage stem from the marriage junction knot
       if (partnerConn) {
@@ -680,8 +679,9 @@ export default function DarkFamilyTree({
         };
       }
 
-      // Smooth organic tree branch through the clear corridor between row tiers (never touching names!)
-      const midY = conn.midY || (fromNode.y + h + toNode.y) / 2;
+      // Smooth organic tree branch strictly in clear corridor below all text labels
+      const parentBottom = Math.max(fromNode.y + totalH, startY);
+      const midY = conn.midY || (parentBottom + toNode.y) / 2;
       const r = Math.min(12, Math.abs(endX - startX) / 2, Math.abs(endY - midY) / 2);
       const dirX = endX > startX ? 1 : -1;
 
@@ -747,10 +747,11 @@ export default function DarkFamilyTree({
 
       // Otherwise stepped down from bottom to top through clear mid-corridor
       const startX = fromCenterX;
-      const startY = fromNode.y + h;
+      const startY = fromNode.y + totalH;
       const endX = toCenterX;
       const endY = toNode.y;
-      const midY = conn.midY || (fromNode.y + h + toNode.y) / 2;
+      const parentBottom = fromNode.y + totalH;
+      const midY = conn.midY || (parentBottom + toNode.y) / 2;
       const r = 10;
       const dirX = endX > startX ? 1 : -1;
 
@@ -763,11 +764,12 @@ export default function DarkFamilyTree({
     }
 
     // Default smooth tree step
-    const midY = (fromNode.y + h + toNode.y) / 2;
+    const parentBottom = fromNode.y + totalH;
+    const midY = (parentBottom + toNode.y) / 2;
     const r = 10;
     const dirX = toCenterX > fromCenterX ? 1 : -1;
     return {
-      path: `M ${fromCenterX} ${fromNode.y + h} V ${midY - r} Q ${fromCenterX} ${midY} ${fromCenterX + dirX * r} ${midY} H ${toCenterX - dirX * r} Q ${toCenterX} ${midY} ${toCenterX} ${midY + r} V ${toNode.y}`,
+      path: `M ${fromCenterX} ${fromNode.y + totalH} V ${midY - r} Q ${fromCenterX} ${midY} ${fromCenterX + dirX * r} ${midY} H ${toCenterX - dirX * r} Q ${toCenterX} ${midY} ${toCenterX} ${midY + r} V ${toNode.y}`,
       arrow: { x: toCenterX, y: toNode.y - 3, dir: "down" },
     };
   };
@@ -1138,12 +1140,12 @@ export default function DarkFamilyTree({
                 )}
               </div>
 
-              {/* Character Name & Subtitle Beneath Card (100% Unclipped) */}
-              <div className="mt-2.5 flex flex-col items-center text-center w-full max-w-[160px] px-1 pointer-events-none">
+              {/* Character Name & Subtitle Beneath Card (100% Protected & Clear) */}
+              <div className="mt-2 flex flex-col items-center text-center w-full max-w-[160px] px-1 pointer-events-none z-20">
                 <h3
-                  className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 w-full transition-colors ${
+                  className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 max-w-full px-2 py-0.5 rounded bg-black/85 backdrop-blur-[2px] transition-colors ${
                     isSelected || isHovered
-                      ? "text-white"
+                      ? "text-white ring-1 ring-white/30"
                       : "text-stone-300"
                   }`}
                   title={node.name}
@@ -1151,7 +1153,7 @@ export default function DarkFamilyTree({
                   {node.name}
                 </h3>
                 {node.subtitle && (
-                  <p className="text-[8px] sm:text-[8.5px] font-mono tracking-widest uppercase text-stone-400 line-clamp-1 w-full mt-0.5">
+                  <p className="text-[8px] sm:text-[8.5px] font-mono tracking-widest uppercase text-stone-400 line-clamp-1 max-w-full px-1.5 py-0.5 rounded bg-black/85 backdrop-blur-[2px] mt-0.5">
                     {node.subtitle}
                   </p>
                 )}
