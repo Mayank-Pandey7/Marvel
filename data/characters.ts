@@ -50,24 +50,71 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-        eraId: "iron-man-origin",
-        phase: 1,
-        title: "Iron Man: The Genesis (2008–2012)",
-        year: "2008–2012",
-        universe: "Earth-616",
-        description: "Built the Mark I armor in a cave, announced 'I am Iron Man' to the world, and redirected the nuclear missile into the Chitauri portal.",
-        keyMoments: ["Built Mark I in cave with Yinsen", "'I am Iron Man'", "Flew the nuke into the Chitauri wormhole"]
+            "eraId": "iron-man-origins-phase-1",
+            "phase": 1,
+            "title": "The Genesis & Avengers Dawn (2008–2012)",
+            "year": "2008–2012",
+            "universe": "Earth-616",
+            "description": "Escaped Afghanistan in the Mark I, announced 'I am Iron Man' to the press, synthesized a new element, and redirected a nuclear warhead into the Chitauri wormhole.",
+            "keyMoments": [
+                  "Forged Mark I scrap armor in the cave with Yinsen",
+                  "'I am Iron Man'",
+                  "Flew the nuke into the Chitauri wormhole"
+            ]
       },
       {
-        eraId: "iron-man-endgame",
-        phase: 3,
-        title: "Iron Man: The Snap (2018–2023)",
-        year: "2018–2023",
-        universe: "Earth-616",
-        description: "Devised the Time Heist GPS, reunited with his father Howard in 1970, and performed the final snap to defeat Thanos.",
-        keyMoments: ["Invented GPS for quantum time travel", "Reunited with Howard Stark in 1970", "'And I... am... Iron Man'"]
+            "eraId": "iron-man-escalation-phase-2",
+            "phase": 2,
+            "title": "House Party Protocol & Ultron (2013–2015)",
+            "year": "2013–2015",
+            "universe": "Earth-616",
+            "description": "Battled PTSD through 35 autonomous suits in the House Party Protocol, built the Hulkbuster with Bruce Banner, and created Vision to destroy the rogue AI Ultron.",
+            "keyMoments": [
+                  "Activated the 35-suit House Party Protocol on the oil rig",
+                  "Deployed Veronica Hulkbuster armor in Johannesburg",
+                  "Brought Vision online with the Mind Stone"
+            ]
+      },
+      {
+            "eraId": "iron-man-reckoning-phase-3",
+            "phase": 3,
+            "title": "Civil War & The Final Snap (2016–2023)",
+            "year": "2016–2023",
+            "universe": "Earth-616",
+            "description": "Championed the Sokovia Accords, mentored Peter Parker, fought Thanos on Titan with Bleeding Edge nanotech, solved quantum time travel, and saved the universe.",
+            "keyMoments": [
+                  "Airport battle and Siberian bunker duel with Steve and Bucky",
+                  "Drew blood from Thanos with nanotech armor on Titan",
+                  "'And I... am... Iron Man'"
+            ]
+      },
+      {
+            "eraId": "iron-man-legacy-phase-4",
+            "phase": 4,
+            "title": "The Immortal Legacy & E.D.I.T.H. (2024)",
+            "year": "2024",
+            "universe": "Earth-616",
+            "description": "Posthumously guided the next generation through E.D.I.T.H. tactical satellites and Stark Industries advanced aerospace defense networks.",
+            "keyMoments": [
+                  "Bequeathed E.D.I.T.H. glasses to Peter Parker",
+                  "Global murals and monuments erected in Stark's honor",
+                  "Stark Industries tech safeguarded by Pepper Potts and Happy Hogan"
+            ]
+      },
+      {
+            "eraId": "iron-man-resonance-phase-5",
+            "phase": 5,
+            "title": "Armor Wars & Multiversal Resonance (2025–2026)",
+            "year": "2025–2026",
+            "universe": "Earth-616",
+            "description": "Tony's proprietary arc reactor technology and armor blueprints remain the ultimate defensive benchmark against rogue factions and multiversal incursions.",
+            "keyMoments": [
+                  "Rhodey safeguarding Stark armor tech across military channels",
+                  "Ironheart synthesizing next-generation bio-nanotech suits",
+                  "Stark Tower repurposed for multiversal tracking"
+            ]
       }
-    ],
+],
     artifactsPossessed: ["nano-gauntlet", "space-stone", "mind-stone", "reality-stone", "power-stone", "time-stone", "soul-stone"],
     linkedNexusEvents: ["nexus-iron-man-snap", "nexus-time-heist"],
     entries: ["iron-man", "iron-man-2", "avengers", "iron-man-3", "avengers-age-of-ultron", "captain-america-civil-war", "spider-man-homecoming", "avengers-infinity-war", "avengers-endgame"]
@@ -92,24 +139,71 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-        eraId: "cap-ww2",
-        phase: 1,
-        title: "The First Avenger (1942–1945)",
-        year: "1942–1945",
-        universe: "Earth-616",
-        description: "Transformed by Project Rebirth, liberated Allied POWs, defeated Red Skull, and crashed the Valkyrie into Arctic ice.",
-        keyMoments: ["Injected with Erskine's Super Soldier Serum", "Defeated Red Skull on the Valkyrie", "'I can do this all day'"]
+            "eraId": "cap-first-avenger-phase-1",
+            "phase": 1,
+            "title": "The First Avenger (1942–2012)",
+            "year": "1942–2012",
+            "universe": "Earth-616",
+            "description": "Injected with Erskine's Super Soldier Serum, liberated 400 Allied POWs, defeated Red Skull, crashed the Valkyrie into the ice, and awoke in 21st century New York.",
+            "keyMoments": [
+                  "Project Rebirth transformation in Brooklyn",
+                  "Led the Howling Commandos across occupied Europe",
+                  "'I had a date...'"
+            ]
       },
       {
-        eraId: "cap-worthy",
-        phase: 3,
-        title: "The Worthy Captain (2018–2023)",
-        year: "2018–2023",
-        universe: "Earth-616",
-        description: "Led the Battle of Earth, lifted Thor's hammer Mjolnir, uttered 'Avengers Assemble', and passed the shield to Sam Wilson.",
-        keyMoments: ["Summoned Mjolnir against Thanos", "'Avengers... Assemble'", "Returned the 6 Infinity Stones to their timelines"]
+            "eraId": "cap-winter-soldier-phase-2",
+            "phase": 2,
+            "title": "The Winter Soldier & Hydra Fall (2014–2015)",
+            "year": "2014–2015",
+            "universe": "Earth-616",
+            "description": "Exposed Hydra's 70-year infiltration of S.H.I.E.L.D., survived the Triskelion elevator ambush, and fought his brainwashed best friend Bucky Barnes.",
+            "keyMoments": [
+                  "'Before we get started, does anyone want to get out?'",
+                  "Shield street brawl against the Winter Soldier",
+                  "'I'm with you 'til the end of the line'"
+            ]
+      },
+      {
+            "eraId": "cap-civil-war-endgame-phase-3",
+            "phase": 3,
+            "title": "Civil War Nomad & The Worthy Snap (2016–2023)",
+            "year": "2016–2023",
+            "universe": "Earth-616",
+            "description": "Refused the Sokovia Accords, fought as an underground vigilante, lifted Thor's hammer Mjolnir against Thanos, and lived a full lifetime with Peggy Carter.",
+            "keyMoments": [
+                  "Bicep helicopter curl in Berlin",
+                  "Summoned Mjolnir against Thanos in 2023",
+                  "'Avengers... Assemble'"
+            ]
+      },
+      {
+            "eraId": "cap-torch-passed-phase-4",
+            "phase": 4,
+            "title": "Passing the Mantle to Sam Wilson (2024)",
+            "year": "2024",
+            "universe": "Earth-616",
+            "description": "Entrusted his circular vibranium shield to Sam Wilson, inspiring a new era of principled heroism without super soldier serum.",
+            "keyMoments": [
+                  "Passed the shield on the park bench by the lake",
+                  "'How does it feel?' 'Like it's someone else's.' 'It isn't.'",
+                  "Legendary Smithsonian exhibition updated"
+            ]
+      },
+      {
+            "eraId": "cap-eternal-symbol-phase-5",
+            "phase": 5,
+            "title": "Brave New World & Red Hulk Crisis (2025–2026)",
+            "year": "2025–2026",
+            "universe": "Earth-616",
+            "description": "Steve Rogers' ethical legacy serves as the guiding bedrock as Sam Wilson confronts global conspiracies and the monstrous Red Hulk.",
+            "keyMoments": [
+                  "Sam Wilson upholding Steve's moral code against global militarization",
+                  "Memorial tributes worldwide",
+                  "Sacred timeline anchor status confirmed"
+            ]
       }
-    ],
+],
     artifactsPossessed: ["vibranium-shield", "mjolnir"],
     linkedNexusEvents: ["nexus-worthy-cap", "nexus-time-heist"],
     entries: ["captain-america-first-avenger", "avengers", "captain-america-winter-soldier", "avengers-age-of-ultron", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame"]
@@ -134,24 +228,71 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-        eraId: "thor-god-of-thunder",
-        phase: 1,
-        title: "Thor: The Worthy Prince (2011–2012)",
-        year: "2011–2012",
-        universe: "Earth-616",
-        description: "Banished by Odin to New Mexico; reclaimed Mjolnir to save Earth and Asgard.",
-        keyMoments: ["Reclaimed Mjolnir in the rain", "Fought Hulk on the Helicarrier", "Brought Loki to Asgardian justice"]
+            "eraId": "thor-prince-phase-1",
+            "phase": 1,
+            "title": "The Worthy Prince (2011–2012)",
+            "year": "2011–2012",
+            "universe": "Earth-616",
+            "description": "Cast down to Midgard by Odin to learn humility; proved his worthiness to reclaim Mjolnir and united with Earth's heroes in the Battle of New York.",
+            "keyMoments": [
+                  "Reclaimed Mjolnir in the pouring rain in New Mexico",
+                  "Defeated the Destroyer automaton",
+                  "Brought Loki and the Tesseract home to Asgard"
+            ]
       },
       {
-        eraId: "thor-ragnarok-infinity",
-        phase: 3,
-        title: "Thor: Ragnarok & Stormbreaker (2017–2019)",
-        year: "2017–2019",
-        universe: "Earth-616",
-        description: "Awakened internal lightning without Mjolnir, forged Stormbreaker in Nidavellir, and decimated the Outrider army in Wakanda.",
-        keyMoments: ["'Are you Thor, God of Hammers?'", "Forged Stormbreaker with Eitri", "Arrived in Wakanda with lightning blast"]
+            "eraId": "thor-dark-world-phase-2",
+            "phase": 2,
+            "title": "The Dark World & Aether Convergence (2013–2015)",
+            "year": "2013–2015",
+            "universe": "Earth-616",
+            "description": "Saved Jane Foster from the parasitic Reality Stone, stopped Malekith during the Greenwich Convergence, and witnessed the vision of the Infinity Stones.",
+            "keyMoments": [
+                  "Battle of Svartalfheim alongside Loki",
+                  "Defeated Malekith across dimensional portals in London",
+                  "Received the prophetic vision in the Water of Sights"
+            ]
+      },
+      {
+            "eraId": "thor-ragnarok-endgame-phase-3",
+            "phase": 3,
+            "title": "Ragnarok & Stormbreaker (2017–2023)",
+            "year": "2017–2023",
+            "universe": "Earth-616",
+            "description": "Lost Mjolnir and an eye to Hela, awakened internal lightning, forged the god-killing axe Stormbreaker in Nidavellir, and decapitated Thanos.",
+            "keyMoments": [
+                  "'Are you Thor, God of Hammers?'",
+                  "Forged Stormbreaker with the dwarf king Eitri",
+                  "Arrived in Wakanda with a thunderous lightning strike"
+            ]
+      },
+      {
+            "eraId": "thor-love-and-thunder-phase-4",
+            "phase": 4,
+            "title": "Love and Thunder & Eternity (2022)",
+            "year": "2022",
+            "universe": "Earth-616",
+            "description": "Fought alongside the Mighty Thor (Jane Foster) to vanquish Gorr the God Butcher, reached the cosmic wishing well Eternity, and adopted Love.",
+            "keyMoments": [
+                  "Reunited with Jane Foster wielding reforged Mjolnir",
+                  "Stole Zeus's Thunderbolt in Omnipotence City",
+                  "Adopted Gorr's resurrected daughter Love"
+            ]
+      },
+      {
+            "eraId": "thor-cosmic-vanguard-phase-5",
+            "phase": 5,
+            "title": "The Cosmic Vanguard (2025–2026)",
+            "year": "2025–2026",
+            "universe": "Earth-616",
+            "description": "Travels the cosmos defending endangered alien civilizations, wielding both Stormbreaker and Zeus's Thunderbolt against the looming multiversal collapse.",
+            "keyMoments": [
+                  "Mentoring Love in cosmic combat",
+                  "Defending Asgardian refugees across the galaxy",
+                  "Preparing for the Doomsday incursion convergence"
+            ]
       }
-    ],
+],
     artifactsPossessed: ["mjolnir", "stormbreaker"],
     linkedNexusEvents: ["nexus-stormbreaker-forge"],
     entries: ["thor", "avengers", "thor-dark-world", "avengers-age-of-ultron", "thor-ragnarok", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder"]
@@ -176,24 +317,71 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-        eraId: "hulk-avengers",
-        phase: 1,
-        title: "The Green Goliath (2008–2012)",
-        year: "2008–2012",
-        universe: "Earth-616",
-        description: "Controlled his anger to reveal his secret: 'I'm always angry', taking down the giant Leviathan in New York.",
-        keyMoments: ["'That's my secret, Cap... I'm always angry'", "Smashed Loki at Stark Tower"]
+            "eraId": "hulk-origins-phase-1",
+            "phase": 1,
+            "title": "The Green Goliath (2008–2012)",
+            "year": "2008–2012",
+            "universe": "Earth-616",
+            "description": "Hunted by General Ross, Bruce controlled his anger in Harlem and revealed his secret in New York: 'I'm always angry', taking down the giant Chitauri Leviathan.",
+            "keyMoments": [
+                  "Harlem showdown against Abomination",
+                  "'That's my secret, Cap... I'm always angry'",
+                  "Smashed Loki at Stark Tower"
+            ]
       },
       {
-        eraId: "smart-hulk-snap",
-        phase: 3,
-        title: "Smart Hulk & The Restoration Snap (2023)",
-        year: "2023",
-        universe: "Earth-616",
-        description: "Merged the brains and the brawn; withstood lethal gamma radiation to bring back the vanished trillions.",
-        keyMoments: ["Met the Ancient One in 2012 New York", "Snapped the Nano Gauntlet to bring everyone back"]
+            "eraId": "hulk-escalation-phase-2",
+            "phase": 2,
+            "title": "Sokovia & The Quinjet Exile (2015)",
+            "year": "2015",
+            "universe": "Earth-616",
+            "description": "Under Wanda's mental spell in Johannesburg, Hulk clashed with the Hulkbuster before aiding in Ultron's defeat and disappearing into space aboard a cloaked Quinjet.",
+            "keyMoments": [
+                  "Brutal Johannesburg duel with Tony's Hulkbuster",
+                  "Defended the Sokovian Vibranium Core",
+                  "Deactivated Quinjet comms to disappear into the cosmos"
+            ]
+      },
+      {
+            "eraId": "hulk-ragnarok-endgame-phase-3",
+            "phase": 3,
+            "title": "Sakaar Champion & Smart Hulk Snap (2017–2023)",
+            "year": "2017–2023",
+            "universe": "Earth-616",
+            "description": "Ruled as Grandmaster's undefeated gladiator champion on Sakaar, reconciled his dual identity into Smart Hulk, and survived the Nano Gauntlet Snap restoring half the universe.",
+            "keyMoments": [
+                  "Gladiator duel against Thor in the Contest of Champions",
+                  "Merged the brains and brawn into Smart Hulk",
+                  "Survived lethal gamma radiation to perform the Blip restoration snap"
+            ]
+      },
+      {
+            "eraId": "hulk-mentorship-phase-4",
+            "phase": 4,
+            "title": "She-Hulk Mentorship & Skaar (2022)",
+            "year": "2022",
+            "universe": "Earth-616",
+            "description": "Engineered a secluded laboratory in Mexico to train his cousin Jennifer Walters (She-Hulk) in controlling gamma abilities, and later welcomed his Sakaaran son Skaar.",
+            "keyMoments": [
+                  "Built the Mexico tropical recovery retreat with Tony Stark",
+                  "Trained Jennifer Walters in thunderclaps and boulder tossing",
+                  "Introduced his son Skaar to the family"
+            ]
+      },
+      {
+            "eraId": "hulk-world-war-phase-5",
+            "phase": 5,
+            "title": "Gamma Reckoning & Red Hulk (2025–2026)",
+            "year": "2025–2026",
+            "universe": "Earth-616",
+            "description": "As gamma technology proliferates across global geopolitics and President Ross transforms into the Red Hulk, Bruce serves as the leading scientific mind of the new era.",
+            "keyMoments": [
+                  "Investigated unauthorized worldwide gamma research",
+                  "Confronted the weaponization of the Leader's blood samples",
+                  "Defended against planetary-level gamma anomalies"
+            ]
       }
-    ],
+],
     artifactsPossessed: ["nano-gauntlet"],
     linkedNexusEvents: ["nexus-restoration-snap"],
     entries: ["the-incredible-hulk", "avengers", "avengers-age-of-ultron", "thor-ragnarok", "avengers-infinity-war", "avengers-endgame", "she-hulk"]
@@ -295,24 +483,71 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-        eraId: "loki-prince",
-        phase: 1,
-        title: "Loki: The Fallen Prince (2011–2012)",
-        year: "2011–2012",
-        universe: "Earth-616",
-        description: "Discovered his true lineage as Laufey's son. Led the Chitauri invasion with the Mind and Space Stones.",
-        keyMoments: ["Broke the Rainbow Bridge", "'I am a god, you dull creature'", "Mind-controlled Hawkeye & Selvig"]
+            "eraId": "loki-invasion-phase-1",
+            "phase": 1,
+            "title": "The Invasion of Midgard (2011–2012)",
+            "year": "2011–2012",
+            "universe": "Earth-616",
+            "description": "Fell from the broken Bifrost into Thanos's domain; armed with the Mind Stone Scepter, led the Chitauri invasion of New York before being defeated by the Avengers.",
+            "keyMoments": [
+                  "Stole the Tesseract from the underground SHIELD facility",
+                  "Stuttgart opera house kneeling speech",
+                  "Smashed into the floor of Stark Tower by Hulk"
+            ]
       },
       {
-        eraId: "loki-god-of-stories",
-        phase: 5,
-        title: "Loki: God of Stories (Citadel / Yggdrasil)",
-        year: "Eternal",
-        universe: "Yggdrasil Multiverse",
-        description: "Spent centuries mastering physics and temporal mechanics. Sacrificed personal companionship to destroy the Loom and weave all dying timelines with his bare hands.",
-        keyMoments: ["Tore open the Temporal Loom", "Weaved all timelines with green temporal magic", "Ascended the lonely throne at the end of time"]
+            "eraId": "loki-dark-world-phase-2",
+            "phase": 2,
+            "title": "Asgardian Deception & The Throne (2013)",
+            "year": "2013",
+            "universe": "Earth-616",
+            "description": "Allied with Thor to avenge their mother Frigga, faked his death in Svartalfheim, and secretly placed Odin in a spell to rule Asgard disguised as the All-Father.",
+            "keyMoments": [
+                  "Grief in the Asgardian prison cell after Frigga's death",
+                  "Faked death taking down Kurse",
+                  "Revealed sitting on the throne of Asgard in disguise"
+            ]
+      },
+      {
+            "eraId": "loki-ragnarok-infinity-phase-3",
+            "phase": 3,
+            "title": "Savior of Asgard & Ultimate Sacrifice (2017–2018)",
+            "year": "2017–2018",
+            "universe": "Earth-616",
+            "description": "Arrived with the Statesman to evacuate Asgard from Hela, reclaimed the Tesseract, and was killed trying to assassinate Thanos to protect Thor.",
+            "keyMoments": [
+                  "'Your savior is here!' during the Battle of the Rainbow Bridge",
+                  "Summoned Surtur to initiate Ragnarok",
+                  "'The sun will shine on us again, brother'"
+            ]
+      },
+      {
+            "eraId": "loki-tva-phase-4",
+            "phase": 4,
+            "title": "The Time Variance Authority & Sylvie (2021)",
+            "year": "2021",
+            "universe": "Earth-616",
+            "description": "2012 Variant arrested by the TVA, learned the truth about the Sacred Timeline, teamed with Sylvie, and confronted He Who Remains at the Citadel.",
+            "keyMoments": [
+                  "Witnessed Infinity Stones used as paperweights at the TVA",
+                  "Enchanted Alioth alongside Sylvie in the Void",
+                  "Pushed through the time door back to the altered TVA"
+            ]
+      },
+      {
+            "eraId": "loki-god-of-stories-phase-5",
+            "phase": 5,
+            "title": "God of Stories & The World Tree (2023)",
+            "year": "2023",
+            "universe": "Earth-616",
+            "description": "Mastered time-slipping, destroyed the mechanical Temporal Loom, and seized infinite dying timeline branches with his bare hands to weave the living Yggdrasil tree.",
+            "keyMoments": [
+                  "Controlled his time-slipping across centuries of TVA history",
+                  "'I know what I want. I know what kind of god I need to be.'",
+                  "Ascended the Throne of Time to hold the Multiverse together for eternity"
+            ]
       }
-    ],
+],
     artifactsPossessed: ["space-stone", "mind-stone", "tva-tempad"],
     linkedNexusEvents: ["nexus-time-heist", "nexus-citadel-death", "nexus-god-of-stories"],
     entries: ["thor", "avengers", "thor-dark-world", "thor-ragnarok", "avengers-infinity-war", "loki-s1", "loki-s2"]
