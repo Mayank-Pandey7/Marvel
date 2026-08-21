@@ -38,7 +38,7 @@ export default function SearchInvestigation({
   }, [isOpen, onClose]);
 
   const filteredMovies = useMemo(() => {
-    if (!query.trim()) return ALL_MOVIES_FLAT;
+    if (!query.trim()) return [];
     const q = query.toLowerCase().trim();
     return ALL_MOVIES_FLAT.filter(
       (m) =>
@@ -113,13 +113,15 @@ export default function SearchInvestigation({
           onTouchMove={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase px-2 mb-2">
-            <span>{filteredMovies.length} CHRONOLOGY ENTRIES</span>
+            <span>{filteredMovies.length} TIMELINE MATCHES</span>
             {query && <span>FILTERED</span>}
           </div>
 
           {filteredMovies.length === 0 ? (
             <div className="py-16 text-center text-xs font-mono text-stone-500 tracking-[0.2em] uppercase">
-              No anomalies found for &ldquo;{query}&rdquo; in the Sacred Timeline.
+              {query
+                ? `No anomalies found for "${query}" in the Sacred Timeline.`
+                : "Type to search MCU entries across all 6 phases..."}
             </div>
           ) : (
             filteredMovies.map((movie) => (
