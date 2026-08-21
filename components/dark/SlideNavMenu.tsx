@@ -164,13 +164,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                   >
                     <span className="text-stone-600">•</span> Multiverse Map Realities
                   </Link>
-                  <Link
-                    href="/web"
-                    onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
-                  >
-                    <span className="text-stone-600">•</span> Interactive Multiverse Web
-                  </Link>
                 </div>
               )}
             </div>

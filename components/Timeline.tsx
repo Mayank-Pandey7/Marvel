@@ -46,12 +46,6 @@ export default function Timeline() {
                     {phase.years} · {items.length} stories · {watchedCount} / {items.length} watched
                   </p>
                 </div>
-                <Link
-                  href={`/web?focus=phase:${phase.id}`}
-                  className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-stone-500 hover:text-white transition-colors"
-                >
-                  <Share2 size={12} /> Explore in Web
-                </Link>
               </div>
               <div className="flex gap-4 overflow-x-auto mt-6 pb-2 -mx-1 px-1">
                 {items.map((e) => (
