@@ -27,10 +27,10 @@ export default function Navbar({ onSearch }: { onSearch: () => void }) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-300 px-4 sm:px-8 ${
+      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-300 px-4 sm:px-8 bg-transparent ${
         scrolled
-          ? "py-3 bg-[#030305]/95 backdrop-blur-xl border-b border-stone-800/80 shadow-2xl"
-          : "py-4 bg-transparent"
+          ? "py-3 backdrop-blur-md border-b border-white/5 bg-black/20"
+          : "py-4 backdrop-blur-none border-b border-transparent"
       }`}
     >
       {/* Brand Logo: MARVEL | DOOMSDAY */}

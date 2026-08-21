@@ -45,7 +45,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
       
       {/* 1. TOP FIXED HEADER (MENU · MARVEL · CLOSE) */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 py-5 flex items-center justify-between bg-black/60 backdrop-blur-xl border-b border-white/5 transition-all">
+      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 py-5 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-white/5 transition-all">
         {/* Left: Drawer Toggle */}
         <button
           onClick={() => setNavMenuOpen(true)}
