@@ -82,8 +82,8 @@ function characterNode(c: Character): WebNode {
     label: c.name,
     sublabel: c.role || "Multiverse Champion",
     description: c.overview || `${c.name} — ${c.role}`,
-    image: c.avatar || `/images/characters/${c.id}.jpg`,
-    backdrop: c.avatar || `/images/characters/${c.id}.jpg`,
+    image: `/images/characters/${c.id}.jpg`,
+    backdrop: `/images/characters/${c.id}.jpg`,
     meta: {
       role: c.role,
       universe: c.universe,
