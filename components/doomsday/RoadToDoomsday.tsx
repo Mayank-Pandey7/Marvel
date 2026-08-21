@@ -435,7 +435,7 @@ export default function RoadToDoomsday() {
                           </p>
 
                           {/* Card Meta & Watched Toggle */}
-                          <div className={`flex items-center justify-between gap-2 mt-2.5 pt-2 border-t border-white/5 ${
+                          <div className={`flex items-center justify-between gap-3 mt-2 ${
                             isEven ? "md:flex-row-reverse" : "md:flex-row"
                           }`}>
                             <span className="text-[8px] font-mono tracking-widest uppercase text-stone-500 truncate">
@@ -449,20 +449,20 @@ export default function RoadToDoomsday() {
                                 e.stopPropagation();
                                 toggleWatched(item.id);
                               }}
-                              className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 text-[8.5px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                              className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 text-[8.5px] font-mono tracking-wider uppercase transition-colors cursor-pointer ${
                                 isItemWatched
-                                  ? "bg-white border-white text-black font-bold shadow-[0_0_10px_rgba(255,255,255,0.25)]"
-                                  : "bg-white/5 border-white/10 text-stone-400 hover:text-white hover:bg-white/10 hover:border-white/20"
+                                  ? "text-emerald-400 font-semibold"
+                                  : "text-stone-400 hover:text-white"
                               }`}
                             >
                               {isItemWatched ? (
                                 <>
-                                  <CheckCircle2 size={10} className="text-black" />
+                                  <CheckCircle2 size={11} className="text-emerald-400" />
                                   <span>WATCHED</span>
                                 </>
                               ) : (
                                 <>
-                                  <Circle size={10} className="text-stone-400" />
+                                  <Circle size={11} className="text-stone-500" />
                                   <span>MARK WATCHED</span>
                                 </>
                               )}
