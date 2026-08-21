@@ -175,7 +175,26 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "sersi": "/images/characters/sersi.jpg",
   "thena": "/images/characters/thena.jpg",
   "ajak": "/images/characters/ajak.jpg",
-  "gilgamesh": "/images/characters/gilgamesh.jpg"
+  "gilgamesh": "/images/characters/gilgamesh.jpg",
+  "dormammu": "/images/characters/dormammu.jpg",
+  "abomination": "/images/characters/abomination.jpg",
+  "adam-warlock": "/images/characters/adam-warlock.jpg",
+  "us-agent": "/images/characters/us-agent.jpg",
+  "ghost": "/images/characters/ghost.jpg",
+  "sentry": "/images/characters/sentry.jpg",
+  "the-leader": "/images/characters/the-leader.jpg",
+  "baron-mordo": "/images/characters/baron-mordo.jpg",
+  "electro": "/images/characters/electro.jpg",
+  "sandman": "/images/characters/sandman.jpg",
+  "lizard": "/images/characters/lizard.jpg",
+  "captain-carter": "/images/characters/captain-carter.jpg",
+  "blade": "/images/characters/blade.jpg",
+  "elektra": "/images/characters/elektra.jpg",
+  "silver-surfer": "/images/characters/silver-surfer.jpg",
+  "modok": "/images/characters/modok.jpg",
+  "ebony-maw": "/images/characters/ebony-maw.jpg",
+  "surtur": "/images/characters/surtur.jpg",
+  "bullseye": "/images/characters/bullseye.jpg",
 };
 
 export function getCharacterBackdrop(characterId: string, _eraId?: string, _phase?: number): string {

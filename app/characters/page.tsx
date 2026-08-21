@@ -131,7 +131,9 @@ function CharactersContent() {
               "thanos", "kang-the-conqueror", "doctor-doom", "ultron", "green-goblin",
               "doc-ock", "hela", "killmonger", "namor", "red-skull", "gorr", "mysterio",
               "vulture", "wenwu", "agatha-harkness", "high-evolutionary", "kingpin",
-              "red-hulk", "zemo", "ronan", "cassandra-nova"
+              "red-hulk", "zemo", "ronan", "cassandra-nova", "dormammu", "abomination",
+              "ego", "the-leader", "baron-mordo", "electro", "sandman", "lizard",
+              "modok", "ebony-maw", "surtur", "bullseye", "taskmaster"
             ].includes(c.id);
           if (!isVillain) return false;
         }
