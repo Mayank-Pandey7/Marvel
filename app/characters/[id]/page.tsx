@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
-import { getCharacterBackdrop } from "@/data/characterBackdrops";
+import { getCharacterAvatar, getCharacterBackdrop } from "@/data/characterBackdrops";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
 export default function CharacterDetailPage({ params }: { params: { id: string } }) {
@@ -19,21 +19,38 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   if (!character) notFound();
 
   const [navMenuOpen, setNavMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const movieEntries = useMemo(() => MCU.filter((m) => character.entries.includes(m.id)), [character]);
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const movieEntries = useMemo(() => {
+    return MCU.filter(
+      (m) =>
+        character.entries.includes(m.id) ||
+        m.characters.includes(character.id)
+    );
+  }, [character]);
 
   // Find previous and next characters in archive
   const currentIndex = CHARACTERS.findIndex((c) => c.id === character.id);
   const prevCharacter = currentIndex > 0 ? CHARACTERS[currentIndex - 1] : CHARACTERS[CHARACTERS.length - 1];
   const nextCharacter = currentIndex < CHARACTERS.length - 1 ? CHARACTERS[currentIndex + 1] : CHARACTERS[0];
 
-  const heroBackdrop = getCharacterBackdrop(character.id);
+  const characterFacePortrait = getCharacterAvatar(character.id);
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
       
-      {/* 1. TOP FIXED HEADER (MENU · MARVEL · CLOSE) */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 py-5 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-white/5 transition-all">
+      {/* 1. TOP FIXED HEADER (MATCHING /TIMELINE NAVBAR BLUR BEHAVIOR) */}
+      <header className={`fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 flex items-center justify-between transition-all duration-300 ${
+        scrolled
+          ? "py-3 backdrop-blur-md border-b border-white/5 bg-black/20"
+          : "py-5 backdrop-blur-none border-b border-transparent bg-transparent"
+      }`}>
         {/* Left: Drawer Toggle */}
         <button
           onClick={() => setNavMenuOpen(true)}
@@ -64,37 +81,30 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </Link>
       </header>
 
-      {/* 2. CINEMATIC HERO SECTION (LEFT-ALIGNED) */}
-      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-end pt-28 pb-16 px-6 sm:px-12 md:px-16 overflow-hidden">
+      {/* 2. CINEMATIC HERO SECTION (FEATHERED SEAMLESS BLEND INTO BLACK) */}
+      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-end pt-28 pb-16 px-6 sm:px-12 md:px-16 overflow-hidden bg-[#000000]">
         
-        {/* High-Resolution Dynamic Backdrop */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Right-Side Character Face with Feathered Radial Mask (Zero Hard Edges) */}
+        <div 
+          className="absolute right-0 top-0 bottom-0 w-full sm:w-[80%] md:w-[70%] lg:w-[62%] z-0 overflow-hidden flex items-center justify-end pointer-events-none [mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)] [-webkit-mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)]"
+        >
           <img
-            src={heroBackdrop}
+            src={characterFacePortrait}
             alt={character.name}
-            className="w-full h-full object-cover object-center filter brightness-90 contrast-105 scale-105"
+            className="w-full h-full object-contain md:object-cover object-right md:object-[center_20%] filter brightness-95 contrast-105"
           />
-          {/* Ambient Gradients for Perfect Legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 z-10 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent z-10 pointer-events-none" />
         </div>
 
-        {/* Hero Narrative Overlay */}
-        <div className="relative z-20 max-w-4xl flex flex-col gap-5">
+        {/* Left Side: Pure Black Grounding for Text Legibility */}
+        <div className="relative z-20 max-w-2xl lg:max-w-3xl flex flex-col gap-5">
           
-          {/* Subtitle Badges */}
-          <div className="flex flex-wrap items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-stone-400">
-            <span className="px-2.5 py-0.5 rounded bg-black/75 backdrop-blur-md border border-white/15 text-stone-200">
-              {character.universe.split("/")[0].trim()}
-            </span>
-            <span>·</span>
-            <span className="px-2.5 py-0.5 rounded bg-black/75 backdrop-blur-md border border-white/15 text-stone-200">
-              {character.faction.split(",")[0].trim()}
-            </span>
-            <span>·</span>
-            <span className="text-stone-400">
-              {character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}
-            </span>
+          {/* Subtitle Badges (Clean Monospace Text, No Boxes) */}
+          <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-stone-400">
+            <span>{character.universe.split("/")[0].trim()}</span>
+            <span className="text-stone-600">·</span>
+            <span>{character.faction.split(",")[0].trim()}</span>
+            <span className="text-stone-600">·</span>
+            <span>{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
           </div>
 
           {/* Character Main Headline Title */}
@@ -103,23 +113,23 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </h1>
 
           {/* Overview Narrative */}
-          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-2xl">
+          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-xl">
             {character.overview}
           </p>
 
-          {/* Specification Metrics */}
-          <div className="flex flex-wrap items-center gap-3 pt-2 text-xs font-mono">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-white/10">
-              <span className="text-[9px] uppercase tracking-widest text-stone-500">ROLE:</span>
-              <span className="text-stone-200 font-bold">{character.role}</span>
+          {/* Specification Metrics (Clean Minimal Text, No Box Backgrounds) */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 text-xs font-mono text-stone-400">
+            <div>
+              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
+              <span className="text-stone-200">{character.role}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-white/10">
-              <span className="text-[9px] uppercase tracking-widest text-stone-500">FIRST SEEN:</span>
-              <span className="text-stone-200 font-bold">{character.firstAppearance}</span>
+            <div>
+              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">FIRST SEEN:</span>
+              <span className="text-stone-200">{character.firstAppearance}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-white/10">
-              <span className="text-[9px] uppercase tracking-widest text-stone-500">APPEARANCES:</span>
-              <span className="text-stone-200 font-bold">{character.entries.length} MCU TITLES</span>
+            <div>
+              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">APPEARANCES:</span>
+              <span className="text-stone-200">{movieEntries.length} MCU TITLES</span>
             </div>
           </div>
 
@@ -133,13 +143,13 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS (LEFT-ALIGNED) */}
-      <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 flex flex-col gap-14">
+      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS (LEFT-ALIGNED, NO DIVIDER LINES) */}
+      <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 flex flex-col gap-12">
         
         {/* Section Heading */}
-        <div className="flex items-center justify-between border-b border-stone-800/80 pb-4 max-w-4xl">
+        <div className="flex items-center justify-between pb-2 max-w-4xl">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.6)]" />
+            <span className="w-2 h-2 rounded-full bg-stone-400" />
             <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
               MCU CHRONOLOGICAL TIMELINE
             </h2>
@@ -149,23 +159,23 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </span>
         </div>
 
-        {/* Eras Timeline Spine (Aligned from the Left) */}
-        <div className="relative border-l-2 border-stone-800/80 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-16 max-w-4xl">
+        {/* Eras Timeline Spine (Aligned from the Left with Clean Minimalist Styling) */}
+        <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-16 max-w-4xl">
           {character.eras.map((era, idx) => {
             const eraBackdrop = getCharacterBackdrop(character.id, era.eraId, era.phase);
 
             return (
               <div key={era.eraId || idx} className="relative flex flex-col gap-4 group">
                 
-                {/* Timeline Pulse Node */}
-                <span className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-black border-2 border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.8)] group-hover:scale-125 transition-transform" />
+                {/* Timeline Node */}
+                <span className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-3.5 h-3.5 rounded-full bg-black border-2 border-stone-500 group-hover:border-white transition-colors" />
 
-                {/* Phase & Year Pill */}
-                <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-amber-400">
-                  <span className="px-2.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30">
+                {/* Phase & Year Header (Clean Minimal Monospace Text, No Neon Background) */}
+                <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase">
+                  <span className="text-stone-300 font-bold">
                     PHASE {era.phase}
                   </span>
-                  <span>·</span>
+                  <span className="text-stone-600">·</span>
                   <span className="text-stone-400">{era.year}</span>
                 </div>
 
@@ -174,7 +184,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
                   {era.title}
                 </h3>
 
-                {/* Era Backdrop Visual */}
+                {/* Distinct In-Movie Era Visual */}
                 <div className="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden bg-stone-950 border border-white/10 shadow-2xl my-2">
                   <img
                     src={eraBackdrop}
@@ -189,15 +199,15 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
                   {era.description}
                 </p>
 
-                {/* Key Moments */}
+                {/* Catalyst Moments (Clean Unboxed List) */}
                 {era.keyMoments && era.keyMoments.length > 0 && (
-                  <div className="mt-2 space-y-2 max-w-2xl bg-stone-950/60 p-4 rounded-xl border border-stone-800/80">
-                    <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-stone-400 block mb-2">
+                  <div className="mt-2 space-y-2 max-w-2xl">
+                    <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-stone-500 block mb-1">
                       CATALYST MOMENTS:
                     </span>
                     {era.keyMoments.map((moment, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs font-mono text-stone-300">
-                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
+                        <span className="w-1 h-1 rounded-full mt-2 shrink-0 bg-stone-400" />
                         <span>{moment}</span>
                       </div>
                     ))}
@@ -211,13 +221,13 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {/* 4. MCU FILMOGRAPHY & APPEARANCES (LEFT-ALIGNED) */}
+      {/* 4. MCU FILMOGRAPHY & APPEARANCES (LEFT-ALIGNED, NO DIVIDER LINE) */}
       {movieEntries.length > 0 && (
-        <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8 border-t border-stone-900">
+        <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8">
           
           <div className="flex items-center justify-between max-w-4xl">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+              <span className="w-2 h-2 rounded-full bg-stone-400" />
               <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
                 MCU CINEMATIC FILMOGRAPHY
               </h2>
@@ -259,8 +269,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </section>
       )}
 
-      {/* 5. PREVIOUS / NEXT CHARACTER JUMP FOOTER */}
-      <footer className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 mt-8 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-6">
+      {/* 5. PREVIOUS / NEXT CHARACTER JUMP FOOTER (NO DIVIDER LINE) */}
+      <footer className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 mt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Previous Character */}
         <Link
@@ -276,10 +286,10 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </div>
         </Link>
 
-        {/* Back to Characters Button */}
+        {/* Back to Characters Button (Clean Text Link, No Heavy Background) */}
         <Link
           href="/characters"
-          className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 font-mono text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-lg"
+          className="font-mono text-xs tracking-[0.2em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer py-2"
         >
           VIEW ALL CHARACTERS
         </Link>

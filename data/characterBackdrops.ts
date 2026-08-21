@@ -1,23 +1,30 @@
-// Official Marvel Studios & MCU Character portraits and cinematic backdrops
+// Official Marvel Studios & MCU Character portraits and widescreen cinematic backdrops
+
 export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   // Original 6 Avengers & Core
   "iron-man": "/images/characters/tony-stark.jpg",
+  "tony-stark": "/images/characters/tony-stark.jpg",
   "captain-america": "/images/characters/steve-rogers.jpg",
+  "steve-rogers": "/images/characters/steve-rogers.jpg",
   "thor": "/images/characters/thor.jpg",
   "hulk": "/images/characters/hulk.jpg",
   "bruce-banner": "/images/characters/bruce-banner.jpg",
   "black-widow": "/images/characters/natasha-romanoff.jpg",
+  "natasha-romanoff": "/images/characters/natasha-romanoff.jpg",
   "hawkeye": "/images/characters/hawkeye.jpg",
+  "clint-barton": "/images/characters/hawkeye.jpg",
 
   // Spider-Heroes
   "spider-man": "/images/characters/peter-parker.jpg",
   "spiderman": "/images/characters/peter-parker.jpg",
+  "peter-parker": "/images/characters/peter-parker.jpg",
   "spider-man-maguire": "/images/characters/spider-man-tobey.jpg",
   "spider-man-garfield": "/images/characters/spider-man-andrew.jpg",
   "may-parker": "/images/characters/may-parker.jpg",
 
   // Sorcerers & Mystics
   "doctor-strange": "/images/characters/doctor-strange.jpg",
+  "stephen-strange": "/images/characters/doctor-strange.jpg",
   "wong": "/images/characters/wong.jpg",
   "ancient-one": "/images/characters/ancient-one.jpg",
   "clea": "/images/characters/clea.jpg",
@@ -26,6 +33,7 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   // Maximoff & Vision Lineage
   "wanda": "/images/characters/wanda-maximoff.jpg",
   "scarlet-witch": "/images/characters/wanda-maximoff.jpg",
+  "wanda-maximoff": "/images/characters/wanda-maximoff.jpg",
   "vision": "/images/characters/vision.jpg",
   "white-vision": "/images/characters/white-vision.jpg",
   "pietro-maximoff": "/images/characters/pietro-maximoff.jpg",
@@ -33,6 +41,7 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "billy-maximoff": "/images/characters/billy-maximoff.jpg",
   "tommy-maximoff": "/images/characters/tommy-maximoff.jpg",
   "agatha-harkness": "/images/characters/agatha-harkness.jpg",
+  "agatha": "/images/characters/agatha-harkness.jpg",
 
   // Super Soldiers & Shield
   "bucky-barnes": "/images/characters/bucky-barnes.jpg",
@@ -56,7 +65,9 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
 
   // Pym & Ant-Family
   "ant-man": "/images/characters/scott-lang.jpg",
+  "scott-lang": "/images/characters/scott-lang.jpg",
   "wasp": "/images/characters/hope-van-dyne.jpg",
+  "hope-van-dyne": "/images/characters/hope-van-dyne.jpg",
   "hank-pym": "/images/characters/hank-pym.jpg",
   "janet-van-dyne": "/images/characters/janet-van-dyne.jpg",
   "cassie-lang": "/images/characters/cassie-lang.jpg",
@@ -74,7 +85,9 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
 
   // Cosmic & Marvels
   "captain-marvel": "/images/characters/captain-marvel.jpg",
+  "carol-danvers": "/images/characters/captain-marvel.jpg",
   "ms-marvel": "/images/characters/ms-marvel.jpg",
+  "kamala-khan": "/images/characters/ms-marvel.jpg",
   "the-watcher": "/images/characters/the-watcher.jpg",
 
   // Guardians of the Galaxy
@@ -169,51 +182,91 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "maya-lopez": "/images/characters/maya-lopez.jpg",
   "echo": "/images/characters/maya-lopez.jpg",
   "moon-knight": "/images/characters/moon-knight.jpg",
-
-  // Eternals
-  "ikaris": "/images/characters/ikaris.jpg",
-  "sersi": "/images/characters/sersi.jpg",
-  "thena": "/images/characters/thena.jpg",
-  "ajak": "/images/characters/ajak.jpg",
-  "gilgamesh": "/images/characters/gilgamesh.jpg",
-  "dormammu": "/images/characters/dormammu.jpg",
-  "abomination": "/images/characters/abomination.jpg",
-  "adam-warlock": "/images/characters/adam-warlock.jpg",
-  "us-agent": "/images/characters/us-agent.jpg",
-  "ghost": "/images/characters/ghost.jpg",
-  "sentry": "/images/characters/sentry.jpg",
-  "the-leader": "/images/characters/the-leader.jpg",
-  "baron-mordo": "/images/characters/baron-mordo.jpg",
-  "electro": "/images/characters/electro.jpg",
-  "sandman": "/images/characters/sandman.jpg",
-  "lizard": "/images/characters/lizard.jpg",
-  "captain-carter": "/images/characters/captain-carter.jpg",
-  "blade": "/images/characters/blade.jpg",
-  "elektra": "/images/characters/elektra.jpg",
-  "silver-surfer": "/images/characters/silver-surfer.jpg",
-  "modok": "/images/characters/modok.jpg",
-  "ebony-maw": "/images/characters/ebony-maw.jpg",
-  "surtur": "/images/characters/surtur.jpg",
-  "bullseye": "/images/characters/bullseye.jpg",
-  "mobius": "/images/characters/mobius.jpg",
-  "kaecilius": "/images/characters/kaecilius.jpg",
-  "malekith": "/images/characters/malekith.jpg",
-  "justin-hammer": "/images/characters/justin-hammer.jpg",
-  "arnim-zola": "/images/characters/arnim-zola.jpg",
-  "crossbones": "/images/characters/crossbones.jpg",
-  "corvus-glaive": "/images/characters/corvus-glaive.jpg",
-  "proxima-midnight": "/images/characters/proxima-midnight.jpg",
-  "grandmaster": "/images/characters/grandmaster.jpg",
-  "the-collector": "/images/characters/the-collector.jpg",
-  "korg": "/images/characters/korg.jpg",
-  "black-bolt": "/images/characters/black-bolt.jpg",
-  "sabretooth": "/images/characters/sabretooth.jpg",
-  "pyro": "/images/characters/pyro.jpg",
-  "juggernaut": "/images/characters/juggernaut.jpg",
-  "lady-deadpool": "/images/characters/lady-deadpool.jpg",
 };
 
-export function getCharacterBackdrop(characterId: string, _eraId?: string, _phase?: number): string {
+// Exact Phase Era In-Movie Stills Map
+export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
+  // Iron Man Eras
+  "iron-man-origins-phase-1": "/images/backdrops/iron-man.jpg",
+  "iron-man-escalation-phase-2": "/images/backdrops/iron-man-3.jpg",
+  "iron-man-reckoning-phase-3": "/images/backdrops/endgame.jpg",
+  "iron-man-legacy-phase-4": "/images/backdrops/spider-man-far-from-home.jpg",
+  "iron-man-resonance-phase-5": "/images/backdrops/thunderbolts.jpg",
+
+  // Captain America Eras
+  "cap-first-avenger-phase-1": "/images/backdrops/captain-america-first-avenger.jpg",
+  "cap-winter-soldier-phase-2": "/images/backdrops/cap-winter-soldier.jpg",
+  "cap-civil-war-endgame-phase-3": "/images/backdrops/cap-civil-war.jpg",
+  "cap-torch-passed-phase-4": "/images/backdrops/falcon-winter-soldier.jpg",
+  "cap-eternal-symbol-phase-5": "/images/backdrops/cap-brave-new-world.jpg",
+
+  // Thor Eras
+  "thor-prince-phase-1": "/images/backdrops/thor.jpg",
+  "thor-dark-world-phase-2": "/images/backdrops/thor-dark-world.jpg",
+  "thor-ragnarok-endgame-phase-3": "/images/backdrops/thor-ragnarok.jpg",
+  "thor-love-and-thunder-phase-4": "/images/backdrops/thor-love-thunder.jpg",
+  "thor-cosmic-vanguard-phase-5": "/images/backdrops/deadpool-and-wolverine.jpg",
+
+  // Hulk Eras
+  "hulk-origins-phase-1": "/images/backdrops/the-incredible-hulk.jpg",
+  "hulk-escalation-phase-2": "/images/backdrops/avengers-age-of-ultron.jpg",
+  "hulk-ragnarok-endgame-phase-3": "/images/backdrops/thor-ragnarok.jpg",
+  "hulk-mentorship-phase-4": "/images/backdrops/she-hulk.jpg",
+  "hulk-world-war-phase-5": "/images/backdrops/cap-brave-new-world.jpg",
+
+  // Loki Eras
+  "loki-invasion-phase-1": "/images/backdrops/the-avengers.jpg",
+  "loki-dark-world-phase-2": "/images/backdrops/thor-dark-world.jpg",
+  "loki-ragnarok-infinity-phase-3": "/images/backdrops/thor-ragnarok.jpg",
+  "loki-tva-phase-4": "/images/backdrops/loki-s1.jpg",
+  "loki-god-of-stories-phase-5": "/images/backdrops/loki-s2.jpg",
+
+  // Antagonists & Multiverse Legends
+  "dormammu-bargain": "/images/backdrops/doctor-strange.jpg",
+  "abomination-harlem": "/images/backdrops/the-incredible-hulk.jpg",
+  "ego-expansion": "/images/backdrops/gotg2.jpg",
+  "warlock-awakening": "/images/backdrops/guardians-vol3.jpg",
+  "walker-fall": "/images/backdrops/falcon-winter-soldier.jpg",
+  "ghost-hunt": "/images/backdrops/ant-man-wasp.jpg",
+  "taskmaster-liberation": "/images/backdrops/black-widow.jpg",
+  "sentry-awakening": "/images/backdrops/thunderbolts.jpg",
+  "leader-resurgence": "/images/backdrops/cap-brave-new-world.jpg",
+  "mordo-crusade": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "electro-nwh": "/images/backdrops/spider-man-no-way-home.jpg",
+  "sandman-nwh": "/images/backdrops/spider-man-no-way-home.jpg",
+  "lizard-nwh": "/images/backdrops/spider-man-no-way-home.jpg",
+  "carter-illuminati": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "blade-void": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "elektra-void": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "surfer-herald": "/images/backdrops/fantastic-four.jpg",
+  "modok-quantum": "/images/backdrops/ant-man-quantumania.jpg",
+  "maw-new-york": "/images/backdrops/infinity-war.jpg",
+  "surtur-ragnarok": "/images/backdrops/thor-ragnarok.jpg",
+  "clea-incursion": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "dex-born-again": "/images/backdrops/daredevil-born-again.jpg",
+  "hwr-citadel": "/images/backdrops/loki-s1.jpg",
+  "sylvie-ascent": "/images/backdrops/loki-s2.jpg",
+  "mobius-tva": "/images/backdrops/loki-s1.jpg",
+  "timely-loom": "/images/backdrops/loki-s2.jpg",
+  "kaecilius-sanctum": "/images/backdrops/doctor-strange.jpg",
+  "malekith-convergence": "/images/backdrops/thor-dark-world.jpg",
+  "hammer-expo": "/images/backdrops/iron-man-2.jpg",
+  "zola-algorithm": "/images/backdrops/cap-winter-soldier.jpg",
+  "crossbones-lagos": "/images/backdrops/cap-civil-war.jpg",
+  "corvus-wakanda": "/images/backdrops/infinity-war.jpg",
+  "proxima-wakanda": "/images/backdrops/infinity-war.jpg",
+  "grandmaster-contest": "/images/backdrops/thor-ragnarok.jpg",
+  "collector-knowhere": "/images/backdrops/gotg.jpg",
+  "korg-revolution": "/images/backdrops/thor-ragnarok.jpg",
+  "blackbolt-titan": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "sabretooth-duel": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "pyro-void": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "juggernaut-clash": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "lady-dp-corps": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "echo-ancestral": "/images/backdrops/echo.jpg",
+};
+
+export function getCharacterAvatar(characterId: string): string {
   const normId = characterId.toLowerCase().trim();
   if (CHARACTER_IMAGE_MAP[normId]) {
     return CHARACTER_IMAGE_MAP[normId];
@@ -223,6 +276,75 @@ export function getCharacterBackdrop(characterId: string, _eraId?: string, _phas
     return CHARACTER_IMAGE_MAP[stripped];
   }
   return `/images/characters/${normId}.jpg`;
+}
+
+export function getCharacterBackdrop(characterId: string, eraId?: string, phase?: number): string {
+  const normId = characterId.toLowerCase().trim();
+
+  // 1. Direct match by specific era ID
+  if (eraId && ERA_SPECIFIC_BACKDROPS[eraId]) {
+    return ERA_SPECIFIC_BACKDROPS[eraId];
+  }
+
+  // 2. Accurate match by Phase & Character
+  if (phase !== undefined) {
+    if (phase === 1) {
+      if (normId.includes("cap") || normId.includes("rogers")) return "/images/backdrops/captain-america-first-avenger.jpg";
+      if (normId.includes("iron") || normId.includes("stark")) return "/images/backdrops/iron-man.jpg";
+      if (normId.includes("thor")) return "/images/backdrops/thor.jpg";
+      if (normId.includes("hulk") || normId.includes("banner")) return "/images/backdrops/the-incredible-hulk.jpg";
+      if (normId.includes("widow") || normId.includes("hawkeye") || normId.includes("loki")) return "/images/backdrops/the-avengers.jpg";
+      return "/images/backdrops/the-avengers.jpg";
+    }
+    if (phase === 2) {
+      if (normId.includes("cap") || normId.includes("rogers") || normId.includes("bucky") || normId.includes("falcon")) return "/images/backdrops/cap-winter-soldier.jpg";
+      if (normId.includes("iron") || normId.includes("stark")) return "/images/backdrops/iron-man-3.jpg";
+      if (normId.includes("thor") || normId.includes("loki")) return "/images/backdrops/thor-dark-world.jpg";
+      if (normId.includes("ant")) return "/images/backdrops/ant-man.jpg";
+      if (normId.includes("guardians") || normId.includes("quill") || normId.includes("gamora") || normId.includes("drax") || normId.includes("rocket") || normId.includes("groot")) return "/images/backdrops/gotg.jpg";
+      return "/images/backdrops/avengers-age-of-ultron.jpg";
+    }
+    if (phase === 3) {
+      if (normId.includes("cap") || normId.includes("rogers") || normId.includes("bucky")) return "/images/backdrops/cap-civil-war.jpg";
+      if (normId.includes("iron") || normId.includes("stark")) return "/images/backdrops/endgame.jpg";
+      if (normId.includes("thor") || normId.includes("loki") || normId.includes("hulk")) return "/images/backdrops/thor-ragnarok.jpg";
+      if (normId.includes("spider") || normId.includes("parker")) return "/images/backdrops/spider-man-homecoming.jpg";
+      if (normId.includes("panther") || normId.includes("tchalla")) return "/images/backdrops/black-panther.jpg";
+      if (normId.includes("strange")) return "/images/backdrops/doctor-strange.jpg";
+      if (normId.includes("thanos")) return "/images/backdrops/infinity-war.jpg";
+      if (normId.includes("danvers") || normId.includes("marvel")) return "/images/backdrops/captain-marvel.jpg";
+      return "/images/backdrops/endgame.jpg";
+    }
+    if (phase === 4) {
+      if (normId.includes("wanda") || normId.includes("vision")) return "/images/backdrops/wandavision.jpg";
+      if (normId.includes("loki") || normId.includes("sylvie")) return "/images/backdrops/loki-s1.jpg";
+      if (normId.includes("spider") || normId.includes("parker")) return "/images/backdrops/spider-man-no-way-home.jpg";
+      if (normId.includes("strange")) return "/images/backdrops/doctor-strange-multiverse.jpg";
+      if (normId.includes("thor") || normId.includes("foster")) return "/images/backdrops/thor-love-thunder.jpg";
+      if (normId.includes("widow") || normId.includes("yelena")) return "/images/backdrops/black-widow.jpg";
+      if (normId.includes("shang")) return "/images/backdrops/shang-chi.jpg";
+      if (normId.includes("she-hulk")) return "/images/backdrops/she-hulk.jpg";
+      if (normId.includes("moon")) return "/images/backdrops/moon-knight.jpg";
+      if (normId.includes("hawkeye")) return "/images/backdrops/hawkeye.jpg";
+      return "/images/backdrops/spider-man-no-way-home.jpg";
+    }
+    if (phase === 5) {
+      if (normId.includes("ant")) return "/images/backdrops/ant-man-quantumania.jpg";
+      if (normId.includes("guardians") || normId.includes("rocket")) return "/images/backdrops/guardians-vol3.jpg";
+      if (normId.includes("loki")) return "/images/backdrops/loki-s2.jpg";
+      if (normId.includes("deadpool") || normId.includes("wolverine")) return "/images/backdrops/deadpool-and-wolverine.jpg";
+      if (normId.includes("agatha")) return "/images/backdrops/agatha-all-along.jpg";
+      if (normId.includes("daredevil") || normId.includes("murdock")) return "/images/backdrops/daredevil-born-again.jpg";
+      if (normId.includes("cap") || normId.includes("sam") || normId.includes("bucky")) return "/images/backdrops/cap-brave-new-world.jpg";
+      return "/images/backdrops/thunderbolts.jpg";
+    }
+    if (phase === 6) {
+      if (normId.includes("fantastic") || normId.includes("reed")) return "/images/backdrops/fantastic-four.jpg";
+      return "/images/backdrops/avengers-doomsday.jpg";
+    }
+  }
+
+  return getCharacterAvatar(characterId);
 }
 
 export function hasCharacterBackdrop(characterId: string): boolean {

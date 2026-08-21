@@ -117,7 +117,7 @@ export const CHARACTERS: Character[] = [
 ],
     artifactsPossessed: ["nano-gauntlet", "space-stone", "mind-stone", "reality-stone", "power-stone", "time-stone", "soul-stone"],
     linkedNexusEvents: ["nexus-iron-man-snap", "nexus-time-heist"],
-    entries: ["iron-man", "iron-man-2", "avengers", "iron-man-3", "avengers-age-of-ultron", "captain-america-civil-war", "spider-man-homecoming", "avengers-infinity-war", "avengers-endgame"]
+    entries: ["iron-man","hulk","iron-man-2","avengers","iron-man-3","avengers-aou","cap-civil-war","spiderman-homecoming","infinity-war","endgame","spiderman-far-from-home"]
   },
   {
     id: "captain-america",
@@ -206,7 +206,7 @@ export const CHARACTERS: Character[] = [
 ],
     artifactsPossessed: ["vibranium-shield", "mjolnir"],
     linkedNexusEvents: ["nexus-worthy-cap", "nexus-time-heist"],
-    entries: ["captain-america-first-avenger", "avengers", "captain-america-winter-soldier", "avengers-age-of-ultron", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame"]
+    entries: ["cap-first-avenger","avengers","thor-dark-world","cap-winter-soldier","avengers-aou","ant-man","cap-civil-war","spiderman-homecoming","infinity-war","captain-marvel","endgame"]
   },
   {
     id: "thor",
@@ -295,7 +295,7 @@ export const CHARACTERS: Character[] = [
 ],
     artifactsPossessed: ["mjolnir", "stormbreaker"],
     linkedNexusEvents: ["nexus-stormbreaker-forge"],
-    entries: ["thor", "avengers", "thor-dark-world", "avengers-age-of-ultron", "thor-ragnarok", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder"]
+    entries: ["thor","avengers","thor-dark-world","avengers-aou","doctor-strange","thor-ragnarok","infinity-war","endgame","thor-love-thunder"]
   },
   {
     id: "hulk",
@@ -384,7 +384,7 @@ export const CHARACTERS: Character[] = [
 ],
     artifactsPossessed: ["nano-gauntlet"],
     linkedNexusEvents: ["nexus-restoration-snap"],
-    entries: ["the-incredible-hulk", "avengers", "avengers-age-of-ultron", "thor-ragnarok", "avengers-infinity-war", "avengers-endgame", "she-hulk"]
+    entries: ["hulk","avengers","iron-man-3","avengers-aou","thor-ragnarok","infinity-war","captain-marvel","endgame","shang-chi","she-hulk"]
   },
   {
     id: "black-widow",
@@ -426,7 +426,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["soul-stone"],
     linkedNexusEvents: ["nexus-vormir-sacrifice"],
-    entries: ["iron-man-2", "avengers", "captain-america-winter-soldier", "avengers-age-of-ultron", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame", "black-widow"]
+    entries: ["iron-man-2","avengers","cap-winter-soldier","avengers-aou","cap-civil-war","thor-ragnarok","infinity-war","captain-marvel","endgame","black-widow"]
   },
   {
     id: "hawkeye",
@@ -459,7 +459,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["soul-stone", "nano-gauntlet"],
     linkedNexusEvents: [],
-    entries: ["thor", "avengers", "avengers-age-of-ultron", "captain-america-civil-war", "avengers-endgame", "hawkeye"]
+    entries: ["thor","avengers","avengers-aou","cap-civil-war","endgame","black-widow","hawkeye"]
   },
 
   // --- GODS, MULTIVERSE & CHAOS ---
@@ -550,7 +550,7 @@ export const CHARACTERS: Character[] = [
 ],
     artifactsPossessed: ["space-stone", "mind-stone", "tva-tempad"],
     linkedNexusEvents: ["nexus-time-heist", "nexus-citadel-death", "nexus-god-of-stories"],
-    entries: ["thor", "avengers", "thor-dark-world", "thor-ragnarok", "avengers-infinity-war", "loki-s1", "loki-s2"]
+    entries: ["thor","avengers","thor-dark-world","thor-ragnarok","infinity-war","endgame","loki-s1","ant-man-quantumania","loki-s2"]
   },
   {
     id: "wanda",
@@ -592,7 +592,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["mind-stone", "darkhold"],
     linkedNexusEvents: ["nexus-westview-hex", "nexus-illuminati-massacre"],
-    entries: ["avengers-age-of-ultron", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame", "wandavision", "doctor-strange-multiverse-of-madness"]
+    entries: ["cap-winter-soldier","avengers-aou","cap-civil-war","infinity-war","endgame","wandavision","doctor-strange-multiverse","agatha-all-along"]
   },
   {
     id: "doctor-strange",
@@ -634,7 +634,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["time-stone", "eye-of-agamotto", "cloak-of-levitation", "darkhold-sinister", "book-of-vishanti"],
     linkedNexusEvents: ["nexus-titan-bargain", "nexus-multiverse-spell", "nexus-third-eye"],
-    entries: ["doctor-strange", "thor-ragnarok", "avengers-infinity-war", "avengers-endgame", "spider-man-no-way-home", "doctor-strange-multiverse-of-madness"]
+    entries: ["doctor-strange","thor-ragnarok","infinity-war","endgame","spiderman-no-way-home","doctor-strange-multiverse"]
   },
   {
     id: "spider-man",
@@ -676,7 +676,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["nano-gauntlet"],
     linkedNexusEvents: ["nexus-multiverse-spell", "nexus-three-spidermen"],
-    entries: ["captain-america-civil-war", "spider-man-homecoming", "avengers-infinity-war", "avengers-endgame", "spider-man-far-from-home", "spider-man-no-way-home"]
+    entries: ["cap-civil-war","spiderman-homecoming","infinity-war","endgame","spiderman-far-from-home","spiderman-no-way-home","spiderman-brand-new-day"]
   },
 
   // --- MULTIVERSE VARIANTS & MUTANTS ---
@@ -1329,7 +1329,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["vibranium-shield"],
     linkedNexusEvents: [],
-    entries: ["captain-america-first-avenger", "captain-america-winter-soldier", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame", "the-falcon-and-the-winter-soldier", "thunderbolts"]
+    entries: ["cap-first-avenger","cap-winter-soldier","ant-man","cap-civil-war","black-panther","infinity-war","endgame","falcon-winter-soldier","thunderbolts"]
   },
 
   // --- MAJOR VILLAINS & INVASION FORCES ---
@@ -1364,7 +1364,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["infinity-gauntlet", "space-stone", "mind-stone", "reality-stone", "power-stone", "time-stone", "soul-stone"],
     linkedNexusEvents: ["nexus-the-snap", "nexus-titan-bargain"],
-    entries: ["avengers", "guardians-of-the-galaxy", "avengers-age-of-ultron", "avengers-infinity-war", "avengers-endgame"]
+    entries: ["avengers","gotg","avengers-aou","infinity-war","endgame"]
   },
   {
     id: "kang-the-conqueror",
@@ -1629,7 +1629,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["vibranium-shield"],
     linkedNexusEvents: [],
-    entries: ["captain-america-winter-soldier", "avengers-age-of-ultron", "captain-america-civil-war", "avengers-infinity-war", "avengers-endgame", "the-falcon-and-the-winter-soldier", "captain-america-brave-new-world"]
+    entries: ["cap-winter-soldier","ant-man","avengers-aou","cap-civil-war","infinity-war","endgame","falcon-winter-soldier"]
   },
   {
     id: "shuri",
@@ -1753,7 +1753,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["pym-particles"],
     linkedNexusEvents: ["nexus-time-heist"],
-    entries: ["ant-man", "captain-america-civil-war", "ant-man-and-the-wasp", "avengers-endgame", "ant-man-and-the-wasp-quantumania"]
+    entries: ["ant-man","cap-civil-war","ant-man-wasp","endgame","ant-man-quantumania"]
   },
   {
     id: "wong",

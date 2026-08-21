@@ -208,38 +208,40 @@ export default function DeepMovieDetail({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
       </div>
 
-      {/* 2. MINIMALIST TOP HEADER */}
+      {/* 2. MINIMALIST TOP HEADER (PERFECT EQUAL BALANCE) */}
       <header
-        className={`relative z-20 w-full px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative z-20 w-full px-8 sm:px-14 md:px-20 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
         }`}
       >
         {/* Left: Clean Borderless Return Button */}
-        <button
-          onClick={handleClose}
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
-        >
-          <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-          <span>RETURN</span>
-        </button>
+        <div className="w-28 flex items-center justify-start">
+          <button
+            onClick={handleClose}
+            className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
+          >
+            <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
+            <span>RETURN</span>
+          </button>
+        </div>
 
-        {/* Center: Brand Title */}
-        <div className="text-center pointer-events-none">
-          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
-            M A R V E L
+        {/* Center: Perfectly Centered Marvel Branding */}
+        <div className="flex-1 flex items-center justify-center">
+          <h1 className="text-xs sm:text-sm font-mono font-medium tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.55em]">
+            MARVEL
           </h1>
         </div>
 
-        {/* Right side: Empty for clean balanced look */}
-        <div className="w-16 sm:w-20" />
+        {/* Right side: Matching Equal Spacer */}
+        <div className="w-28 flex items-center justify-end" />
       </header>
 
-      {/* 3. MAIN DOSSIER STAGE (DARK CINEMATIC LAYOUT WITH OFFICIAL POSTER) */}
-      <main className="relative z-20 flex-1 px-6 sm:px-12 md:px-16 py-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      {/* 3. MAIN DOSSIER STAGE (PERFECTLY BALANCED & EQUALLY ALIGNED) */}
+      <main className="relative z-20 flex-1 px-8 sm:px-14 md:px-20 py-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-16 overflow-y-auto w-full max-w-[1700px] mx-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
         {/* LEFT COLUMN: OFFICIAL POSTER + NARRATIVE DOSSIER */}
         <div
-          className={`flex-1 flex flex-col sm:flex-row items-center sm:items-start gap-8 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+          className={`flex-1 flex flex-col md:flex-row items-start gap-8 lg:gap-10 min-w-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
@@ -353,30 +355,18 @@ export default function DeepMovieDetail({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: FLOATING VERTICAL TIMELINE NODE & DIRECT CONNECTIONS */}
+        {/* RIGHT COLUMN: DIRECT CONNECTIONS (ALIGNED EQUALLY WITH PHASE BAR) */}
         <div
-          className={`w-full lg:w-[420px] flex flex-col items-center lg:items-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
+          className={`w-full lg:w-[400px] xl:w-[420px] flex flex-col shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
             isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
           }`}
         >
-          {/* Vertical Timeline Pin */}
-          <div className="flex flex-col items-center mb-5">
-            <span className="text-[10.5px] font-mono tracking-[0.35em] uppercase text-stone-400 font-bold mb-1">
-              {movie.heroAlias}
-            </span>
-            <span className="text-base text-white animate-spin [animation-duration:16s]">✹</span>
-            <div className="w-[1.5px] h-7 bg-gradient-to-b from-white/80 to-white/20" />
-            <span className="text-xs font-mono font-bold text-white tracking-widest bg-black/70 px-2.5 py-0.5 rounded-full mt-1 shadow-md">
-              {movie.year}
-            </span>
-          </div>
-
-          {/* Direct Connections Narrative Card List (No Glow, No Boundaries) */}
+          {/* Direct Connections Header - Exactly Aligned with PHASE Line */}
           <div className="w-full bg-transparent p-0">
-            <div className="flex items-center justify-between mb-3 pb-1">
+            <div className="flex items-center justify-between mb-3 pb-1 h-6">
               <div className="flex items-center gap-2">
-                <Compass size={14} className="text-stone-400" />
-                <span className="text-[10.5px] font-mono tracking-[0.25em] uppercase text-stone-200 font-bold">
+                <Compass size={13} className="text-stone-400" />
+                <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-stone-200 font-bold">
                   DIRECT CONNECTIONS
                 </span>
               </div>
@@ -385,7 +375,7 @@ export default function DeepMovieDetail({
               </span>
             </div>
 
-            <div className="flex flex-col gap-2 max-h-80 overflow-y-auto pr-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex flex-col gap-2 max-h-[380px] overflow-y-auto pr-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {connectedMovies.map((conn) => {
                 if (!conn) return null;
                 const { target, relationship } = conn;

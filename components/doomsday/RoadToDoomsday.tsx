@@ -14,8 +14,6 @@ import {
   Circle,
   ArrowRight,
   ArrowLeft,
-  Volume2,
-  VolumeX,
   Menu,
   Search,
   X,
@@ -26,12 +24,63 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+const DOOMSDAY_RELEASE_DATE = new Date("2026-12-18T00:00:00").getTime();
+
+function useCountdown(targetDate: number) {
+  const [timeLeft, setTimeLeft] = useState<{
+    months: number;
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+    isPassed: boolean;
+  }>({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, isPassed: false });
+
+  useEffect(() => {
+    const calculate = () => {
+      const now = new Date();
+      const target = new Date(targetDate);
+      const difference = target.getTime() - now.getTime();
+
+      if (difference <= 0) {
+        setTimeLeft({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, isPassed: true });
+        return;
+      }
+
+      // Calculate exact calendar months
+      let months = (target.getFullYear() - now.getFullYear()) * 12 + (target.getMonth() - now.getMonth());
+      let tempDate = new Date(now);
+      tempDate.setMonth(tempDate.getMonth() + months);
+
+      if (tempDate > target) {
+        months--;
+        tempDate = new Date(now);
+        tempDate.setMonth(tempDate.getMonth() + months);
+      }
+
+      const diffMs = target.getTime() - tempDate.getTime();
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+      setTimeLeft({ months: Math.max(0, months), days, hours, minutes, seconds, isPassed: false });
+    };
+
+    calculate();
+    const interval = setInterval(calculate, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return timeLeft;
+}
+
 export default function RoadToDoomsday() {
   const { isWatched, toggleWatched } = useWatched();
   const [activeItem, setActiveItem] = useState<DoomsdayWatchlistItem | null>(null);
-  const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const countdown = useCountdown(DOOMSDAY_RELEASE_DATE);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -253,14 +302,6 @@ export default function RoadToDoomsday() {
 
         {/* Right: Return + Search Button */}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
-          <button
-            onClick={() => setIsAudioMuted((prev) => !prev)}
-            className="text-stone-500 hover:text-white transition-colors p-1 cursor-pointer"
-            title={isAudioMuted ? "Enable Atmospheric Audio" : "Mute Sound"}
-          >
-            {!isAudioMuted ? <Volume2 size={14} className="text-white" /> : <VolumeX size={14} />}
-          </button>
-
           <Link
             href="/timeline"
             className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
@@ -283,30 +324,78 @@ export default function RoadToDoomsday() {
       </header>
 
       {/* ------------------------------------------------------------- */}
-      {/* HERO SECTION: NARRATIVE TITLE & WATCH PROGRESS TRACKER        */}
+      {/* HERO SECTION: DOOMSDAY IS COMING COUNTDOWN & TRACKER          */}
       {/* ------------------------------------------------------------- */}
       <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-24 pb-8 text-center">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono uppercase tracking-[0.22em] font-light text-white">
-          ROAD TO DOOMSDAY
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono uppercase tracking-[0.22em] font-bold text-white">
+          <span className="text-emerald-400 drop-shadow-[0_0_25px_rgba(52,211,153,0.6)]">DOOMSDAY</span> IS COMING
         </h1>
         <p className="mt-3 text-xs sm:text-[13.5px] font-mono text-stone-400 max-w-2xl mx-auto leading-relaxed">
           «All universes die. The question is what survives in the fire of Victor von Doom.»
         </p>
 
-        {/* Progress Tracker */}
-        <div className="mt-6 max-w-md mx-auto py-2 px-4 flex items-center justify-between gap-4">
-          <span className="text-[9px] font-mono tracking-widest uppercase text-stone-400">
-            CHRONOLOGY STATUS:
-          </span>
-          <div className="flex-1 h-1 bg-stone-900 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-white transition-all duration-500 rounded-full"
-              style={{ width: `${progressPercent}%` }}
-            />
+        {/* COUNTDOWN TIMER (MONTHS : DAYS : HOURS : MINUTES : SECONDS) */}
+        <div className="mt-7 mb-4 flex flex-col items-center justify-center select-none">
+          {/* Digits Row: 03 : 26 : 17 : 57 : 00 */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3.5 md:gap-5 text-white font-mono">
+            {/* Months */}
+            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+                {String(countdown.months).padStart(2, "0")}
+              </span>
+              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2 sm:mt-2.5">
+                MONTHS
+              </span>
+            </div>
+
+            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+
+            {/* Days */}
+            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+                {String(countdown.days).padStart(2, "0")}
+              </span>
+              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+                DAYS
+              </span>
+            </div>
+
+            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+
+            {/* Hours */}
+            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+                {String(countdown.hours).padStart(2, "0")}
+              </span>
+              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+                HOURS
+              </span>
+            </div>
+
+            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+
+            {/* Minutes */}
+            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+                {String(countdown.minutes).padStart(2, "0")}
+              </span>
+              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+                MINUTES
+              </span>
+            </div>
+
+            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+
+            {/* Seconds */}
+            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
+                {String(countdown.seconds).padStart(2, "0")}
+              </span>
+              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-emerald-400/80 mt-2.5 sm:mt-2.5">
+                SECONDS
+              </span>
+            </div>
           </div>
-          <span className="text-[10px] font-mono text-white font-bold tracking-wider shrink-0">
-            {watchedCount} / {DOOMSDAY_WATCHLIST.length}
-          </span>
         </div>
       </section>
 
@@ -484,14 +573,11 @@ export default function RoadToDoomsday() {
             {/* GRAND TIMELINE DESTINATION: AVENGERS DOOMSDAY & SECRET WARS   */}
             {/* ------------------------------------------------------------- */}
             <div id="doomsday-destination" className="relative flex flex-col items-center justify-center text-center pt-8 pl-12 md:pl-0">
-              <div className="max-w-xl w-full p-4 text-center">
-                <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-stone-400 font-bold block mb-1">
-                  THE MULTIVERSAL CONVERGENCE · MAY 2026 — MAY 2027
-                </span>
-                <h3 className="text-lg sm:text-2xl font-mono uppercase tracking-[0.2em] font-black text-white">
-                  AVENGERS: DOOMSDAY &amp; SECRET WARS
+              <div className="max-w-xl w-full p-4 text-center flex flex-col items-center">
+                <h3 className="text-xl sm:text-3xl font-mono uppercase tracking-[0.2em] font-black text-white">
+                  AVENGERS: <span className="text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]">DOOMSDAY</span>
                 </h3>
-                <p className="mt-2 text-xs text-stone-300 font-sans font-light leading-relaxed max-w-lg mx-auto">
+                <p className="mt-2.5 text-xs text-stone-300 font-sans font-light leading-relaxed max-w-lg mx-auto">
                   All 15 multiversal timeline branches collide under catastrophic incursions. Victor von Doom ascends the throne to forge Battleworld from the dying ashes of reality.
                 </p>
               </div>
