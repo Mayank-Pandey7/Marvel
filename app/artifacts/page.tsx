@@ -3,13 +3,14 @@
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Search, ArrowRight, X, Sparkles, MapPin, Calendar, Shield, ArrowUpRight } from "lucide-react";
+import { Search, ArrowRight, X, Sparkles } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { ARTIFACTS, type Artifact } from "@/data/artifacts";
 
 const CATEGORIES = [
   { id: "all", label: "ALL RELICS" },
   { id: "infinity_stone", label: "INFINITY STONES" },
+  { id: "ironman_armor", label: "IRON MAN ARMORY" },
   { id: "dark_magic", label: "DARK MAGIC" },
   { id: "mystic_relic", label: "MYSTIC RELICS" },
   { id: "cosmic_technology", label: "COSMIC TECH & WEAPONS" },
@@ -94,7 +95,7 @@ function ArtifactsContent() {
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
           
-          {/* OPEN SPATIAL SEARCH & TEXT FILTERS */}
+          {/* SEARCH INPUT & CATEGORY TABS (MATCHING /CHARACTERS) */}
           <div className="flex flex-col gap-6 pb-2">
             
             {/* Search Input with Clean Borderless Surface */}
@@ -117,7 +118,7 @@ function ArtifactsContent() {
               )}
             </div>
 
-            {/* Clean Minimal Text Filters */}
+            {/* Clean Minimal Category Tabs (No Numbers) */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
                 {CATEGORIES.map((c) => (
@@ -138,7 +139,7 @@ function ArtifactsContent() {
 
           </div>
 
-          {/* OPEN SPATIAL CINEMATIC GALLERY */}
+          {/* ARTIFACT GALLERY GRID (MATCHING /CHARACTERS 4:5 CARD SYSTEM) */}
           {filteredArtifacts.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -161,7 +162,7 @@ function ArtifactsContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {filteredArtifacts.map((artifact) => {
                 const latestHistory = artifact.history[artifact.history.length - 1];
-                const backdropUrl = artifact.backdrop || "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop";
+                const primaryOrigin = artifact.origin.split("/")[0].trim();
 
                 return (
                   <div
@@ -170,47 +171,46 @@ function ArtifactsContent() {
                     className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
                     
-                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT */}
-                    <div className="relative w-full aspect-[16/11] overflow-hidden bg-stone-950">
+                    {/* FULL BLEED IMAGE WITH DYNAMIC SUIT & RELIC FRAMING */}
+                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-gradient-to-b from-[#0c0c12] to-[#020204] rounded-xl border border-white/10 shadow-lg flex items-center justify-center">
                       <img
-                        src={backdropUrl}
+                        src={artifact.backdrop}
                         alt={artifact.name}
-                        className="w-full h-full object-cover object-center filter brightness-85 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
+                        className={`w-full h-full filter brightness-95 group-hover:brightness-110 group-hover:scale-105 transition-all duration-700 ease-out ${
+                          artifact.category === "ironman_armor"
+                            ? "object-contain object-center p-2.5"
+                            : "object-cover object-center"
+                        }`}
                       />
 
                       {/* Smooth Vignette */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
 
-                      {/* Category in Bottom Left of Image */}
-                      <div className="absolute bottom-2.5 left-3 max-w-[85%]">
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-300 line-clamp-1">
-                          {artifact.origin.split("/")[0].trim()}
+                      {/* Origin Pill in Bottom Left */}
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-200 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15 truncate max-w-full">
+                          {primaryOrigin}
                         </span>
                       </div>
                     </div>
 
-                    {/* OPEN TEXT AREA */}
+                    {/* OPEN TEXT AREA (NO TRUNCATION) */}
                     <div className="flex flex-col gap-1">
                       
-                      {/* Name */}
-                      <h2 className="text-base font-mono font-bold tracking-[0.16em] uppercase text-white group-hover:text-stone-200 transition-colors">
+                      {/* Name (Full Title Display) */}
+                      <h2 className="text-sm sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
                         {artifact.name}
                       </h2>
 
-                      {/* Power / Description */}
-                      <p className="text-[11px] font-mono tracking-wide text-stone-400 line-clamp-2 leading-relaxed">
-                        {artifact.power}
-                      </p>
+                      {/* Category / Current Wielder */}
+                      <div className="text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
+                        {artifact.category.replace(/_/g, " ")} · {latestHistory ? latestHistory.holderName : "Singularity"}
+                      </div>
 
-                      {/* Bearer & Action Link */}
-                      <div className="pt-1.5 flex items-center justify-between text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
-                        <span className="truncate max-w-[170px] text-stone-400">
-                          {latestHistory ? latestHistory.holderName : "Singularity"}
-                        </span>
-                        <div className="flex items-center gap-1 shrink-0">
-                          <span>PROVENANCE</span>
-                          <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
-                        </div>
+                      {/* Action Link */}
+                      <div className="pt-1 flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
+                        <span>EXPLORE RELIC</span>
+                        <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
 
                     </div>
@@ -241,7 +241,7 @@ function ArtifactsContent() {
             {/* 1. CINEMATIC HERO IMAGE BANNER */}
             <div className="relative w-full h-56 sm:h-72 shrink-0 bg-stone-950 overflow-hidden">
               <img
-                src={activeArtifact.backdrop || "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2560&auto=format&fit=crop"}
+                src={activeArtifact.backdrop}
                 alt={activeArtifact.name}
                 className="w-full h-full object-cover object-center filter brightness-90"
               />
