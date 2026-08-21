@@ -1,26 +1,16 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { 
   X, 
   ArrowRight, 
   ArrowLeft, 
-  Sparkles, 
-  Shield, 
-  Globe, 
-  Film, 
-  Layers, 
-  Users, 
-  Zap, 
-  ChevronDown,
-  ExternalLink
+  ChevronDown
 } from "lucide-react";
-import { CHARACTERS, getCharacter, type Character } from "@/data/characters";
-import { ARTIFACTS } from "@/data/artifacts";
+import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
-import { getRelationshipsForNode } from "@/data/relationships";
 import { getCharacterBackdrop } from "@/data/characterBackdrops";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
@@ -30,8 +20,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
   const [navMenuOpen, setNavMenuOpen] = useState(false);
 
-  const relationships = useMemo(() => getRelationshipsForNode(character.id, 8), [character.id]);
-  const artifacts = useMemo(() => ARTIFACTS.filter((a) => character.artifactsPossessed.includes(a.id)), [character]);
   const movieEntries = useMemo(() => MCU.filter((m) => character.entries.includes(m.id)), [character]);
 
   // Find previous and next characters in archive
@@ -45,7 +33,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
       
       {/* 1. TOP FIXED HEADER (MENU · MARVEL · CLOSE) */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 py-5 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-white/5 transition-all">
+      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 py-5 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-white/5 transition-all">
         {/* Left: Drawer Toggle */}
         <button
           onClick={() => setNavMenuOpen(true)}
@@ -76,7 +64,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </Link>
       </header>
 
-      {/* 2. CINEMATIC HERO SECTION */}
+      {/* 2. CINEMATIC HERO SECTION (LEFT-ALIGNED) */}
       <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-end pt-28 pb-16 px-6 sm:px-12 md:px-16 overflow-hidden">
         
         {/* High-Resolution Dynamic Backdrop */}
@@ -88,7 +76,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           />
           {/* Ambient Gradients for Perfect Legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 z-10 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent z-10 pointer-events-none" />
         </div>
 
         {/* Hero Narrative Overlay */}
@@ -145,11 +133,11 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS */}
-      <section className="relative z-10 max-w-5xl mx-auto px-6 sm:px-12 py-16 flex flex-col gap-14">
+      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS (LEFT-ALIGNED) */}
+      <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 flex flex-col gap-14">
         
         {/* Section Heading */}
-        <div className="flex items-center justify-between border-b border-stone-800/80 pb-4">
+        <div className="flex items-center justify-between border-b border-stone-800/80 pb-4 max-w-4xl">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.6)]" />
             <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
@@ -161,8 +149,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </span>
         </div>
 
-        {/* Eras Timeline Spine */}
-        <div className="relative border-l-2 border-stone-800/80 ml-3 sm:ml-6 pl-6 sm:pl-10 flex flex-col gap-16">
+        {/* Eras Timeline Spine (Aligned from the Left) */}
+        <div className="relative border-l-2 border-stone-800/80 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-16 max-w-4xl">
           {character.eras.map((era, idx) => {
             const eraBackdrop = getCharacterBackdrop(character.id, era.eraId, era.phase);
 
@@ -223,108 +211,11 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {/* 4. RELATIONAL ENTANGLEMENTS & COSMIC BONDS */}
-      {relationships.length > 0 && (
-        <section className="relative z-10 max-w-5xl mx-auto px-6 sm:px-12 py-12 flex flex-col gap-8 border-t border-stone-900">
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.6)]" />
-              <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
-                RELATIONAL ENTANGLEMENTS
-              </h2>
-            </div>
-            <span className="text-[10px] font-mono tracking-widest uppercase text-stone-500">
-              MULTIVERSE BONDS & RIVALRIES
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {relationships.map((rel) => {
-              const targetChar = CHARACTERS.find((c) => c.id === rel.target);
-              const avatar = targetChar ? `/images/characters/${targetChar.id}.jpg` : "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2560&auto=format&fit=crop";
-
-              return (
-                <Link
-                  key={rel.id}
-                  href={`/characters/${rel.target}`}
-                  className="group p-3.5 rounded-xl bg-stone-950/80 border border-stone-800/80 hover:border-cyan-400/50 hover:bg-stone-900 transition-all flex items-center gap-3 shadow-lg"
-                >
-                  <img
-                    src={avatar}
-                    alt={targetChar?.name || rel.label}
-                    className="w-12 h-12 rounded-lg object-cover border border-white/10 shrink-0 group-hover:scale-105 transition-transform"
-                  />
-                  <div className="flex flex-col gap-0.5 overflow-hidden">
-                    <span className="text-xs font-mono font-bold text-white group-hover:text-cyan-300 transition-colors uppercase truncate">
-                      {targetChar?.name || rel.target}
-                    </span>
-                    <span className="text-[9.5px] font-mono uppercase text-cyan-400 tracking-wider truncate">
-                      {rel.label}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-        </section>
-      )}
-
-      {/* 5. WIELDED COSMIC RELICS */}
-      {artifacts.length > 0 && (
-        <section className="relative z-10 max-w-5xl mx-auto px-6 sm:px-12 py-12 flex flex-col gap-8 border-t border-stone-900">
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-400 shadow-[0_0_10px_rgba(248,113,113,0.6)]" />
-              <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
-                WIELDED RELICS & ARTIFACTS
-              </h2>
-            </div>
-            <Link
-              href="/artifacts"
-              className="text-[10px] font-mono tracking-widest uppercase text-stone-400 hover:text-white flex items-center gap-1 transition-colors"
-            >
-              <span>EXPLORE ALL RELICS</span>
-              <ArrowRight size={11} />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {artifacts.map((art) => (
-              <div
-                key={art.id}
-                className="p-4 rounded-xl bg-stone-950/80 border border-stone-800/80 flex items-center gap-3.5 shadow-lg"
-              >
-                <img
-                  src={art.backdrop}
-                  alt={art.name}
-                  className="w-14 h-14 rounded-lg object-cover border border-white/10 shrink-0"
-                />
-                <div className="flex flex-col gap-0.5 overflow-hidden">
-                  <span className="text-xs font-mono font-bold text-white uppercase truncate">
-                    {art.name}
-                  </span>
-                  <span className="text-[9.5px] font-mono uppercase text-red-400 tracking-wider truncate">
-                    {art.category.replace(/_/g, " ")}
-                  </span>
-                  <span className="text-[9px] font-mono text-stone-500 truncate">
-                    {art.origin}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </section>
-      )}
-
-      {/* 6. MCU FILMOGRAPHY & APPEARANCES */}
+      {/* 4. MCU FILMOGRAPHY & APPEARANCES (LEFT-ALIGNED) */}
       {movieEntries.length > 0 && (
-        <section className="relative z-10 max-w-5xl mx-auto px-6 sm:px-12 py-12 flex flex-col gap-8 border-t border-stone-900">
+        <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8 border-t border-stone-900">
           
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between max-w-4xl">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
               <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
@@ -336,7 +227,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 max-w-5xl">
             {movieEntries.map((m) => (
               <Link
                 key={m.id}
@@ -368,8 +259,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </section>
       )}
 
-      {/* 7. PREVIOUS / NEXT CHARACTER JUMP FOOTER */}
-      <footer className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-12 py-16 mt-8 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-6">
+      {/* 5. PREVIOUS / NEXT CHARACTER JUMP FOOTER */}
+      <footer className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 mt-8 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Previous Character */}
         <Link
