@@ -80,10 +80,10 @@ export default function PhaseSpine({
                       }}
                       className={`relative flex items-center justify-center transition-all duration-300 rounded-full cursor-pointer shrink-0 z-10 ${
                         is616 && isEarth616Expanded
-                          ? "w-14 h-14 bg-black border-2 border-white text-white shadow-[0_0_24px_rgba(255,255,255,0.7)] scale-105"
+                          ? "w-14 h-14 bg-black border border-white/60 text-white shadow-[0_0_15px_rgba(255,255,255,0.25)] scale-105"
                           : isSelectedEarth
-                          ? "w-14 h-14 bg-stone-900 border-2 border-white text-white shadow-[0_0_16px_rgba(255,255,255,0.4)]"
-                          : "w-14 h-14 bg-[#06060c] border border-stone-700 hover:border-white text-stone-200 hover:text-white hover:scale-105 hover:shadow-[0_0_16px_rgba(255,255,255,0.4)] shadow-xl"
+                          ? "w-14 h-14 bg-stone-900 border border-white/50 text-white shadow-[0_0_10px_rgba(255,255,255,0.15)]"
+                          : "w-14 h-14 bg-[#06060c] border border-stone-800 hover:border-white/50 text-stone-300 hover:text-white hover:scale-105 hover:shadow-[0_0_10px_rgba(255,255,255,0.15)] shadow-xl"
                       }`}
                       title={`${earth.designation} · ${earth.name}`}
                       aria-label={earth.designation}
@@ -92,7 +92,7 @@ export default function PhaseSpine({
 
                       {/* Rotating Glow Ring on Active Earth-616 */}
                       {is616 && isEarth616Expanded && (
-                        <span className="absolute -inset-2 rounded-full border border-dotted border-white animate-[spin_8s_linear_infinite] pointer-events-none" />
+                        <span className="absolute -inset-2 rounded-full border border-dotted border-white/35 animate-[spin_8s_linear_infinite] pointer-events-none" />
                       )}
                     </button>
 
@@ -109,7 +109,7 @@ export default function PhaseSpine({
                       }}
                       className="absolute left-16 pl-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap flex flex-col cursor-pointer pointer-events-auto z-50"
                     >
-                      <span className="text-[11px] font-mono tracking-[0.25em] uppercase font-bold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] flex items-center gap-1.5">
+                      <span className="text-[11px] font-mono tracking-[0.25em] uppercase font-bold text-white/90 drop-shadow-[0_0_6px_rgba(255,255,255,0.3)] flex items-center gap-1.5">
                         <span>{earth.designation}</span>
                       </span>
                       <span className="text-[9px] font-mono text-stone-400 mt-0.5">
@@ -124,7 +124,7 @@ export default function PhaseSpine({
                   {is616 && isEarth616Expanded && (
                     <div className="relative flex flex-col items-center gap-3 my-1 w-14 overflow-visible animate-in slide-in-from-top-3 fade-in duration-300">
                       {/* Vertical connector line */}
-                      <div className="w-[1.5px] h-3 bg-white/50 pointer-events-none" />
+                      <div className="w-[1.5px] h-3 bg-white/20 pointer-events-none" />
 
                       {/* ALL (Full Timeline Overview) Node */}
                       <div className="group relative flex items-center justify-center w-14 overflow-visible animate-in slide-in-from-top-2 fade-in duration-200">
@@ -133,7 +133,7 @@ export default function PhaseSpine({
                           className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-[9px] font-bold transition-all cursor-pointer z-10 ${
                             isFullOverview
                               ? "bg-white text-black border border-white scale-110 font-black"
-                              : "bg-black/90 border border-stone-700 hover:border-white text-stone-400 hover:text-white hover:scale-110"
+                              : "bg-black/90 border border-stone-800 hover:border-white/50 text-stone-400 hover:text-white hover:scale-110"
                           }`}
                           title="View Full Earth-616 Timeline Tree"
                         >
@@ -166,7 +166,7 @@ export default function PhaseSpine({
                               className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-[10.5px] font-bold transition-all cursor-pointer z-10 ${
                                 isActive
                                   ? "bg-white text-black border border-white scale-110 font-black"
-                                  : "bg-black/90 border border-stone-700 hover:border-white text-stone-400 hover:text-white hover:scale-110"
+                                  : "bg-black/90 border border-stone-800 hover:border-white/50 text-stone-400 hover:text-white hover:scale-110"
                               }`}
                               title={`Direct to Phase ${p.roman} (${p.years})`}
                             >
@@ -196,7 +196,7 @@ export default function PhaseSpine({
                       })}
 
                       {/* Vertical connector line ending */}
-                      <div className="w-[1.5px] h-3 bg-white/50 pointer-events-none" />
+                      <div className="w-[1.5px] h-3 bg-white/20 pointer-events-none" />
                     </div>
                   )}
                 </React.Fragment>

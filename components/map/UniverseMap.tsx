@@ -401,6 +401,8 @@ export default function UniverseMap({
 
       {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
       {/* ------------------------------------------------------------- */}
+      {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
+      {/* ------------------------------------------------------------- */}
       {/* TOP HEADER: RESPONSIVE MATCH WITH DARKFAMILYTREE              */}
       {/* ------------------------------------------------------------- */}
       <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
@@ -408,19 +410,19 @@ export default function UniverseMap({
         <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
+            className="text-stone-400 hover:text-stone-200 transition-colors cursor-pointer p-1"
             aria-label="Open Universe Navigation"
             title="Open Universe Navigation"
           >
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest) */}
+          {/* View Mode Switcher */}
           <div className="flex items-center gap-2 sm:gap-3">
             {onSwitchToFamilyTree && (
               <button
                 onClick={onSwitchToFamilyTree}
-                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
+                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
                 title="Switch to Sacred Family Tree Lineage View"
               >
                 FAMILY TREE
@@ -428,7 +430,7 @@ export default function UniverseMap({
             )}
             <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
             <button
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
+              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-200 font-semibold transition-colors cursor-pointer"
               title="Sacred Timeline Map View"
             >
               TIMELINE MAP
@@ -436,11 +438,11 @@ export default function UniverseMap({
           </div>
         </div>
 
-        {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
+        {/* Center: Centered MARVEL | DOOMSDAY Brand Header */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
           <Link 
             href="/timeline" 
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-stone-300 hover:text-stone-200 transition-opacity select-none"
             title="MCU Timeline Map"
           >
             MARVEL
@@ -460,7 +462,7 @@ export default function UniverseMap({
           {onReturn && (
             <button
               onClick={onReturn}
-              className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-stone-400 hover:text-stone-200 text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
               title="Return to Timeline Selector"
             >
               <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
@@ -470,10 +472,10 @@ export default function UniverseMap({
 
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-stone-200 text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
             title="Search All Timeline Nodes (/ or Ctrl+K)"
           >
-            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={13} className="text-stone-500 group-hover:text-stone-200 transition-colors" />
             <span className="hidden sm:inline">SEARCH</span>
             <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
               /
@@ -482,7 +484,7 @@ export default function UniverseMap({
         </div>
       </header>
 
-      {/* 3. Phase Spine Side Indicator (With Earth-616 Root at Top and All MCU Earths Catalogue) */}
+      {/* 3. Phase Spine Side Indicator */}
       <PhaseSpine
         currentPhase={activePhase}
         isFullOverview={isFullOverview}
@@ -490,18 +492,18 @@ export default function UniverseMap({
         onSelectEarth616={showFullEarth616Timeline}
       />
 
-      {/* 4. Bottom Controls (Zoom In/Out, Earth-616 Overview, Reset) - Positioned safely away from left PhaseSpine */}
+      {/* 4. Bottom Controls */}
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.25, 1.65) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.18) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
           <ZoomOut size={13} />
@@ -510,8 +512,8 @@ export default function UniverseMap({
           onClick={showFullEarth616Timeline}
           className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
             isFullOverview
-              ? "bg-white text-black border-white"
-              : "bg-black/80 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
+              ? "bg-stone-200 text-black border-stone-300"
+              : "bg-black/80 border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200"
           }`}
           title="Earth-616 Full Timeline Overview"
         >
@@ -519,34 +521,34 @@ export default function UniverseMap({
         </button>
         <button
           onClick={() => directToPhase(1)}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Direct to Phase I"
         >
           <RotateCcw size={12} />
         </button>
       </div>
 
-      {/* 5. Bottom Timeline Status (Shifted safely above or next to controls) */}
+      {/* 5. Bottom Timeline Status */}
       <div className="hidden lg:block fixed bottom-16 right-10 z-30 pointer-events-none text-right font-mono text-[9.5px] text-stone-400 tracking-[0.25em] uppercase">
-        <span className="text-white font-bold">
+        <span className="text-stone-300 font-semibold">
           {isFullOverview ? "EARTH-616 TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
         </span>
         <span className="mx-2">•</span>
         <span>{isFullOverview ? "2008 — 2027" : currentPhaseMeta.years}</span>
         <span className="mx-2">•</span>
-        <span className="text-stone-300 font-semibold">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
+        <span className="text-stone-400 font-medium">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
       </div>
 
       {/* Mobile compact badge */}
       <div className="md:hidden fixed bottom-4 right-4 z-30 pointer-events-none font-mono text-[8.5px] text-stone-400 tracking-wider uppercase bg-black/70 px-2.5 py-1 rounded-full border border-stone-800/80 backdrop-blur-md">
-        <span className="text-white font-bold">
+        <span className="text-stone-300 font-semibold">
           {isFullOverview ? "ALL PHASES" : `PHASE ${currentPhaseMeta.roman}`}
         </span>
         <span className="mx-1.5">•</span>
         <span>{isFullOverview ? "2008–27" : currentPhaseMeta.years}</span>
       </div>
 
-      {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
+      {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS */}
       <div
         className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left ${
           isDragging
@@ -557,7 +559,7 @@ export default function UniverseMap({
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}
       >
-        {/* SVG Network: ONLY Interrelated Movie-to-Movie Narrative Threads & Phase Markers */}
+        {/* SVG Network */}
         <svg
           className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
           viewBox="0 0 2000 10500"
@@ -585,7 +587,7 @@ export default function UniverseMap({
             `}</style>
           </defs>
 
-          {/* Phase Era Pill Banners (Clickable to Direct to that Phase) */}
+          {/* Phase Era Pill Banners */}
           {PHASES_CONFIG.map((p) => (
             <g
               key={`phase-divider-${p.id}`}
@@ -599,28 +601,28 @@ export default function UniverseMap({
                 height="36"
                 rx="18"
                 fill="#05050a"
-                stroke={activePhase === p.id && !isFullOverview ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
-                strokeWidth={activePhase === p.id && !isFullOverview ? "1.8" : "1"}
-                className="transition-all duration-300 group-hover:stroke-white group-hover:fill-[#0c0c14]"
+                stroke={activePhase === p.id && !isFullOverview ? "rgba(255, 255, 255, 0.45)" : "rgba(255, 255, 255, 0.1)"}
+                strokeWidth={activePhase === p.id && !isFullOverview ? "1.2" : "1"}
+                className="transition-all duration-300 group-hover:stroke-white/40 group-hover:fill-[#0c0c14]"
               />
 
               <text
                 x="1000"
                 y={p.startY + 4}
                 textAnchor="middle"
-                fill={activePhase === p.id && !isFullOverview ? "#ffffff" : "#d4d4d8"}
+                fill={activePhase === p.id && !isFullOverview ? "rgba(228, 228, 231, 0.85)" : "#71717a"}
                 fontSize="12"
                 fontFamily="monospace"
                 fontWeight="bold"
                 letterSpacing="0.25em"
-                className="select-none transition-colors group-hover:fill-white"
+                className="select-none transition-colors group-hover:fill-stone-200"
               >
                 PHASE {p.roman} · {p.title} ({p.years})
               </text>
             </g>
           ))}
 
-          {/* ONLY INTERRELATED MOVIE-TO-MOVIE NARRATIVE THREADS */}
+          {/* Narrative Threads */}
           {UNIFIED_MCU_TREE.flatMap((fromMovie) =>
             fromMovie.connections.map((conn) => {
               const toMovie = UNIFIED_MCU_TREE.find((m) => m.id === conn.toId);
@@ -633,7 +635,6 @@ export default function UniverseMap({
               const isDimmed =
                 (selectedMovie || hoveredMovieId) && !isDirectlyConnected;
 
-              // Organic smooth curved arc flowing directly between the two interrelated movies
               const midX = (fromMovie.x + toMovie.x) / 2 + (fromMovie.x < 1000 ? -60 : 60);
               const midY = (fromMovie.y + toMovie.y) / 2;
 
@@ -646,8 +647,8 @@ export default function UniverseMap({
                       d={pathD}
                       fill="none"
                       stroke={fromMovie.color || "#ffffff"}
-                      strokeWidth="3.5"
-                      opacity="0.9"
+                      strokeWidth="2.5"
+                      opacity="0.6"
                       filter="url(#universe-line-glow)"
                       strokeDasharray="6 6"
                       className="flowing-connection transition-all duration-500"
@@ -659,12 +660,12 @@ export default function UniverseMap({
                     fill="none"
                     stroke={
                       isDirectlyConnected
-                        ? "#ffffff"
+                        ? "rgba(255, 255, 255, 0.75)"
                         : isDimmed
-                        ? "rgba(255, 255, 255, 0.04)"
-                        : "rgba(255, 255, 255, 0.28)"
+                        ? "rgba(255, 255, 255, 0.02)"
+                        : "rgba(255, 255, 255, 0.12)"
                     }
-                    strokeWidth={isDirectlyConnected ? "2" : "1.2"}
+                    strokeWidth={isDirectlyConnected ? "1.8" : "1"}
                     strokeDasharray={isDirectlyConnected ? "4 4" : "3 5"}
                     className={`${isDirectlyConnected ? "flowing-connection" : "faint-connection"} transition-all duration-500`}
                   />
@@ -674,7 +675,7 @@ export default function UniverseMap({
           )}
         </svg>
 
-        {/* Interactive Movie Nodes Positioned Vertically in Space */}
+        {/* Interactive Movie Nodes */}
         {UNIFIED_MCU_TREE.map((movie) => {
           const isSelected = selectedMovie?.id === movie.id;
           const isHovered = hoveredMovieId === movie.id;
@@ -696,37 +697,37 @@ export default function UniverseMap({
                 zIndex: isSelected ? 45 : isHovered ? 40 : 10,
               }}
             >
-              {/* Minimalist TVA Cinematic Dossier Popover on Hover */}
+              {/* Popover on Hover */}
               {isHovered && !isSelected && (
                 <div className="absolute bottom-[115%] left-1/2 -translate-x-1/2 mb-3 w-[340px] pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200 ease-out">
-                  <div className="p-3.5 rounded-2xl bg-[#09090b]/95 border border-white/15 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_0_25px_rgba(255,255,255,0.06)] flex gap-3.5 text-left">
+                  <div className="p-3.5 rounded-2xl bg-[#09090b]/95 border border-white/10 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex gap-3.5 text-left">
                     {/* Official Movie Poster Thumbnail */}
-                    <div className="w-20 aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 shrink-0 shadow-xl border border-white/15 relative">
+                    <div className="w-20 aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 shrink-0 shadow-xl border border-white/10 relative">
                       <img
                         src={MCU_POSTER_MAP[movie.id]?.poster || ""}
                         alt={movie.title}
                         loading="eager"
                         className="w-full h-full object-cover object-center"
                       />
-                      <div className="absolute inset-0 border border-white/10 rounded-xl pointer-events-none" />
+                      <div className="absolute inset-0 border border-white/5 rounded-xl pointer-events-none" />
                     </div>
 
                     {/* Movie Information Column */}
                     <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
-                      {/* Header Row: Phase Badge + Year + Runtime */}
+                      {/* Header Row */}
                       <div className="flex items-center justify-between text-[9px] font-mono tracking-wider uppercase">
                         <div className="flex items-center gap-1.5">
-                          <span className="px-2 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/10">
+                          <span className="px-2 py-0.5 rounded-full bg-white/[0.06] text-stone-300 font-semibold border border-white/[0.08]">
                             PHASE {movie.phase}
                           </span>
-                          <span className="text-stone-400 font-semibold">{movie.year}</span>
+                          <span className="text-stone-400">{movie.year}</span>
                         </div>
-                        <span className="text-stone-500 font-medium">{movie.runtime} MIN</span>
+                        <span className="text-stone-500">{movie.runtime} MIN</span>
                       </div>
 
                       {/* Title & Protagonist */}
                       <div className="my-1.5">
-                        <h4 className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-tight line-clamp-1 drop-shadow-sm">
+                        <h4 className="font-mono text-xs sm:text-sm font-semibold text-stone-200 uppercase tracking-wider leading-tight line-clamp-1">
                           {movie.title}
                         </h4>
                         <p className="text-[9.5px] font-mono tracking-wide uppercase text-stone-400 line-clamp-1 mt-0.5">
@@ -734,17 +735,17 @@ export default function UniverseMap({
                         </p>
                       </div>
 
-                      {/* Tagline / Narrative Quote */}
-                      <p className="text-[10px] font-sans italic text-stone-300 line-clamp-2 leading-snug">
+                      {/* Tagline */}
+                      <p className="text-[10px] font-sans italic text-stone-400 line-clamp-2 leading-snug">
                         &ldquo;{movie.tagline || movie.quote || movie.description}&rdquo;
                       </p>
 
-                      {/* Footer: Links & Action Prompt */}
+                      {/* Footer */}
                       <div className="pt-2 mt-1 border-t border-white/10 flex items-center justify-between text-[8.5px] font-mono tracking-widest uppercase">
-                        <span className="text-stone-400 font-medium">
+                        <span className="text-stone-500">
                           {movie.connections.length} {movie.connections.length === 1 ? "CONNECTION" : "CONNECTIONS"}
                         </span>
-                        <span className="text-white font-bold flex items-center gap-1">
+                        <span className="text-stone-300 font-semibold flex items-center gap-1">
                           EXPLORE <span className="text-[10px]">→</span>
                         </span>
                       </div>
@@ -752,29 +753,29 @@ export default function UniverseMap({
                   </div>
 
                   {/* Clean Subtle Glow Tip */}
-                  <div className="w-3 h-3 bg-[#09090b]/95 border-r border-b border-white/15 rotate-45 mx-auto -mt-1.5 shadow-lg" />
+                  <div className="w-3 h-3 bg-[#09090b]/95 border-r border-b border-white/10 rotate-45 mx-auto -mt-1.5 shadow-lg" />
                 </div>
               )}
 
-              {/* Circular Universe Node Core (Clean Minimal Monochrome) */}
+              {/* Circular Universe Node Core */}
               <div
                 className={`relative rounded-full flex items-center justify-center transition-all duration-300 ${
                   isSelected
-                    ? "w-28 h-28 sm:w-32 sm:h-32 scale-110 shadow-[0_0_40px_rgba(255,255,255,0.7)]"
+                    ? "w-28 h-28 sm:w-32 sm:h-32 scale-110 shadow-[0_0_25px_rgba(255,255,255,0.35)]"
                     : isHovered
-                    ? "w-24 h-24 sm:w-28 sm:h-28 scale-110 shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                    ? "w-24 h-24 sm:w-28 sm:h-28 scale-110 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                     : "w-20 h-20 sm:w-24 sm:h-24 shadow-[0_0_15px_rgba(0,0,0,0.8)]"
                 }`}
               >
-                {/* Clean Dotted Orbit Ring on Hover or Select */}
+                {/* Dotted Orbit Ring */}
                 {(isSelected || isHovered) && (
-                  <span className="absolute -inset-2 rounded-full border border-dotted border-white/70 animate-[spin_8s_linear_infinite]" />
+                  <span className="absolute -inset-2 rounded-full border border-dotted border-white/35 animate-[spin_8s_linear_infinite]" />
                 )}
 
                 {/* Node Artwork Emblem */}
                 <div
                   className={`w-full h-full rounded-full border transition-colors p-0.5 bg-black overflow-hidden ${
-                    isSelected || isHovered ? "border-white" : "border-stone-800"
+                    isSelected || isHovered ? "border-white/70" : "border-stone-800"
                   }`}
                 >
                   <NodeArtwork movieId={movie.id} isActive={isSelected || isHovered} />
@@ -783,7 +784,7 @@ export default function UniverseMap({
                 {/* Release Year Badge */}
                 <div
                   className={`absolute -bottom-2 bg-black/95 border px-2 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-md ${
-                    isSelected || isHovered ? "border-white text-white font-bold" : "border-stone-800 text-stone-400"
+                    isSelected || isHovered ? "border-white/40 text-stone-300 font-semibold" : "border-stone-800 text-stone-500"
                   }`}
                 >
                   {movie.year}
@@ -797,10 +798,10 @@ export default function UniverseMap({
                 }`}
               >
                 <h3
-                  className={`font-mono text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
+                  className={`font-mono text-xs uppercase tracking-[0.2em] font-semibold transition-colors ${
                     isSelected || isHovered
-                      ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                      : "text-stone-300"
+                      ? "text-stone-200"
+                      : "text-stone-400"
                   }`}
                 >
                   {movie.title}
