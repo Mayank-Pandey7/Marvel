@@ -3141,6 +3141,969 @@ export const CHARACTERS: Character[] = [
     "entries": [
       "daredevil-born-again"
     ]
+  },
+
+  // --- NEW MULTIVERSE ICONS & VILLAIN EXPANSION ---
+  {
+    "id": "he-who-remains",
+    "name": "He Who Remains",
+    "aliases": [
+      "The Creator of the TVA",
+      "The Sacred Timeline Architect",
+      "Kang Prime Variant"
+    ],
+    "universe": "Citadel at the End of Time",
+    "faction": "Time Variance Authority / Citadel",
+    "role": "Architect of the Sacred Timeline who won the multiversal war.",
+    "overview": "A Kang variant who weaponized the cosmic beast Alioth to isolate the Sacred Timeline and created the TVA to prevent multiversal war, allowing Sylvie to kill him knowing his variants would rise.",
+    "firstAppearance": "Loki: Season 1 (2021)",
+    "color": "#a855f7",
+    "imageSearch": "He Who Remains (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "4": {
+        "status": "deceased",
+        "note": "Slain by Sylvie at the Citadel at the End of Time, releasing the branching multiverse."
+      },
+      "5": {
+        "status": "deceased",
+        "note": "Temporal echoes and loom records accessed by Loki and Mobius."
+      },
+      "6": {
+        "status": "deceased",
+        "note": "His death precipitated the universal incursion crisis."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "hwr-citadel",
+        "phase": 4,
+        "title": "The Citadel Offer (2021)",
+        "year": "2021",
+        "universe": "End of Time",
+        "description": "Offered Loki and Sylvie the choice to manage the timeline or kill him and unleash infinite Kang variants.",
+        "keyMoments": [
+          "Revealed he scripted every event in the Sacred Timeline",
+          "'See you soon'",
+          "Stabbed by Sylvie's enchanted dagger"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "temppad-prime",
+      "citadel-throne"
+    ],
+    "linkedNexusEvents": [
+      "nexus-he-who-remains-death"
+    ],
+    "entries": [
+      "loki-season-1",
+      "loki-season-2"
+    ]
+  },
+
+  {
+    "id": "sylvie",
+    "name": "Sylvie Laufeydottir",
+    "aliases": [
+      "Sylvie",
+      "The Goddess of Mischief",
+      "Lady Loki"
+    ],
+    "universe": "Asgard Branch (Pruned) / Earth-616",
+    "faction": "Loki Variants / McDonald's (1982 Branch)",
+    "role": "Fugitive Loki variant who shattered the Sacred Timeline.",
+    "overview": "Pruned as a child by the TVA, Sylvie survived by hiding in natural apocalypses across time, mastering enchantment magic before teaming with Loki to reach the Citadel at the End of Time.",
+    "firstAppearance": "Loki: Season 1 (2021)",
+    "color": "#10b981",
+    "imageSearch": "Sylvie (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "4": {
+        "status": "alive",
+        "note": "Killed He Who Remains and chose a peaceful life in a 1982 McDonald's branch."
+      },
+      "5": {
+        "status": "alive",
+        "note": "Reunited with Loki; witnessed him ascend to God of Stories at the center of the Yggdrasil multiverse."
+      },
+      "6": {
+        "status": "alive",
+        "note": "Free to live in any branch of the thriving multiverse."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "sylvie-ascent",
+        "phase": 5,
+        "title": "The God of Stories Witness (2026)",
+        "year": "2026",
+        "universe": "End of Time",
+        "description": "Watched Loki sacrifice his own freedom to hold infinite timelines together as the World Tree.",
+        "keyMoments": [
+          "Used enchanted machete across timeline branches",
+          "Comforted Mobius at the end of time"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "he-who-remains-temppad",
+      "enchanted-machete"
+    ],
+    "linkedNexusEvents": [
+      "nexus-lamentis-apocalypse"
+    ],
+    "entries": [
+      "loki-season-1",
+      "loki-season-2"
+    ]
+  },
+
+  {
+    "id": "mobius",
+    "name": "Mobius M. Mobius",
+    "aliases": [
+      "Agent Mobius",
+      "Don (Original Jet Ski Salesman)"
+    ],
+    "universe": "TVA / Earth-616 Branch",
+    "faction": "Time Variance Authority",
+    "role": "Senior TVA Analyst and loyal companion to Loki.",
+    "overview": "A dedicated TVA investigator who recruited Loki to track down a dangerous variant, discovering his own stolen past as a 2022 jet ski salesman before helping rebuild the TVA into a multiverse-monitoring agency.",
+    "firstAppearance": "Loki: Season 1 (2021)",
+    "color": "#f59e0b",
+    "imageSearch": "Mobius M. Mobius (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "4": {
+        "status": "alive",
+        "note": "Uncovered the truth of the Time-Keepers and aided Loki."
+      },
+      "5": {
+        "status": "alive",
+        "note": "Stepped down from the TVA to live peacefully watching his alternate life on the timeline."
+      },
+      "6": {
+        "status": "alive",
+        "note": "Retired temporal investigator."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "mobius-tva",
+        "phase": 5,
+        "title": "Watching the Branches (2026)",
+        "year": "2026",
+        "universe": "Earth-616 (Branch 2022)",
+        "description": "Stood outside his variant family's home in Ohio, admiring the peaceful passing of time.",
+        "keyMoments": [
+          "Befriended Loki and taught him empathy",
+          "Protected the timeline loom with Victor Timely"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "tva-time-stick",
+      "tva-temppad"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "loki-season-1",
+      "loki-season-2",
+      "deadpool-and-wolverine"
+    ]
+  },
+
+  {
+    "id": "victor-timely",
+    "name": "Victor Timely",
+    "aliases": [
+      "Timely",
+      "19th-Century Industrial Inventor",
+      "Kang Variant"
+    ],
+    "universe": "Earth-616 (1893 Chicago Branch)",
+    "faction": "TVA / Timely Industries",
+    "role": "Eccentric 19th-century inventor of the prototype Temporal Loom.",
+    "overview": "A brilliant Kang variant living in 1893 Chicago who was provided a TVA handbook by Ravonna Renslayer, leading him to invent early temporal mechanics and risk his life to repair the Temporal Loom.",
+    "firstAppearance": "Ant-Man and the Wasp: Quantumania (2023) / Loki: Season 2 (2023)",
+    "color": "#f97316",
+    "imageSearch": "Victor Timely (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "5": {
+        "status": "alive",
+        "note": "Aided Loki in repairing the Temporal Loom; reset into an innocent 1868 childhood branch."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "timely-loom",
+        "phase": 5,
+        "title": "The Temporal Loom Protocol (2026)",
+        "year": "2026",
+        "universe": "TVA",
+        "description": "Stepped into the cosmic radiation stream to deploy the Throughput Multiplier onto the Loom.",
+        "keyMoments": [
+          "Exhibited the prototype Temporal Loom at 1893 Chicago World's Fair",
+          "Spaghettified and restored during time loops"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "temporal-loom-multiplier",
+      "tva-handbook-1893"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "ant-man-and-the-wasp-quantumania",
+      "loki-season-2"
+    ]
+  },
+
+  {
+    "id": "kaecilius",
+    "name": "Kaecilius",
+    "aliases": [
+      "Master Kaecilius",
+      "Zealot Leader"
+    ],
+    "universe": "Earth-616",
+    "faction": "Zealots of the Dark Dimension",
+    "role": "Grief-stricken former master of Kamar-Taj who allied with Dormammu.",
+    "overview": "Devastated by the death of his family, Kaecilius rebelled against the Ancient One after discovering her Dark Dimension secrets, leading the Zealots to merge Earth with Dormammu's timeless realm.",
+    "firstAppearance": "Doctor Strange (2016)",
+    "color": "#7c3aed",
+    "imageSearch": "Kaecilius (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "3": {
+        "status": "ascended",
+        "note": "Dragged into the Dark Dimension by Dormammu, transformed into a Mindless One for eternity."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "kaecilius-sanctum",
+        "phase": 3,
+        "title": "Fall of the Sanctums (2016)",
+        "year": "2016",
+        "universe": "Earth-616",
+        "description": "Destroyed the London and New York Sanctums to usher in Dormammu's arrival.",
+        "keyMoments": [
+          "Decapitated the Kamar-Taj librarian to steal the Book of Cagliostro pages",
+          "Impaled the Ancient One through a mirror portal"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "space-shard-daggers",
+      "book-of-cagliostro-pages"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "doctor-strange"
+    ]
+  },
+
+  {
+    "id": "malekith",
+    "name": "Malekith",
+    "aliases": [
+      "Malekith the Accursed",
+      "Lord of the Dark Elves"
+    ],
+    "universe": "Svartalfheim (Dark World)",
+    "faction": "Dark Elves of Svartalfheim",
+    "role": "Ancient ruler of the Dark Elves who sought to plunge the universe into eternal darkness.",
+    "overview": "Leader of the primordial Dark Elves who waged war against Bor of Asgard with the Aether (Reality Stone), awakening millennia later during the Convergence to extinguish the cosmos.",
+    "firstAppearance": "Thor: The Dark World (2013)",
+    "color": "#64748b",
+    "imageSearch": "Malekith (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "2": {
+        "status": "deceased",
+        "note": "Crushed on Svartalfheim by his own collapsing Ark flagship during the Convergence battle with Thor."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "malekith-convergence",
+        "phase": 2,
+        "title": "The Great Darkness (2013)",
+        "year": "2013",
+        "universe": "Earth-616 / Svartalfheim",
+        "description": "Absorbed the Aether in Greenwich to blast dark matter through the Nine Realms.",
+        "keyMoments": [
+          "Assaulted Asgard and killed Queen Frigga",
+          "Bonded with the liquid Aether Reality Stone",
+          "Banished across dimensional portals in Greenwich"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "reality-stone",
+      "kurse-kurse-stone"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "thor-dark-world"
+    ]
+  },
+
+  {
+    "id": "justin-hammer",
+    "name": "Justin Hammer",
+    "aliases": [
+      "CEO of Hammer Industries",
+      "The Rival Industrialist"
+    ],
+    "universe": "Earth-616",
+    "faction": "Hammer Industries / Seagate Prison",
+    "role": "Ruthless tech CEO and rival to Tony Stark.",
+    "overview": "An ambitious defense contractor who bankrolled Ivan Vanko to manufacture copycat Arc Reactor combat drones to surpass Stark Industries, landing in Seagate Federal Prison after the Stark Expo disaster.",
+    "firstAppearance": "Iron Man 2 (2010)",
+    "color": "#ca8a04",
+    "imageSearch": "Justin Hammer (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "1": {
+        "status": "alive",
+        "note": "Arrested at Stark Expo by Pepper Potts and incarcerated in Seagate Prison."
+      },
+      "2": {
+        "status": "alive",
+        "note": "Held in Seagate Prison as seen in All Hail the King."
+      },
+      "5": {
+        "status": "alive",
+        "note": "Rumored to re-enter military tech contracts during Armor Wars."
+      },
+      "6": {
+        "status": "alive",
+        "note": "Active defense industrialist."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "hammer-expo",
+        "phase": 1,
+        "title": "The Stark Expo Disaster (2010)",
+        "year": "2010",
+        "universe": "Earth-616",
+        "description": "Unveiled Hammer Drones and the modified War Machine armor at the Flushing Meadows Expo.",
+        "keyMoments": [
+          "Broke Ivan Vanko out of French prison",
+          "Presented the Hammer Drones with his awkward stage dance"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "ex-wife-missile",
+      "hammer-drone-blueprints"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "iron-man-2"
+    ]
+  },
+
+  {
+    "id": "arnim-zola",
+    "name": "Dr. Arnim Zola",
+    "aliases": [
+      "The HYDRA Brain",
+      "Zola's Algorithm Creator"
+    ],
+    "universe": "Earth-616",
+    "faction": "HYDRA / SSR / Project Paperclip",
+    "role": "Genius HYDRA scientist who digitized his mind into a 1970s supercomputer.",
+    "overview": "Red Skull's chief scientist who harvested Tesseract energy in WWII. Recruited into SHIELD via Operation Paperclip, he secretly rebuilt HYDRA from within and uploaded his consciousness into millions of feet of computer tape at Camp Lehigh.",
+    "firstAppearance": "Captain America: The First Avenger (2011)",
+    "color": "#16a34a",
+    "imageSearch": "Arnim Zola (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "1": {
+        "status": "alive",
+        "note": "Captured by the Howling Commandos and recruited into SHIELD."
+      },
+      "2": {
+        "status": "deceased",
+        "note": "Computer bunker destroyed by a ballistic missile at Camp Lehigh in 2014."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "zola-algorithm",
+        "phase": 2,
+        "title": "Project Insight Revealed (2014)",
+        "year": "2014",
+        "universe": "Earth-616",
+        "description": "Stalled Steve Rogers and Natasha Romanoff with his digitized avatar before a missile strike.",
+        "keyMoments": [
+          "Designed Insight Algorithm to predict and eliminate future threats",
+          "'HYDRA was founded on the belief that humanity could not be trusted with its own freedom'"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "tesseract-harness",
+      "insight-algorithm"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "captain-america-first-avenger",
+      "captain-america-winter-soldier"
+    ]
+  },
+
+  {
+    "id": "crossbones",
+    "name": "Brock Rumlow",
+    "aliases": [
+      "Crossbones",
+      "STRIKE Commander"
+    ],
+    "universe": "Earth-616",
+    "faction": "STRIKE / HYDRA",
+    "role": "Ruthless HYDRA black-ops commander.",
+    "overview": "The commander of SHIELD's elite counter-terrorism STRIKE team who led HYDRA's internal assault on Steve Rogers, surviving the Triskelion collapse as the heavily armored suicide terrorist Crossbones.",
+    "firstAppearance": "Captain America: The Winter Soldier (2014)",
+    "color": "#475569",
+    "imageSearch": "Brock Rumlow (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "2": {
+        "status": "alive",
+        "note": "Horrifically burned when the Triskelion collapsed on him."
+      },
+      "3": {
+        "status": "deceased",
+        "note": "Detonated a suicide bomb vest in Lagos in 2016, triggering the Sokovia Accords."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "crossbones-lagos",
+        "phase": 3,
+        "title": "The Lagos Catalyst (2016)",
+        "year": "2016",
+        "universe": "Earth-616",
+        "description": "Stole a biological weapon in Nigeria and blew himself up to avenge his defeat.",
+        "keyMoments": [
+          "Led the iconic Triskelion glass elevator ambush ('Before we get started...')",
+          "Detonated suicide vest outside the IFID building in Lagos"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "pneumatic-hydraulic-gauntlets"
+    ],
+    "linkedNexusEvents": [
+      "nexus-lagos-bombing"
+    ],
+    "entries": [
+      "captain-america-winter-soldier",
+      "captain-america-civil-war",
+      "avengers-endgame"
+    ]
+  },
+
+  {
+    "id": "corvus-glaive",
+    "name": "Corvus Glaive",
+    "aliases": [
+      "General Glaive",
+      "Black Order Commander"
+    ],
+    "universe": "Earth-616",
+    "faction": "Black Order / Thanos' Army",
+    "role": "Lethal blade master and field commander of the Black Order.",
+    "overview": "The ruthless right hand of Thanos whose molecular-splitting glaive could pierce any matter in the universe, including Vision's vibranium android body.",
+    "firstAppearance": "Avengers: Infinity War (2018)",
+    "color": "#6b7280",
+    "imageSearch": "Corvus Glaive (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "3": {
+        "status": "deceased",
+        "note": "Impaled through the chest with his own glaive by Vision in Wakanda; 2014 variant dusted by Iron Man."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "corvus-wakanda",
+        "phase": 3,
+        "title": "The Wakandan Infiltration (2018)",
+        "year": "2018",
+        "universe": "Earth-616",
+        "description": "Infiltrated Shuri's laboratory to extract the Mind Stone from Vision.",
+        "keyMoments": [
+          "Ambushed Wanda and Vision in Edinburgh",
+          "Impaled by Vision with his own weapon"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "molecular-glaive"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "avengers-infinity-war",
+      "avengers-endgame"
+    ]
+  },
+
+  {
+    "id": "proxima-midnight",
+    "name": "Proxima Midnight",
+    "aliases": [
+      "Proxima",
+      "Black Order Vanguard"
+    ],
+    "universe": "Earth-616",
+    "faction": "Black Order / Thanos' Army",
+    "role": "Deadly vanguard warrior wielding a three-pronged energy spear.",
+    "overview": "A fierce combatant of the Black Order whose three-pronged spear was forged by Thanos from a trapped star in a supernova, firing fatal tracking energy bolts.",
+    "firstAppearance": "Avengers: Infinity War (2018)",
+    "color": "#0284c7",
+    "imageSearch": "Proxima Midnight (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "3": {
+        "status": "deceased",
+        "note": "Crushed in the Wakandan Thresher grinder by Scarlet Witch; 2014 variant dusted."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "proxima-wakanda",
+        "phase": 3,
+        "title": "The Vanguard Assault (2018)",
+        "year": "2018",
+        "universe": "Earth-616",
+        "description": "Led the Outrider hordes against the Wakandan energy barrier alongside Cull Obsidian.",
+        "keyMoments": [
+          "Duels Natasha, Okoye, and Wanda in Wakanda trenches",
+          "'She's not alone'"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "supernova-spear"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "avengers-infinity-war",
+      "avengers-endgame"
+    ]
+  },
+
+  {
+    "id": "grandmaster",
+    "name": "En Dwi Gast",
+    "aliases": [
+      "The Grandmaster",
+      "Ruler of Sakaar",
+      "Elder of the Universe"
+    ],
+    "universe": "Sakaar / Space",
+    "faction": "Contest of Champions / Sakaar",
+    "role": "Eccentric immortal ruler of the junk planet Sakaar.",
+    "overview": "An ancient Elder of the Universe and brother to the Collector who ruled the trash planet Sakaar, staging gladiatorial deathmatches in his Contest of Champions featuring the Hulk.",
+    "firstAppearance": "Thor: Ragnarok (2017)",
+    "color": "#06b6d4",
+    "imageSearch": "Grandmaster (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "3": {
+        "status": "alive",
+        "note": "Overthrown by the Sakaaran revolution after Thor and Hulk escaped."
+      },
+      "4": {
+        "status": "alive",
+        "note": "Lurking across forgotten galactic sectors."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "grandmaster-contest",
+        "phase": 3,
+        "title": "The Contest of Champions (2017)",
+        "year": "2017",
+        "universe": "Sakaar",
+        "description": "Enslaved Thor and pitted him against the Champion of Sakaar (The Incredible Hulk).",
+        "keyMoments": [
+          "Controlled gladiators with obedience disks",
+          "Melted his cousin Carlo with the Melt Stick",
+          "'It's a tie!'"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "melt-stick",
+      "obedience-disk-controller"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "thor-ragnarok"
+    ]
+  },
+
+  {
+    "id": "the-collector",
+    "name": "Taneleer Tivan",
+    "aliases": [
+      "The Collector",
+      "Elder of the Universe"
+    ],
+    "universe": "Knowhere / Deep Cosmos",
+    "faction": "Tivan Group / Knowhere",
+    "role": "Cosmic hoarder of rare interstellar fauna, artifacts, and Infinity Stones.",
+    "overview": "An immortal Elder of the Universe who turned the severed Celestial head Knowhere into his personal museum of cosmic wonders, holding the Aether (Reality Stone) until Thanos incinerated his vault.",
+    "firstAppearance": "Thor: The Dark World (2013) / Guardians of the Galaxy (2014)",
+    "color": "#f43f5e",
+    "imageSearch": "Taneleer Tivan (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "2": {
+        "status": "alive",
+        "note": "Museum wrecked when Carina triggered the Power Stone."
+      },
+      "3": {
+        "status": "unknown",
+        "note": "Interrogated and illusioned by Thanos during the raid on Knowhere in 2018."
+      },
+      "4": {
+        "status": "alive",
+        "note": "Sold Knowhere to the Guardians of the Galaxy."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "collector-knowhere",
+        "phase": 2,
+        "title": "The Infinity Lore (2014)",
+        "year": "2014",
+        "universe": "Knowhere",
+        "description": "Explained the origin of the six Infinity Stones to the Guardians of the Galaxy.",
+        "keyMoments": [
+          "Received the Aether from Volstagg and Sif ('One down, five to go')",
+          "Delivered the iconic cosmic projection lore of the Infinity Stones"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "aether-containment-unit",
+      "orb-of-power"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "thor-dark-world",
+      "guardians-of-the-galaxy",
+      "avengers-infinity-war"
+    ]
+  },
+
+  {
+    "id": "korg",
+    "name": "Korg",
+    "aliases": [
+      "Korg the Kronan",
+      "Revolutionary Leader"
+    ],
+    "universe": "Sakaar / Earth-616",
+    "faction": "Gladiators / Revengers / New Asgard",
+    "role": "Lovable rock-bodied Kronan gladiator and loyal companion to Thor.",
+    "overview": "A charismatic Kronan made of perishable rocks who led the gladiator rebellion on Sakaar with his insectoid buddy Miek, settling with Thor in New Asgard and fighting Thanos.",
+    "firstAppearance": "Thor: Ragnarok (2017)",
+    "color": "#78716c",
+    "imageSearch": "Korg (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "3": {
+        "status": "alive",
+        "note": "Escaped Asgard's destruction and played Fortnite with Thor in New Asgard."
+      },
+      "4": {
+        "status": "alive",
+        "note": "Survived Zeus's Thunderbolt strike and raised a child with his partner Dwayne."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "korg-revolution",
+        "phase": 3,
+        "title": "The Revolution Has Begun (2017)",
+        "year": "2017",
+        "universe": "Sakaar / Asgard",
+        "description": "Armed gladiators with Sakaaran plasma rifles and evacuated Asgardian citizens onto the Statesman.",
+        "keyMoments": [
+          "'I'm made of rocks, as you can see, but don't let that intimidate you'",
+          "Crushed Miek by accident and evacuated Asgard"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "sakaaran-plasma-blaster"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "thor-ragnarok",
+      "avengers-endgame",
+      "thor-love-and-thunder"
+    ]
+  },
+
+  {
+    "id": "black-bolt",
+    "name": "Blackagar Boltagon",
+    "aliases": [
+      "Black Bolt",
+      "King of the Inhumans (Earth-838)"
+    ],
+    "universe": "Earth-838",
+    "faction": "Illuminati (838) / Inhuman Royal Family",
+    "role": "Silent monarch whose whisper can level mountains.",
+    "overview": "The King of the Inhumans whose hypersonic vocal cords produce cataclysmic destructive force with even a breath, executing Thanos on Titan before falling to Scarlet Witch in the Illuminati chambers.",
+    "firstAppearance": "Doctor Strange in the Multiverse of Madness (2022)",
+    "color": "#38bdf8",
+    "imageSearch": "Black Bolt (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "4": {
+        "status": "deceased",
+        "note": "Mouth removed and head imploded by Scarlet Witch's reality warping on Earth-838."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "blackbolt-titan",
+        "phase": 4,
+        "title": "Execution of Supreme Strange (2024)",
+        "year": "2024",
+        "universe": "Earth-838",
+        "description": "Whispered 'I'm sorry' on Titan to execute corrupted Doctor Strange after defeating Thanos.",
+        "keyMoments": [
+          "Disintegrated Thanos on Titan with a whisper",
+          "Fought Scarlet Witch in the Illuminati tribunal"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "tuning-fork-crown"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "doctor-strange-in-the-multiverse-of-madness"
+    ]
+  },
+
+  {
+    "id": "sabretooth",
+    "name": "Victor Creed",
+    "aliases": [
+      "Sabretooth",
+      "Half-Brother of Wolverine"
+    ],
+    "universe": "Earth-10005 / The Void",
+    "faction": "Brotherhood of Mutants / Cassandra Nova's Marauders",
+    "role": "Feral mutant predator with razor fangs and healing factor.",
+    "overview": "Logan's ferocious, bloodthirsty half-brother possessing razor claws, heightened animal senses, and an accelerated healing factor, serving in Cassandra Nova's wasteland forces until decapitated by Wolverine.",
+    "firstAppearance": "Deadpool & Wolverine (2024)",
+    "color": "#d97706",
+    "imageSearch": "Sabretooth (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "5": {
+        "status": "deceased",
+        "note": "Decapitated by Wolverine in The Void during their iconic wasteland duel."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "sabretooth-duel",
+        "phase": 5,
+        "title": "Duel in the Wastelands (2024)",
+        "year": "2024",
+        "universe": "The Void",
+        "description": "Clashed with Logan in a brutal, long-awaited rematch before being beheaded with adamantium claws.",
+        "keyMoments": [
+          "Charged Wolverine across the desert",
+          "Decapitated in single swipe; head paraded by Deadpool"
+        ]
+      }
+    ],
+    "artifactsPossessed": [],
+    "linkedNexusEvents": [],
+    "entries": [
+      "deadpool-and-wolverine"
+    ]
+  },
+
+  {
+    "id": "pyro",
+    "name": "John Allerdyce",
+    "aliases": [
+      "Pyro",
+      "Fire Manipulator"
+    ],
+    "universe": "Earth-10005 / The Void",
+    "faction": "Brotherhood / Cassandra's Guard / TVA Informant",
+    "role": "Pyrokinesis mutant and secret TVA double-agent.",
+    "overview": "A mutant capable of manipulating and magnifying fire who served as Cassandra Nova's right-hand enforcer while secretly feeding intelligence to TVA agent Paradox in exchange for a timeline extraction ticket.",
+    "firstAppearance": "Deadpool & Wolverine (2024)",
+    "color": "#ef4444",
+    "imageSearch": "Pyro (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "5": {
+        "status": "deceased",
+        "note": "Neck snapped by Cassandra Nova after his betrayal to Paradox was exposed."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "pyro-void",
+        "phase": 5,
+        "title": "Double Cross at Ant-Man's Corpse (2024)",
+        "year": "2024",
+        "universe": "The Void",
+        "description": "Sniped Cassandra Nova with a rifle to depower her before being caught and executed.",
+        "keyMoments": [
+          "Extinguished Johnny Storm's flame in the desert",
+          "Sniped Cassandra Nova; neck broken telekinetically"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "wrist-mounted-flamethrower-igniters"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "deadpool-and-wolverine"
+    ]
+  },
+
+  {
+    "id": "juggernaut",
+    "name": "Cain Marko",
+    "aliases": [
+      "The Juggernaut",
+      "Unstoppable Juggernaut"
+    ],
+    "universe": "Earth-10005 / The Void",
+    "faction": "Cassandra Nova's Marauders",
+    "role": "Unstoppable kinetic juggernaut.",
+    "overview": "An unstoppable armored behemoth possessing boundless physical momentum and raw strength, wearing a psychic-blocking domed helmet used by the Resistance to neutralize Cassandra Nova.",
+    "firstAppearance": "Deadpool & Wolverine (2024)",
+    "color": "#b45309",
+    "imageSearch": "Juggernaut (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "5": {
+        "status": "deceased",
+        "note": "Slain by Laura (X-23) during the Void fortress assault; helmet stripped to trap Cassandra."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "juggernaut-clash",
+        "phase": 5,
+        "title": "Assault on Cassandra's Fortress (2024)",
+        "year": "2024",
+        "universe": "The Void",
+        "description": "Battled X-23 and Wolverine before having his telepathic helmet sliced off.",
+        "keyMoments": [
+          "Pounded the desert wasteland with unstoppable shockwaves",
+          "Helmet placed on Cassandra Nova by Deadpool"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "telepathic-dampener-helmet"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "deadpool-and-wolverine"
+    ]
+  },
+
+  {
+    "id": "lady-deadpool",
+    "name": "Wanda Wilson",
+    "aliases": [
+      "Lady Deadpool",
+      "Deadpool Corps General"
+    ],
+    "universe": "Multiverse / Earth-3010",
+    "faction": "Deadpool Corps",
+    "role": "Dual-Uzi wielding leader of the multiversal Deadpool Corps.",
+    "overview": "The lethal, blonde-ponytail variant of Wade Wilson who led hundreds of Deadpool variants through a multiversal portal to execute Prime Deadpool and Wolverine in New York.",
+    "firstAppearance": "Deadpool & Wolverine (2024)",
+    "color": "#e11d48",
+    "imageSearch": "Lady Deadpool (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "5": {
+        "status": "alive",
+        "note": "Regenerated after being dismembered in the street fight alongside the 100-Deadpool Corps."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "lady-dp-corps",
+        "phase": 5,
+        "title": "The 100-Deadpool Street War (2024)",
+        "year": "2024",
+        "universe": "Earth-616 Branch",
+        "description": "Led the army of Deadpool variants charging through the city streets in ultra-violent synchronized combat.",
+        "keyMoments": [
+          "Dual-wielded custom gold Uzis",
+          "Regenerated instantly after headshots and limb decapitations"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "dual-gold-uzis",
+      "kurt-swords"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "deadpool-and-wolverine"
+    ]
+  },
+
+  {
+    "id": "maya-lopez",
+    "name": "Maya Lopez",
+    "aliases": [
+      "Echo",
+      "Tracksuit Mafia Commander"
+    ],
+    "universe": "Earth-616",
+    "faction": "Choctaw Nation / Tracksuit Mafia (Former)",
+    "role": "Deaf martial artist channelling the ancestral spirit powers of Choctaw warriors.",
+    "overview": "A deaf martial artist and former Tracksuit Mafia leader who broke free from Wilson Fisk's manipulation and awakened her ancestral Choctaw warrior lineage, healing Kingpin's psychological trauma.",
+    "firstAppearance": "Hawkeye (2021) / Echo (2024)",
+    "color": "#0284c7",
+    "imageSearch": "Maya Lopez (Marvel Cinematic Universe)",
+    "statusByPhase": {
+      "4": {
+        "status": "alive",
+        "note": "Shot Wilson Fisk in New York and fled to Tamaha, Oklahoma."
+      },
+      "5": {
+        "status": "alive",
+        "note": "Unlocked ancestral warrior resonance and healed Fisk's childhood trauma."
+      }
+    },
+    "eras": [
+      {
+        "eraId": "echo-ancestral",
+        "phase": 5,
+        "title": "Ancestral Resonance (2026)",
+        "year": "2026",
+        "universe": "Earth-616",
+        "description": "Shared ancestral strength with her Choctaw family to defeat Fisk's armed cartel.",
+        "keyMoments": [
+          "Disarmed Daredevil in one-on-one armory duel",
+          "Channeled ancestral spirit glow through her prosthetic leg"
+        ]
+      }
+    ],
+    "artifactsPossessed": [
+      "choctaw-ancestral-resonance"
+    ],
+    "linkedNexusEvents": [],
+    "entries": [
+      "hawkeye",
+      "echo",
+      "daredevil-born-again"
+    ]
   }
 ];
 

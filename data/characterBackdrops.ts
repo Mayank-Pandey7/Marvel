@@ -195,6 +195,22 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "ebony-maw": "/images/characters/ebony-maw.jpg",
   "surtur": "/images/characters/surtur.jpg",
   "bullseye": "/images/characters/bullseye.jpg",
+  "mobius": "/images/characters/mobius.jpg",
+  "kaecilius": "/images/characters/kaecilius.jpg",
+  "malekith": "/images/characters/malekith.jpg",
+  "justin-hammer": "/images/characters/justin-hammer.jpg",
+  "arnim-zola": "/images/characters/arnim-zola.jpg",
+  "crossbones": "/images/characters/crossbones.jpg",
+  "corvus-glaive": "/images/characters/corvus-glaive.jpg",
+  "proxima-midnight": "/images/characters/proxima-midnight.jpg",
+  "grandmaster": "/images/characters/grandmaster.jpg",
+  "the-collector": "/images/characters/the-collector.jpg",
+  "korg": "/images/characters/korg.jpg",
+  "black-bolt": "/images/characters/black-bolt.jpg",
+  "sabretooth": "/images/characters/sabretooth.jpg",
+  "pyro": "/images/characters/pyro.jpg",
+  "juggernaut": "/images/characters/juggernaut.jpg",
+  "lady-deadpool": "/images/characters/lady-deadpool.jpg",
 };
 
 export function getCharacterBackdrop(characterId: string, _eraId?: string, _phase?: number): string {

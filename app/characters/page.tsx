@@ -133,7 +133,7 @@ function CharactersContent() {
               "vulture", "wenwu", "agatha-harkness", "high-evolutionary", "kingpin",
               "red-hulk", "zemo", "ronan", "cassandra-nova", "dormammu", "abomination",
               "ego", "the-leader", "baron-mordo", "electro", "sandman", "lizard",
-              "modok", "ebony-maw", "surtur", "bullseye", "taskmaster"
+              "modok", "ebony-maw", "surtur", "bullseye", "taskmaster", "juggernaut", "pyro", "sabretooth", "black-bolt", "the-collector", "grandmaster", "proxima-midnight", "corvus-glaive", "crossbones", "arnim-zola", "justin-hammer", "malekith", "kaecilius", "he-who-remains"
             ].includes(c.id);
           if (!isVillain) return false;
         }
