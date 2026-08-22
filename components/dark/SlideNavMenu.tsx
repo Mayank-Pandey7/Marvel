@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { X, ChevronDown } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 
@@ -12,7 +12,7 @@ interface SlideNavMenuProps {
 }
 
 export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
-  const router = useRouter();
+  const pathname = usePathname();
   const { currentPhase, setCurrentPhase } = useTimelineState();
 
   // Accordion open states
@@ -34,6 +34,9 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
 
   if (!isOpen) return null;
 
+  const isTimelineActive = pathname === "/timeline" || pathname === "/";
+  const isFamilyTreeActive = pathname === "/familytree";
+
   return (
     <div 
       role="dialog" 
@@ -47,40 +50,77 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
         onClick={onClose}
       />
 
-      {/* Slide-out Menu Panel (Sleek High-Tech Dark Glass matching website UI) */}
-      <aside className="relative z-10 w-full max-w-[340px] sm:max-w-[380px] bg-[#000000] border-r border-stone-800/80 h-full flex flex-col justify-between p-6 sm:p-8 shadow-[20px_0_50px_rgba(0,0,0,0.9)] animate-in slide-in-from-left duration-300 overflow-y-auto">
+      {/* Slide-out Menu Panel (Sleek Minimalist Dark Theme) */}
+      <aside className="relative z-10 w-full max-w-[340px] sm:max-w-[380px] bg-[#000000] border-r border-stone-900 h-full flex flex-col justify-between p-6 sm:p-8 shadow-[20px_0_50px_rgba(0,0,0,0.9)] animate-in slide-in-from-left duration-300 overflow-y-auto">
         
         {/* Top Header & Navigation */}
         <div>
           {/* Close Button X & Brand */}
           <div className="flex justify-between items-center mb-8 pb-4 border-b border-stone-900">
-            <div className="flex items-center gap-2.5">
-              <Link 
-                href="/timeline" 
-                onClick={onClose}
-                className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white hover:text-white/80 transition-opacity"
-              >
-                MARVEL
-              </Link>
-            </div>
+            <Link 
+              href="/timeline" 
+              onClick={onClose}
+              className="text-xs font-mono font-bold tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity pl-[0.45em]"
+            >
+              MARVEL
+            </Link>
 
             <button
               onClick={onClose}
-              className="text-stone-400 hover:text-white transition-colors p-1.5 rounded-sm border border-stone-800 hover:border-stone-600 bg-stone-950 cursor-pointer"
+              className="text-stone-400 hover:text-white transition-colors p-1 cursor-pointer"
               aria-label="Close Navigation Menu"
             >
-              <X size={15} strokeWidth={1.5} />
+              <X size={16} strokeWidth={1.5} />
             </button>
           </div>
 
-          {/* Primary Accordion Navigation Sections */}
-          <div className="flex flex-col gap-4">
+          {/* Primary Navigation Sections */}
+          <div className="flex flex-col gap-6">
             
-            {/* WHO SECTION */}
-            <div className="overflow-hidden bg-transparent border-b border-stone-900/80 pb-1">
+            {/* 1. VIEW MODES / MAPS (Shown on Mobile, Hidden on Desktop where top bar has dedicated switcher) */}
+            <div className="md:hidden border-b border-stone-900/80 pb-6">
+              <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
+                VIEW MODES
+              </div>
+
+              <div className="flex flex-col gap-2.5">
+                <Link
+                  href="/timeline"
+                  onClick={onClose}
+                  className={`text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group ${
+                    isTimelineActive
+                      ? "text-white font-bold"
+                      : "text-stone-400 hover:text-white"
+                  }`}
+                >
+                  <span>Sacred Timeline Map</span>
+                  {isTimelineActive && (
+                    <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                  )}
+                </Link>
+
+                <Link
+                  href="/familytree"
+                  onClick={onClose}
+                  className={`text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group ${
+                    isFamilyTreeActive
+                      ? "text-white font-bold"
+                      : "text-stone-400 hover:text-white"
+                  }`}
+                >
+                  <span>Sacred Family Tree</span>
+                  {isFamilyTreeActive && (
+                    <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                  )}
+                </Link>
+              </div>
+            </div>
+
+            {/* 2. WHO SECTION */}
+            <div className="overflow-hidden bg-transparent border-b border-stone-900/80 pb-6">
               <button
                 onClick={() => toggleSection("who")}
-                className="w-full px-1 py-3 flex items-center justify-between text-left group cursor-pointer transition-colors"
+                className="w-full py-1 flex items-center justify-between text-left group cursor-pointer transition-colors"
               >
                 <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 group-hover:text-white transition-colors font-bold">
                   WHO — HEROES &amp; FACTIONS
@@ -96,44 +136,44 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
 
               {/* Submenu Links for WHO */}
               {openSection === "who" && (
-                <div className="px-1 pb-3 pt-1 flex flex-col gap-2 animate-in slide-in-from-top-2 duration-200">
+                <div className="pb-1 pt-3 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
                   <Link
                     href="/characters"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> All 100+ Characters
+                    All 100+ Characters
                   </Link>
                   <Link
                     href="/characters?faction=avengers"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> Earth-616 Avengers
+                    Earth-616 Avengers
                   </Link>
                   <Link
                     href="/characters?faction=cosmic"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> Guardians &amp; Cosmic
+                    Guardians &amp; Cosmic
                   </Link>
                   <Link
                     href="/characters?faction=multiverse"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> Mutants &amp; Multiverse
+                    Mutants &amp; Multiverse
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* WHAT SECTION */}
-            <div className="overflow-hidden bg-transparent border-b border-stone-900/80 pb-1">
+            {/* 3. WHAT SECTION */}
+            <div className="overflow-hidden bg-transparent border-b border-stone-900/80 pb-6">
               <button
                 onClick={() => toggleSection("what")}
-                className="w-full px-1 py-3 flex items-center justify-between text-left group cursor-pointer transition-colors"
+                className="w-full py-1 flex items-center justify-between text-left group cursor-pointer transition-colors"
               >
                 <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 group-hover:text-white transition-colors font-bold">
                   WHAT — COSMIC ARTIFACTS
@@ -149,20 +189,20 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
 
               {/* Submenu Links for WHAT */}
               {openSection === "what" && (
-                <div className="px-1 pb-3 pt-1 flex flex-col gap-2 animate-in slide-in-from-top-2 duration-200">
+                <div className="pb-1 pt-3 flex flex-col gap-2.5 animate-in slide-in-from-top-2 duration-200">
                   <Link
                     href="/artifacts"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> Cosmic Relics Vault
+                    Cosmic Relics Vault
                   </Link>
                   <Link
-                    href="/multiverse"
+                    href="/timeline"
                     onClick={onClose}
-                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-1 flex items-center gap-2"
+                    className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >
-                    <span className="text-stone-600">•</span> Multiverse Map Realities
+                    Multiverse Map Realities
                   </Link>
                 </div>
               )}

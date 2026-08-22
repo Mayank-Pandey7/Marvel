@@ -194,7 +194,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Miniature Arc Reactor", "Mark III Armor"],
     description: "Billionaire engineer Tony Stark builds a powered suit to escape captivity, forging the modern age of heroes and drawing the attention of S.H.I.E.L.D.",
     color: "#e55039",
-    x: 680,
+    x: 800,
     y: 420,
     offsetY: -120,
     connections: [
@@ -221,7 +221,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Super Soldier Serum variant", "Gamma Radiator"],
     description: "Scientist Bruce Banner seeks a cure for the gamma radiation that transforms him into a monstrous titan while pursued by General Ross.",
     color: "#2ed573",
-    x: 1320,
+    x: 1200,
     y: 420,
     offsetY: 120,
     connections: [
@@ -246,7 +246,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Badassium New Element", "Mark IV Suitcase Armor"],
     description: "Tony Stark resists government pressure to surrender his technology while discovering his father's blueprints for a clean energy element.",
     color: "#fa8231",
-    x: 620,
+    x: 780,
     y: 720,
     offsetY: -140,
     connections: [
@@ -273,7 +273,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Mjolnir", "The Casket of Ancient Winters", "Bifrost Bridge"],
     description: "The warrior Thor is banished to Earth stripped of his powers until he learns humility and stops Loki's usurpation of the Asgardian throne.",
     color: "#4bcffa",
-    x: 1380,
+    x: 1220,
     y: 720,
     offsetY: 140,
     connections: [
@@ -299,7 +299,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Tesseract (Space Stone)", "Vibranium Shield", "Super Soldier Formula"],
     description: "During WWII, Steve Rogers is transformed into Captain America, battling Red Skull and HYDRA before awakening in the 21st century.",
     color: "#3867d6",
-    x: 700,
+    x: 800,
     y: 1020,
     offsetY: -120,
     connections: [
@@ -355,7 +355,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Mark 42 Armor", "Extremis Virus"],
     description: "Confronting panic attacks after New York, Tony Stark faces the Mandarin and Aldrich Killian with bare hands and sheer intellect.",
     color: "#fa8231",
-    x: 650,
+    x: 790,
     y: 1800,
     offsetY: -120,
     connections: [
@@ -380,7 +380,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Aether (Reality Stone)", "Mjolnir"],
     description: "Thor allies with Loki to prevent the Dark Elf Malekith from using the Reality Stone to submerge the cosmos into eternal darkness.",
     color: "#a55eea",
-    x: 1350,
+    x: 1210,
     y: 1800,
     offsetY: 120,
     connections: [
@@ -406,7 +406,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Project Insight Helicarriers", "Cybernetic Arm"],
     description: "Steve Rogers and Natasha Romanoff discover that HYDRA has grown inside S.H.I.E.L.D., encountering the brainwashed Winter Soldier.",
     color: "#4b6584",
-    x: 620,
+    x: 780,
     y: 2100,
     offsetY: -140,
     connections: [
@@ -432,7 +432,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Orb (Power Stone)", "The Milano"],
     description: "A band of cosmic misfits unite to protect the Power Stone from Ronan the Accuser, bringing Thanos directly into focus.",
     color: "#20bf6b",
-    x: 1380,
+    x: 1220,
     y: 2100,
     offsetY: 140,
     connections: [
@@ -482,14 +482,14 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     runtime: 117,
     leadCharacter: "Scott Lang",
     heroAlias: "Ant-Man",
-    keyRelics: ["Pym Particles", "Quantum Realm Regulator"],
-    description: "Scott Lang masters shrinking technology under Hank Pym, infiltrating Avengers compound and returning from the subatomic Quantum Realm.",
-    color: "#fc5c65",
-    x: 700,
-    y: 2680,
-    offsetY: 0,
+    keyRelics: ["Ant-Man Suit", "Pym Particles", "Yellowjacket Suit"],
+    description: "Master thief Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, protect the secret behind his spectacular Ant-Man suit.",
+    color: "#ff3838",
+    x: 800,
+    y: 2700,
+    offsetY: 120,
     connections: [
-      { toId: "cap-civil-war", relationship: "Recruited by Sam Wilson for Team Captain America", type: "direct_sequel" },
+      { toId: "cap-civil-war", relationship: "Recruited by Sam Wilson to join Team Cap", type: "direct_sequel" },
     ],
   },
 
@@ -541,7 +541,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Eye of Agamotto (Time Stone)", "Cloak of Levitation"],
     description: "Neurosurgeon Stephen Strange masters the mystic arts, guarding reality and the Time Stone from dark dimensional threats.",
     color: "#20bf6b",
-    x: 600,
+    x: 770,
     y: 3450,
     offsetY: 120,
     connections: [
@@ -567,7 +567,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Yaka Arrow", "Ego Celestial Seed"],
     description: "The Guardians uncover Peter Quill's celestial lineage, defeating his planet-devouring father Ego.",
     color: "#2ed573",
-    x: 1400,
+    x: 1230,
     y: 3450,
     offsetY: -140,
     connections: [
@@ -592,7 +592,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Stark Tech Spider Suit", "Chitauri Salvage"],
     description: "Peter Parker balances sophomore year of high school with proving himself against Adrian Toomes's Vulture.",
     color: "#ff3838",
-    x: 650,
+    x: 790,
     y: 3750,
     offsetY: 140,
     connections: [
@@ -617,7 +617,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Crown of Surtur", "Eternal Flame", "The Tesseract"],
     description: "Imprisoned on Sakaar, Thor must duel Hulk and unleash Ragnarok to defeat goddess of death Hela.",
     color: "#4bcffa",
-    x: 1350,
+    x: 1210,
     y: 3750,
     offsetY: -120,
     connections: [
@@ -642,7 +642,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Heart-Shaped Herb", "Vibranium Kinetic Suit"],
     description: "T'Challa defends Wakanda's throne and technology against Erik Killmonger, opening Wakanda to the world.",
     color: "#7158e2",
-    x: 700,
+    x: 800,
     y: 4050,
     offsetY: 120,
     connections: [
@@ -694,7 +694,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Tunnel", "Healing Particles"],
     description: "Scott Lang and Hope van Dyne rescue Janet van Dyne from the subatomic Quantum Realm.",
     color: "#fc5c65",
-    x: 1350,
+    x: 1210,
     y: 4450,
     offsetY: 140,
     connections: [
@@ -719,7 +719,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Light-Speed Engine", "Intergalactic Pager"],
     description: "In 1995, Carol Danvers discovers her cosmic photon powers, protecting Skrull refugees and inspiring Fury's Initiative.",
     color: "#ffd32a",
-    x: 650,
+    x: 790,
     y: 4450,
     offsetY: -140,
     connections: [
@@ -800,7 +800,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Darkhold", "The Hex Barrier"],
     description: "Grief-stricken Wanda creates a sitcom reality in Westview, awakening her ancient power as the Scarlet Witch.",
     color: "#eb3b5a",
-    x: 600,
+    x: 770,
     y: 5350,
     offsetY: -120,
     connections: [
@@ -825,7 +825,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["TemPad", "Citadel at End of Time"],
     description: "At the TVA, variant Loki meets He Who Remains, and Sylvie slays him, unleashing infinite branching timelines.",
     color: "#2ed573",
-    x: 1400,
+    x: 1230,
     y: 5350,
     offsetY: 120,
     connections: [
@@ -851,7 +851,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Red Dust Antidote", "Taskmaster HUD"],
     description: "Natasha confronts the Red Room conspiracy, passing the torch to Yelena Belova.",
     color: "#fa8231",
-    x: 650,
+    x: 790,
     y: 5650,
     offsetY: -140,
     connections: [
@@ -876,7 +876,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Ten Rings", "Dragon Scale"],
     description: "Shang-Chi masters the thousand-year-old Ten Rings in mystical Ta Lo, discovering their cosmic beacon.",
     color: "#4bcffa",
-    x: 1350,
+    x: 1210,
     y: 5650,
     offsetY: 140,
     connections: [
@@ -927,7 +927,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Book of Vishanti", "The Darkhold", "Star Portals"],
     description: "Doctor Strange journeys across alternate dimensions to protect America Chavez from the corrupted Scarlet Witch.",
     color: "#8854d0",
-    x: 600,
+    x: 770,
     y: 6180,
     offsetY: -120,
     connections: [
@@ -952,7 +952,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Stormbreaker", "Reconstructed Mjolnir", "Necrosword"],
     description: "Thor and Jane Foster stop Gorr the God Butcher at the Gates of Eternity.",
     color: "#4bcffa",
-    x: 1400,
+    x: 1230,
     y: 6180,
     offsetY: 140,
     connections: [
@@ -977,7 +977,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Synthetic Herb", "Midnight Angel Armor"],
     description: "Wakanda defends against global powers and the undersea mutant nation of Talokan.",
     color: "#7158e2",
-    x: 650,
+    x: 790,
     y: 6450,
     offsetY: -120,
     connections: [
@@ -1002,7 +1002,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Domo", "Uni-Mind", "Tiamut Island"],
     description: "Immortal protectors stop the celestial emergence of Tiamut from inside Earth's mantle.",
     color: "#ffd32a",
-    x: 1350,
+    x: 1210,
     y: 6450,
     offsetY: 120,
     connections: [
@@ -1056,7 +1056,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Time Chair Core", "Quantum Realm"],
     description: "The Lang-Pym family clashes with exiled warlord Kang in the microscopic Quantum Realm.",
     color: "#eb3b5a",
-    x: 620,
+    x: 780,
     y: 7150,
     offsetY: -120,
     connections: [
@@ -1081,7 +1081,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Orgocorp Biological Core", "Bowie"],
     description: "The Guardians save Rocket's life and defeat his sadistic creator, the High Evolutionary.",
     color: "#20bf6b",
-    x: 1380,
+    x: 1220,
     y: 7150,
     offsetY: 120,
     connections: [
@@ -1132,7 +1132,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Bands", "X-Men Reality Tear"],
     description: "Carol, Kamala, and Monica swap places across space, tearing open a portal to the X-Men universe.",
     color: "#ffd32a",
-    x: 620,
+    x: 780,
     y: 7750,
     offsetY: 140,
     connections: [
@@ -1157,7 +1157,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Harvest (Super Skrull DNA)"],
     description: "Nick Fury uncovers a secret infiltration of Earth by radicalized shapeshifting Skrulls.",
     color: "#4b6584",
-    x: 1380,
+    x: 1220,
     y: 7750,
     offsetY: -120,
     connections: [
@@ -1182,7 +1182,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Witches' Road", "Black Coven Sigil"],
     description: "Agatha walks the legendary Witches' Road, awakening Billy Maximoff's powers as Wiccan.",
     color: "#a55eea",
-    x: 650,
+    x: 790,
     y: 8050,
     offsetY: 120,
     connections: [
@@ -1236,7 +1236,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Fantasticar", "Galactus Beacon"],
     description: "In a retro-futuristic 1960s universe, Marvel's First Family defends against Galactus before incursion collision.",
     color: "#4bcffa",
-    x: 650,
+    x: 790,
     y: 8850,
     offsetY: -120,
     connections: [
@@ -1261,7 +1261,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Classic Cloth Suit", "Police Scanner"],
     description: "Forgotten by the world, Peter operates as a street-level hero in NYC as universal incursions approach.",
     color: "#ff3838",
-    x: 1350,
+    x: 1210,
     y: 8850,
     offsetY: 120,
     connections: [

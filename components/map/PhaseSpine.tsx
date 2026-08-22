@@ -50,7 +50,131 @@ export default function PhaseSpine({
   return (
     <>
       {/* ========================================================
-          VERTICAL SIDE SPINE: OVERFLOW VISIBLE (ZERO CLIPPING / CUT-OFF)
+          MOBILE COMPACT PHASE & MULTIVERSE DRAWER TRIGGER
+         ======================================================== */}
+      <div className="fixed left-3 top-14 z-30 md:hidden flex items-center gap-1.5">
+        <button
+          onClick={() => setIsEarth616Expanded((prev) => !prev)}
+          className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform"
+        >
+          <span>{isFullOverview ? "ALL PHASES" : `PHASE ${currentPhase || 1}`}</span>
+        </button>
+      </div>
+
+      {/* Mobile Slide-Out Phases & Multiverse Sheet */}
+      {isEarth616Expanded && (
+        <div className="fixed inset-0 z-50 md:hidden flex select-none animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsEarth616Expanded(false)}
+          />
+          <aside className="relative z-10 w-full max-w-[320px] bg-[#000000] border-r border-stone-900 h-full p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300 shadow-[20px_0_50px_rgba(0,0,0,0.9)]">
+            <div>
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-stone-900 mb-6">
+                <span className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white">
+                  SACRED TIMELINE HUD
+                </span>
+                <button
+                  onClick={() => setIsEarth616Expanded(false)}
+                  className="text-stone-400 hover:text-white transition-colors p-1 cursor-pointer"
+                  aria-label="Close HUD"
+                >
+                  <X size={16} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Earth-616 Phases */}
+              <div className="border-b border-stone-900/80 pb-6 mb-6">
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
+                  EARTH-616 PHASES
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  {/* Full Timeline Tree */}
+                  <button
+                    onClick={() => {
+                      onSelectEarth616 && onSelectEarth616();
+                      setIsEarth616Expanded(false);
+                    }}
+                    className={`w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group cursor-pointer ${
+                      isFullOverview
+                        ? "text-white font-bold"
+                        : "text-stone-400 hover:text-white"
+                    }`}
+                  >
+                    <span>Full Timeline Tree</span>
+                    {isFullOverview ? (
+                      <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                    ) : (
+                      <span className="text-[8.5px] text-stone-500 font-normal">2008–27</span>
+                    )}
+                  </button>
+
+                  {/* Individual Phases 1 - 6 */}
+                  {PHASES_CONFIG.map((p) => {
+                    const isActive = p.id === currentPhase && !isFullOverview;
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() => {
+                          onSelectPhase && onSelectPhase(p.id);
+                          setIsEarth616Expanded(false);
+                        }}
+                        className={`w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group cursor-pointer ${
+                          isActive
+                            ? "text-white font-bold"
+                            : "text-stone-400 hover:text-white"
+                        }`}
+                      >
+                        <span>Phase {p.id}</span>
+                        {isActive ? (
+                          <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                        ) : (
+                          <span className="text-[8.5px] text-stone-500 font-normal">{p.years}</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Multiverse Earths */}
+              <div>
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
+                  MULTIVERSE CONTINUITIES
+                </div>
+                <div className="flex flex-col gap-2.5">
+                  {MCU_EARTHS.filter((e) => e.id !== "earth-616").map((earth) => (
+                    <button
+                      key={earth.id}
+                      onClick={() => {
+                        setSelectedEarthModal(earth);
+                        setIsEarth616Expanded(false);
+                      }}
+                      className="w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group text-stone-400 hover:text-white cursor-pointer"
+                    >
+                      <span className="font-semibold">{earth.designation}</span>
+                      <span className="text-[8.5px] text-stone-500 font-normal truncate max-w-[110px] text-right">
+                        {earth.name.replace("Reality", "").trim()}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="pt-6 border-t border-stone-900 flex items-center justify-between text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
+              <span>EARTH-616 CONTINUITY</span>
+              <span>PHASE I — VI</span>
+            </div>
+          </aside>
+        </div>
+      )}
+
+      {/* ========================================================
+          VERTICAL SIDE SPINE: OVERFLOW VISIBLE (DESKTOP)
          ======================================================== */}
       <aside className="fixed left-6 sm:left-10 top-24 z-40 select-none hidden md:flex flex-col items-start pointer-events-auto overflow-visible p-2">
         {/* Spine Connecting Track Line */}
@@ -80,10 +204,10 @@ export default function PhaseSpine({
                       }}
                       className={`relative flex items-center justify-center transition-all duration-300 rounded-full cursor-pointer shrink-0 z-10 ${
                         is616 && isEarth616Expanded
-                          ? "w-14 h-14 bg-black border border-white/60 text-white shadow-[0_0_15px_rgba(255,255,255,0.25)] scale-105"
+                          ? "w-14 h-14 bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.25)] scale-105"
                           : isSelectedEarth
-                          ? "w-14 h-14 bg-stone-900 border border-white/50 text-white shadow-[0_0_10px_rgba(255,255,255,0.15)]"
-                          : "w-14 h-14 bg-[#06060c] border border-stone-800 hover:border-white/50 text-stone-300 hover:text-white hover:scale-105 hover:shadow-[0_0_10px_rgba(255,255,255,0.15)] shadow-xl"
+                          ? "w-14 h-14 bg-stone-800 text-white shadow-[0_0_10px_rgba(255,255,255,0.15)]"
+                          : "w-14 h-14 bg-[#06060c] text-stone-300 hover:text-white hover:scale-105 hover:bg-stone-900 shadow-xl"
                       }`}
                       title={`${earth.designation} · ${earth.name}`}
                       aria-label={earth.designation}
@@ -132,8 +256,8 @@ export default function PhaseSpine({
                           onClick={() => onSelectEarth616 && onSelectEarth616()}
                           className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-[9px] font-bold transition-all cursor-pointer z-10 ${
                             isFullOverview
-                              ? "bg-white text-black border border-white scale-110 font-black"
-                              : "bg-black/90 border border-stone-800 hover:border-white/50 text-stone-400 hover:text-white hover:scale-110"
+                              ? "bg-white text-black scale-110 font-black shadow-md"
+                              : "bg-black/90 text-stone-400 hover:text-white hover:scale-110 hover:bg-stone-900 shadow-md"
                           }`}
                           title="View Full Earth-616 Timeline Tree"
                         >
@@ -165,8 +289,8 @@ export default function PhaseSpine({
                               onClick={() => onSelectPhase && onSelectPhase(p.id)}
                               className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-[10.5px] font-bold transition-all cursor-pointer z-10 ${
                                 isActive
-                                  ? "bg-white text-black border border-white scale-110 font-black"
-                                  : "bg-black/90 border border-stone-800 hover:border-white/50 text-stone-400 hover:text-white hover:scale-110"
+                                  ? "bg-white text-black scale-110 font-black shadow-md"
+                                  : "bg-black/90 text-stone-400 hover:text-white hover:scale-110 hover:bg-stone-900 shadow-md"
                               }`}
                               title={`Direct to Phase ${p.roman} (${p.years})`}
                             >

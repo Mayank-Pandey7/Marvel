@@ -131,7 +131,7 @@ export default function RoadToDoomsday() {
       if (destEl) {
         const destRect = destEl.getBoundingClientRect();
         points.push({
-          x: isMobile ? 16 : containerRect.width / 2,
+          x: containerRect.width / 2,
           y: destRect.top - containerRect.top + 20,
         });
       }
@@ -326,72 +326,72 @@ export default function RoadToDoomsday() {
       {/* ------------------------------------------------------------- */}
       {/* HERO SECTION: DOOMSDAY IS COMING COUNTDOWN & TRACKER          */}
       {/* ------------------------------------------------------------- */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-24 pb-8 text-center">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono uppercase tracking-[0.22em] font-bold text-white">
+      <section className="relative z-10 max-w-5xl mx-auto px-3 sm:px-8 pt-20 sm:pt-24 pb-6 sm:pb-8 text-center">
+        <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-mono uppercase tracking-[0.16em] xs:tracking-[0.22em] font-bold text-white leading-tight">
           <span className="text-emerald-400 drop-shadow-[0_0_25px_rgba(52,211,153,0.6)]">DOOMSDAY</span> IS COMING
         </h1>
-        <p className="mt-3 text-xs sm:text-[13.5px] font-mono text-stone-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-2.5 sm:mt-3 text-[11px] xs:text-xs sm:text-[13.5px] font-mono text-stone-400 max-w-2xl mx-auto leading-relaxed px-2">
           «All universes die. The question is what survives in the fire of Victor von Doom.»
         </p>
 
         {/* COUNTDOWN TIMER (MONTHS : DAYS : HOURS : MINUTES : SECONDS) */}
-        <div className="mt-7 mb-4 flex flex-col items-center justify-center select-none">
+        <div className="mt-5 sm:mt-7 mb-3 sm:mb-4 flex flex-col items-center justify-center select-none w-full max-w-full px-1">
           {/* Digits Row: 03 : 26 : 17 : 57 : 00 */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3.5 md:gap-5 text-white font-mono">
+          <div className="flex items-center justify-center gap-1 xs:gap-2 sm:gap-3.5 md:gap-5 text-white font-mono">
             {/* Months */}
-            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+            <div className="flex flex-col items-center min-w-[2.2rem] xs:min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
                 {String(countdown.months).padStart(2, "0")}
               </span>
-              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2 sm:mt-2.5">
+              <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.18em] sm:tracking-[0.22em] uppercase text-stone-400 mt-1.5 xs:mt-2 sm:mt-2.5">
                 MONTHS
               </span>
             </div>
 
-            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+            <span className="text-base xs:text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-2 xs:pb-3.5 sm:pb-5">:</span>
 
             {/* Days */}
-            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+            <div className="flex flex-col items-center min-w-[2.2rem] xs:min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
                 {String(countdown.days).padStart(2, "0")}
               </span>
-              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+              <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.18em] sm:tracking-[0.22em] uppercase text-stone-400 mt-1.5 xs:mt-2 sm:mt-2.5">
                 DAYS
               </span>
             </div>
 
-            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+            <span className="text-base xs:text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-2 xs:pb-3.5 sm:pb-5">:</span>
 
             {/* Hours */}
-            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+            <div className="flex flex-col items-center min-w-[2.2rem] xs:min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
                 {String(countdown.hours).padStart(2, "0")}
               </span>
-              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+              <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.18em] sm:tracking-[0.22em] uppercase text-stone-400 mt-1.5 xs:mt-2 sm:mt-2.5">
                 HOURS
               </span>
             </div>
 
-            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+            <span className="text-base xs:text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-2 xs:pb-3.5 sm:pb-5">:</span>
 
             {/* Minutes */}
-            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
+            <div className="flex flex-col items-center min-w-[2.2rem] xs:min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none">
                 {String(countdown.minutes).padStart(2, "0")}
               </span>
-              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-stone-400 mt-2.5 sm:mt-2.5">
+              <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.18em] sm:tracking-[0.22em] uppercase text-stone-400 mt-1.5 xs:mt-2 sm:mt-2.5">
                 MINUTES
               </span>
             </div>
 
-            <span className="text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-3.5 sm:pb-5">:</span>
+            <span className="text-base xs:text-xl sm:text-2xl md:text-3xl font-light text-stone-500 pb-2 xs:pb-3.5 sm:pb-5">:</span>
 
             {/* Seconds */}
-            <div className="flex flex-col items-center min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
+            <div className="flex flex-col items-center min-w-[2.2rem] xs:min-w-[2.75rem] sm:min-w-[3.75rem] md:min-w-[4.5rem]">
+              <span className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider leading-none text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
                 {String(countdown.seconds).padStart(2, "0")}
               </span>
-              <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.22em] uppercase text-emerald-400/80 mt-2.5 sm:mt-2.5">
+              <span className="text-[6.5px] xs:text-[7.5px] sm:text-[9px] md:text-[10px] font-mono tracking-[0.18em] sm:tracking-[0.22em] uppercase text-emerald-400/80 mt-1.5 xs:mt-2 sm:mt-2.5">
                 SECONDS
               </span>
             </div>
@@ -474,10 +474,10 @@ export default function RoadToDoomsday() {
                   </div>
 
                   {/* Left or Right Tree Card Branch (Clean Borderless & Transparent) */}
-                  <div className={`w-full md:w-[calc(50%-4rem)] ${isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"}`}>
+                  <div className={`w-full md:w-[calc(50%-4rem)] min-w-0 ${isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"}`}>
                     <Link
                       href={`/${item.slug || item.id}`}
-                      className="group block relative p-2 sm:p-3 transition-all duration-200 cursor-pointer hover:opacity-100 opacity-90"
+                      className="group block relative p-1.5 sm:p-3 transition-all duration-200 cursor-pointer hover:opacity-100 opacity-90 w-full min-w-0"
                     >
                       {/* Horizontal Tree Connector Arm (Desktop) */}
                       <div
@@ -486,10 +486,10 @@ export default function RoadToDoomsday() {
                         } bg-stone-700 group-hover:bg-stone-400`}
                       />
 
-                      <div className={`flex items-start gap-3.5 ${isEven ? "md:flex-row-reverse" : "md:flex-row"}`}>
+                      <div className={`flex items-start gap-2.5 sm:gap-3.5 w-full min-w-0 ${isEven ? "md:flex-row-reverse" : "md:flex-row"}`}>
                         
-                        {/* Movie Poster Artwork (Prominent & High-Res) */}
-                        <div className="relative w-18 h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-md overflow-hidden bg-stone-950 shrink-0 border border-stone-800/90 group-hover:border-stone-400 group-hover:scale-105 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+                        {/* Movie Poster Artwork (Fixed Dimensions with Responsive Scale) */}
+                        <div className="relative w-16 h-24 xs:w-20 xs:h-28 sm:w-24 sm:h-36 rounded-md overflow-hidden bg-stone-950 shrink-0 border border-stone-800/90 group-hover:border-stone-400 group-hover:scale-105 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                           <img
                             src={item.posterUrl}
                             alt={item.title}
@@ -506,8 +506,8 @@ export default function RoadToDoomsday() {
                         </div>
 
                         {/* Node Card Details */}
-                        <div className="flex-1 min-w-0">
-                          <div className={`flex items-center gap-1.5 flex-wrap text-[8.5px] font-mono uppercase tracking-wider mb-0.5 ${
+                        <div className="flex-1 min-w-0 pr-1">
+                          <div className={`flex items-center gap-1.5 flex-wrap text-[8px] xs:text-[8.5px] font-mono uppercase tracking-wider mb-0.5 ${
                             isEven ? "md:justify-end" : "md:justify-start"
                           }`}>
                             <span className="text-stone-400 font-semibold">{item.year}</span>
@@ -515,19 +515,19 @@ export default function RoadToDoomsday() {
                             <span className="text-stone-500">{item.universe}</span>
                           </div>
 
-                          <h3 className="text-sm sm:text-base font-mono uppercase tracking-[0.14em] font-bold truncate text-stone-300 group-hover:text-white transition-colors">
+                          <h3 className="text-xs xs:text-sm sm:text-base font-mono uppercase tracking-[0.1em] xs:tracking-[0.14em] font-bold truncate text-stone-300 group-hover:text-white transition-colors">
                             {item.title}
                           </h3>
 
-                          <p className="text-[11px] font-sans text-stone-400 line-clamp-2 mt-0.5 font-light leading-relaxed">
+                          <p className="text-[10px] xs:text-[11px] font-sans text-stone-400 line-clamp-2 mt-0.5 font-light leading-relaxed">
                             {item.tagline}
                           </p>
 
                           {/* Card Meta & Watched Toggle */}
-                          <div className={`flex items-center justify-between gap-3 mt-2 ${
+                          <div className={`flex items-center justify-between gap-2 sm:gap-3 mt-1.5 sm:mt-2 ${
                             isEven ? "md:flex-row-reverse" : "md:flex-row"
                           }`}>
-                            <span className="text-[8px] font-mono tracking-widest uppercase text-stone-500 truncate">
+                            <span className="text-[7.5px] xs:text-[8px] font-mono tracking-widest uppercase text-stone-500 truncate">
                               {item.incursionThreat}
                             </span>
 
@@ -538,7 +538,7 @@ export default function RoadToDoomsday() {
                                 e.stopPropagation();
                                 toggleWatched(item.id);
                               }}
-                              className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 text-[8.5px] font-mono tracking-wider uppercase transition-colors cursor-pointer ${
+                              className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 sm:gap-1.5 text-[8px] xs:text-[8.5px] font-mono tracking-wider uppercase transition-colors cursor-pointer ${
                                 isItemWatched
                                   ? "text-emerald-400 font-semibold"
                                   : "text-stone-400 hover:text-white"
@@ -572,7 +572,7 @@ export default function RoadToDoomsday() {
             {/* ------------------------------------------------------------- */}
             {/* GRAND TIMELINE DESTINATION: AVENGERS DOOMSDAY & SECRET WARS   */}
             {/* ------------------------------------------------------------- */}
-            <div id="doomsday-destination" className="relative flex flex-col items-center justify-center text-center pt-8 pl-12 md:pl-0">
+            <div id="doomsday-destination" className="relative flex flex-col items-center justify-center text-center pt-8 px-2 sm:px-4 w-full">
               <div className="max-w-xl w-full p-4 text-center flex flex-col items-center">
                 <h3 className="text-xl sm:text-3xl font-mono uppercase tracking-[0.2em] font-black text-white">
                   AVENGERS: <span className="text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]">DOOMSDAY</span>

@@ -7,7 +7,8 @@ import {
   X, 
   ArrowRight, 
   ArrowLeft, 
-  ChevronDown
+  ChevronDown,
+  Menu
 } from "lucide-react";
 import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
@@ -43,29 +44,28 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   const characterFacePortrait = getCharacterAvatar(character.id);
 
   return (
-    <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       
-      {/* 1. TOP FIXED HEADER (MATCHING /TIMELINE NAVBAR BLUR BEHAVIOR) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 flex items-center justify-between transition-all duration-300 ${
-        scrolled
-          ? "py-3 backdrop-blur-md border-b border-white/5 bg-black/20"
-          : "py-5 backdrop-blur-none border-b border-transparent bg-transparent"
-      }`}>
+      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (EXACT SAME AS TIMELINE) */}
+      <div
+        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        aria-hidden="true"
+      />
+
+      {/* 1. TOP FIXED HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-12 md:px-16 py-3 sm:py-4 flex items-center justify-between pointer-events-none bg-transparent">
         {/* Left: Drawer Toggle */}
         <button
           onClick={() => setNavMenuOpen(true)}
-          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1 group"
+          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
           title="Open Universe Menu"
           aria-label="Open Universe Menu"
         >
-          <div className="w-5 flex flex-col gap-1.5">
-            <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
-            <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
-          </div>
+          <Menu size={16} strokeWidth={1.5} />
         </button>
 
         {/* Center: Spaced MARVEL Logo */}
-        <div className="text-xs sm:text-sm font-mono font-medium tracking-[0.55em] uppercase text-white pl-[0.55em]">
+        <div className="text-xs sm:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             MARVEL
           </Link>
@@ -74,41 +74,41 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         {/* Right: Return to Characters Index */}
         <Link
           href="/characters"
-          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
           title="Return to Characters Archive (Esc)"
         >
           <X size={18} strokeWidth={1.5} />
         </Link>
       </header>
 
-      {/* 2. CINEMATIC HERO SECTION (FEATHERED SEAMLESS BLEND INTO BLACK) */}
-      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-end pt-28 pb-16 px-6 sm:px-12 md:px-16 overflow-hidden bg-[#000000]">
+      {/* 2. CINEMATIC HERO SECTION */}
+      <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-[52vh] sm:pt-48 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden bg-[#000000]">
         
-        {/* Right-Side Character Face with Feathered Radial Mask (Zero Hard Edges) */}
+        {/* Right-Side Character Face with Feathered Radial Mask (Showcased in top half on mobile) */}
         <div 
-          className="absolute right-0 top-0 bottom-0 w-full sm:w-[80%] md:w-[70%] lg:w-[62%] z-0 overflow-hidden flex items-center justify-end pointer-events-none [mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)] [-webkit-mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)]"
+          className="absolute top-0 right-0 left-0 sm:left-auto w-full sm:w-[80%] md:w-[70%] lg:w-[62%] h-[44vh] sm:h-[65vh] lg:h-full z-0 overflow-hidden flex items-start sm:items-center justify-center sm:justify-end pointer-events-none [mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)] sm:[mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)]"
         >
           <img
             src={characterFacePortrait}
             alt={character.name}
-            className="w-full h-full object-contain md:object-cover object-right md:object-[center_20%] filter brightness-95 contrast-105"
+            className="w-full h-full object-cover object-[center_15%] sm:object-right md:object-[center_20%] filter brightness-95 contrast-105"
           />
         </div>
 
-        {/* Left Side: Pure Black Grounding for Text Legibility */}
-        <div className="relative z-20 max-w-2xl lg:max-w-3xl flex flex-col gap-5">
+        {/* Left Side: Pure Black Grounding for Text Legibility (Starts below the portrait on mobile) */}
+        <div className="relative z-20 max-w-2xl lg:max-w-3xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
           
-          {/* Subtitle Badges (Clean Monospace Text, No Boxes) */}
-          <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-stone-400">
+          {/* Subtitle Badges */}
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] sm:text-[11px] font-mono tracking-wider uppercase text-stone-400">
             <span>{character.universe.split("/")[0].trim()}</span>
-            <span className="text-stone-600">·</span>
+            <span className="text-stone-600">/</span>
             <span>{character.faction.split(",")[0].trim()}</span>
-            <span className="text-stone-600">·</span>
-            <span>{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
+            <span className="text-stone-600">/</span>
+            <span className="text-white font-semibold">{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
           </div>
 
           {/* Character Main Headline Title */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold tracking-[0.12em] uppercase text-white leading-tight drop-shadow-2xl">
+          <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-mono font-bold tracking-[0.08em] xs:tracking-[0.12em] uppercase text-white leading-tight drop-shadow-2xl">
             {character.name}
           </h1>
 
@@ -117,24 +117,24 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             {character.overview}
           </p>
 
-          {/* Specification Metrics (Clean Minimal Text, No Box Backgrounds) */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 text-xs font-mono text-stone-400">
+          {/* Specification Metrics */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-400">
             <div>
-              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
+              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
               <span className="text-stone-200">{character.role}</span>
             </div>
             <div>
-              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">FIRST SEEN:</span>
+              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">FIRST SEEN:</span>
               <span className="text-stone-200">{character.firstAppearance}</span>
             </div>
             <div>
-              <span className="text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">APPEARANCES:</span>
+              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">APPEARANCES:</span>
               <span className="text-stone-200">{movieEntries.length} MCU TITLES</span>
             </div>
           </div>
 
           {/* Scroll Down Indicator */}
-          <div className="pt-6 flex items-center gap-2 text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 animate-pulse">
+          <div className="pt-4 sm:pt-6 flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 animate-pulse">
             <span>SCROLL FOR MCU TIMELINE CHRONOLOGY</span>
             <ChevronDown size={14} />
           </div>
@@ -143,18 +143,15 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS (LEFT-ALIGNED, NO DIVIDER LINES) */}
-      <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 flex flex-col gap-12">
+      {/* 3. CONTINUOUS TIMELINE CHRONOLOGY & ERAS */}
+      <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-16 flex flex-col gap-8 sm:gap-12">
         
         {/* Section Heading */}
-        <div className="flex items-center justify-between pb-2 max-w-4xl">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-stone-400" />
-            <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
-              MCU CHRONOLOGICAL TIMELINE
-            </h2>
-          </div>
-          <span className="text-[10px] font-mono tracking-widest uppercase text-stone-500">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+            MCU CHRONOLOGICAL TIMELINE
+          </h2>
+          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
             {character.eras.length} RECORDED ERAS
           </span>
         </div>
@@ -175,7 +172,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
                   <span className="text-stone-300 font-bold">
                     PHASE {era.phase}
                   </span>
-                  <span className="text-stone-600">·</span>
+                  <span className="text-stone-600">/</span>
                   <span className="text-stone-400">{era.year}</span>
                 </div>
 
@@ -225,14 +222,11 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
       {movieEntries.length > 0 && (
         <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8">
           
-          <div className="flex items-center justify-between max-w-4xl">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-stone-400" />
-              <h2 className="text-lg sm:text-xl font-mono font-bold tracking-[0.18em] uppercase text-white">
-                MCU CINEMATIC FILMOGRAPHY
-              </h2>
-            </div>
-            <span className="text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 max-w-4xl">
+            <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+              MCU CINEMATIC FILMOGRAPHY
+            </h2>
+            <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
               {movieEntries.length} CANON TITLES
             </span>
           </div>
@@ -269,43 +263,46 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </section>
       )}
 
-      {/* 5. PREVIOUS / NEXT CHARACTER JUMP FOOTER (NO DIVIDER LINE) */}
-      <footer className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-16 mt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      {/* 5. PREVIOUS / NEXT CHARACTER JUMP FOOTER */}
+      <footer className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 py-12 sm:py-16 flex flex-col gap-6 items-center">
         
-        {/* Previous Character */}
-        <Link
-          href={`/characters/${prevCharacter.id}`}
-          className="group flex items-center gap-3 text-stone-400 hover:text-white transition-colors"
-        >
-          <div className="p-2.5 rounded-full bg-stone-900 border border-stone-800 group-hover:border-white/30 transition-all">
-            <ArrowLeft size={16} />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[9px] font-mono uppercase tracking-widest text-stone-500">PREVIOUS OPERATIVE</span>
-            <span className="text-xs sm:text-sm font-mono font-bold uppercase">{prevCharacter.name}</span>
-          </div>
-        </Link>
+        {/* Navigation Row (Side-by-Side on all screen sizes) */}
+        <div className="w-full flex items-center justify-between gap-4">
+          {/* Previous Character */}
+          <Link
+            href={`/characters/${prevCharacter.id}`}
+            className="group flex items-center gap-2 sm:gap-3 text-stone-400 hover:text-white transition-colors max-w-[45%]"
+          >
+            <div className="p-2 sm:p-2.5 rounded-full bg-white/[0.03] border border-white/5 group-hover:border-white/20 transition-all shrink-0">
+              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-[8px] sm:text-[9px] font-mono uppercase tracking-widest text-stone-500 truncate">PREVIOUS</span>
+              <span className="text-[11px] sm:text-sm font-mono font-bold uppercase text-stone-200 group-hover:text-white truncate">{prevCharacter.name}</span>
+            </div>
+          </Link>
 
-        {/* Back to Characters Button (Clean Text Link, No Heavy Background) */}
+          {/* Next Character */}
+          <Link
+            href={`/characters/${nextCharacter.id}`}
+            className="group flex items-center justify-end gap-2 sm:gap-3 text-stone-400 hover:text-white transition-colors text-right max-w-[45%]"
+          >
+            <div className="flex flex-col min-w-0">
+              <span className="text-[8px] sm:text-[9px] font-mono uppercase tracking-widest text-stone-500 truncate">NEXT</span>
+              <span className="text-[11px] sm:text-sm font-mono font-bold uppercase text-stone-200 group-hover:text-white truncate">{nextCharacter.name}</span>
+            </div>
+            <div className="p-2 sm:p-2.5 rounded-full bg-white/[0.03] border border-white/5 group-hover:border-white/20 transition-all shrink-0">
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </Link>
+        </div>
+
+        {/* Back to Characters Button */}
         <Link
           href="/characters"
-          className="font-mono text-xs tracking-[0.2em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer py-2"
+          className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 hover:text-white transition-colors cursor-pointer py-1"
         >
           VIEW ALL CHARACTERS
-        </Link>
-
-        {/* Next Character */}
-        <Link
-          href={`/characters/${nextCharacter.id}`}
-          className="group flex items-center gap-3 text-stone-400 hover:text-white transition-colors text-right"
-        >
-          <div className="flex flex-col">
-            <span className="text-[9px] font-mono uppercase tracking-widest text-stone-500">NEXT OPERATIVE</span>
-            <span className="text-xs sm:text-sm font-mono font-bold uppercase">{nextCharacter.name}</span>
-          </div>
-          <div className="p-2.5 rounded-full bg-stone-900 border border-stone-800 group-hover:border-white/30 transition-all">
-            <ArrowRight size={16} />
-          </div>
         </Link>
 
       </footer>

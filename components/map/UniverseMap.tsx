@@ -109,12 +109,14 @@ export default function UniverseMap({
   const directToPhase = useCallback((phaseNum: number) => {
     const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
     const targetMeta = PHASES_CONFIG.find((p) => p.id === phaseNum) || PHASES_CONFIG[0];
+    const isMobile = width < 768;
     
-    const targetScale = 0.58;
+    // Responsive scale: on mobile frame tighter so left and right branches sit comfortably in viewport without giant empty gap
+    const targetScale = isMobile ? Math.min(width / 720, 0.50) : 0.58;
     // Exactly center the 2000px wide timeline tree (trunk at X=1000) in middle of screen
     const targetX = width / 2 - 1000 * targetScale;
     // Frame so the Phase Heading banner is clearly visible right at the top
-    const targetY = 120 - targetMeta.startY * targetScale;
+    const targetY = (isMobile ? 70 : 120) - targetMeta.startY * targetScale;
 
     setCamera({ x: targetX, y: targetY, scale: targetScale });
     setActivePhase(phaseNum);
@@ -143,13 +145,14 @@ export default function UniverseMap({
   // Frame Timeline Tree Perfectly Centered in Viewport on Initial Entry from Home/Continue
   useEffect(() => {
     const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
-    const targetScale = 0.58;
+    const isMobile = width < 768;
+    const targetScale = isMobile ? Math.min(width / 720, 0.50) : 0.58;
     const targetX = width / 2 - 1000 * targetScale;
 
     if (targetMovieId) {
       const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
       if (targetMovie) {
-        const targetY = 220 - targetMovie.y * targetScale;
+        const targetY = (isMobile ? 180 : 220) - targetMovie.y * targetScale;
         setCamera({ x: targetX, y: targetY, scale: targetScale });
         setActivePhase(targetMovie.phase);
         setCurrentPhase(targetMovie.phase);
@@ -160,7 +163,7 @@ export default function UniverseMap({
     }
 
     const targetMeta = PHASES_CONFIG.find((p) => p.id === (initialPhase || 1)) || PHASES_CONFIG[0];
-    const targetY = 120 - targetMeta.startY * targetScale;
+    const targetY = (isMobile ? 70 : 120) - targetMeta.startY * targetScale;
     setCamera({ x: targetX, y: targetY, scale: targetScale });
     setActivePhase(initialPhase || 1);
     setCurrentPhase(initialPhase || 1);
@@ -402,12 +405,9 @@ export default function UniverseMap({
       {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
       {/* ------------------------------------------------------------- */}
       {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
-      {/* ------------------------------------------------------------- */}
-      {/* TOP HEADER: RESPONSIVE MATCH WITH DARKFAMILYTREE              */}
-      {/* ------------------------------------------------------------- */}
       <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
-        {/* Left: Minimalist Menu & Mode Switcher (Matching RETURN typography) */}
-        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+        {/* Left: Minimalist Menu & Mode Switcher */}
+        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-400 hover:text-stone-200 transition-colors cursor-pointer p-1"
@@ -417,8 +417,8 @@ export default function UniverseMap({
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* View Mode Switcher (Hidden on mobile to prevent collision with center header) */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-3">
             {onSwitchToFamilyTree && (
               <button
                 onClick={onSwitchToFamilyTree}
@@ -439,10 +439,10 @@ export default function UniverseMap({
         </div>
 
         {/* Center: Centered MARVEL | DOOMSDAY Brand Header */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
           <Link 
             href="/timeline" 
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-stone-300 hover:text-stone-200 transition-opacity select-none"
+            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-stone-300 hover:text-stone-200 transition-opacity select-none"
             title="MCU Timeline Map"
           >
             MARVEL
@@ -450,7 +450,7 @@ export default function UniverseMap({
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
@@ -496,24 +496,24 @@ export default function UniverseMap({
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.25, 1.65) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
           onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.18) }))}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
           <ZoomOut size={13} />
         </button>
         <button
           onClick={showFullEarth616Timeline}
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
             isFullOverview
-              ? "bg-stone-200 text-black border-stone-300"
-              : "bg-black/80 border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200"
+              ? "bg-white text-black font-bold"
+              : "bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200"
           }`}
           title="Earth-616 Full Timeline Overview"
         >
@@ -521,31 +521,11 @@ export default function UniverseMap({
         </button>
         <button
           onClick={() => directToPhase(1)}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/40 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Direct to Phase I"
         >
           <RotateCcw size={12} />
         </button>
-      </div>
-
-      {/* 5. Bottom Timeline Status */}
-      <div className="hidden lg:block fixed bottom-16 right-10 z-30 pointer-events-none text-right font-mono text-[9.5px] text-stone-400 tracking-[0.25em] uppercase">
-        <span className="text-stone-300 font-semibold">
-          {isFullOverview ? "EARTH-616 TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
-        </span>
-        <span className="mx-2">•</span>
-        <span>{isFullOverview ? "2008 — 2027" : currentPhaseMeta.years}</span>
-        <span className="mx-2">•</span>
-        <span className="text-stone-400 font-medium">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
-      </div>
-
-      {/* Mobile compact badge */}
-      <div className="md:hidden fixed bottom-4 right-4 z-30 pointer-events-none font-mono text-[8.5px] text-stone-400 tracking-wider uppercase bg-black/70 px-2.5 py-1 rounded-full border border-stone-800/80 backdrop-blur-md">
-        <span className="text-stone-300 font-semibold">
-          {isFullOverview ? "ALL PHASES" : `PHASE ${currentPhaseMeta.roman}`}
-        </span>
-        <span className="mx-1.5">•</span>
-        <span>{isFullOverview ? "2008–27" : currentPhaseMeta.years}</span>
       </div>
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS */}
@@ -601,9 +581,7 @@ export default function UniverseMap({
                 height="36"
                 rx="18"
                 fill="#05050a"
-                stroke={activePhase === p.id && !isFullOverview ? "rgba(255, 255, 255, 0.45)" : "rgba(255, 255, 255, 0.1)"}
-                strokeWidth={activePhase === p.id && !isFullOverview ? "1.2" : "1"}
-                className="transition-all duration-300 group-hover:stroke-white/40 group-hover:fill-[#0c0c14]"
+                className="transition-all duration-300 group-hover:fill-[#0c0c14]"
               />
 
               <text

@@ -62,6 +62,7 @@ export default function DarkFamilyTree({
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeCluster, setActiveCluster] = useState<string>("all");
+  const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const contentLayerRef = useRef<HTMLDivElement | null>(null);
@@ -277,8 +278,12 @@ export default function DarkFamilyTree({
         return;
       }
 
-      // Dynamically calculate the exact bounding center of the chosen dynasty cluster
-      const clusterNodes = DARK_TREE_NODES.filter((n) => n.cluster === clusterId);
+      // Dynamically calculate the exact bounding center of the chosen dynasty cluster using visible nodes
+      const targetClusterNodes = visibleNodes.filter((n) => n.cluster === clusterId);
+      const clusterNodes = targetClusterNodes.length > 0
+        ? targetClusterNodes
+        : DARK_TREE_NODES.filter((n) => n.cluster === clusterId);
+
       if (clusterNodes.length > 0) {
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
         clusterNodes.forEach((n) => {
@@ -289,19 +294,35 @@ export default function DarkFamilyTree({
         });
 
         const centerX = (minX + maxX + CARD_W) / 2;
-        const centerY = (minY + maxY + CARD_H) / 2;
+        const centerY = (minY + maxY + CARD_H + 40) / 2;
         const clusterW = maxX - minX + CARD_W;
-        const clusterH = maxY - minY + CARD_H;
+        const clusterH = maxY - minY + CARD_H + 40;
 
-        // Auto-compute framing scale so the entire family cluster fits centered with breathing margin
-        const scaleX = (width - (isMobile ? 40 : 120)) / (clusterW + 60);
-        const scaleY = (height - (isMobile ? 120 : 180)) / (clusterH + 60);
+        // Auto-compute framing scale so the entire family cluster fits centered in the viewport
+        const scaleX = (width - (isMobile ? 32 : 120)) / (clusterW + 40);
+        const scaleY = (height - (isMobile ? 140 : 180)) / (clusterH + 40);
         const autoScale = Math.min(scaleX, scaleY);
 
-        focusOnCoordinates(centerX, centerY, Math.min(Math.max(autoScale, 0.45), 0.95));
+        focusOnCoordinates(
+          centerX,
+          centerY,
+          Math.min(Math.max(autoScale, isMobile ? 0.52 : 0.60), isMobile ? 0.95 : 1.05)
+        );
       }
     },
     [focusOnCoordinates, visibleNodes]
+  );
+
+  // Switch Active Spoiler Phase
+  const handleSelectPhase = useCallback(
+    (phaseNum: number) => {
+      setSpoilerPhase(phaseNum);
+      setCurrentPhase(phaseNum);
+      setIsPhaseDrawerOpen(false);
+      setActiveCluster("all");
+      setSelectedNode(null);
+    },
+    [setCurrentPhase]
   );
 
   // Responsive Initial Frame on Mount & Window Resize (Auto-fit all active Phase characters)
@@ -810,10 +831,10 @@ export default function DarkFamilyTree({
       {/* ------------------------------------------------------------- */}
       {/* TOP HEADER: RESPONSIVE MATCH WITH PAGESHELL & UNIVERSEMAP    */}
       {/* ------------------------------------------------------------- */}
-      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-3 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
         
-        {/* Left: Drawer Menu Toggle + Mode Switcher (Matching RETURN typography) */}
-        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+        {/* Left: Drawer Menu Toggle + Mode Switcher */}
+        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
@@ -823,8 +844,8 @@ export default function DarkFamilyTree({
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest) */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* View Mode Switcher (Hidden on mobile to prevent collision with center header) */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-3">
             <button
               className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
               title="Sacred Family Tree Lineage View"
@@ -845,10 +866,10 @@ export default function DarkFamilyTree({
         </div>
 
         {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
           <Link 
             href="/timeline" 
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
+            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
             title="MCU Timeline Map"
           >
             MARVEL
@@ -856,7 +877,7 @@ export default function DarkFamilyTree({
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
@@ -874,10 +895,7 @@ export default function DarkFamilyTree({
               {[1, 2, 3, 4, 5, 6].map((p) => (
                 <button
                   key={p}
-                  onClick={() => {
-                    setSpoilerPhase(p);
-                    setCurrentPhase(p);
-                  }}
+                  onClick={() => handleSelectPhase(p)}
                   className={`text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
                     spoilerPhase === p
                       ? "text-white font-bold"
@@ -914,6 +932,94 @@ export default function DarkFamilyTree({
           </button>
         </div>
       </header>
+
+      {/* ========================================================
+          MOBILE COMPACT PHASE DRAWER TRIGGER
+         ======================================================== */}
+      <div className="fixed left-3 top-14 z-30 md:hidden flex items-center gap-1.5">
+        <button
+          onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
+          className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform"
+        >
+          <span>{`PHASE ${spoilerPhase}`}</span>
+        </button>
+      </div>
+
+      {/* Mobile Slide-Out Family Tree Phase Sheet */}
+      {isPhaseDrawerOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex select-none animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsPhaseDrawerOpen(false)}
+          />
+          <aside className="relative z-10 w-full max-w-[320px] bg-[#000000] border-r border-stone-900 h-full p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300 shadow-[20px_0_50px_rgba(0,0,0,0.9)]">
+            <div>
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-stone-900 mb-6">
+                <span className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white">
+                  SACRED FAMILY TREE
+                </span>
+                <button
+                  onClick={() => setIsPhaseDrawerOpen(false)}
+                  className="text-stone-400 hover:text-white transition-colors p-1 cursor-pointer"
+                  aria-label="Close Phase HUD"
+                >
+                  <X size={16} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Phase Switcher List */}
+              <div className="border-b border-stone-900/80 pb-6 mb-6">
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
+                  REVEAL UP TO PHASE
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  {[1, 2, 3, 4, 5, 6].map((p) => {
+                    const isActive = p === spoilerPhase;
+                    return (
+                      <button
+                        key={p}
+                        onClick={() => handleSelectPhase(p)}
+                        className={`w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group cursor-pointer ${
+                          isActive
+                            ? "text-white font-bold"
+                            : "text-stone-400 hover:text-white"
+                        }`}
+                      >
+                        <span>Phase {p}</span>
+                        {isActive ? (
+                          <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                        ) : (
+                          <span className="text-[8.5px] text-stone-500 font-normal">
+                            {p === 6 ? "ALL CHARACTERS" : `UP TO PHASE ${p}`}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Info block */}
+              <div>
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-2">
+                  SPOILER FILTER
+                </div>
+                <p className="text-[9.5px] font-mono text-stone-500 leading-relaxed">
+                  Select a Phase to explore character relationships and lineages up to that point in the Marvel Cinematic Universe.
+                </p>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="pt-6 border-t border-stone-900 flex items-center justify-between text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
+              <span>{visibleNodes.length} HEROES VISIBLE</span>
+              <span>PHASE {spoilerPhase}</span>
+            </div>
+          </aside>
+        </div>
+      )}
 
       {/* Slide Navigation Drawer */}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
@@ -1167,14 +1273,14 @@ export default function DarkFamilyTree({
       {/* BOTTOM DYNASTY CLUSTER NAVIGATION TABS (Fluid Ribbon)        */}
       {/* ------------------------------------------------------------- */}
       <footer className="fixed bottom-3 sm:bottom-4 left-0 right-0 z-30 flex items-center justify-center px-2 sm:px-4 pointer-events-none">
-        <div className="no-map-drag pointer-events-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-full sm:max-w-5xl py-1.5 sm:py-2 px-2.5 sm:px-3 bg-black/85 rounded-full backdrop-blur-xl shadow-2xl no-scrollbar">
+        <div className="no-map-drag pointer-events-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-[95vw] sm:max-w-5xl py-1 sm:py-2 px-2 sm:px-3 bg-black/90 rounded-full backdrop-blur-xl shadow-2xl no-scrollbar">
           {availableDynastyClusters.map((dynasty) => {
             const isActive = activeCluster === dynasty.id;
             return (
               <button
                 key={dynasty.id}
                 onClick={() => focusOnCluster(dynasty.id)}
-                className={`px-2.5 sm:px-3 py-1 rounded-full text-[8.5px] sm:text-[9px] font-mono tracking-widest uppercase whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[7px] xs:text-[7.5px] sm:text-[9px] font-mono tracking-wider sm:tracking-widest uppercase whitespace-nowrap transition-all cursor-pointer ${
                   isActive
                     ? "bg-white text-black font-bold shadow-md"
                     : "text-stone-400 hover:text-white hover:bg-stone-900/60"
@@ -1188,26 +1294,26 @@ export default function DarkFamilyTree({
       </footer>
 
       {/* ------------------------------------------------------------- */}
-      {/* FLOATING ZOOM & CANVAS CONTROLS (Bottom Left)                */}
+      {/* FLOATING ZOOM & CANVAS CONTROLS (Positioned above footer)     */}
       {/* ------------------------------------------------------------- */}
-      <div className="fixed bottom-3 sm:bottom-4 left-3 sm:left-6 z-30 flex items-center gap-1.5 pointer-events-auto">
+      <div className="fixed bottom-14 sm:bottom-16 left-3 sm:left-6 z-30 flex items-center gap-1.5 pointer-events-auto">
         <button
           onClick={zoomIn}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
           onClick={zoomOut}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
           <ZoomOut size={13} />
         </button>
         <button
           onClick={resetView}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Fit All Families"
         >
           <RotateCcw size={12} />
@@ -1225,33 +1331,30 @@ export default function DarkFamilyTree({
             className="md:hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-xs"
           />
 
-          <aside className="dossier-card fixed bottom-0 md:top-0 right-0 left-0 md:left-auto z-50 w-full md:max-w-[380px] max-h-[84vh] md:max-h-full bg-black/95 border-t md:border-t-0 md:border-l border-stone-800 p-5 sm:p-6 shadow-[0_0_50px_rgba(0,0,0,0.95)] backdrop-blur-2xl flex flex-col justify-between overflow-y-auto rounded-t-2xl md:rounded-none animate-in slide-in-from-bottom md:slide-in-from-right duration-300">
+          <aside className="dossier-card fixed bottom-0 md:top-0 right-0 left-0 md:left-auto z-50 w-full md:max-w-[400px] max-h-[86vh] md:max-h-full bg-black/95 border-t md:border-t-0 md:border-l border-white/10 p-5 sm:p-7 shadow-[0_0_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl flex flex-col justify-between overflow-y-auto rounded-t-2xl md:rounded-none animate-in slide-in-from-bottom md:slide-in-from-right duration-300">
             <div>
               {/* Mobile Drag/Close indicator bar */}
-              <div className="md:hidden w-10 h-1 bg-stone-700 rounded-full mx-auto mb-3" />
+              <div className="md:hidden w-10 h-1 bg-stone-700 rounded-full mx-auto mb-3.5" />
 
-              {/* Header / Close button */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-stone-800">
-                <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/20">
-                    {selectedNode.clusterLabel}
-                  </span>
-                  <span className="text-[9px] font-mono text-stone-500 uppercase">
-                    PHASE {selectedNode.phaseIntroduced}+
-                  </span>
+              {/* Header / Subtitle Badges */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
+                <div className="flex items-center gap-2 text-[10px] font-mono tracking-[0.25em] uppercase text-stone-400">
+                  <span className="text-white font-bold">{selectedNode.clusterLabel}</span>
+                  <span className="text-stone-600">•</span>
+                  <span>PHASE {selectedNode.phaseIntroduced}</span>
                 </div>
                 <button
                   onClick={() => setSelectedNode(null)}
-                  className="text-stone-400 hover:text-white p-1 rounded-sm cursor-pointer transition-colors"
+                  className="text-stone-400 hover:text-white p-1 rounded-full hover:bg-white/10 cursor-pointer transition-colors"
                   aria-label="Close dossier"
                 >
-                  <X size={18} />
+                  <X size={16} />
                 </button>
               </div>
 
               {/* Character Portrait & Main Name */}
-              <div className="mt-4 flex gap-3.5 items-start">
-                <div className="w-20 sm:w-24 h-28 sm:h-32 rounded-sm border border-stone-700 bg-stone-950 overflow-hidden shrink-0 shadow-xl relative">
+              <div className="mt-5 flex gap-4 items-start">
+                <div className="w-20 sm:w-24 h-28 sm:h-32 rounded-xl border border-white/10 bg-stone-950 overflow-hidden shrink-0 shadow-2xl relative">
                   {selectedNode.isMystery ? (
                     <div className="w-full h-full flex items-center justify-center text-3xl font-mono text-stone-600 bg-stone-900">
                       ?
@@ -1261,35 +1364,37 @@ export default function DarkFamilyTree({
                       src={selectedNode.photoUrl || ""}
                       alt={selectedNode.name}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover object-top grayscale contrast-125"
+                      className="w-full h-full object-cover object-top filter brightness-95 contrast-105"
                     />
                   )}
-                  <div className="absolute inset-0 border border-white/10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                 </div>
 
-                <div>
-                  <h2 className="text-base sm:text-lg font-mono font-bold text-white uppercase tracking-wider leading-tight">
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-base sm:text-lg font-mono font-bold text-white uppercase tracking-[0.14em] leading-tight">
                     {selectedNode.name}
                   </h2>
                   {selectedNode.subtitle && (
-                    <p className="text-[9.5px] font-mono tracking-widest uppercase text-stone-400 mt-0.5 sm:mt-1">
+                    <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-stone-400">
                       {selectedNode.subtitle}
                     </p>
                   )}
                   {fullCharacterData && (
-                    <span className="inline-block mt-1.5 text-[8.5px] font-mono uppercase px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-400">
-                      {fullCharacterData.universe}
-                    </span>
+                    <div className="pt-1">
+                      <span className="inline-block text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/10 text-stone-300">
+                        {fullCharacterData.universe}
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
 
               {/* Biography / Narrative Summary */}
-              <div className="mt-4">
-                <h4 className="text-[8.5px] font-mono tracking-widest uppercase text-stone-500 mb-1">
+              <div className="mt-5">
+                <h4 className="text-[9.5px] font-mono tracking-[0.3em] uppercase text-stone-500 font-bold mb-1.5">
                   NARRATIVE DOSSIER
                 </h4>
-                <p className="text-xs text-stone-300 leading-relaxed font-sans line-clamp-4 md:line-clamp-none">
+                <p className="text-xs sm:text-[13px] text-stone-300 leading-relaxed font-sans font-light line-clamp-4 md:line-clamp-none">
                   {selectedNode.bio ||
                     fullCharacterData?.overview ||
                     "Encrypted timeline record preserved in the Sacred Timeline archives."}
@@ -1298,10 +1403,10 @@ export default function DarkFamilyTree({
 
               {/* Family & Connected Ties in the Tree */}
               <div className="mt-5">
-                <h4 className="text-[8.5px] font-mono tracking-widest uppercase text-stone-500 mb-2">
+                <h4 className="text-[9.5px] font-mono tracking-[0.3em] uppercase text-stone-500 font-bold mb-2">
                   DIRECT GENEALOGICAL CONNECTIONS
                 </h4>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {visibleConnections
                     .filter(
                       (c) =>
@@ -1317,22 +1422,22 @@ export default function DarkFamilyTree({
                         <button
                           key={c.id}
                           onClick={() => focusOnNode(otherNode)}
-                          className="w-full p-2 rounded border border-stone-900 bg-stone-950/80 hover:border-stone-700 hover:bg-stone-900/60 flex items-center justify-between text-left transition-all group cursor-pointer"
+                          className="w-full p-2.5 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.06] flex items-center justify-between text-left transition-all group cursor-pointer"
                         >
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-5 h-7 bg-stone-900 border border-stone-800 overflow-hidden shrink-0">
+                          <div className="flex items-center gap-3">
+                            <div className="w-7 h-9 rounded-md bg-stone-900 border border-white/10 overflow-hidden shrink-0 shadow-sm">
                               <img
                                 src={otherNode.photoUrl || ""}
                                 alt={otherNode.name}
                                 referrerPolicy="no-referrer"
-                                className="w-full h-full object-cover grayscale"
+                                className="w-full h-full object-cover filter brightness-95"
                               />
                             </div>
                             <div>
-                              <div className="text-xs font-mono font-bold text-white uppercase group-hover:text-white">
+                              <div className="text-xs font-mono font-bold text-stone-200 uppercase tracking-wider group-hover:text-white transition-colors">
                                 {otherNode.name}
                               </div>
-                              <div className="text-[8px] font-mono uppercase text-stone-500">
+                              <div className="text-[8.5px] font-mono uppercase tracking-widest text-stone-500 mt-0.5">
                                 {c.label || c.type}
                               </div>
                             </div>
@@ -1351,15 +1456,15 @@ export default function DarkFamilyTree({
               {fullCharacterData &&
                 fullCharacterData.artifactsPossessed.length > 0 && (
                   <div className="mt-5">
-                    <h4 className="text-[8.5px] font-mono tracking-widest uppercase text-stone-500 mb-1.5">
+                    <h4 className="text-[9.5px] font-mono tracking-[0.3em] uppercase text-stone-500 font-bold mb-2">
                       COSMIC RELICS WIELDED
                     </h4>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1.5">
                       {fullCharacterData.artifactsPossessed.map((artId) => (
                         <Link
                           key={artId}
                           href={`/artifacts?relic=${encodeURIComponent(artId)}`}
-                          className="text-[8.5px] font-mono uppercase px-2 py-0.5 rounded-full bg-stone-900/90 border border-stone-800 text-stone-300 hover:border-white hover:text-white transition-colors"
+                          className="inline-flex items-center text-[9px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/10 text-stone-300 hover:border-white/30 hover:text-white transition-colors"
                         >
                           {artId.replace("-", " ")}
                         </Link>
@@ -1371,10 +1476,10 @@ export default function DarkFamilyTree({
 
             {/* Footer Action: Open Full Profile */}
             {selectedNode.characterId && (
-              <div className="pt-4 border-t border-stone-900 mt-4">
+              <div className="pt-4 border-t border-white/10 mt-5">
                 <Link
                   href={`/characters/${selectedNode.characterId}`}
-                  className="w-full py-2 sm:py-2.5 rounded bg-white text-black font-mono font-bold text-[9.5px] sm:text-[10px] tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:bg-stone-200 transition-colors shadow-lg"
+                  className="w-full py-2.5 sm:py-3 rounded-xl bg-white text-black font-mono font-bold text-[10px] tracking-[0.22em] uppercase flex items-center justify-center gap-2 hover:bg-stone-200 transition-colors shadow-lg cursor-pointer"
                 >
                   <span>OPEN FULL DOSSIER</span>
                   <ExternalLink size={12} />

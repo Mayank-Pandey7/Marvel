@@ -69,22 +69,22 @@ export default function SearchInvestigation({
 
       {/* Transparent Glass Spatial Modal Container */}
       <div 
-        className="relative z-10 w-full max-w-3xl bg-black/50 backdrop-blur-md p-5 sm:p-8 flex flex-col gap-6 animate-in zoom-in-95 duration-200 no-map-drag search-modal-container"
+        className="relative z-10 w-full max-w-3xl bg-black/70 sm:bg-black/50 backdrop-blur-md p-4 xs:p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 animate-in zoom-in-95 duration-200 no-map-drag search-modal-container"
         onWheel={(e) => e.stopPropagation()}
         onTouchMove={(e) => e.stopPropagation()}
       >
         
         {/* Borderless Search Input Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-stone-800/40">
-          <div className="flex items-center gap-3.5 flex-1 mr-2">
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-stone-800/40">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 flex-1 mr-2">
             <Search size={16} className="text-stone-500 shrink-0" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="SEARCH ACROSS 6 PHASES (IRON MAN, THANOS, LOKI, DOOM)..."
-              className="w-full bg-transparent text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-white placeholder-stone-600 focus:outline-none"
+              placeholder="SEARCH ACROSS 6 PHASES (IRON MAN, LOKI, DOOM)..."
+              className="w-full bg-transparent text-xs sm:text-sm font-mono uppercase tracking-[0.1em] sm:tracking-[0.2em] text-white placeholder-stone-600 focus:outline-none"
             />
           </div>
 

@@ -96,36 +96,36 @@ function ArtifactsContent() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
           
           {/* SEARCH INPUT & CATEGORY TABS (MATCHING /CHARACTERS) */}
-          <div className="flex flex-col gap-6 pb-2">
+          <div className="flex flex-col gap-5 pb-2">
             
             {/* Search Input with Clean Borderless Surface */}
-            <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
-              <Search size={15} className="text-stone-500 shrink-0 mr-3" />
+            <div className="relative flex items-center bg-white/[0.03] border border-white/5 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/20 transition-all">
+              <Search size={14} className="text-stone-500 shrink-0 mr-3" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH (RELIC, POWER, WIELDER, ORIGIN)..."
-                className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-[0.2em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
+                placeholder="SEARCH RELICS & ARTIFACTS..."
+                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="text-stone-500 hover:text-stone-300 text-[10px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                  className="text-stone-500 hover:text-stone-300 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
                 >
                   CLEAR
                 </button>
               )}
             </div>
 
-            {/* Clean Minimal Category Tabs (No Numbers) */}
+            {/* Clean Minimal Category Tabs (Swipeable on mobile) */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
+              <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setSelectedCategory(c.id)}
-                    className={`transition-colors cursor-pointer py-1 ${
+                    className={`transition-colors cursor-pointer py-1 shrink-0 whitespace-nowrap ${
                       selectedCategory === c.id
                         ? "text-white font-bold"
                         : "text-stone-500 hover:text-stone-300"
@@ -139,11 +139,11 @@ function ArtifactsContent() {
 
           </div>
 
-          {/* ARTIFACT GALLERY GRID (MATCHING /CHARACTERS 4:5 CARD SYSTEM) */}
+          {/* OPEN SPATIAL CINEMATIC GALLERY (2-COLUMN ON MOBILE) */}
           {filteredArtifacts.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
-                NO RELICS FOUND
+                NO RECORDS FOUND
               </h3>
               <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
                 No cosmic artifact matches the active query parameters.
@@ -159,7 +159,7 @@ function ArtifactsContent() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
               {filteredArtifacts.map((artifact) => {
                 const latestHistory = artifact.history[artifact.history.length - 1];
                 const primaryOrigin = artifact.origin.split("/")[0].trim();
@@ -168,49 +168,42 @@ function ArtifactsContent() {
                   <div
                     key={artifact.id}
                     onClick={() => setActiveArtifact(artifact)}
-                    className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
+                    className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
                     
                     {/* FULL BLEED IMAGE WITH DYNAMIC SUIT & RELIC FRAMING */}
-                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-gradient-to-b from-[#0c0c12] to-[#020204] rounded-xl border border-white/10 shadow-lg flex items-center justify-center">
+                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-gradient-to-b from-[#0c0c12] to-[#020204] rounded-xl border border-white/5 shadow-2xl flex items-center justify-center">
                       <img
                         src={artifact.backdrop}
                         alt={artifact.name}
                         className={`w-full h-full filter brightness-95 group-hover:brightness-110 group-hover:scale-105 transition-all duration-700 ease-out ${
                           artifact.category === "ironman_armor"
-                            ? "object-contain object-center p-2.5"
+                            ? "object-contain object-center p-2 sm:p-2.5"
                             : "object-cover object-center"
                         }`}
                       />
 
                       {/* Smooth Vignette */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
-
-                      {/* Origin Pill in Bottom Left */}
-                      <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between">
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-200 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15 truncate max-w-full">
-                          {primaryOrigin}
-                        </span>
-                      </div>
                     </div>
 
                     {/* OPEN TEXT AREA (NO TRUNCATION) */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0.5 sm:gap-1">
                       
                       {/* Name (Full Title Display) */}
-                      <h2 className="text-sm sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
+                      <h2 className="text-xs sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] leading-snug">
                         {artifact.name}
                       </h2>
 
-                      {/* Category / Current Wielder */}
-                      <div className="text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
-                        {artifact.category.replace(/_/g, " ")} · {latestHistory ? latestHistory.holderName : "Singularity"}
+                      {/* Category / Current Wielder / Origin */}
+                      <div className="text-[9px] sm:text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
+                        {primaryOrigin} · {artifact.category.replace(/_/g, " ")}
                       </div>
 
                       {/* Action Link */}
-                      <div className="pt-1 flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
+                      <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10.5px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
                         <span>EXPLORE RELIC</span>
-                        <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
 
                     </div>
@@ -227,7 +220,7 @@ function ArtifactsContent() {
 
       {/* STATE-OF-THE-ART CINEMATIC PROVENANCE MODAL */}
       {activeArtifact && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 select-none">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 select-none">
           
           {/* Backdrop Click Dismiss */}
           <div 
@@ -236,10 +229,10 @@ function ArtifactsContent() {
           />
 
           {/* Modal Container */}
-          <div className="relative z-10 w-full max-w-3xl bg-[#070709] border border-stone-800/80 sm:rounded-2xl flex flex-col max-h-screen sm:max-h-[90vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+          <div className="relative z-10 w-full max-w-3xl bg-[#070709] border border-stone-800/80 rounded-xl sm:rounded-2xl flex flex-col max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
             
             {/* 1. CINEMATIC HERO IMAGE BANNER */}
-            <div className="relative w-full h-56 sm:h-72 shrink-0 bg-stone-950 overflow-hidden">
+            <div className="relative w-full h-48 sm:h-72 shrink-0 bg-stone-950 overflow-hidden">
               <img
                 src={activeArtifact.backdrop}
                 alt={activeArtifact.name}
@@ -260,43 +253,43 @@ function ArtifactsContent() {
               {/* Close Button */}
               <button
                 onClick={() => setActiveArtifact(null)}
-                className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 p-2 sm:p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white backdrop-blur-md transition-all cursor-pointer"
                 title="Close (Esc)"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
 
               {/* Title & Origin Floating in Hero */}
-              <div className="absolute bottom-4 left-6 right-6 flex flex-col gap-1 z-10">
-                <div className="flex items-center gap-2 text-[10px] font-mono tracking-[0.3em] uppercase text-stone-400">
+              <div className="absolute bottom-3 sm:bottom-4 left-4 sm:left-6 right-4 sm:right-6 flex flex-col gap-1 z-10">
+                <div className="flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.25em] sm:tracking-[0.3em] uppercase text-stone-400">
                   <span 
                     className="w-2 h-2 rounded-full inline-block"
                     style={{ backgroundColor: activeArtifact.iconColor || "#fff" }}
                   />
                   <span>{activeArtifact.origin}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-mono font-bold tracking-[0.14em] uppercase text-white drop-shadow-md">
+                <h2 className="text-xl xs:text-2xl sm:text-3xl font-mono font-bold tracking-[0.1em] sm:tracking-[0.14em] uppercase text-white drop-shadow-md leading-tight">
                   {activeArtifact.name}
                 </h2>
               </div>
             </div>
 
             {/* 2. SCROLLABLE LORE & PROVENANCE CONTENT */}
-            <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 flex flex-col gap-6 scrollbar-thin scrollbar-thumb-stone-800">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 flex flex-col gap-5 sm:gap-6 scrollbar-thin scrollbar-thumb-stone-800">
               
               {/* SPECIFICATION PILLARS */}
-              <div className="grid grid-cols-3 gap-3 py-3 border-y border-stone-800/60 text-center font-mono uppercase">
+              <div className="grid grid-cols-3 gap-1 xs:gap-3 py-2.5 sm:py-3 border-y border-stone-800/60 text-center font-mono uppercase">
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] tracking-[0.25em] text-stone-500">PHASE INTRODUCED</span>
-                  <span className="text-xs font-bold text-stone-200">PHASE {activeArtifact.phaseIntroduced}</span>
+                  <span className="text-[7.5px] xs:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-stone-500">PHASE</span>
+                  <span className="text-[10.5px] xs:text-xs font-bold text-stone-200">PHASE {activeArtifact.phaseIntroduced}</span>
                 </div>
-                <div className="flex flex-col gap-0.5 border-x border-stone-800/60">
-                  <span className="text-[9px] tracking-[0.25em] text-stone-500">CATEGORY</span>
-                  <span className="text-xs font-bold text-stone-200">{activeArtifact.category.replace(/_/g, " ")}</span>
+                <div className="flex flex-col gap-0.5 border-x border-stone-800/60 px-1">
+                  <span className="text-[7.5px] xs:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-stone-500 truncate">CATEGORY</span>
+                  <span className="text-[10.5px] xs:text-xs font-bold text-stone-200 truncate">{activeArtifact.category.replace(/_/g, " ")}</span>
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] tracking-[0.25em] text-stone-500">RECORDED WIELDERS</span>
-                  <span className="text-xs font-bold text-stone-200">{activeArtifact.history.length} ENTITIES</span>
+                  <span className="text-[7.5px] xs:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-stone-500">WIELDERS</span>
+                  <span className="text-[10.5px] xs:text-xs font-bold text-stone-200">{activeArtifact.history.length} ENTITIES</span>
                 </div>
               </div>
 

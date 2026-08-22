@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="border-t border-stone-900 bg-[#020204] px-6 py-12 text-center relative z-20">
       <div className="flex items-center justify-center gap-2 mb-2">
         <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
-        <p className="font-mono tracking-[0.4em] uppercase text-white text-xs sm:text-sm font-light">
+        <p className="font-mono tracking-[0.18em] sm:tracking-[0.35em] uppercase text-white text-[10px] sm:text-xs font-light">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </p>
       </div>

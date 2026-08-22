@@ -169,22 +169,22 @@ function CharactersContent() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
           
           {/* OPEN SPATIAL SEARCH & TEXT FILTERS (NO LINES) */}
-          <div className="flex flex-col gap-6 pb-2">
+          <div className="flex flex-col gap-5 pb-2">
             
             {/* Search Input with Clean Borderless Surface */}
-            <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
-              <Search size={15} className="text-stone-500 shrink-0 mr-3" />
+            <div className="relative flex items-center bg-white/[0.03] border border-white/5 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/20 transition-all">
+              <Search size={14} className="text-stone-500 shrink-0 mr-3" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH (NAME, ALIAS, FACTION)..."
-                className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-[0.2em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
+                placeholder="SEARCH CHARACTERS..."
+                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="text-stone-500 hover:text-stone-300 text-[10px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                  className="text-stone-500 hover:text-stone-300 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
                 >
                   CLEAR
                 </button>
@@ -194,13 +194,13 @@ function CharactersContent() {
             {/* Clean Minimal Text Filters */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               
-              {/* Factions (No numbers) */}
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
+              {/* Factions (Swipeable on mobile) */}
+              <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {FACTIONS.map((f) => (
                   <button
                     key={f.id}
                     onClick={() => setSelectedFaction(f.id)}
-                    className={`transition-colors cursor-pointer py-1 ${
+                    className={`transition-colors cursor-pointer py-1 shrink-0 whitespace-nowrap ${
                       selectedFaction === f.id
                         ? "text-white font-bold"
                         : "text-stone-500 hover:text-stone-300"
@@ -215,7 +215,7 @@ function CharactersContent() {
 
           </div>
 
-          {/* OPEN SPATIAL CINEMATIC GALLERY */}
+          {/* OPEN SPATIAL CINEMATIC GALLERY (2-COLUMN ON MOBILE) */}
           {filteredCharacters.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -235,7 +235,7 @@ function CharactersContent() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
               {filteredCharacters.map((character) => {
                 const primaryAlias = character.aliases[0] || character.role.split(",")[0] || "OPERATIVE";
                 const backdropUrl = getCharacterBackdrop(character.id);
@@ -244,11 +244,11 @@ function CharactersContent() {
                   <Link
                     key={character.id}
                     href={`/characters/${character.id}`}
-                    className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
+                    className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
                     
                     {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT (PORTRAIT ORIENTED FOR PERFECT FACE FRAMING) */}
-                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-lg">
+                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/5 shadow-2xl">
                       <img
                         src={backdropUrl}
                         alt={character.name}
@@ -257,32 +257,25 @@ function CharactersContent() {
 
                       {/* Smooth Vignette */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
-
-                      {/* Role in Bottom Left of Image */}
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-stone-300 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                          {primaryAlias}
-                        </span>
-                      </div>
                     </div>
 
                     {/* OPEN TEXT AREA */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0.5 sm:gap-1">
                       
                       {/* Name */}
-                      <h2 className="text-base font-mono font-bold tracking-[0.16em] uppercase text-white group-hover:text-stone-200 transition-colors">
+                      <h2 className="text-xs sm:text-base font-mono font-bold tracking-wider uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-1">
                         {character.name}
                       </h2>
 
                       {/* Faction / Role */}
-                      <div className="text-[10px] font-mono tracking-wider uppercase text-stone-500 line-clamp-1">
-                        {character.faction.split("/")[0].trim()} · {character.role.split(",")[0].trim()}
+                      <div className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
+                        {primaryAlias !== character.name ? `${primaryAlias} · ` : ""}{character.faction.split("/")[0].trim()}
                       </div>
 
                       {/* Action Link */}
-                      <div className="pt-1 flex items-center gap-1.5 text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
+                      <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
                         <span>EXPLORE</span>
-                        <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
 
                     </div>

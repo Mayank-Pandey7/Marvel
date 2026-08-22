@@ -77,14 +77,14 @@ export default function EarthDossierPage({
 
       {/* 2. MINIMALIST TOP HEADER */}
       <header
-        className={`relative z-20 w-full px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative z-20 w-full px-4 sm:px-12 py-4 sm:py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
         }`}
       >
         {/* Left: Clean Borderless Return Button */}
         <button
           onClick={handleClose}
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
+          className="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
         >
           <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
           <span>RETURN</span>
@@ -92,7 +92,7 @@ export default function EarthDossierPage({
 
         {/* Center: Brand Title */}
         <div className="text-center pointer-events-none">
-          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
+          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.5em] sm:tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
             M A R V E L
           </h1>
         </div>
@@ -102,16 +102,16 @@ export default function EarthDossierPage({
       </header>
 
       {/* 3. MAIN MULTIVERSE DOSSIER STAGE */}
-      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-6 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <main className="relative z-20 flex-1 px-4 sm:px-12 md:px-20 py-4 sm:py-6 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
         {/* LEFT COLUMN: TITLE & NARRATIVE BRIEFING */}
         <div
-          className={`flex-1 max-w-2xl flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+          className={`flex-1 max-w-2xl flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 text-center lg:text-left ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
           {/* Status Tag */}
-          <div className="flex items-center gap-3 text-[11px] font-mono tracking-[0.35em] text-stone-400 uppercase font-semibold">
+          <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] sm:tracking-[0.35em] text-stone-400 uppercase font-semibold">
             <span>MULTIVERSE CONTINUITY</span>
             <span>•</span>
             <span style={{ color: earth.color || "#ffffff" }}>
@@ -121,16 +121,16 @@ export default function EarthDossierPage({
 
           {/* Large Cinematic Title */}
           <h2
-            className={`font-mono font-light text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-tight mt-3 drop-shadow-[0_0_35px_rgba(255,255,255,0.25)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
+            className={`font-mono font-light text-2xl xs:text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-tight mt-3 drop-shadow-[0_0_35px_rgba(255,255,255,0.25)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
               isExpanded
-                ? "tracking-[0.15em] sm:tracking-[0.2em] opacity-100 scale-100"
-                : "tracking-[0.35em] opacity-0 scale-95"
+                ? "tracking-[0.1em] xs:tracking-[0.15em] sm:tracking-[0.2em] opacity-100 scale-100"
+                : "tracking-[0.3em] opacity-0 scale-95"
             }`}
           >
             {earth.name}
           </h2>
 
-          <div className="mt-1 text-sm font-mono tracking-widest text-stone-400 uppercase">
+          <div className="mt-1 text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
             DESIGNATION: <span className="text-white font-bold">{earth.designation}</span>
           </div>
 

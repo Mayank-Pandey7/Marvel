@@ -210,7 +210,7 @@ export default function DarkIntroSelector({
 
       {/* CINEMATIC ASCENDING BRAND TITLE (Original proportion with increased vertical letter height) */}
       <div
-        className="fixed z-40 pointer-events-none transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center w-full max-w-full px-4"
+        className="fixed z-40 pointer-events-none transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4"
         style={{
           left: "50%",
           top: introStage === "initial" || introStage === "centered" ? "50%" : "26px",
@@ -224,10 +224,10 @@ export default function DarkIntroSelector({
         }}
       >
         <h1
-          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-block ${
+          className={`font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] inline-block whitespace-nowrap ${
             introStage === "centered"
-              ? "text-sm sm:text-lg md:text-xl tracking-[0.5em] sm:tracking-[0.75em]"
-              : "text-xs sm:text-sm md:text-base tracking-[0.42em] sm:tracking-[0.6em]"
+              ? "text-[8px] xs:text-[9.5px] sm:text-sm md:text-lg tracking-[0.18em] xs:tracking-[0.32em] sm:tracking-[0.55em] md:tracking-[0.75em]"
+              : "text-[7px] xs:text-[8px] sm:text-xs md:text-sm tracking-[0.14em] xs:tracking-[0.24em] sm:tracking-[0.45em] md:tracking-[0.6em]"
           }`}
         >
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
@@ -235,7 +235,7 @@ export default function DarkIntroSelector({
       </div>
 
       {/* TOP BAR */}
-      <header className={`relative z-10 w-full px-6 sm:px-14 py-4 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
+      <header className={`relative z-10 w-full px-4 sm:px-14 py-4 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
         <button
@@ -251,7 +251,7 @@ export default function DarkIntroSelector({
         </button>
 
         {/* Empty placeholder to balance flex container while ascending title docks above */}
-        <div className="invisible text-xs sm:text-sm md:text-base font-mono tracking-[0.42em] sm:tracking-[0.6em] uppercase">
+        <div className="invisible text-[7px] xs:text-[8px] sm:text-xs md:text-sm font-mono tracking-[0.14em] xs:tracking-[0.24em] sm:tracking-[0.45em] md:tracking-[0.6em] uppercase whitespace-nowrap">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </div>
 
@@ -260,7 +260,7 @@ export default function DarkIntroSelector({
       </header>
 
       {/* BOTTOM-DOCKED INTERACTIVE CONTROLS */}
-      <main className={`relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-4 mt-auto mb-3 overflow-visible transition-opacity duration-1000 ${
+      <main className={`relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-2 xs:px-4 mt-auto mb-3 overflow-visible transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
         
@@ -279,7 +279,7 @@ export default function DarkIntroSelector({
           /* SELECTED PHASE: FLOWER + MOVIE TRACK */
           <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200">
             {/* Flower with increased size and animated glowing effects */}
-            <div className="relative w-44 h-44 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
+            <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
               <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
                 <defs>
                   <filter id="dark-triquetra-glow-sel" x="-40%" y="-40%" width="180%" height="180%">
@@ -351,8 +351,8 @@ export default function DarkIntroSelector({
               </svg>
             </div>
 
-            {/* DYNAMIC PROGRESS CAPSULE TRACK — movies within selected phase */}
-            <div className="flex items-center justify-center my-1.5 select-none overflow-visible w-full max-w-full px-2">
+            {/* DYNAMIC PROGRESS CAPSULE TRACK — Touch-scrollable on mobile */}
+            <div className="flex items-center justify-center my-1.5 select-none w-full max-w-full px-2 overflow-x-auto overflow-y-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <div ref={containerRef} className="relative inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-3 py-1.5 overflow-visible">
                 {/* 1. Dynamic Progress Capsule Pill */}
                 {pillBounds.width > 0 && (
@@ -386,7 +386,6 @@ export default function DarkIntroSelector({
                   const isSelected = idx === selectedMovieIndex;
                   const isHovered = idx === hoveredMovieIndex;
                   const movieNum = idx + 1;
-                  const posterData = MCU_POSTER_MAP[movie.id];
 
                   return (
                     <button
@@ -395,7 +394,7 @@ export default function DarkIntroSelector({
                       onClick={() => handleSelectMovie(idx)}
                       onMouseEnter={() => setHoveredMovieIndex(idx)}
                       onMouseLeave={() => setHoveredMovieIndex(null)}
-                      className={`relative z-20 shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-all duration-300 overflow-visible bg-transparent ${
+                      className={`relative z-20 shrink-0 w-6 h-6 xs:w-7 xs:h-7 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-all duration-300 overflow-visible bg-transparent ${
                         isSelected
                           ? "text-white font-bold scale-110"
                           : isHovered
