@@ -39,3 +39,7 @@ npm run build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Recent Updates
+- Added CI workflow
+- Updated README with this section
