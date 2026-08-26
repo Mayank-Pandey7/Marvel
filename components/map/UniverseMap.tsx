@@ -29,8 +29,32 @@ export default function UniverseMap({
 
   // Universe Camera State (Pan & Zoom on a 2000px wide by 10500px tall vertical cosmic tree)
   const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.58 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const cameraRef = useRef({ x: 0, y: 0, scale: 0.58 });
+  const contentLayerRef = useRef<HTMLDivElement | null>(null);
+  const isDraggingRef = useRef(false);
+  const isPinchingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const touchStartRef = useRef<{
+    dist?: number;
+    initialScale?: number;
+    midX?: number;
+    midY?: number;
+    initialCamX?: number;
+    initialCamY?: number;
+  }>({});
+
+  useEffect(() => {
+    cameraRef.current = camera;
+  }, [camera]);
+
+  const updateCameraTransform = useCallback((newCamera: { x: number; y: number; scale: number }, isSmooth: boolean = false) => {
+    cameraRef.current = newCamera;
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = isSmooth ? "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)" : "none";
+      contentLayerRef.current.style.transform = `translate3d(${newCamera.x}px, ${newCamera.y}px, 0) scale(${newCamera.scale})`;
+    }
+    setCamera(newCamera);
+  }, []);
 
   // Selected & Hovered Movie Nodes
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
@@ -118,12 +142,12 @@ export default function UniverseMap({
     // Frame so the Phase Heading banner is clearly visible right at the top
     const targetY = (isMobile ? 70 : 120) - targetMeta.startY * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
     setActivePhase(phaseNum);
     setCurrentPhase(phaseNum);
     setSelectedMovie(null);
     setIsFullOverview(false);
-  }, [setCurrentPhase]);
+  }, [setCurrentPhase, updateCameraTransform]);
 
   // EARTH-616 FULL TIMELINE OVERVIEW (Shows the entire vertical tree)
   const showFullEarth616Timeline = useCallback(() => {
@@ -137,10 +161,10 @@ export default function UniverseMap({
     const targetX = width / 2 - 1000 * targetScale;
     const targetY = height / 2 - 5200 * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) });
+    updateCameraTransform({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) }, true);
     setSelectedMovie(null);
     setIsFullOverview(true);
-  }, []);
+  }, [updateCameraTransform]);
 
   // Frame Timeline Tree Perfectly Centered in Viewport on Initial Entry from Home/Continue
   useEffect(() => {
@@ -153,10 +177,10 @@ export default function UniverseMap({
       const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
       if (targetMovie) {
         const targetY = (isMobile ? 180 : 220) - targetMovie.y * targetScale;
-        setCamera({ x: targetX, y: targetY, scale: targetScale });
+        updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, false);
         setActivePhase(targetMovie.phase);
         setCurrentPhase(targetMovie.phase);
-        setSelectedMovie(null); // Keep modal closed so the tree section is visible!
+        setSelectedMovie(null);
         setIsFullOverview(false);
         return;
       }
@@ -164,12 +188,12 @@ export default function UniverseMap({
 
     const targetMeta = PHASES_CONFIG.find((p) => p.id === (initialPhase || 1)) || PHASES_CONFIG[0];
     const targetY = (isMobile ? 70 : 120) - targetMeta.startY * targetScale;
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, false);
     setActivePhase(initialPhase || 1);
     setCurrentPhase(initialPhase || 1);
     setSelectedMovie(null);
     setIsFullOverview(false);
-  }, [initialPhase, targetMovieId, setCurrentPhase]);
+  }, [initialPhase, targetMovieId, setCurrentPhase, updateCameraTransform]);
 
   // Pan Camera to Center onto a Target Movie Node
   const focusOnMovie = useCallback((movie: MovieNode) => {
@@ -183,10 +207,10 @@ export default function UniverseMap({
     const targetX = clientWidth / 2 - movie.x * targetScale;
     const targetY = clientHeight / 2 - movie.y * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
     setSelectedMovie(movie);
     setIsFullOverview(false);
-  }, [setCurrentPhase]);
+  }, [setCurrentPhase, updateCameraTransform]);
 
   // Ambient Star Dust / Micro-Particle Canvas Animation
   useEffect(() => {
@@ -243,76 +267,123 @@ export default function UniverseMap({
     };
   }, []);
 
-  // Mouse & Touch Pan Handling
-  const touchStartRef = useRef<{ x: number; y: number; dist?: number }>({ x: 0, y: 0 });
-
+  // Mouse Pan Handling (120fps hardware-accelerated transform)
   const handleMouseDown = (e: React.MouseEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
+    isDraggingRef.current = true;
+    dragStartRef.current = {
+      x: e.clientX - cameraRef.current.x,
+      y: e.clientY - cameraRef.current.y,
+    };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
-    setCamera((prev) => ({
-      ...prev,
-      x: newX,
-      y: newY,
-    }));
+    if (!isDraggingRef.current) return;
+    const newX = e.clientX - dragStartRef.current.x;
+    const newY = e.clientY - dragStartRef.current.y;
+    cameraRef.current.x = newX;
+    cameraRef.current.y = newY;
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${cameraRef.current.scale})`;
+    }
   };
 
-  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      setCamera({ ...cameraRef.current });
+    }
+  };
 
+  // Touch Handling: 1-Finger Pan & 2-Finger Focal-Point Pinch Zoom
   const handleTouchStart = (e: React.TouchEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+    }
+
     if (e.touches.length === 1) {
-      setIsDragging(true);
-      setDragStart({ x: e.touches[0].clientX - camera.x, y: e.touches[0].clientY - camera.y });
+      isDraggingRef.current = true;
+      isPinchingRef.current = false;
+      dragStartRef.current = {
+        x: e.touches[0].clientX - cameraRef.current.x,
+        y: e.touches[0].clientY - cameraRef.current.y,
+      };
     } else if (e.touches.length === 2) {
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
+      isDraggingRef.current = false;
+      isPinchingRef.current = true;
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const midX = (t1.clientX + t2.clientX) / 2;
+      const midY = (t1.clientY + t2.clientY) / 2;
+
       touchStartRef.current = {
-        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
-        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
-        dist,
+        dist: Math.max(dist, 10),
+        initialScale: cameraRef.current.scale,
+        midX,
+        midY,
+        initialCamX: cameraRef.current.x,
+        initialCamY: cameraRef.current.y,
       };
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 1 && isDragging) {
-      const newX = e.touches[0].clientX - dragStart.x;
-      const newY = e.touches[0].clientY - dragStart.y;
-      setCamera((prev) => ({
-        ...prev,
-        x: newX,
-        y: newY,
-      }));
-    } else if (e.touches.length === 2 && touchStartRef.current.dist) {
-      const currentDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      const scaleFactor = currentDist / touchStartRef.current.dist;
-      setCamera((prev) => ({
-        ...prev,
-        scale: Math.min(Math.max(prev.scale * scaleFactor, 0.08), 2.2),
-      }));
-      touchStartRef.current.dist = currentDist;
+    if (e.touches.length === 1 && isDraggingRef.current) {
+      const newX = e.touches[0].clientX - dragStartRef.current.x;
+      const newY = e.touches[0].clientY - dragStartRef.current.y;
+      cameraRef.current.x = newX;
+      cameraRef.current.y = newY;
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${cameraRef.current.scale})`;
+      }
+    } else if (e.touches.length === 2 && isPinchingRef.current && touchStartRef.current.dist && touchStartRef.current.initialScale !== undefined) {
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const currentMidX = (t1.clientX + t2.clientX) / 2;
+      const currentMidY = (t1.clientY + t2.clientY) / 2;
+
+      const scaleRatio = currentDist / touchStartRef.current.dist;
+      const nextScale = Math.min(Math.max(touchStartRef.current.initialScale * scaleRatio, 0.08), 2.2);
+      const zoomFactor = nextScale / touchStartRef.current.initialScale;
+
+      const initialMidX = touchStartRef.current.midX || currentMidX;
+      const initialMidY = touchStartRef.current.midY || currentMidY;
+      const initialCamX = touchStartRef.current.initialCamX || cameraRef.current.x;
+      const initialCamY = touchStartRef.current.initialCamY || cameraRef.current.y;
+
+      const newX = currentMidX - (initialMidX - initialCamX) * zoomFactor;
+      const newY = currentMidY - (initialMidY - initialCamY) * zoomFactor;
+
+      cameraRef.current = { x: newX, y: newY, scale: nextScale };
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
+      }
     }
   };
 
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    touchStartRef.current.dist = undefined;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      isDraggingRef.current = true;
+      isPinchingRef.current = false;
+      dragStartRef.current = {
+        x: e.touches[0].clientX - cameraRef.current.x,
+        y: e.touches[0].clientY - cameraRef.current.y,
+      };
+    } else if (e.touches.length === 0) {
+      isDraggingRef.current = false;
+      isPinchingRef.current = false;
+      touchStartRef.current = {};
+      setCamera({ ...cameraRef.current });
+    }
   };
 
   const handleWheel = (e: React.WheelEvent) => {
-    // If search modal is open or scrolling over an interactive panel, don't zoom the background universe map
     if (
       searchOpen ||
       (e.target as HTMLElement).closest(
@@ -324,17 +395,22 @@ export default function UniverseMap({
     e.preventDefault();
     const delta = Math.max(Math.min(e.deltaY, 120), -120);
     const zoomFactor = Math.exp(-delta * 0.0016);
-    const newScale = Math.min(Math.max(camera.scale * zoomFactor, 0.18), 1.65);
+    const nextScale = Math.min(Math.max(cameraRef.current.scale * zoomFactor, 0.08), 2.2);
 
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const newX = mouseX - (mouseX - camera.x) * (newScale / camera.scale);
-    const newY = mouseY - (mouseY - camera.y) * (newScale / camera.scale);
+    const newX = mouseX - (mouseX - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+    const newY = mouseY - (mouseY - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
 
-    setCamera({ x: newX, y: newY, scale: newScale });
+    cameraRef.current = { x: newX, y: newY, scale: nextScale };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "none";
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
+    }
+    setCamera({ ...cameraRef.current });
     setIsFullOverview(false);
   };
 
@@ -352,11 +428,11 @@ export default function UniverseMap({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const targetScale = Math.min(camera.scale * 1.35, 1.65);
-    const newX = mouseX - (mouseX - camera.x) * (targetScale / camera.scale);
-    const newY = mouseY - (mouseY - camera.y) * (targetScale / camera.scale);
+    const targetScale = Math.min(cameraRef.current.scale * 1.35, 2.2);
+    const newX = mouseX - (mouseX - cameraRef.current.x) * (targetScale / cameraRef.current.scale);
+    const newY = mouseY - (mouseY - cameraRef.current.y) * (targetScale / cameraRef.current.scale);
 
-    setCamera({ x: newX, y: newY, scale: targetScale });
+    updateCameraTransform({ x: newX, y: newY, scale: targetScale }, true);
     setIsFullOverview(false);
   };
 
@@ -495,14 +571,32 @@ export default function UniverseMap({
       {/* 4. Bottom Controls */}
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.25, 1.65) }))}
+          onClick={() => {
+            const nextScale = Math.min(cameraRef.current.scale * 1.30, 2.2);
+            if (!containerRef.current) return;
+            const cx = containerRef.current.clientWidth / 2;
+            const cy = containerRef.current.clientHeight / 2;
+            const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+            const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
+            setIsFullOverview(false);
+          }}
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.18) }))}
+          onClick={() => {
+            const nextScale = Math.max(cameraRef.current.scale * 0.75, 0.08);
+            if (!containerRef.current) return;
+            const cx = containerRef.current.clientWidth / 2;
+            const cy = containerRef.current.clientHeight / 2;
+            const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+            const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
+            setIsFullOverview(false);
+          }}
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-stone-200 flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
@@ -530,11 +624,10 @@ export default function UniverseMap({
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS */}
       <div
-        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left ${
-          isDragging
-            ? "transition-none"
-            : "transition-[transform,opacity] duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-        } ${isTreeVisible ? "opacity-100" : "opacity-0"}`}
+        ref={contentLayerRef}
+        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left will-change-transform ${
+          isTreeVisible ? "opacity-100" : "opacity-0"
+        }`}
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}
@@ -545,24 +638,13 @@ export default function UniverseMap({
           viewBox="0 0 2000 10500"
         >
           <defs>
-            <filter id="universe-line-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
             <style>{`
               @keyframes timelineFlow {
-                0% { stroke-dashoffset: 60; }
+                0% { stroke-dashoffset: 24; }
                 100% { stroke-dashoffset: 0; }
               }
               .flowing-connection {
-                animation: timelineFlow 3s linear infinite;
-              }
-              .faint-connection {
-                animation: timelineFlow 8s linear infinite;
+                animation: timelineFlow 1.8s linear infinite;
               }
             `}</style>
           </defs>
@@ -620,33 +702,39 @@ export default function UniverseMap({
 
               return (
                 <g key={`conn-${fromMovie.id}-${toMovie.id}`}>
-                  {isDirectlyConnected && (
+                  {isDirectlyConnected ? (
+                    <>
+                      <path
+                        d={pathD}
+                        fill="none"
+                        stroke={fromMovie.color || "#ffffff"}
+                        strokeWidth="2.5"
+                        opacity="0.8"
+                        strokeDasharray="6 6"
+                        className="flowing-connection"
+                      />
+                      <path
+                        d={pathD}
+                        fill="none"
+                        stroke="#ffffff"
+                        strokeWidth="1.8"
+                        strokeDasharray="4 4"
+                        className="flowing-connection"
+                      />
+                    </>
+                  ) : (
                     <path
                       d={pathD}
                       fill="none"
-                      stroke={fromMovie.color || "#ffffff"}
-                      strokeWidth="2.5"
-                      opacity="0.6"
-                      filter="url(#universe-line-glow)"
-                      strokeDasharray="6 6"
-                      className="flowing-connection transition-all duration-500"
+                      stroke={
+                        isDimmed
+                          ? "rgba(255, 255, 255, 0.02)"
+                          : "rgba(255, 255, 255, 0.12)"
+                      }
+                      strokeWidth="1"
+                      strokeDasharray="3 5"
                     />
                   )}
-
-                  <path
-                    d={pathD}
-                    fill="none"
-                    stroke={
-                      isDirectlyConnected
-                        ? "rgba(255, 255, 255, 0.75)"
-                        : isDimmed
-                        ? "rgba(255, 255, 255, 0.02)"
-                        : "rgba(255, 255, 255, 0.12)"
-                    }
-                    strokeWidth={isDirectlyConnected ? "1.8" : "1"}
-                    strokeDasharray={isDirectlyConnected ? "4 4" : "3 5"}
-                    className={`${isDirectlyConnected ? "flowing-connection" : "faint-connection"} transition-all duration-500`}
-                  />
                 </g>
               );
             })

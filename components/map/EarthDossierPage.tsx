@@ -5,13 +5,21 @@ import { ArrowLeft, Sparkles, Film } from "lucide-react";
 import type { MCUEarth } from "@/data/movies";
 
 const EARTH_BACKDROPS: Record<string, string> = {
-  "earth-616": "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1z9q9v8t6s5a4.jpg",
-  "earth-838": "https://image.tmdb.org/t/p/original/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",
-  "earth-10005": "https://image.tmdb.org/t/p/original/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-  "earth-96283": "https://image.tmdb.org/t/p/original/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
-  "earth-120703": "https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
-  "earth-688": "https://image.tmdb.org/t/p/original/4q2hz2mYflgYOpVLyGuhiz0yYAW.jpg",
-  "battleworld": "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+  "earth-616": "/images/multiverse/earth-616.jpg",
+  "earth-838": "/images/multiverse/earth-838.jpg",
+  "earth-10005": "/images/multiverse/earth-10005.jpg",
+  "earth-96283": "/images/multiverse/earth-96283.jpg",
+  "earth-120703": "/images/multiverse/earth-120703.jpg",
+  "earth-688": "/images/multiverse/earth-sinister.jpg",
+  "battleworld": "/images/multiverse/battleworld.jpg",
+  "the-void": "/images/multiverse/the-void.jpg",
+  "yggdrasil": "/images/multiverse/yggdrasil.jpg",
+  "quantum-realm": "/images/multiverse/quantum-realm.jpg",
+  "citadel-end-of-time": "/images/multiverse/citadel-end-of-time.jpg",
+  "earth-sinister": "/images/multiverse/earth-sinister.jpg",
+  "earth-82111": "/images/multiverse/earth-82111.jpg",
+  "earth-2149": "/images/multiverse/earth-2149.jpg",
+  "gap-junction": "/images/multiverse/gap-junction.jpg",
 };
 
 export default function EarthDossierPage({
@@ -40,7 +48,7 @@ export default function EarthDossierPage({
 
   const backdropSrc =
     EARTH_BACKDROPS[earth.id] ||
-    "https://image.tmdb.org/t/p/original/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg";
+    "/images/multiverse/earth-838.jpg";
 
   const isExpanded = stage === "expanded";
   const isClosing = stage === "closing";
@@ -59,20 +67,20 @@ export default function EarthDossierPage({
           : "opacity-0 scale-105 pointer-events-none"
       }`}
     >
-      {/* 1. FULLSCREEN CINEMATIC BACKDROP IMAGE */}
+      {/* 1. FULLSCREEN CINEMATIC HD REALITY BACKDROP */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <img
           src={backdropSrc}
           alt={earth.name}
-          className={`w-full h-full object-cover object-center filter brightness-[0.55] contrast-[1.10] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isExpanded ? "scale-105 blur-0 opacity-100" : "scale-125 blur-lg opacity-0"
+          className={`w-full h-full object-cover object-center filter brightness-[0.80] contrast-[1.06] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isExpanded ? "scale-100 blur-0 opacity-100" : "scale-110 blur-sm opacity-0"
           }`}
         />
 
-        {/* Cinematic Vignette & Atmospheric Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/90 via-[#020204]/55 to-[#020204]/70" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(2,2,4,0.92)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
+        {/* Cinematic Crisp Vignette & Atmospheric Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020204]/85 via-[#020204]/30 to-[#020204]/75" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(2,2,4,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.70)_0%,transparent_25%,transparent_65%,rgba(2,2,4,0.92)_100%)]" />
       </div>
 
       {/* 2. MINIMALIST TOP HEADER */}

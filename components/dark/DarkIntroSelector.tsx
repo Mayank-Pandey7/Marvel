@@ -61,27 +61,31 @@ export default function DarkIntroSelector({
   // Recalculate progress capsule and sliding selector circle bounding box
   useEffect(() => {
     const updateBounds = () => {
-      const container = containerRef.current;
       const firstBtn = buttonRefs.current[0];
       const activeBtn = buttonRefs.current[selectedMovieIndex];
 
-      if (container && firstBtn && activeBtn) {
-        const cRect = container.getBoundingClientRect();
-        const fRect = firstBtn.getBoundingClientRect();
-        const aRect = activeBtn.getBoundingClientRect();
+      if (firstBtn && activeBtn) {
+        // Use offset coordinates relative to container to prevent bounding rect jitter
+        const btnWidth = activeBtn.offsetWidth || 28;
+        const btnHeight = activeBtn.offsetHeight || 28;
+        const diameter = Math.max(btnWidth, btnHeight) + 6;
+        const radius = diameter / 2;
 
-        // Progressive Capsule Pill bounds [1 .. active]
-        const pLeft = fRect.left - cRect.left - 4;
-        const pWidth = aRect.right - fRect.left + 8;
-        const pHeight = Math.max(fRect.height, aRect.height) + 6;
-        setPillBounds({ left: pLeft, width: pWidth, height: pHeight });
+        const fc = firstBtn.offsetLeft + firstBtn.offsetWidth / 2;
+        const ac = activeBtn.offsetLeft + activeBtn.offsetWidth / 2;
 
-        // Continuous Sliding Circle indicator bounds
-        const bLeft = aRect.left - cRect.left - 3;
-        const bTop = aRect.top - cRect.top - 3;
-        const bWidth = aRect.width + 6;
-        const bHeight = aRect.height + 6;
-        setActiveBtnBounds({ left: bLeft, top: bTop, width: bWidth, height: bHeight });
+        setPillBounds({
+          left: fc - radius,
+          width: ac - fc + diameter,
+          height: diameter,
+        });
+
+        setActiveBtnBounds({
+          left: ac - radius,
+          top: 0,
+          width: diameter,
+          height: diameter,
+        });
       }
     };
 
@@ -179,6 +183,33 @@ export default function DarkIntroSelector({
     <div
       className="fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans"
     >
+      <style>{`
+        @keyframes floatPrompt {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        .animate-float-prompt {
+          animation: floatPrompt 3.2s ease-in-out infinite;
+        }
+        .animate-float-prompt:hover {
+          animation-play-state: paused;
+        }
+        @keyframes floatFull {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        .animate-float-full {
+          animation: floatFull 3.6s ease-in-out infinite;
+        }
+      `}</style>
       {/* Cinematic Background Doctor Doom Live Video Layer */}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
@@ -270,29 +301,22 @@ export default function DarkIntroSelector({
           <div className="flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
             <button
               onClick={() => handleSelectPhase(1)}
-              className="group relative text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-100 uppercase font-light drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] leading-relaxed py-1 px-4 cursor-pointer bg-transparent border-none outline-none hover:text-white transition-colors hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+              className="group relative animate-float-prompt text-xs sm:text-sm md:text-base font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-115 hover:tracking-[0.55em] sm:hover:tracking-[0.65em] active:scale-95 transition-all duration-300 ease-out py-2.5 px-6 cursor-pointer bg-transparent border-none outline-none select-none will-change-transform"
             >
               SELECT PHASE &amp; MOVIE
             </button>
           </div>
         ) : (
-          /* SELECTED PHASE: FLOWER + MOVIE TRACK */
-          <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200">
+          /* SELECTED PHASE: FLOWER + MOVIE TRACK + CONTINUE BUTTON (Floating unified HUD) */
+          <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200 animate-float-full will-change-transform">
             {/* Flower with increased size and animated glowing effects */}
             <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
               <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
                 <defs>
-                  <filter id="dark-triquetra-glow-sel" x="-40%" y="-40%" width="180%" height="180%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
                   <radialGradient id="smoky-leaf-sel" cx="50%" cy="28%" r="75%">
-                    <stop offset="0%" stopColor="rgba(160, 160, 175, 0.55)" />
-                    <stop offset="48%" stopColor="rgba(90, 90, 105, 0.28)" />
-                    <stop offset="100%" stopColor="rgba(10, 10, 15, 0.0)" />
+                    <stop offset="0%" stopColor="rgba(255, 255, 255, 0.20)" />
+                    <stop offset="60%" stopColor="rgba(255, 255, 255, 0.05)" />
+                    <stop offset="100%" stopColor="rgba(0, 0, 0, 0.0)" />
                   </radialGradient>
                   <style>{`
                     @keyframes flowDotsClockwise {
@@ -300,8 +324,8 @@ export default function DarkIntroSelector({
                       100% { stroke-dashoffset: 50; }
                     }
                     @keyframes petalBreathe {
-                      0%, 100% { opacity: 0.9; }
-                      50% { opacity: 1; filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)); }
+                      0%, 100% { opacity: 0.85; }
+                      50% { opacity: 1; }
                     }
                     .flowing-dots {
                       animation: flowDotsClockwise 8s linear infinite;
@@ -325,11 +349,10 @@ export default function DarkIntroSelector({
                       <path
                         d={EDGE_JOINED_BETEL_PATH}
                         transform={`rotate(${leaf.angle} 100 100)`}
-                        fill={isSelected ? "url(#smoky-leaf-sel)" : isHovered ? "rgba(255, 255, 255, 0.12)" : "transparent"}
+                        fill={isSelected ? "url(#smoky-leaf-sel)" : isHovered ? "rgba(255, 255, 255, 0.08)" : "transparent"}
                         stroke={isSelected ? "#ffffff" : isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.35)"}
                         strokeWidth={isSelected ? "1.8" : isHovered ? "1.4" : "1.0"}
                         strokeDasharray={isSelected ? "2.5, 3.5" : "1.8, 2.8"}
-                        filter={isSelected ? "url(#dark-triquetra-glow-sel)" : undefined}
                         className={`transition-all duration-300 ${isSelected ? "flowing-dots-active" : "flowing-dots"}`}
                       />
                       <text
@@ -341,7 +364,7 @@ export default function DarkIntroSelector({
                         fontSize={isSelected ? "15" : "13"}
                         fontFamily="sans-serif"
                         fontWeight={isSelected ? "600" : "400"}
-                        className="select-none pointer-events-none transition-all drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]"
+                        className="select-none pointer-events-none transition-all"
                       >
                         {leaf.phase}
                       </text>
@@ -357,7 +380,7 @@ export default function DarkIntroSelector({
                 {/* 1. Dynamic Progress Capsule Pill */}
                 {pillBounds.width > 0 && (
                   <div
-                    className="absolute rounded-full border border-dotted border-white/80 bg-white/[0.04] backdrop-blur-[2px] pointer-events-none z-0 transition-[width,left] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="absolute rounded-full border border-dotted border-white/60 bg-white/[0.04] pointer-events-none z-0 transition-[width,left] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{
                       left: `${pillBounds.left}px`,
                       width: `${pillBounds.width}px`,
@@ -371,10 +394,11 @@ export default function DarkIntroSelector({
                 {/* 2. Sliding Active Circle Ring */}
                 {activeBtnBounds.width > 0 && (
                   <div
-                    className="absolute pointer-events-none z-10 rounded-full border border-dotted border-white/90 bg-white/[0.09] shadow-[0_0_16px_rgba(255,255,255,0.25)] transition-[left,top,width,height] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="absolute pointer-events-none z-10 rounded-full border border-dotted border-white/95 bg-white/[0.12] transition-[left,width,height] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{
                       left: `${activeBtnBounds.left}px`,
-                      top: `${activeBtnBounds.top}px`,
+                      top: "50%",
+                      transform: "translateY(-50%)",
                       width: `${activeBtnBounds.width}px`,
                       height: `${activeBtnBounds.height}px`,
                     }}
@@ -394,16 +418,18 @@ export default function DarkIntroSelector({
                       onClick={() => handleSelectMovie(idx)}
                       onMouseEnter={() => setHoveredMovieIndex(idx)}
                       onMouseLeave={() => setHoveredMovieIndex(null)}
-                      className={`relative z-20 shrink-0 w-6 h-6 xs:w-7 xs:h-7 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-all duration-300 overflow-visible bg-transparent ${
+                      className={`relative z-20 shrink-0 w-6 h-6 xs:w-7 xs:h-7 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono transition-colors duration-200 overflow-visible bg-transparent ${
                         isSelected
-                          ? "text-white font-bold scale-110"
+                          ? "text-white font-bold"
                           : isHovered
-                          ? "text-white font-semibold scale-110 shadow-[inset_0_0_12px_rgba(255,255,255,0.5)]"
+                          ? "text-white font-semibold"
                           : "text-stone-400 hover:text-stone-200"
                       }`}
                       title={movie.title}
                     >
-                      {movieNum}
+                      <span className={`inline-flex items-center justify-center transition-transform duration-200 ${isSelected || isHovered ? "scale-110" : "scale-100"}`}>
+                        {movieNum}
+                      </span>
                     </button>
                   );
                 })}
@@ -431,20 +457,16 @@ export default function DarkIntroSelector({
                 </div>
               );
             })()}
-          </div>
-        )}
 
-        {/* MINIMALIST 'C O N T I N U E' ACTION BUTTON (Only shown when a phase is actively selected) */}
-        {activePhase !== null && (
-          <div className="mt-1.5 mb-1 animate-in fade-in duration-700 delay-500">
-            <button
-              onClick={handleContinue}
-              className="group relative px-6 py-2 text-[11px] font-mono tracking-[0.45em] sm:tracking-[0.55em] uppercase text-stone-300 hover:text-white transition-all flex items-center justify-center cursor-pointer"
-            >
-              <span className="relative z-10 transition-transform group-hover:scale-105 font-light drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+            {/* MINIMALIST 'C O N T I N U E' ACTION BUTTON */}
+            <div className="mt-2 mb-1 animate-in fade-in duration-700 delay-500 flex justify-center">
+              <button
+                onClick={handleContinue}
+                className="group relative text-xs sm:text-sm font-mono tracking-[0.45em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-115 hover:tracking-[0.65em] sm:hover:tracking-[0.75em] active:scale-95 transition-all duration-300 ease-out py-2.5 px-6 cursor-pointer bg-transparent border-none outline-none select-none will-change-transform"
+              >
                 C O N T I N U E
-              </span>
-            </button>
+              </button>
+            </div>
           </div>
         )}
 
