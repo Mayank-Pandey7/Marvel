@@ -10,7 +10,7 @@ export type MCUEntry = {
   runtime?: string;
   importance: "essential" | "recommended" | "optional";
   status: "released" | "upcoming";
-  characters: string[]; // character ids, see data/characters.ts
+  characters: string[];
 };
 
 export const PHASES = [

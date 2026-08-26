@@ -15,12 +15,12 @@ export type Artifact = {
   power: string;
   description: string;
   phaseIntroduced: number;
-  iconColor: string; // hex
+  iconColor: string;
   backdrop: string;
   history: {
     phase: number;
     year: string;
-    holder: string; // character id or organization
+    holder: string;
     holderName: string;
     location: string;
     event: string;
@@ -28,7 +28,7 @@ export type Artifact = {
 };
 
 export const ARTIFACTS: Artifact[] = [
-  // 1. INFINITY STONES
+
   {
     id: "space-stone",
     name: "The Tesseract (Space Stone)",
@@ -130,7 +130,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 2. GAUNTLETS & COSMIC HARNESSES
   {
     id: "infinity-gauntlet",
     name: "The Infinity Gauntlet",
@@ -162,7 +161,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 3. ANCIENT TOMES & DARK MAGIC
   {
     id: "the-darkhold",
     name: "The Darkhold (Book of the Damned)",
@@ -196,7 +194,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 4. MULTIVERSAL & COSMIC TECHNOLOGY
   {
     id: "ten-rings",
     name: "The Ten Rings",
@@ -261,7 +258,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 5. ASGARDIAN & COSMIC GOD WEAPONS
   {
     id: "mjolnir",
     name: "Mjolnir (Enchanted Uru Hammer)",
@@ -340,7 +336,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 6. EARTH & WAKANDAN VIBRANIUM
   {
     id: "vibranium-shield",
     name: "Captain America's Shield",
@@ -405,7 +400,6 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
 
-  // 7. MYSTIC RELICS & SANCTUM SANCTORUM
   {
     id: "cloak-of-levitation",
     name: "Cloak of Levitation",

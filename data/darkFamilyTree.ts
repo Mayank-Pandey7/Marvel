@@ -12,7 +12,7 @@ export interface DarkTreeNode {
   y: number;
   isMystery?: boolean;
   status?: string;
-  characterId?: string; // Links to data/characters.ts
+  characterId?: string;
   bio?: string;
 }
 
@@ -32,15 +32,8 @@ export interface OrthogonalConnection {
   arrowDir?: "down" | "right" | "left" | "up";
 }
 
-// ---------------------------------------------------------------------------
-// CHARACTER NODES (Generational Dynasties with Spatial Coords)
-// Coordinate Space: 2600 x 2000
-// ---------------------------------------------------------------------------
-
 export const DARK_TREE_NODES: DarkTreeNode[] = [
-  // ==========================================
-  // 1. THE ASGARDIAN ROYAL HOUSE (Top Left)
-  // ==========================================
+
   {
     id: "bor",
     name: "BOR BURISON",
@@ -168,9 +161,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Resurrected daughter of Gorr infused with cosmic energy of Eternity, raised by Thor."
   },
 
-  // ==========================================
-  // 2. THE STARK DYNASTY (Center Top)
-  // ==========================================
   {
     id: "howard-stark",
     name: "HOWARD STARK",
@@ -259,9 +249,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "'With great power, there must also come great responsibility.' Moral anchor of Spider-Man."
   },
 
-  // ==========================================
-  // 3. THE ROGERS & SUPER SOLDIER LINEAGE (Top Right)
-  // ==========================================
   {
     id: "abraham-erskine",
     name: "DR. ERSKINE",
@@ -339,9 +326,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "HYDRA commander warped by Erskine's prototype serum, cursed to guide seekers on Vormir."
   },
 
-  // ==========================================
-  // 4. THE MAXIMOFF BLOODLINE (Left Mid)
-  // ==========================================
   {
     id: "oleg-maximoff",
     name: "OLEG MAXIMOFF",
@@ -454,9 +438,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Salem witch who absorbed her coven and guided Billy Maximoff along the Witches' Road."
   },
 
-  // ==========================================
-  // 5. THE PYM-LANG QUANTUM TREE (Center Mid)
-  // ==========================================
   {
     id: "hank-pym",
     name: "HANK PYM",
@@ -521,9 +502,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Scott's activist daughter who built the Quantum Satellite and wears Pym shrinking armor."
   },
 
-  // ==========================================
-  // 6. THE COUNCIL OF KANGS & TVA (Bottom Left)
-  // ==========================================
   {
     id: "nathaniel-richards",
     name: "NATHANIEL RICHARDS",
@@ -599,9 +577,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Former commander and lover of He Who Remains exiled into the Void at the End of Time."
   },
 
-  // ==========================================
-  // 7. FANTASTIC FOUR & LATVERIA (Bottom Mid)
-  // ==========================================
   {
     id: "reed-richards",
     name: "REED RICHARDS",
@@ -680,9 +655,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Monarch of Latveria blending sorcery and supreme science, destined to rule Battleworld."
   },
 
-  // ==========================================
-  // 8. THE MUTANTS & X-MEN (Bottom Right)
-  // ==========================================
   {
     id: "charles-xavier",
     name: "CHARLES XAVIER",
@@ -762,9 +734,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "'You know how long I been waiting for this?' Kinetic-charging Cajun hero from the Void."
   },
 
-  // ==========================================
-  // 9. THE RED ROOM SISTERHOOD (Right Mid)
-  // ==========================================
   {
     id: "dreykov",
     name: "GENERAL DREYKOV",
@@ -828,9 +797,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Natasha's surrogate sister who freed all brainwashed Widows and co-leads the Thunderbolts*."
   },
 
-  // ==========================================
-  // 10. THE COSMIC TITAN ORDER (Far Right)
-  // ==========================================
   {
     id: "alars",
     name: "A'LARS",
@@ -932,9 +898,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Half-human, half-Celestial leader of the Guardians who fell in love with Gamora."
   },
 
-  // ==========================================
-  // 11. SPIDERS OF THE MULTIVERSE (Far Right Mid)
-  // ==========================================
   {
     id: "spider-man-tobey",
     name: "PETER PARKER (96283)",
@@ -988,9 +951,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "'The power of the sun in the palm of my hand.' Cured inhibitor chip by Peter Parker."
   },
 
-  // ==========================================
-  // 12. THE WAKANDAN ROYAL DYNASTY
-  // ==========================================
   {
     id: "tchaka",
     name: "KING T'CHAKA",
@@ -1089,9 +1049,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Feathered serpent mutant god and underwater monarch of Talokan forged by vibranium evolution."
   },
 
-  // ==========================================
-  // 13. MASTERS OF THE MYSTIC ARTS (KAMAR-TAJ)
-  // ==========================================
   {
     id: "ancient-one",
     name: "THE ANCIENT ONE",
@@ -1154,9 +1111,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Niece of Dormammu who enlisted Doctor Strange to fix an impending Multiversal Incursion."
   },
 
-  // ==========================================
-  // 14. THE TEN RINGS & TA LO DYNASTY
-  // ==========================================
   {
     id: "xu-wenwu",
     name: "XU WENWU",
@@ -1207,9 +1161,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Founder of the Golden Daggers Club who restructured the Ten Rings army under modern leadership."
   },
 
-  // ==========================================
-  // 15. GUARDIANS & RAVAGERS
-  // ==========================================
   {
     id: "yondu-udonta",
     name: "YONDU UDONTA",
@@ -1271,9 +1222,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Empath daughter of Ego and half-sister of Peter Quill who controls cosmic feelings and minds."
   },
 
-  // ==========================================
-  // 16. STREET LEVEL DEFENDERS & UNDERWORLD
-  // ==========================================
   {
     id: "matt-murdock",
     name: "MATT MURDOCK",
@@ -1325,9 +1273,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Deaf Choctaw warrior empowered by ancestral spirits who healed Wilson Fisk's childhood trauma."
   },
 
-  // ==========================================
-  // 17. ETERNALS OF EARTH
-  // ==========================================
   {
     id: "ajak",
     name: "AJAK",
@@ -1389,10 +1334,6 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
     bio: "Gentle powerhouse who guarded Thena for centuries before falling to the Deviant Kro."
   },
 
-  // ==========================================
-  // 18. MYSTERY NODES / UNKNOWN PARADOXES
-  // (Like the blank '?' portraits in Dark tree)
-  // ==========================================
   {
     id: "mystery-secret-wars",
     name: "?",
@@ -1419,16 +1360,10 @@ export const DARK_TREE_NODES: DarkTreeNode[] = [
   }
 ];
 
-// ---------------------------------------------------------------------------
-// ORTHOGONAL LINEAGE CONNECTIONS
-// (Strict 90-degree lines connecting nodes with marriage junctions & arrows)
-// ---------------------------------------------------------------------------
-
 export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
-  // --- ASGARDIAN ROYAL DYNASTY ---
-  // Bor -> Odin
+
   { id: "c_bor_odin", fromId: "bor", toId: "odin", type: "child", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Odin + Frigga (Partnership)
+
   {
     id: "c_odin_frigga",
     fromId: "odin",
@@ -1436,13 +1371,13 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Odin+Frigga -> Thor
+
   { id: "c_parents_thor", fromId: "odin", toId: "thor", type: "child", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
-  // Odin+Frigga -> Hela (Firstborn)
+
   { id: "c_odin_hela", fromId: "odin", toId: "hela", type: "child", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // Laufey -> Loki (Biological Lineage)
+
   { id: "c_laufey_loki", fromId: "laufey", toId: "loki", type: "child", label: "Biological", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
-  // Thor + Jane Foster
+
   {
     id: "c_thor_jane",
     fromId: "thor",
@@ -1450,13 +1385,11 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Thor+Jane -> Love (Adopted Cosmic Child)
+
   { id: "c_thor_love", fromId: "thor", toId: "love", type: "child", label: "Adopted", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Loki <-> Sylvie (Multiversal Variant & Paradox)
+
   { id: "c_loki_sylvie", fromId: "loki", toId: "sylvie", type: "variant", label: "Variant", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
 
-  // --- STARK DYNASTY ---
-  // Howard + Maria
   {
     id: "c_howard_maria",
     fromId: "howard-stark",
@@ -1464,9 +1397,9 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Howard+Maria -> Tony Stark
+
   { id: "c_howard_tony", fromId: "howard-stark", toId: "tony-stark", type: "child", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
-  // Tony + Pepper Potts
+
   {
     id: "c_tony_pepper",
     fromId: "tony-stark",
@@ -1474,19 +1407,17 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Tony+Pepper -> Morgan Stark
+
   { id: "c_tony_morgan", fromId: "tony-stark", toId: "morgan-stark", type: "child", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // Tony -> Peter Parker (Mentor / Surrogate Father)
+
   { id: "c_tony_peter", fromId: "tony-stark", toId: "peter-parker", type: "mentor", label: "Mentor", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // Aunt May -> Peter Parker
+
   { id: "c_may_peter", fromId: "may-parker", toId: "peter-parker", type: "child", label: "Guardian", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
 
-  // --- SUPER SOLDIER COVENANT ---
-  // Erskine -> Steve Rogers
   { id: "c_erskine_steve", fromId: "abraham-erskine", toId: "steve-rogers", type: "creator", label: "Serum", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
-  // Erskine -> Red Skull (Failed prototype)
+
   { id: "c_erskine_skull", fromId: "abraham-erskine", toId: "red-skull", type: "creator", label: "Prototype", phaseRevealed: 1, hasArrow: true, arrowDir: "down" },
-  // Steve + Peggy Carter
+
   {
     id: "c_steve_peggy",
     fromId: "steve-rogers",
@@ -1494,13 +1425,11 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 1,
   },
-  // Bucky Barnes <-> Steve Rogers (Brothers in Arms)
+
   { id: "c_steve_bucky", fromId: "bucky-barnes", toId: "steve-rogers", type: "variant", label: "Brothers in Arms", phaseRevealed: 1, hasArrow: false },
-  // Steve -> Sam Wilson (Shield Inheritor)
+
   { id: "c_steve_sam", fromId: "steve-rogers", toId: "sam-wilson", type: "mentor", label: "Shield Mantle", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
 
-  // --- MAXIMOFF BLOODLINE ---
-  // Oleg + Iryna Maximoff
   {
     id: "c_oleg_iryna",
     fromId: "oleg-maximoff",
@@ -1508,11 +1437,11 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 4,
   },
-  // Parents -> Wanda
+
   { id: "c_parents_wanda", fromId: "oleg-maximoff", toId: "wanda-maximoff", type: "child", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Parents -> Pietro
+
   { id: "c_parents_pietro", fromId: "oleg-maximoff", toId: "pietro-maximoff", type: "child", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Wanda + Vision
+
   {
     id: "c_wanda_vision",
     fromId: "wanda-maximoff",
@@ -1520,17 +1449,15 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 3,
   },
-  // Vision <-> White Vision (Memory Restoration Paradox)
+
   { id: "c_vision_white", fromId: "vision", toId: "white-vision", type: "variant", label: "Theseus", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
-  // Wanda+Vision -> Billy
+
   { id: "c_wanda_billy", fromId: "wanda-maximoff", toId: "billy-maximoff", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Wanda+Vision -> Tommy
+
   { id: "c_wanda_tommy", fromId: "wanda-maximoff", toId: "tommy-maximoff", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Agatha -> Billy (Witches Road Mentor)
+
   { id: "c_agatha_billy", fromId: "agatha-harkness", toId: "billy-maximoff", type: "mentor", label: "Coven", phaseRevealed: 5, hasArrow: true, arrowDir: "right" },
 
-  // --- PYM-LANG QUANTUM TREE ---
-  // Hank + Janet
   {
     id: "c_hank_janet",
     fromId: "hank-pym",
@@ -1538,9 +1465,9 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 2,
   },
-  // Hank+Janet -> Hope van Dyne
+
   { id: "c_hank_hope", fromId: "hank-pym", toId: "hope-van-dyne", type: "child", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Hope + Scott Lang
+
   {
     id: "c_hope_scott",
     fromId: "hope-van-dyne",
@@ -1548,23 +1475,19 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 2,
   },
-  // Scott Lang -> Cassie Lang
+
   { id: "c_scott_cassie", fromId: "scott-lang", toId: "cassie-lang", type: "child", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
 
-  // --- KANG DYNASTY & TVA ---
-  // Nathaniel Richards -> He Who Remains
   { id: "c_nathaniel_hwr", fromId: "nathaniel-richards", toId: "he-who-remains", type: "variant", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // He Who Remains -> Kang Conqueror
+
   { id: "c_hwr_conqueror", fromId: "he-who-remains", toId: "kang-the-conqueror", type: "variant", phaseRevealed: 5, hasArrow: true, arrowDir: "right" },
-  // He Who Remains -> Victor Timely
+
   { id: "c_hwr_timely", fromId: "he-who-remains", toId: "victor-timely", type: "variant", phaseRevealed: 5, hasArrow: true, arrowDir: "right" },
-  // He Who Remains -> Immortus
+
   { id: "c_hwr_immortus", fromId: "he-who-remains", toId: "immortus", type: "variant", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
-  // He Who Remains -> Ravonna Renslayer
+
   { id: "c_hwr_ravonna", fromId: "he-who-remains", toId: "ravonna-renslayer", type: "mentor", label: "TVA Founder", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
 
-  // --- FANTASTIC FOUR & LATVERIA ---
-  // Reed + Sue
   {
     id: "c_reed_sue",
     fromId: "reed-richards",
@@ -1572,17 +1495,15 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 4,
   },
-  // Sue + Johnny (Siblings)
+
   { id: "c_sue_johnny", fromId: "sue-storm", toId: "johnny-storm", type: "variant", label: "Siblings", phaseRevealed: 5, hasArrow: false },
-  // Reed + Ben (Best Friends)
+
   { id: "c_reed_ben", fromId: "reed-richards", toId: "ben-grimm", type: "variant", label: "Founding", phaseRevealed: 6, hasArrow: false },
-  // Reed+Sue -> Franklin Richards
+
   { id: "c_reed_franklin", fromId: "reed-richards", toId: "franklin-richards", type: "child", phaseRevealed: 6, hasArrow: true, arrowDir: "down" },
-  // Reed <-> Doctor Doom (Eternal Rivals)
+
   { id: "c_reed_doom", fromId: "reed-richards", toId: "doctor-doom", type: "enemy", label: "Rivalry", phaseRevealed: 6, hasArrow: true, arrowDir: "down" },
 
-  // --- MUTANTS & X-MEN ---
-  // Xavier <-> Magneto
   {
     id: "c_charles_erik",
     fromId: "charles-xavier",
@@ -1592,17 +1513,15 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     phaseRevealed: 4,
     hasArrow: false
   },
-  // Wolverine -> Laura / X-23 (Genetic Daughter)
+
   { id: "c_logan_laura", fromId: "wolverine", toId: "x-23", type: "child", label: "Genetic Daughter", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
-  // Wolverine + Deadpool (Anchor Duo)
+
   { id: "c_logan_deadpool", fromId: "wolverine", toId: "deadpool", type: "variant", label: "Anchor Beings", phaseRevealed: 5, hasArrow: false },
-  // Deadpool <-> Gambit (Void Survivors)
+
   { id: "c_laura_gambit", fromId: "deadpool", toId: "gambit", type: "variant", label: "Void Resistance", phaseRevealed: 5, hasArrow: false },
 
-  // --- RED ROOM SISTERHOOD ---
-  // Dreykov -> Melina & Alexei
   { id: "c_dreykov_melina", fromId: "dreykov", toId: "melina-vostokoff", type: "creator", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
-  // Melina + Alexei
+
   {
     id: "c_melina_alexei",
     fromId: "melina-vostokoff",
@@ -1610,27 +1529,25 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 4,
   },
-  // Melina+Alexei -> Natasha
+
   { id: "c_parents_natasha", fromId: "melina-vostokoff", toId: "natasha-romanoff", type: "child", label: "Surrogate", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Melina+Alexei -> Yelena
+
   { id: "c_parents_yelena", fromId: "melina-vostokoff", toId: "yelena-belova", type: "child", label: "Surrogate", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Natasha <-> Yelena (Sisters)
+
   { id: "c_natasha_yelena", fromId: "natasha-romanoff", toId: "yelena-belova", type: "variant", label: "Sisters", phaseRevealed: 4, hasArrow: false },
 
-  // --- COSMIC TITAN DYNASTY ---
-  // A'Lars -> Thanos
   { id: "c_alars_thanos", fromId: "alars", toId: "thanos", type: "child", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // A'Lars -> Eros
+
   { id: "c_alars_eros", fromId: "alars", toId: "eros", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Thanos -> Gamora (Adopted)
+
   { id: "c_thanos_gamora", fromId: "thanos", toId: "gamora", type: "child", label: "Adopted", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Thanos -> Nebula (Adopted)
+
   { id: "c_thanos_nebula", fromId: "thanos", toId: "nebula", type: "child", label: "Adopted", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Ego + Meredith Quill
+
   { id: "c_ego_meredith", fromId: "ego", toId: "meredith-quill", type: "partner", label: "Union", phaseRevealed: 2, hasArrow: false },
-  // Ego -> Peter Quill
+
   { id: "c_ego_quill", fromId: "ego", toId: "peter-quill", type: "child", label: "Celestial Son", phaseRevealed: 2, hasArrow: true, arrowDir: "down" },
-  // Peter Quill + Gamora
+
   {
     id: "c_quill_gamora",
     fromId: "peter-quill",
@@ -1639,8 +1556,6 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     phaseRevealed: 2,
   },
 
-  // --- WAKANDAN ROYAL DYNASTY ---
-  // T'Chaka + Ramonda
   {
     id: "c_tchaka_ramonda",
     fromId: "tchaka",
@@ -1648,11 +1563,11 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 3,
   },
-  // T'Chaka -> T'Challa
+
   { id: "c_tchaka_tchalla", fromId: "tchaka", toId: "tchalla", type: "child", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // T'Chaka -> Shuri
+
   { id: "c_tchaka_shuri", fromId: "tchaka", toId: "shuri", type: "child", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // T'Challa + Nakia
+
   {
     id: "c_tchalla_nakia",
     fromId: "tchalla",
@@ -1660,25 +1575,21 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 3,
   },
-  // T'Challa+Nakia -> Toussaint (T'Challa II)
+
   { id: "c_tchalla_toussaint", fromId: "tchalla", toId: "toussaint", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // T'Chaka -> Killmonger (Uncle / Bloodline)
+
   { id: "c_tchaka_killmonger", fromId: "tchaka", toId: "killmonger", type: "child", label: "Nephew", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // Shuri <-> Namor (Alliance / Rivals)
+
   { id: "c_shuri_namor", fromId: "shuri", toId: "namor", type: "variant", label: "Truce", phaseRevealed: 4, hasArrow: false },
 
-  // --- MASTERS OF THE MYSTIC ARTS ---
-  // Ancient One -> Stephen Strange
   { id: "c_ancient_strange", fromId: "ancient-one", toId: "doctor-strange", type: "mentor", label: "Sorcerer Mantle", phaseRevealed: 3, hasArrow: true, arrowDir: "down" },
-  // Strange <-> Wong
+
   { id: "c_strange_wong", fromId: "doctor-strange", toId: "wong", type: "variant", label: "Supreme Ally", phaseRevealed: 3, hasArrow: false },
-  // Strange -> America Chavez
+
   { id: "c_strange_america", fromId: "doctor-strange", toId: "america-chavez", type: "mentor", label: "Multiverse Mentor", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Strange + Clea
+
   { id: "c_strange_clea", fromId: "doctor-strange", toId: "clea", type: "partner", label: "Incursion Team", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
 
-  // --- TEN RINGS & TA LO ---
-  // Xu Wenwu + Ying Li
   {
     id: "c_wenwu_yingli",
     fromId: "xu-wenwu",
@@ -1686,31 +1597,23 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 4,
   },
-  // Wenwu+Ying Li -> Shang-Chi
+
   { id: "c_parents_shangchi", fromId: "xu-wenwu", toId: "shang-chi", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
-  // Wenwu+Ying Li -> Xu Xialing
+
   { id: "c_parents_xialing", fromId: "xu-wenwu", toId: "xu-xialing", type: "child", phaseRevealed: 4, hasArrow: true, arrowDir: "down" },
 
-  // --- GUARDIANS & RAVAGERS ---
-  // Yondu -> Peter Quill
-    // Rocket + Groot
   { id: "c_rocket_groot", fromId: "rocket-raccoon", toId: "groot", type: "variant", label: "Brothers", phaseRevealed: 2, hasArrow: false },
-  // Drax + Mantis
+
   { id: "c_drax_mantis", fromId: "drax", toId: "mantis", type: "variant", label: "Best Friends", phaseRevealed: 3, hasArrow: false },
-  // Ego -> Mantis (Empath Daughter)
-  
-  // --- DEFENDERS & UNDERWORLD ---
-  // Matt Murdock <-> Wilson Fisk
+
   { id: "c_matt_fisk", fromId: "matt-murdock", toId: "wilson-fisk", type: "enemy", label: "Arch-Nemesis", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
-  // Matt Murdock -> Frank Castle
+
   { id: "c_matt_frank", fromId: "matt-murdock", toId: "frank-castle", type: "mentor", label: "Vigilante Code", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
-  // Wilson Fisk -> Maya Lopez
+
   { id: "c_fisk_maya", fromId: "wilson-fisk", toId: "maya-lopez", type: "mentor", label: "Surrogate Uncle", phaseRevealed: 5, hasArrow: true, arrowDir: "down" },
 
-  // --- ETERNALS OF EARTH ---
-  // Ajak -> Ikaris & Sersi
   { id: "c_ajak_ikaris", fromId: "ajak", toId: "ikaris", type: "child", label: "Prime", phaseRevealed: 4, hasArrow: true, arrowDir: "right" },
-  // Ikaris + Sersi (5,000 Year Bond)
+
   {
     id: "c_ikaris_sersi",
     fromId: "ikaris",
@@ -1718,7 +1621,7 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
     type: "partner",
     phaseRevealed: 4,
   },
-  // Thena + Gilgamesh
+
   {
     id: "c_thena_gilgamesh",
     fromId: "thena",
@@ -1749,4 +1652,3 @@ export const DYNASTY_CLUSTERS = [
   { id: "eternals", label: "ETERNALS OF EARTH", count: 5, focusX: 1820, focusY: 1950 },
   { id: "spiders", label: "SPIDER-VERSE WEB", count: 4, focusX: 2230, focusY: 890 }
 ] as const;
-

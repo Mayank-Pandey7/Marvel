@@ -7,7 +7,6 @@ export function getProgress(watched: Set<string>) {
   return { total, watchedCount, pct };
 }
 
-/** First unreleased-from-watched item in year order — used for "Continue Watching". */
 export function getContinueItem(watched: Set<string>) {
   const sorted = [...MCU].sort((a, b) => a.year - b.year);
   return (

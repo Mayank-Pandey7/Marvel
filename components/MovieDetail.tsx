@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Share2, Users, Gem, Film, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight, Share2, Users, Gem, Film, Calendar, Play, ExternalLink } from "lucide-react";
 import PosterArt from "./PosterArt";
 import Reveal from "./Reveal";
 import type { MCUEntry } from "@/data/mcu";
@@ -51,14 +51,14 @@ export default function MovieDetail({
           {entry.title}
         </h1>
 
-        <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-2xl mb-8">
+        <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-2xl mb-6">
           {entry.description}
         </p>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <Link
             href={`/timeline?phase=${entry.phase}&movie=${encodeURIComponent(entry.id)}`}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-mono tracking-wider uppercase rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-mono tracking-wider uppercase rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
           >
             <Share2 size={13} />
             <span>Inspect in Timeline Tree</span>
@@ -66,7 +66,7 @@ export default function MovieDetail({
         </div>
       </Reveal>
 
-      {/* Featured Entangled Characters */}
+      {}
       {characters.length > 0 && (
         <Reveal delay={140} className="mt-10">
           <h2 className="text-xs font-mono font-bold uppercase tracking-widest text-stone-400 mb-3 flex items-center gap-1.5">
@@ -93,7 +93,7 @@ export default function MovieDetail({
         </Reveal>
       )}
 
-      {/* Previous & Next Navigation */}
+      {}
       <div className="mt-14 flex items-center justify-between border-t border-stone-800 pt-6">
         {prev ? (
           <Link

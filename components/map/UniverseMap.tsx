@@ -27,7 +27,6 @@ export default function UniverseMap({
   const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
 
-  // Universe Camera State (Pan & Zoom on a 2000px wide by 10500px tall vertical cosmic tree)
   const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.58 });
   const cameraRef = useRef({ x: 0, y: 0, scale: 0.58 });
   const contentLayerRef = useRef<HTMLDivElement | null>(null);
@@ -56,44 +55,37 @@ export default function UniverseMap({
     setCamera(newCamera);
   }, []);
 
-  // Selected & Hovered Movie Nodes
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
   const [hoveredMovieId, setHoveredMovieId] = useState<string | null>(null);
 
-  // Modals & Navigation
   const [searchOpen, setSearchOpen] = useState(false);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [isFullOverview, setIsFullOverview] = useState(false);
 
-  // Direct ready state so title never overlaps the timeline tree
   const [introStep, setIntroStep] = useState<"ready">("ready");
   const [isTreeVisible, setIsTreeVisible] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Smooth Cinematic Tree Entrance on Mount
   useEffect(() => {
     const timer = setTimeout(() => setIsTreeVisible(true), 50);
     return () => clearTimeout(timer);
   }, []);
 
-  // Sync with timeline context
   useEffect(() => {
     if (currentPhase && currentPhase !== activePhase) {
       setActivePhase(currentPhase);
     }
   }, [currentPhase]);
 
-  // Current active Phase metadata
   const currentPhaseMeta = useMemo(() => {
     return PHASES_CONFIG.find((p) => p.id === activePhase) || PHASES_CONFIG[0];
   }, [activePhase]);
 
-  // Global Keyboard Shortcuts & Browser Page Zoom Interceptor
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Prevent whole-page browser zoom on Ctrl + / Ctrl - / Ctrl 0
+
       if (
         (e.ctrlKey || e.metaKey) &&
         (e.key === "+" || e.key === "-" || e.key === "=" || e.key === "0" || e.key === "_")
@@ -115,7 +107,7 @@ export default function UniverseMap({
     };
 
     const handleWheelZoomPrevent = (e: WheelEvent) => {
-      // Prevent browser whole-page zoom on Ctrl + Wheel
+
       if (e.ctrlKey) {
         e.preventDefault();
       }
@@ -129,17 +121,15 @@ export default function UniverseMap({
     };
   }, [searchOpen, selectedMovie]);
 
-  // DIRECT TO SPECIFIC PHASE (Frames comfortably with timeline tree trunk centered in viewport)
   const directToPhase = useCallback((phaseNum: number) => {
     const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
     const targetMeta = PHASES_CONFIG.find((p) => p.id === phaseNum) || PHASES_CONFIG[0];
     const isMobile = width < 768;
-    
-    // Responsive scale: on mobile frame tighter so left and right branches sit comfortably in viewport without giant empty gap
+
     const targetScale = isMobile ? Math.min(width / 720, 0.50) : 0.58;
-    // Exactly center the 2000px wide timeline tree (trunk at X=1000) in middle of screen
+
     const targetX = width / 2 - 1000 * targetScale;
-    // Frame so the Phase Heading banner is clearly visible right at the top
+
     const targetY = (isMobile ? 70 : 120) - targetMeta.startY * targetScale;
 
     updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
@@ -149,11 +139,10 @@ export default function UniverseMap({
     setIsFullOverview(false);
   }, [setCurrentPhase, updateCameraTransform]);
 
-  // EARTH-616 FULL TIMELINE OVERVIEW (Shows the entire vertical tree)
   const showFullEarth616Timeline = useCallback(() => {
     const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
     const height = containerRef.current?.clientHeight || (typeof window !== "undefined" ? window.innerHeight : 900);
-    
+
     const scaleX = width / 2200;
     const scaleY = height / 10600;
     const targetScale = Math.min(scaleX, scaleY) * 0.96;
@@ -166,7 +155,6 @@ export default function UniverseMap({
     setIsFullOverview(true);
   }, [updateCameraTransform]);
 
-  // Frame Timeline Tree Perfectly Centered in Viewport on Initial Entry from Home/Continue
   useEffect(() => {
     const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
     const isMobile = width < 768;
@@ -195,7 +183,6 @@ export default function UniverseMap({
     setIsFullOverview(false);
   }, [initialPhase, targetMovieId, setCurrentPhase, updateCameraTransform]);
 
-  // Pan Camera to Center onto a Target Movie Node
   const focusOnMovie = useCallback((movie: MovieNode) => {
     setActivePhase(movie.phase);
     setCurrentPhase(movie.phase);
@@ -203,7 +190,7 @@ export default function UniverseMap({
     if (!containerRef.current) return;
     const { clientWidth, clientHeight } = containerRef.current;
     const targetScale = 0.85;
-    
+
     const targetX = clientWidth / 2 - movie.x * targetScale;
     const targetY = clientHeight / 2 - movie.y * targetScale;
 
@@ -212,7 +199,6 @@ export default function UniverseMap({
     setIsFullOverview(false);
   }, [setCurrentPhase, updateCameraTransform]);
 
-  // Ambient Star Dust / Micro-Particle Canvas Animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -267,7 +253,6 @@ export default function UniverseMap({
     };
   }, []);
 
-  // Mouse Pan Handling (120fps hardware-accelerated transform)
   const handleMouseDown = (e: React.MouseEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
     isDraggingRef.current = true;
@@ -298,7 +283,6 @@ export default function UniverseMap({
     }
   };
 
-  // Touch Handling: 1-Finger Pan & 2-Finger Focal-Point Pinch Zoom
   const handleTouchStart = (e: React.TouchEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
     if (contentLayerRef.current) {
@@ -414,7 +398,6 @@ export default function UniverseMap({
     setIsFullOverview(false);
   };
 
-  // Double Click Canvas Zoom In
   const handleDoubleClick = (e: React.MouseEvent) => {
     if (
       (e.target as HTMLElement).closest(
@@ -436,7 +419,6 @@ export default function UniverseMap({
     setIsFullOverview(false);
   };
 
-  // Set of connected movie IDs for highlighting
   const activeConnectedIds = useMemo(() => {
     const activeMovie = selectedMovie || (hoveredMovieId ? UNIFIED_MCU_TREE.find((m) => m.id === hoveredMovieId) : null);
     if (!activeMovie) return new Set<string>();
@@ -466,23 +448,21 @@ export default function UniverseMap({
       onDoubleClick={handleDoubleClick}
       className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
     >
-      {/* 1. Star Dust & Atmosphere Canvas Layer */}
+      {}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (TIGHT & COMPACT) */}
+      {}
       <div
         className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-
-
-      {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
-      {/* ------------------------------------------------------------- */}
-      {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
+      {}
+      {}
+      {}
       <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
-        {/* Left: Minimalist Menu & Mode Switcher */}
+        {}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
@@ -493,7 +473,7 @@ export default function UniverseMap({
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher (Hidden on mobile to prevent collision with center header) */}
+          {}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
             {onSwitchToFamilyTree && (
               <button
@@ -514,11 +494,11 @@ export default function UniverseMap({
           </div>
         </div>
 
-        {/* Center: Centered MARVEL | DOOMSDAY Brand Header */}
+        {}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
-          <Link 
-            href="/timeline" 
-            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-stone-300 hover:text-stone-200 transition-opacity select-none"
+          <Link
+            href="/timeline"
+            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white scale-110 transition-all select-none"
             title="MCU Timeline Map"
           >
             MARVEL
@@ -526,14 +506,14 @@ export default function UniverseMap({
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
           </button>
         </div>
 
-        {/* Right: Return + Search Button */}
+        {}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           {onReturn && (
             <button
@@ -560,7 +540,7 @@ export default function UniverseMap({
         </div>
       </header>
 
-      {/* 3. Phase Spine Side Indicator */}
+      {}
       <PhaseSpine
         currentPhase={activePhase}
         isFullOverview={isFullOverview}
@@ -568,7 +548,7 @@ export default function UniverseMap({
         onSelectEarth616={showFullEarth616Timeline}
       />
 
-      {/* 4. Bottom Controls */}
+      {}
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
           onClick={() => {
@@ -622,7 +602,7 @@ export default function UniverseMap({
         </button>
       </div>
 
-      {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS */}
+      {}
       <div
         ref={contentLayerRef}
         className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left will-change-transform ${
@@ -632,7 +612,7 @@ export default function UniverseMap({
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
         }}
       >
-        {/* SVG Network */}
+        {}
         <svg
           className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
           viewBox="0 0 2000 10500"
@@ -649,7 +629,7 @@ export default function UniverseMap({
             `}</style>
           </defs>
 
-          {/* Phase Era Pill Banners */}
+          {}
           {PHASES_CONFIG.map((p) => (
             <g
               key={`phase-divider-${p.id}`}
@@ -682,7 +662,7 @@ export default function UniverseMap({
             </g>
           ))}
 
-          {/* Narrative Threads */}
+          {}
           {UNIFIED_MCU_TREE.flatMap((fromMovie) =>
             fromMovie.connections.map((conn) => {
               const toMovie = UNIFIED_MCU_TREE.find((m) => m.id === conn.toId);
@@ -741,7 +721,7 @@ export default function UniverseMap({
           )}
         </svg>
 
-        {/* Interactive Movie Nodes */}
+        {}
         {UNIFIED_MCU_TREE.map((movie) => {
           const isSelected = selectedMovie?.id === movie.id;
           const isHovered = hoveredMovieId === movie.id;
@@ -763,11 +743,11 @@ export default function UniverseMap({
                 zIndex: isSelected ? 45 : isHovered ? 40 : 10,
               }}
             >
-              {/* Popover on Hover */}
+              {}
               {isHovered && !isSelected && (
                 <div className="absolute bottom-[115%] left-1/2 -translate-x-1/2 mb-3 w-[340px] pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200 ease-out">
                   <div className="p-3.5 rounded-2xl bg-[#09090b]/95 border border-white/10 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex gap-3.5 text-left">
-                    {/* Official Movie Poster Thumbnail */}
+                    {}
                     <div className="w-20 aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 shrink-0 shadow-xl border border-white/10 relative">
                       <img
                         src={MCU_POSTER_MAP[movie.id]?.poster || ""}
@@ -778,9 +758,9 @@ export default function UniverseMap({
                       <div className="absolute inset-0 border border-white/5 rounded-xl pointer-events-none" />
                     </div>
 
-                    {/* Movie Information Column */}
+                    {}
                     <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
-                      {/* Header Row */}
+                      {}
                       <div className="flex items-center justify-between text-[9px] font-mono tracking-wider uppercase">
                         <div className="flex items-center gap-1.5">
                           <span className="px-2 py-0.5 rounded-full bg-white/[0.06] text-stone-300 font-semibold border border-white/[0.08]">
@@ -791,7 +771,7 @@ export default function UniverseMap({
                         <span className="text-stone-500">{movie.runtime} MIN</span>
                       </div>
 
-                      {/* Title & Protagonist */}
+                      {}
                       <div className="my-1.5">
                         <h4 className="font-mono text-xs sm:text-sm font-semibold text-stone-200 uppercase tracking-wider leading-tight line-clamp-1">
                           {movie.title}
@@ -801,12 +781,12 @@ export default function UniverseMap({
                         </p>
                       </div>
 
-                      {/* Tagline */}
+                      {}
                       <p className="text-[10px] font-sans italic text-stone-400 line-clamp-2 leading-snug">
                         &ldquo;{movie.tagline || movie.quote || movie.description}&rdquo;
                       </p>
 
-                      {/* Footer */}
+                      {}
                       <div className="pt-2 mt-1 border-t border-white/10 flex items-center justify-between text-[8.5px] font-mono tracking-widest uppercase">
                         <span className="text-stone-500">
                           {movie.connections.length} {movie.connections.length === 1 ? "CONNECTION" : "CONNECTIONS"}
@@ -818,12 +798,12 @@ export default function UniverseMap({
                     </div>
                   </div>
 
-                  {/* Clean Subtle Glow Tip */}
+                  {}
                   <div className="w-3 h-3 bg-[#09090b]/95 border-r border-b border-white/10 rotate-45 mx-auto -mt-1.5 shadow-lg" />
                 </div>
               )}
 
-              {/* Circular Universe Node Core */}
+              {}
               <div
                 className={`relative rounded-full flex items-center justify-center transition-all duration-300 ${
                   isSelected
@@ -833,12 +813,12 @@ export default function UniverseMap({
                     : "w-20 h-20 sm:w-24 sm:h-24 shadow-[0_0_15px_rgba(0,0,0,0.8)]"
                 }`}
               >
-                {/* Dotted Orbit Ring */}
+                {}
                 {(isSelected || isHovered) && (
                   <span className="absolute -inset-2 rounded-full border border-dotted border-white/35 animate-[spin_8s_linear_infinite]" />
                 )}
 
-                {/* Node Artwork Emblem */}
+                {}
                 <div
                   className={`w-full h-full rounded-full border transition-colors p-0.5 bg-black overflow-hidden ${
                     isSelected || isHovered ? "border-white/70" : "border-stone-800"
@@ -847,7 +827,7 @@ export default function UniverseMap({
                   <NodeArtwork movieId={movie.id} isActive={isSelected || isHovered} />
                 </div>
 
-                {/* Release Year Badge */}
+                {}
                 <div
                   className={`absolute -bottom-2 bg-black/95 border px-2 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-md ${
                     isSelected || isHovered ? "border-white/40 text-stone-300 font-semibold" : "border-stone-800 text-stone-500"
@@ -857,7 +837,7 @@ export default function UniverseMap({
                 </div>
               </div>
 
-              {/* Node Title & Hero Metadata */}
+              {}
               <div
                 className={`mt-4 flex flex-col items-center text-center transition-all duration-300 ${
                   isSelected || isHovered ? "scale-105" : ""
@@ -881,7 +861,7 @@ export default function UniverseMap({
         })}
       </div>
 
-      {/* 8. Deep Contextual Movie Detail Panel */}
+      {}
       {selectedMovie && (
         <DeepMovieDetail
           movie={selectedMovie}
@@ -890,14 +870,14 @@ export default function UniverseMap({
         />
       )}
 
-      {/* 9. Investigation Search Overlay Modal */}
+      {}
       <SearchInvestigation
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
         onSelectMovie={(movie) => focusOnMovie(movie)}
       />
 
-      {/* 10. Slide-Out Navigation Menu */}
+      {}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
     </div>
   );

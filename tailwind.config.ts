@@ -16,9 +16,10 @@ const config: Config = {
         panel: "#08080d",
       },
       fontFamily: {
-        display: ["Oswald", "Impact", "sans-serif"],
-        body: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        sans: ["'Geist Pixel'", "ui-monospace", "monospace", "sans-serif"],
+        display: ["'Geist Pixel'", "monospace", "sans-serif"],
+        body: ["'Geist Pixel'", "monospace", "sans-serif"],
+        mono: ["'Geist Pixel'", "ui-monospace", "SFMono-Regular", "monospace"],
       },
     },
   },

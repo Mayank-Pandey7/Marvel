@@ -29,7 +29,7 @@ export type Character = {
 };
 
 export const CHARACTERS: Character[] = [
-  // --- ORIGINAL 6 AVENGERS ---
+
   {
     id: "iron-man",
     name: "Tony Stark",
@@ -462,7 +462,6 @@ export const CHARACTERS: Character[] = [
     entries: ["thor","avengers","avengers-aou","cap-civil-war","endgame","black-widow","hawkeye"]
   },
 
-  // --- GODS, MULTIVERSE & CHAOS ---
   {
     id: "loki",
     name: "Loki Laufeyson",
@@ -679,7 +678,6 @@ export const CHARACTERS: Character[] = [
     entries: ["cap-civil-war","spiderman-homecoming","infinity-war","endgame","spiderman-far-from-home","spiderman-no-way-home","spiderman-brand-new-day"]
   },
 
-  // --- MULTIVERSE VARIANTS & MUTANTS ---
   {
     id: "spider-man-maguire",
     name: "Peter Parker (Earth-96283)",
@@ -798,7 +796,7 @@ export const CHARACTERS: Character[] = [
     linkedNexusEvents: ["nexus-deadpool-wolverine-save"],
     entries: ["deadpool-and-wolverine"]
   },
-  // --- THE FANTASTIC FOUR (MARVEL'S FIRST FAMILY) ---
+
   {
     id: "reed-richards",
     name: "Reed Richards",
@@ -945,7 +943,6 @@ export const CHARACTERS: Character[] = [
     entries: ["fantastic-four-first-steps"]
   },
 
-  // --- X-MEN & MUTANTS ---
   {
     id: "professor-x",
     name: "Charles Xavier",
@@ -1092,7 +1089,6 @@ export const CHARACTERS: Character[] = [
     entries: ["the-marvels"]
   },
 
-  // --- STREET LEVEL & DEFENDERS ---
   {
     id: "daredevil",
     name: "Matt Murdock",
@@ -1185,7 +1181,6 @@ export const CHARACTERS: Character[] = [
     entries: ["hawkeye", "echo", "daredevil-born-again"]
   },
 
-  // --- GUARDIANS OF THE GALAXY ---
   {
     id: "star-lord",
     name: "Peter Quill",
@@ -1258,7 +1253,6 @@ export const CHARACTERS: Character[] = [
     entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "guardians-of-the-galaxy-vol-3"]
   },
 
-  // --- THUNDERBOLTS* & ANTI-HEROES ---
   {
     id: "yelena-belova",
     name: "Yelena Belova",
@@ -1332,7 +1326,6 @@ export const CHARACTERS: Character[] = [
     entries: ["cap-first-avenger","cap-winter-soldier","ant-man","cap-civil-war","black-panther","infinity-war","endgame","falcon-winter-soldier","thunderbolts"]
   },
 
-  // --- MAJOR VILLAINS & INVASION FORCES ---
   {
     id: "thanos",
     name: "Thanos",
@@ -1598,7 +1591,6 @@ export const CHARACTERS: Character[] = [
     entries: ["black-panther-wakanda-forever"]
   },
 
-  // --- ADDITIONAL KEY MCU HEROES & COSMIC ENTITIES ---
   {
     id: "sam-wilson",
     name: "Sam Wilson",
@@ -1939,7 +1931,6 @@ export const CHARACTERS: Character[] = [
     entries: ["what-if-s1", "what-if-s2"]
   },
 
-  // --- EXPANDED ICONIC VILLAINS ROSTER ---
   {
     id: "red-skull",
     name: "Johann Schmidt",
@@ -2269,7 +2260,6 @@ export const CHARACTERS: Character[] = [
     entries: ["deadpool-and-wolverine"]
   },
 
-  // --- EXPANDED MARVEL HEROES & VILLAINS ---
   {
     "id": "dormammu",
     "name": "Dormammu",
@@ -3378,7 +3368,6 @@ export const CHARACTERS: Character[] = [
     ]
   },
 
-  // --- NEW MULTIVERSE ICONS & VILLAIN EXPANSION ---
   {
     "id": "he-who-remains",
     "name": "He Who Remains",
@@ -4350,4 +4339,3 @@ export function getCharacter(id: string): Character | undefined {
 export function getAllCharacters(): Character[] {
   return CHARACTERS;
 }
-

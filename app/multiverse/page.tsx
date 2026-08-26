@@ -30,7 +30,6 @@ function MultiverseContent() {
   const [waveDirection, setWaveDirection] = useState<"next" | "prev">("next");
   const [isRippling, setIsRippling] = useState(false);
 
-  // Single-step scroll lock ref
   const isScrollLocked = useRef(false);
 
   useEffect(() => {
@@ -121,7 +120,6 @@ function MultiverseContent() {
     }
   }, [activeIndex, filteredUniverses, triggerSmoothLiquidWave]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -136,7 +134,6 @@ function MultiverseContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeUniverseId, handleNext, handlePrev]);
 
-  // Wheel navigation when in cinematic fullscreen mode
   useEffect(() => {
     if (!activeUniverseId) return;
 
@@ -161,14 +158,11 @@ function MultiverseContent() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [activeUniverseId, handleNext, handlePrev]);
 
-  // -------------------------------------------------------------
-  // CINEMATIC FULLSCREEN DIMENSION EXPERIENCE (MATCHING /HULK & /MOVIES)
-  // -------------------------------------------------------------
   if (activeUniverseId && currentUniverse) {
     return (
       <div className="relative w-screen h-screen bg-black text-stone-200 font-sans selection:bg-white selection:text-black overflow-hidden select-none">
-        
-        {/* 1. GPU-ACCELERATED SILKY-SMOOTH LIQUID WATER WAVE BACKGROUND */}
+
+        {}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {filteredUniverses.map((univ, idx) => {
             const isActive = idx === activeIndex;
@@ -198,12 +192,12 @@ function MultiverseContent() {
             );
           })}
 
-          {/* Ambient Dark Gradient Overlays */}
+          {}
           <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/55 to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50 z-10 pointer-events-none" />
 
-          {/* Liquid Water Ripple Wave Caustic Light Sweeper */}
-          <div 
+          {}
+          <div
             className="absolute inset-0 pointer-events-none z-15 will-change-[opacity,transform]"
             style={{
               background: `radial-gradient(ellipse 80% 60% at 50% 50%, ${currentUniverse.color || "#fff"}22 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%)`,
@@ -214,9 +208,9 @@ function MultiverseContent() {
           />
         </div>
 
-        {/* 2. TOP FIXED HEADER (MENU · MARVEL · CLOSE) */}
+        {}
         <header className="fixed top-0 left-0 right-0 z-40 px-6 sm:px-10 py-6 flex items-center justify-between bg-transparent">
-          {/* Left: Drawer Toggle */}
+          {}
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1 group"
@@ -229,14 +223,14 @@ function MultiverseContent() {
             </div>
           </button>
 
-          {/* Center: Spaced MARVEL Logo */}
+          {}
           <div className="text-xs sm:text-sm font-mono font-medium tracking-[0.55em] uppercase text-white pl-[0.55em]">
             <Link href="/" className="hover:opacity-80 transition-opacity">
               MARVEL
             </Link>
           </div>
 
-          {/* Right: Return to Multiverse Index */}
+          {}
           <button
             onClick={() => setActiveUniverseId(null)}
             className="text-stone-300 hover:text-white p-1 transition-colors cursor-pointer"
@@ -246,33 +240,33 @@ function MultiverseContent() {
           </button>
         </header>
 
-        {/* 3. FLUID LIQUID-STAGGERED STORY CONTENT AREA */}
+        {}
         <main className="relative z-20 w-full h-full px-6 sm:px-12 md:px-16 flex flex-col justify-between pt-24 pb-12">
-          
-          {/* Upper Spacer */}
+
+          {}
           <div className="h-2" />
 
-          {/* Center / Middle Content Area */}
+          {}
           <div className="w-full max-w-3xl my-auto">
-            
-            <div 
-              key={currentUniverse.id} 
+
+            <div
+              key={currentUniverse.id}
               className={`flex flex-col gap-3.5 ${
-                waveDirection === "next" 
-                  ? "animate-wave-up" 
+                waveDirection === "next"
+                  ? "animate-wave-up"
                   : "animate-wave-down"
               }`}
             >
-              
-              {/* Tag & Threat Status */}
+
+              {}
               <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-[0.3em] uppercase text-stone-400">
-                <span 
+                <span
                   className="w-2 h-2 rounded-full inline-block shrink-0"
                   style={{ backgroundColor: currentUniverse.color }}
                 />
                 <span>{currentUniverse.designation}</span>
                 <span>·</span>
-                <span 
+                <span
                   className="font-bold px-2 py-0.5 rounded bg-black/60 border border-white/10"
                   style={{ color: currentUniverse.color }}
                 >
@@ -280,18 +274,18 @@ function MultiverseContent() {
                 </span>
               </div>
 
-              {/* Main Headline Title */}
+              {}
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-[0.14em] uppercase text-white leading-tight">
                 {currentUniverse.name}
               </h1>
 
-              {/* Narrative Story Paragraph */}
+              {}
               <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-2xl">
                 {currentUniverse.description}
               </p>
 
-              {/* Incursion Collision Matrix Banner */}
-              <div 
+              {}
+              <div
                 className="mt-2 p-3.5 sm:p-4 bg-black/50 backdrop-blur-md border-l-2 flex flex-col gap-1 max-w-2xl rounded-r-lg"
                 style={{ borderColor: currentUniverse.color }}
               >
@@ -304,7 +298,7 @@ function MultiverseContent() {
                 </p>
               </div>
 
-              {/* Anchor Being & Catalyst Nexus Incidents */}
+              {}
               <div className="mt-1 flex flex-wrap items-center gap-3 text-xs font-mono">
                 <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
                   <span className="text-[9px] uppercase tracking-widest text-stone-500">ANCHOR:</span>
@@ -317,7 +311,7 @@ function MultiverseContent() {
                 </div>
               </div>
 
-              {/* Key Identified Entities / Variants */}
+              {}
               {currentUniverse.keyInhabitants && currentUniverse.keyInhabitants.length > 0 && (
                 <div className="mt-1 flex flex-wrap gap-1.5 max-w-2xl">
                   {currentUniverse.keyInhabitants.map((inh, i) => (
@@ -331,7 +325,7 @@ function MultiverseContent() {
                 </div>
               )}
 
-              {/* Bottom Milestone Label */}
+              {}
               <div className="mt-4 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-stone-500 max-w-2xl">
                 <span>DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
                 <Link
@@ -349,10 +343,10 @@ function MultiverseContent() {
 
         </main>
 
-        {/* Slide Navigation Drawer */}
+        {}
         <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-        {/* Silky-Smooth GPU Wave Animation Keyframes */}
+        {}
         <style jsx global>{`
           @keyframes waveUp {
             0% {
@@ -399,18 +393,15 @@ function MultiverseContent() {
     );
   }
 
-  // -------------------------------------------------------------
-  // MULTIVERSE GALLERY GRID VIEW
-  // -------------------------------------------------------------
   return (
     <PageShell backHref="/timeline" backLabel="TIMELINE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
-          
-          {/* SEARCH INPUT & CATEGORY TABS (MATCHING /CHARACTERS & /ARTIFACTS) */}
+
+          {}
           <div className="flex flex-col gap-6 pb-2">
-            
-            {/* Search Input with Clean Borderless Surface */}
+
+            {}
             <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
               <Search size={15} className="text-stone-500 shrink-0 mr-3" />
               <input
@@ -430,7 +421,7 @@ function MultiverseContent() {
               )}
             </div>
 
-            {/* Clean Minimal Category Tabs (No Numbers) */}
+            {}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
                 {CATEGORIES.map((c) => (
@@ -451,7 +442,7 @@ function MultiverseContent() {
 
           </div>
 
-          {/* MULTIVERSE GALLERY GRID (MATCHING 4:5 CARD SYSTEM) */}
+          {}
           {filteredUniverses.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -479,8 +470,8 @@ function MultiverseContent() {
                     onClick={() => setActiveUniverseId(universe.id)}
                     className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
-                    
-                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT (4:5 PORTRAIT ORIENTED) */}
+
+                    {}
                     <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-lg">
                       <img
                         src={universe.backdrop}
@@ -488,15 +479,15 @@ function MultiverseContent() {
                         className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
 
-                      {/* Smooth Vignette */}
+                      {}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
 
-                      {/* Threat Badge Pill in Bottom Left */}
+                      {}
                       <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                        <span 
+                        <span
                           className="text-[10px] font-mono tracking-widest uppercase bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 truncate max-w-full flex items-center gap-1.5"
                         >
-                          <span 
+                          <span
                             className="w-2 h-2 rounded-full shrink-0 inline-block"
                             style={{ backgroundColor: universe.color }}
                           />
@@ -505,20 +496,20 @@ function MultiverseContent() {
                       </div>
                     </div>
 
-                    {/* OPEN TEXT AREA (NO TRUNCATION) */}
+                    {}
                     <div className="flex flex-col gap-1">
-                      
-                      {/* Name (Full Title Display) */}
+
+                      {}
                       <h2 className="text-sm sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
                         {universe.name}
                       </h2>
 
-                      {/* Designation / Anchor Being */}
+                      {}
                       <div className="text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
                         {universe.designation.split("/")[0].trim()} · {universe.anchorBeing.split("(")[0].trim()}
                       </div>
 
-                      {/* Action Link */}
+                      {}
                       <div className="pt-1 flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
                         <span>EXPLORE REALITY</span>
                         <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />

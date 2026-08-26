@@ -1,7 +1,6 @@
-// Official Marvel Studios & MCU Character portraits and widescreen cinematic backdrops
 
 export const CHARACTER_IMAGE_MAP: Record<string, string> = {
-  // Original 6 Avengers & Core
+
   "iron-man": "/images/characters/tony-stark.jpg",
   "tony-stark": "/images/characters/tony-stark.jpg",
   "captain-america": "/images/characters/steve-rogers.jpg",
@@ -14,7 +13,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "hawkeye": "/images/characters/hawkeye.jpg",
   "clint-barton": "/images/characters/hawkeye.jpg",
 
-  // Spider-Heroes
   "spider-man": "/images/characters/peter-parker.jpg",
   "spiderman": "/images/characters/peter-parker.jpg",
   "peter-parker": "/images/characters/peter-parker.jpg",
@@ -22,7 +20,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "spider-man-garfield": "/images/characters/spider-man-andrew.jpg",
   "may-parker": "/images/characters/may-parker.jpg",
 
-  // Sorcerers & Mystics
   "doctor-strange": "/images/characters/doctor-strange.jpg",
   "stephen-strange": "/images/characters/doctor-strange.jpg",
   "wong": "/images/characters/wong.jpg",
@@ -30,7 +27,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "clea": "/images/characters/clea.jpg",
   "america-chavez": "/images/characters/america-chavez.jpg",
 
-  // Maximoff & Vision Lineage
   "wanda": "/images/characters/wanda-maximoff.jpg",
   "scarlet-witch": "/images/characters/wanda-maximoff.jpg",
   "wanda-maximoff": "/images/characters/wanda-maximoff.jpg",
@@ -43,7 +39,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "agatha-harkness": "/images/characters/agatha-harkness.jpg",
   "agatha": "/images/characters/agatha-harkness.jpg",
 
-  // Super Soldiers & Shield
   "bucky-barnes": "/images/characters/bucky-barnes.jpg",
   "winter-soldier": "/images/characters/bucky-barnes.jpg",
   "sam-wilson": "/images/characters/sam-wilson.jpg",
@@ -56,14 +51,12 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "melina-vostokoff": "/images/characters/melina-vostokoff.jpg",
   "taskmaster": "/images/characters/dreykov.jpg",
 
-  // Stark & Armor Lineage
   "war-machine": "/images/characters/howard-stark.jpg",
   "howard-stark": "/images/characters/howard-stark.jpg",
   "maria-stark": "/images/characters/maria-stark.jpg",
   "pepper-potts": "/images/characters/pepper-potts.jpg",
   "morgan-stark": "/images/characters/morgan-stark.jpg",
 
-  // Pym & Ant-Family
   "ant-man": "/images/characters/scott-lang.jpg",
   "scott-lang": "/images/characters/scott-lang.jpg",
   "wasp": "/images/characters/hope-van-dyne.jpg",
@@ -72,7 +65,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "janet-van-dyne": "/images/characters/janet-van-dyne.jpg",
   "cassie-lang": "/images/characters/cassie-lang.jpg",
 
-  // Wakanda & Talokan
   "black-panther": "/images/characters/tchalla.jpg",
   "tchalla": "/images/characters/tchalla.jpg",
   "shuri": "/images/characters/shuri.jpg",
@@ -83,14 +75,12 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "namor": "/images/characters/namor.jpg",
   "killmonger": "/images/characters/killmonger.jpg",
 
-  // Cosmic & Marvels
   "captain-marvel": "/images/characters/captain-marvel.jpg",
   "carol-danvers": "/images/characters/captain-marvel.jpg",
   "ms-marvel": "/images/characters/ms-marvel.jpg",
   "kamala-khan": "/images/characters/ms-marvel.jpg",
   "the-watcher": "/images/characters/the-watcher.jpg",
 
-  // Guardians of the Galaxy
   "peter-quill": "/images/characters/peter-quill.jpg",
   "star-lord": "/images/characters/peter-quill.jpg",
   "gamora": "/images/characters/gamora.jpg",
@@ -104,7 +94,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "ego": "/images/characters/ego.jpg",
   "meredith-quill": "/images/characters/meredith-quill.jpg",
 
-  // Asgardian Pantheon
   "odin": "/images/characters/odin.jpg",
   "frigga": "/images/characters/frigga.jpg",
   "bor": "/images/characters/bor.jpg",
@@ -113,7 +102,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "jane-foster": "/images/characters/jane-foster.jpg",
   "love": "/images/characters/love.jpg",
 
-  // TVA & Multiverse
   "loki": "/images/characters/loki.jpg",
   "sylvie": "/images/characters/sylvie.jpg",
   "he-who-remains": "/images/characters/he-who-remains.jpg",
@@ -122,7 +110,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "immortus": "/images/characters/immortus.jpg",
   "ravonna-renslayer": "/images/characters/ravonna-renslayer.jpg",
 
-  // Mutants & Fox Reality
   "deadpool": "/images/characters/deadpool.jpg",
   "wolverine": "/images/characters/wolverine.jpg",
   "charles-xavier": "/images/characters/charles-xavier.jpg",
@@ -134,7 +121,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "beast": "/images/characters/beast.jpg",
   "cassandra-nova": "/images/characters/cassandra-nova.jpg",
 
-  // Fantastic Four
   "reed-richards": "/images/characters/reed-richards.jpg",
   "mister-fantastic": "/images/characters/reed-richards.jpg",
   "sue-storm": "/images/characters/sue-storm.jpg",
@@ -147,7 +133,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "galactus": "/images/characters/galactus.jpg",
   "doctor-doom": "/images/characters/doctor-doom.jpg",
 
-  // Villains & Cosmic Antagonists
   "thanos": "/images/characters/thanos.jpg",
   "alars": "/images/characters/alars.jpg",
   "eros": "/images/characters/eros.jpg",
@@ -164,7 +149,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "zemo": "/images/characters/zemo.jpg",
   "ronan": "/images/characters/ronan.jpg",
 
-  // Ten Rings & Ta Lo
   "shang-chi": "/images/characters/shang-chi.jpg",
   "wenwu": "/images/characters/xu-wenwu.jpg",
   "xu-wenwu": "/images/characters/xu-wenwu.jpg",
@@ -172,7 +156,6 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "xu-xialing": "/images/characters/xu-xialing.jpg",
   "ying-li": "/images/characters/ying-li.jpg",
 
-  // Street Level Vigilantes
   "matt-murdock": "/images/characters/matt-murdock.jpg",
   "daredevil": "/images/characters/matt-murdock.jpg",
   "frank-castle": "/images/characters/frank-castle.jpg",
@@ -184,44 +167,38 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "moon-knight": "/images/characters/moon-knight.jpg",
 };
 
-// Exact Phase Era In-Movie Stills Map
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
-  // Iron Man Eras
+
   "iron-man-origins-phase-1": "/images/backdrops/iron-man.jpg",
   "iron-man-escalation-phase-2": "/images/backdrops/iron-man-3.jpg",
   "iron-man-reckoning-phase-3": "/images/backdrops/endgame.jpg",
   "iron-man-legacy-phase-4": "/images/backdrops/spider-man-far-from-home.jpg",
   "iron-man-resonance-phase-5": "/images/backdrops/thunderbolts.jpg",
 
-  // Captain America Eras
   "cap-first-avenger-phase-1": "/images/backdrops/captain-america-first-avenger.jpg",
   "cap-winter-soldier-phase-2": "/images/backdrops/cap-winter-soldier.jpg",
   "cap-civil-war-endgame-phase-3": "/images/backdrops/cap-civil-war.jpg",
   "cap-torch-passed-phase-4": "/images/backdrops/falcon-winter-soldier.jpg",
   "cap-eternal-symbol-phase-5": "/images/backdrops/cap-brave-new-world.jpg",
 
-  // Thor Eras
   "thor-prince-phase-1": "/images/backdrops/thor.jpg",
   "thor-dark-world-phase-2": "/images/backdrops/thor-dark-world.jpg",
   "thor-ragnarok-endgame-phase-3": "/images/backdrops/thor-ragnarok.jpg",
   "thor-love-and-thunder-phase-4": "/images/backdrops/thor-love-thunder.jpg",
   "thor-cosmic-vanguard-phase-5": "/images/backdrops/deadpool-and-wolverine.jpg",
 
-  // Hulk Eras
   "hulk-origins-phase-1": "/images/backdrops/the-incredible-hulk.jpg",
   "hulk-escalation-phase-2": "/images/backdrops/avengers-age-of-ultron.jpg",
   "hulk-ragnarok-endgame-phase-3": "/images/backdrops/thor-ragnarok.jpg",
   "hulk-mentorship-phase-4": "/images/backdrops/she-hulk.jpg",
   "hulk-world-war-phase-5": "/images/backdrops/cap-brave-new-world.jpg",
 
-  // Loki Eras
   "loki-invasion-phase-1": "/images/backdrops/the-avengers.jpg",
   "loki-dark-world-phase-2": "/images/backdrops/thor-dark-world.jpg",
   "loki-ragnarok-infinity-phase-3": "/images/backdrops/thor-ragnarok.jpg",
   "loki-tva-phase-4": "/images/backdrops/loki-s1.jpg",
   "loki-god-of-stories-phase-5": "/images/backdrops/loki-s2.jpg",
 
-  // Antagonists & Multiverse Legends
   "dormammu-bargain": "/images/backdrops/doctor-strange.jpg",
   "abomination-harlem": "/images/backdrops/the-incredible-hulk.jpg",
   "ego-expansion": "/images/backdrops/gotg2.jpg",
@@ -281,12 +258,10 @@ export function getCharacterAvatar(characterId: string): string {
 export function getCharacterBackdrop(characterId: string, eraId?: string, phase?: number): string {
   const normId = characterId.toLowerCase().trim();
 
-  // 1. Direct match by specific era ID
   if (eraId && ERA_SPECIFIC_BACKDROPS[eraId]) {
     return ERA_SPECIFIC_BACKDROPS[eraId];
   }
 
-  // 2. Accurate match by Phase & Character
   if (phase !== undefined) {
     if (phase === 1) {
       if (normId.includes("cap") || normId.includes("rogers")) return "/images/backdrops/captain-america-first-avenger.jpg";

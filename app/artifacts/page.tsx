@@ -38,7 +38,6 @@ function ArtifactsContent() {
     }
   }, [paramCat, paramQuery]);
 
-  // Handle ESC key to close modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -53,7 +52,7 @@ function ArtifactsContent() {
     const q = searchQuery.trim().toLowerCase();
 
     return ARTIFACTS.filter((a) => {
-      // 1. Precision Search Query Filter
+
       if (q) {
         const nameLower = a.name.toLowerCase();
         const originLower = a.origin.toLowerCase();
@@ -74,7 +73,6 @@ function ArtifactsContent() {
         }
       }
 
-      // 2. Category Filter
       if (selectedCategory !== "all") {
         if (a.category !== selectedCategory) return false;
       }
@@ -94,11 +92,11 @@ function ArtifactsContent() {
     <PageShell backHref="/timeline" backLabel="TIMELINE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
-          
-          {/* SEARCH INPUT & CATEGORY TABS (MATCHING /CHARACTERS) */}
+
+          {}
           <div className="flex flex-col gap-5 pb-2">
-            
-            {/* Search Input with Clean Borderless Surface */}
+
+            {}
             <div className="relative flex items-center bg-white/[0.03] border border-white/5 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/20 transition-all">
               <Search size={14} className="text-stone-500 shrink-0 mr-3" />
               <input
@@ -118,7 +116,7 @@ function ArtifactsContent() {
               )}
             </div>
 
-            {/* Clean Minimal Category Tabs (Swipeable on mobile) */}
+            {}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {CATEGORIES.map((c) => (
@@ -139,7 +137,7 @@ function ArtifactsContent() {
 
           </div>
 
-          {/* OPEN SPATIAL CINEMATIC GALLERY (2-COLUMN ON MOBILE) */}
+          {}
           {filteredArtifacts.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -170,8 +168,8 @@ function ArtifactsContent() {
                     onClick={() => setActiveArtifact(artifact)}
                     className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
-                    
-                    {/* FULL BLEED IMAGE WITH DYNAMIC SUIT & RELIC FRAMING */}
+
+                    {}
                     <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-gradient-to-b from-[#0c0c12] to-[#020204] rounded-xl border border-white/5 shadow-2xl flex items-center justify-center">
                       <img
                         src={artifact.backdrop}
@@ -183,24 +181,24 @@ function ArtifactsContent() {
                         }`}
                       />
 
-                      {/* Smooth Vignette */}
+                      {}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
                     </div>
 
-                    {/* OPEN TEXT AREA (NO TRUNCATION) */}
+                    {}
                     <div className="flex flex-col gap-0.5 sm:gap-1">
-                      
-                      {/* Name (Full Title Display) */}
+
+                      {}
                       <h2 className="text-xs sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] leading-snug">
                         {artifact.name}
                       </h2>
 
-                      {/* Category / Current Wielder / Origin */}
+                      {}
                       <div className="text-[9px] sm:text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
                         {primaryOrigin} · {artifact.category.replace(/_/g, " ")}
                       </div>
 
-                      {/* Action Link */}
+                      {}
                       <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10.5px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
                         <span>EXPLORE RELIC</span>
                         <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
@@ -218,39 +216,39 @@ function ArtifactsContent() {
 
       </div>
 
-      {/* STATE-OF-THE-ART CINEMATIC PROVENANCE MODAL */}
+      {}
       {activeArtifact && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 select-none">
-          
-          {/* Backdrop Click Dismiss */}
-          <div 
+
+          {}
+          <div
             className="fixed inset-0"
             onClick={() => setActiveArtifact(null)}
           />
 
-          {/* Modal Container */}
+          {}
           <div className="relative z-10 w-full max-w-3xl bg-[#070709] border border-stone-800/80 rounded-xl sm:rounded-2xl flex flex-col max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
-            
-            {/* 1. CINEMATIC HERO IMAGE BANNER */}
+
+            {}
             <div className="relative w-full h-48 sm:h-72 shrink-0 bg-stone-950 overflow-hidden">
               <img
                 src={activeArtifact.backdrop}
                 alt={activeArtifact.name}
                 className="w-full h-full object-cover object-center filter brightness-90"
               />
-              
-              {/* Radial Aura Glow */}
-              <div 
+
+              {}
+              <div
                 className="absolute inset-0 opacity-25 mix-blend-screen pointer-events-none"
                 style={{
                   background: `radial-gradient(circle at 50% 50%, ${activeArtifact.iconColor || "#fff"} 0%, transparent 70%)`
                 }}
               />
 
-              {/* Bottom Fade */}
+              {}
               <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/40 to-transparent" />
 
-              {/* Close Button */}
+              {}
               <button
                 onClick={() => setActiveArtifact(null)}
                 className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 p-2 sm:p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white backdrop-blur-md transition-all cursor-pointer"
@@ -259,10 +257,10 @@ function ArtifactsContent() {
                 <X size={16} />
               </button>
 
-              {/* Title & Origin Floating in Hero */}
+              {}
               <div className="absolute bottom-3 sm:bottom-4 left-4 sm:left-6 right-4 sm:right-6 flex flex-col gap-1 z-10">
                 <div className="flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.25em] sm:tracking-[0.3em] uppercase text-stone-400">
-                  <span 
+                  <span
                     className="w-2 h-2 rounded-full inline-block"
                     style={{ backgroundColor: activeArtifact.iconColor || "#fff" }}
                   />
@@ -274,10 +272,10 @@ function ArtifactsContent() {
               </div>
             </div>
 
-            {/* 2. SCROLLABLE LORE & PROVENANCE CONTENT */}
+            {}
             <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 flex flex-col gap-5 sm:gap-6 scrollbar-thin scrollbar-thumb-stone-800">
-              
-              {/* SPECIFICATION PILLARS */}
+
+              {}
               <div className="grid grid-cols-3 gap-1 xs:gap-3 py-2.5 sm:py-3 border-y border-stone-800/60 text-center font-mono uppercase">
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[7.5px] xs:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-stone-500">PHASE</span>
@@ -293,7 +291,7 @@ function ArtifactsContent() {
                 </div>
               </div>
 
-              {/* Narrative Lore */}
+              {}
               <div className="flex flex-col gap-2">
                 <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-stone-400">
                   ARCHIVAL OVERVIEW
@@ -303,8 +301,8 @@ function ArtifactsContent() {
                 </p>
               </div>
 
-              {/* Capabilities & Power Matrix */}
-              <div 
+              {}
+              <div
                 className="relative p-4 sm:p-5 bg-black/40 border-l-2 flex flex-col gap-1.5"
                 style={{ borderColor: activeArtifact.iconColor || "#fff" }}
               >
@@ -317,7 +315,7 @@ function ArtifactsContent() {
                 </p>
               </div>
 
-              {/* Chronological Provenance Stream */}
+              {}
               <div className="flex flex-col gap-4 pt-2">
                 <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-stone-400">
                   CHRONOLOGICAL WIELDER PROVENANCE
@@ -326,14 +324,14 @@ function ArtifactsContent() {
                 <div className="relative pl-6 space-y-6 border-l border-stone-800/80">
                   {activeArtifact.history.map((h, index) => (
                     <div key={index} className="relative flex flex-col gap-1 font-mono text-xs">
-                      
-                      {/* Timeline Node Point */}
-                      <span 
+
+                      {}
+                      <span
                         className="absolute -left-[31px] top-1 w-2.5 h-2.5 rounded-full border-2 border-[#070709]"
                         style={{ backgroundColor: activeArtifact.iconColor || "#fff" }}
                       />
 
-                      {/* Header Row: Holder & Time/Location */}
+                      {}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                         <span className="font-bold text-stone-100 text-xs sm:text-sm uppercase tracking-wider">
                           {h.holderName}
@@ -345,7 +343,7 @@ function ArtifactsContent() {
                         </div>
                       </div>
 
-                      {/* Event Context */}
+                      {}
                       <p className="text-stone-400 text-[11px] sm:text-xs leading-relaxed mt-0.5">
                         {h.event}
                       </p>

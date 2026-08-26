@@ -36,7 +36,6 @@ export default function AmbientAudio() {
         filter.frequency.setValueAtTime(140, ctx.currentTime);
         filter.connect(masterGain);
 
-        // Low cosmic drone 1 (55Hz - A1)
         const osc1 = ctx.createOscillator();
         osc1.type = "sine";
         osc1.frequency.setValueAtTime(55, ctx.currentTime);
@@ -44,7 +43,6 @@ export default function AmbientAudio() {
         osc1.start();
         osc1Ref.current = osc1;
 
-        // Sub harmonic drone 2 (82.4Hz - E2)
         const osc2 = ctx.createOscillator();
         osc2.type = "triangle";
         osc2.frequency.setValueAtTime(82.4, ctx.currentTime);
@@ -58,15 +56,15 @@ export default function AmbientAudio() {
       }
 
       if (gainNodeRef.current && audioCtxRef.current) {
-        // Soft, ambient level
+
         gainNodeRef.current.gain.setTargetAtTime(0.04, audioCtxRef.current.currentTime, 0.8);
       }
     } catch {
-      // audio error handling
+
     }
 
     return () => {
-      // cleanup on unmount
+
     };
   }, [soundEnabled]);
 

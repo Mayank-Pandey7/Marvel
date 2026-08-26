@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 
-// 100% Verified High-Resolution Official TMDB Posters & Badges for All MCU Entries
 export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fallbackText: string }> = {
-  // Phase 1: Infinity Saga Origins
+
   "iron-man": {
     poster: "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
     color: "#e55039",
@@ -51,7 +50,6 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "THE AVENGERS",
   },
 
-  // Phase 2: Escalation
   "iron-man-3": {
     poster: "https://image.tmdb.org/t/p/w500/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg",
     color: "#e55039",
@@ -98,7 +96,6 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "ANT-MAN",
   },
 
-  // Phase 3: Reckoning
   "cap-civil-war": {
     poster: "https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
     color: "#3867d6",
@@ -190,7 +187,6 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "FAR FROM HOME",
   },
 
-  // Phase 4: Multiverse Saga Origins
   "wandavision": {
     poster: "https://image.tmdb.org/t/p/w500/ijWWwINc8h71NQ8j1LTJMFSj5wr.jpg",
     color: "#eb3b5a",
@@ -312,7 +308,6 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "GOTG SPECIAL",
   },
 
-  // Phase 5: Fractures
   "ant-man-quantumania": {
     poster: "https://image.tmdb.org/t/p/w500/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg",
     color: "#ff4757",
@@ -394,7 +389,6 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "THUNDERBOLTS*",
   },
 
-  // Phase 6: Convergence
   "fantastic-four": {
     poster: "https://image.tmdb.org/t/p/w500/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
     color: "#4bcffa",
@@ -411,17 +405,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "BLADE",
   },
   "spiderman-brand-new-day": {
-    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    poster: "/images/posters/spiderman-brand-new-day.jpg",
     color: "#ff3838",
     fallbackText: "BRAND NEW DAY",
   },
   "spider-man-brand-new-day": {
-    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    poster: "/images/posters/spiderman-brand-new-day.jpg",
     color: "#ff3838",
     fallbackText: "BRAND NEW DAY",
   },
   "spiderman-4": {
-    poster: "https://image.tmdb.org/t/p/w500/iPOn6DinuVyLY17YM9mKuPofV08.jpg",
+    poster: "/images/posters/spiderman-brand-new-day.jpg",
     color: "#ff3838",
     fallbackText: "SPIDER-MAN 4",
   },
@@ -490,7 +484,7 @@ export default function NodeArtwork({
 
   return (
     <div className={`relative ${className} flex items-center justify-center bg-stone-900 overflow-hidden ${rounded} select-none`}>
-      {/* Background Official Poster Image */}
+      {}
       {data.poster && !imgError ? (
         <img
           key={movieId}
@@ -514,10 +508,10 @@ export default function NodeArtwork({
         </div>
       )}
 
-      {/* Clean Subtle Edge Ring */}
+      {}
       <div className={`absolute inset-0 ${rounded} border border-white/10 pointer-events-none`} />
 
-      {/* Active Inner Cosmic Glow Ring */}
+      {}
       {isActive && (
         <div
           className={`absolute inset-0 ${rounded} pointer-events-none transition-opacity duration-300`}

@@ -5,9 +5,8 @@ import { MCU } from "@/data/mcu";
 import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import MovieSlugDetail from "@/components/map/MovieSlugDetail";
 
-// Comprehensive alias dictionary to support short and alternate movie slugs
 const MOVIE_SLUG_ALIASES: Record<string, string> = {
-  // Phase 1
+
   "hulk": "the-incredible-hulk",
   "the-hulk": "the-incredible-hulk",
   "ironman": "iron-man",
@@ -24,7 +23,6 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "the-avengers-1": "the-avengers",
   "avengers-1": "the-avengers",
 
-  // Phase 2
   "thor-2": "thor-the-dark-world",
   "dark-world": "thor-the-dark-world",
   "thor-dark-world": "thor-the-dark-world",
@@ -42,7 +40,6 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "antman": "ant-man",
   "antman-1": "ant-man",
 
-  // Phase 3
   "civil-war": "captain-america-civil-war",
   "cap-civil-war": "captain-america-civil-war",
   "captain-america-3": "captain-america-civil-war",
@@ -71,7 +68,6 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "spider-man-2": "spider-man-far-from-home",
   "spiderman-2": "spider-man-far-from-home",
 
-  // Phase 4
   "wandavision": "wandavision",
   "falcon-and-winter-soldier": "the-falcon-and-the-winter-soldier",
   "falcon-winter-soldier": "the-falcon-and-the-winter-soldier",
@@ -100,7 +96,6 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "black-panther-2": "black-panther-wakanda-forever",
   "guardians-holiday-special": "the-guardians-of-the-galaxy-holiday-special",
 
-  // Phase 5 & 6
   "quantumania": "ant-man-and-the-wasp-quantumania",
   "ant-man-3": "ant-man-and-the-wasp-quantumania",
   "antman-3": "ant-man-and-the-wasp-quantumania",
@@ -139,17 +134,14 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "x2-x-men-united": "x2-2003",
 };
 
-// Helper function to resolve any slug or alias to a canonical MovieNode
 function resolveMovieNode(slug: string): MovieNode | null {
   const normalizedSlug = slug.toLowerCase().trim();
 
-  // 1. Check exact match in UNIFIED_MCU_TREE
   const directMatch = UNIFIED_MCU_TREE.find(
     (m) => m.id.toLowerCase() === normalizedSlug
   );
   if (directMatch) return directMatch;
 
-  // 2. Check alias dictionary
   const aliasedId = MOVIE_SLUG_ALIASES[normalizedSlug];
   if (aliasedId) {
     const aliasMatch = UNIFIED_MCU_TREE.find(
@@ -158,7 +150,6 @@ function resolveMovieNode(slug: string): MovieNode | null {
     if (aliasMatch) return aliasMatch;
   }
 
-  // 3. Check data/mcu.ts entry mapping to UNIFIED_MCU_TREE
   const mcuEntry = MCU.find((m) => m.id.toLowerCase() === normalizedSlug);
   if (mcuEntry) {
     const treeMatch = UNIFIED_MCU_TREE.find(
@@ -169,7 +160,6 @@ function resolveMovieNode(slug: string): MovieNode | null {
     if (treeMatch) return treeMatch;
   }
 
-  // 4. Check DOOMSDAY_WATCHLIST (X-Men 2000, X2, Doomsday milestones)
   const doomsdayItem = DOOMSDAY_WATCHLIST.find(
     (d) =>
       d.id.toLowerCase() === normalizedSlug ||
@@ -179,7 +169,7 @@ function resolveMovieNode(slug: string): MovieNode | null {
         normalizedSlug.replace(/[^a-z0-9]/g, "")
   );
   if (doomsdayItem) {
-    // Try to find if this doomsday movie is also in UNIFIED_MCU_TREE
+
     const treeMatch = UNIFIED_MCU_TREE.find(
       (m) =>
         m.id.toLowerCase() === doomsdayItem.slug.toLowerCase() ||
@@ -208,7 +198,6 @@ function resolveMovieNode(slug: string): MovieNode | null {
     } as unknown as MovieNode;
   }
 
-  // 5. Fuzzy title match (e.g. "the incredible hulk" -> "the-incredible-hulk")
   const titleMatch = UNIFIED_MCU_TREE.find(
     (m) =>
       m.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===

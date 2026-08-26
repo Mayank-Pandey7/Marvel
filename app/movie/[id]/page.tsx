@@ -10,21 +10,18 @@ export default function MovieDossierPage({ params }: { params: { id: string } })
   const router = useRouter();
   const movieId = params.id;
 
-  // Resolve matching MovieNode from UNIFIED_MCU_TREE or fallback to MCU dataset
   const movieNode: MovieNode | null = useMemo(() => {
     const directMatch = UNIFIED_MCU_TREE.find(
       (m) => m.id === movieId || m.id.toLowerCase() === movieId.toLowerCase()
     );
     if (directMatch) return directMatch;
 
-    // Fallback: match by stripped id or title
     const strippedId = movieId.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
     const fallbackMatch = UNIFIED_MCU_TREE.find(
       (m) => m.id.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() === strippedId
     );
     if (fallbackMatch) return fallbackMatch;
 
-    // Fallback from data/mcu.ts if not present in UNIFIED_MCU_TREE
     const mcuEntry = MCU.find((m) => m.id === movieId || m.id.toLowerCase() === movieId.toLowerCase());
     if (mcuEntry) {
       return {

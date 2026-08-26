@@ -2,15 +2,14 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, X, ChevronDown, Sparkles, User, Film } from "lucide-react";
+import { ArrowLeft, ArrowRight, X, ChevronDown, Sparkles, User, Film, Play, ExternalLink } from "lucide-react";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { MCU } from "@/data/mcu";
 import { CHARACTERS } from "@/data/characters";
 import NodeArtwork, { MCU_POSTER_MAP } from "./NodeArtwork";
 
-// High-Resolution 100% Verified TMDB Cinematic Backdrop Images for Every MCU Movie
 export const MCU_BACKDROP_MAP: Record<string, string> = {
-  // Phase 1
+
   "iron-man": "/images/backdrops/iron-man.jpg",
   "the-incredible-hulk": "/images/backdrops/the-incredible-hulk.jpg",
   "hulk": "/images/backdrops/the-incredible-hulk.jpg",
@@ -23,7 +22,6 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "the-avengers": "/images/backdrops/the-avengers.jpg",
   "avengers": "/images/backdrops/the-avengers.jpg",
 
-  // Phase 2
   "iron-man-3": "/images/backdrops/iron-man-3.jpg",
   "thor-the-dark-world": "/images/backdrops/thor-the-dark-world.jpg",
   "thor-dark-world": "/images/backdrops/thor-dark-world.jpg",
@@ -36,7 +34,6 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "avengers-aou": "/images/backdrops/avengers-age-of-ultron.jpg",
   "ant-man": "/images/backdrops/ant-man.jpg",
 
-  // Phase 3
   "captain-america-civil-war": "/images/backdrops/captain-america-civil-war.jpg",
   "cap-civil-war": "/images/backdrops/captain-america-civil-war.jpg",
   "doctor-strange": "/images/backdrops/doctor-strange.jpg",
@@ -56,7 +53,6 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "spider-man-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
   "spiderman-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
 
-  // Phase 4
   "wandavision": "/images/backdrops/wandavision.jpg",
   "the-falcon-and-the-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
   "falcon-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
@@ -85,7 +81,6 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/the-guardians-of-the-galaxy-holiday-special.jpg",
   "guardians-holiday": "/images/backdrops/the-guardians-of-the-galaxy-holiday-special.jpg",
 
-  // Phase 5
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
   "ant-man-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-of-the-galaxy-vol-3.jpg",
@@ -103,7 +98,6 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
   "thunderbolts": "/images/backdrops/thunderbolts.jpg",
 
-  // Phase 6 & Multiverse
   "the-fantastic-four-first-steps": "/images/backdrops/the-fantastic-four-first-steps.jpg",
   "fantastic-four": "/images/backdrops/the-fantastic-four-first-steps.jpg",
   "blade": "/images/backdrops/blade.jpg",
@@ -145,7 +139,6 @@ export default function DeepMovieDetail({
 
   if (!movie) return null;
 
-  // Resolve matching MCU dataset entry
   const mcuEntry = useMemo(() => {
     return MCU.find(
       (m) =>
@@ -155,7 +148,6 @@ export default function DeepMovieDetail({
     );
   }, [movie.id]);
 
-  // Resolve featured characters from MCU and CHARACTERS datasets
   const featuredCharacters = useMemo(() => {
     const charIds = mcuEntry?.characters || [];
     const matched = CHARACTERS.filter(
@@ -167,7 +159,6 @@ export default function DeepMovieDetail({
     return matched.slice(0, 8);
   }, [mcuEntry, movie]);
 
-  // Resolve connected movie objects across all phases
   const connectedMovies = (movie.connections || [])
     .map((conn) => {
       const target = UNIFIED_MCU_TREE.find((m) => m.id === (typeof conn === "string" ? conn : conn.toId));
@@ -175,7 +166,6 @@ export default function DeepMovieDetail({
     })
     .filter(Boolean);
 
-  // Previous & Next movies in MCU canon order
   const currentIndex = UNIFIED_MCU_TREE.findIndex((m) => m.id === movie.id);
   const prevMovie = currentIndex > 0 ? UNIFIED_MCU_TREE[currentIndex - 1] : UNIFIED_MCU_TREE[UNIFIED_MCU_TREE.length - 1];
   const nextMovie = currentIndex < UNIFIED_MCU_TREE.length - 1 ? UNIFIED_MCU_TREE[currentIndex + 1] : UNIFIED_MCU_TREE[0];
@@ -218,12 +208,12 @@ export default function DeepMovieDetail({
           : "opacity-0 scale-105 pointer-events-none"
       }`}
     >
-      {/* ========================================================================= */}
-      {/* DESKTOP LAYOUT (EXACT ORIGINAL DESKTOP LAYOUT AS IT WAS BEFORE)           */}
-      {/* ========================================================================= */}
+      {}
+      {}
+      {}
       <div className="hidden md:flex flex-col justify-between w-full h-full relative overflow-hidden bg-black/65 backdrop-blur-2xl text-stone-300">
-        
-        {/* 1. CINEMATIC AMBIENT BACKDROP IMAGE (CLEAR & VIBRANT) */}
+
+        {}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
             src={backdropSrc}
@@ -238,37 +228,29 @@ export default function DeepMovieDetail({
             }`}
           />
 
-          {/* Cinematic Vignette & Atmospheric Gradients */}
+          {}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/75" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.75)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
         </div>
 
-        {/* 2. MINIMALIST TOP HEADER */}
+        {}
         <header
           className={`relative z-20 w-full px-10 md:px-20 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
           }`}
         >
-          {/* Left: Clean Borderless Return Button */}
-          <div className="w-28 flex items-center justify-start">
-            <button
-              onClick={handleClose}
-              className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
-            >
-              <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
-              <span>RETURN</span>
-            </button>
-          </div>
+          {}
+          <div className="w-10" />
 
-          {/* Center: Perfectly Centered Marvel Branding */}
+          {}
           <div className="flex-1 flex items-center justify-center">
             <h1 className="text-sm font-mono font-medium tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.55em]">
               MARVEL
             </h1>
           </div>
 
-          {/* Right side: Matching Equal Spacer */}
+          {}
           <div className="w-28 flex items-center justify-end">
             <button
               onClick={handleClose}
@@ -280,16 +262,16 @@ export default function DeepMovieDetail({
           </div>
         </header>
 
-        {/* 3. MAIN DOSSIER STAGE */}
+        {}
         <main className="relative z-20 flex-1 px-10 md:px-14 lg:px-20 py-6 flex flex-row items-center justify-between gap-12 lg:gap-16 overflow-y-auto w-full max-w-[1700px] mx-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          
-          {/* LEFT COLUMN: OFFICIAL POSTER + NARRATIVE DOSSIER */}
+
+          {}
           <div
             className={`flex-1 flex flex-row items-start gap-8 lg:gap-10 min-w-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
               isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 -translate-x-12 blur-sm"
             }`}
           >
-            {/* OFFICIAL HIGH-RES THEATRICAL MOVIE POSTER */}
+            {}
             <div className="w-48 sm:w-52 md:w-60 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative">
               <img
                 src={posterSrc}
@@ -306,9 +288,9 @@ export default function DeepMovieDetail({
               <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
             </div>
 
-            {/* NARRATIVE INFORMATION */}
+            {}
             <div className="flex-1 flex flex-col justify-center min-w-0 text-left">
-              {/* Phase & Era Designation */}
+              {}
               <div className="flex items-center justify-start flex-wrap gap-2 text-[11px] font-mono tracking-[0.3em] text-stone-400 uppercase font-semibold">
                 <span className="px-2 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
                 <span>•</span>
@@ -319,7 +301,7 @@ export default function DeepMovieDetail({
                 <span className="text-stone-300">{movie.director}</span>
               </div>
 
-              {/* Large Cinematic Title */}
+              {}
               <h2
                 className={`font-mono font-light text-3xl sm:text-4xl md:text-5xl text-white uppercase leading-tight mt-3 drop-shadow-[0_0_35px_rgba(255,255,255,0.25)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
                   isExpanded
@@ -330,7 +312,7 @@ export default function DeepMovieDetail({
                 {movie.title}
               </h2>
 
-              {/* Narrative Synopsis */}
+              {}
               <div className="mt-4 text-sm text-stone-300 font-sans font-light leading-relaxed">
                 <p>{movie.description}</p>
                 {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
@@ -362,7 +344,7 @@ export default function DeepMovieDetail({
                 )}
               </div>
 
-              {/* Famous Quote Glass Card */}
+              {}
               {movie.quote && (
                 <div className="mt-4 p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md relative max-w-lg shadow-lg">
                   <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
@@ -377,7 +359,7 @@ export default function DeepMovieDetail({
                 </div>
               )}
 
-              {/* Key Relics & Artifacts */}
+              {}
               {movie.keyRelics && movie.keyRelics.length > 0 && (
                 <div className="mt-4">
                   <span className="text-[10px] font-mono tracking-[0.3em] text-stone-400 uppercase block mb-2 font-bold">
@@ -399,7 +381,7 @@ export default function DeepMovieDetail({
             </div>
           </div>
 
-          {/* RIGHT COLUMN: DIRECT CONNECTIONS */}
+          {}
           <div
             className={`w-[380px] lg:w-[400px] xl:w-[420px] flex flex-col shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
               isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
@@ -431,7 +413,7 @@ export default function DeepMovieDetail({
                       className="group w-full flex items-center justify-between p-2 rounded-xl bg-transparent hover:bg-white/[0.05] transition-colors duration-200 text-left cursor-pointer"
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        {/* Mini Theatrical Poster */}
+                        {}
                         <div className="w-11 h-15 aspect-[2/3] rounded-lg overflow-hidden shrink-0 bg-stone-900 shadow-sm relative">
                           {targetPoster ? (
                             <img
@@ -445,7 +427,7 @@ export default function DeepMovieDetail({
                           )}
                         </div>
 
-                        {/* Movie Information */}
+                        {}
                         <div className="flex flex-col min-w-0 flex-1">
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-mono font-bold text-stone-200 group-hover:text-white uppercase tracking-wider line-clamp-1 transition-colors">
@@ -475,25 +457,19 @@ export default function DeepMovieDetail({
         </main>
       </div>
 
-      {/* ========================================================================= */}
-      {/* MOBILE LAYOUT (OPTIMIZED MOBILE CHARACTER-STYLE VIEW)                      */}
-      {/* ========================================================================= */}
+      {}
+      {}
+      {}
       <div className="flex md:hidden flex-col w-full min-h-screen">
-        {/* Top ambient fade blur */}
+        {}
         <div
           className="fixed top-0 inset-x-0 h-20 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
           aria-hidden="true"
         />
 
-        {/* Top Header */}
+        {}
         <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3 flex items-center justify-between pointer-events-none bg-transparent">
-          <button
-            onClick={handleClose}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] font-mono tracking-[0.2em] uppercase group cursor-pointer pointer-events-auto p-1"
-          >
-            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
-            <span>RETURN</span>
-          </button>
+          <div className="w-8" />
 
           <div className="text-xs font-mono font-medium tracking-[0.45em] uppercase text-white pl-[0.45em] pointer-events-auto">
             <Link href="/" className="hover:opacity-80 transition-opacity">
@@ -510,10 +486,10 @@ export default function DeepMovieDetail({
           </button>
         </header>
 
-        {/* Mobile Hero: Theatrical Poster Background + Clean Text */}
+        {}
         <section className="relative w-full min-h-[92vh] flex flex-col justify-end pt-16 pb-8 px-4 bg-[#000000] overflow-hidden">
-          
-          {/* Atmospheric Theatrical Poster Background Image */}
+
+          {}
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <img
               src={posterSrc}
@@ -526,12 +502,12 @@ export default function DeepMovieDetail({
               }}
               className="w-full h-[68vh] object-cover object-top filter brightness-[0.80] contrast-[1.1]"
             />
-            {/* Cinematic Gradient Fade Mask to Pure Black */}
+            {}
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent via-40% to-[#000000]" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/95 via-45% to-transparent" />
           </div>
 
-          {/* Text Flow Over Grounded Black Base */}
+          {}
           <div className="relative z-10 flex flex-col gap-3.5 mt-auto pt-[36vh] xs:pt-[40vh]">
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] font-mono tracking-wider uppercase text-stone-400">
               <span>PHASE {movie.phase}</span>
@@ -581,7 +557,7 @@ export default function DeepMovieDetail({
           </div>
         </section>
 
-        {/* Mobile Featured Operatives */}
+        {}
         {featuredCharacters.length > 0 && (
           <section className="w-full px-4 py-6 flex flex-col gap-3">
             <h2 className="text-sm font-mono font-bold tracking-[0.16em] uppercase text-white">
@@ -611,7 +587,7 @@ export default function DeepMovieDetail({
           </section>
         )}
 
-        {/* Mobile Direct Connections */}
+        {}
         {connectedMovies.length > 0 && (
           <section className="w-full px-4 py-6 flex flex-col gap-4">
             <h2 className="text-sm font-mono font-bold tracking-[0.16em] uppercase text-white">
@@ -654,7 +630,7 @@ export default function DeepMovieDetail({
           </section>
         )}
 
-        {/* Mobile Navigation Footer */}
+        {}
         <footer className="w-full px-4 py-10 flex flex-col gap-6 items-center">
           <div className="w-full flex items-center justify-between gap-4">
             {prevMovie && (

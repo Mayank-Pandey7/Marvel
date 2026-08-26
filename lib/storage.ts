@@ -12,11 +12,11 @@ function safeGet<T>(key: string, fallback: T): T {
     if (!raw) return fallback;
     return JSON.parse(raw) as T;
   } catch {
-    // Corrupted value — reset it rather than crash the app.
+
     try {
       window.localStorage.removeItem(key);
     } catch {
-      /* no-op */
+
     }
     return fallback;
   }
@@ -27,7 +27,7 @@ function safeSet<T>(key: string, value: T) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    /* storage unavailable or full — fail silently */
+
   }
 }
 

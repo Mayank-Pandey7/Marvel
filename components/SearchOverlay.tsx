@@ -91,27 +91,27 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
   }, [q, onClose, router]);
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 select-none animate-in fade-in duration-200 no-map-drag search-modal-container"
       onWheel={(e) => e.stopPropagation()}
       onTouchMove={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
     >
-      {/* Transparent Dim Backdrop with Subtle Blur */}
+      {}
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         onWheel={(e) => e.stopPropagation()}
       />
 
-      {/* Transparent Glass Spatial Modal Container */}
-      <div 
+      {}
+      <div
         className="relative z-10 w-full max-w-3xl bg-black/70 sm:bg-black/50 backdrop-blur-md p-4 xs:p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 animate-in zoom-in-95 duration-200 no-map-drag search-modal-container"
         onWheel={(e) => e.stopPropagation()}
         onTouchMove={(e) => e.stopPropagation()}
       >
-        
-        {/* Borderless Search Input Header */}
+
+        {}
         <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-stone-800/80">
           <div className="flex items-center gap-2.5 sm:gap-3.5 flex-1 mr-2">
             <Search size={16} className="text-stone-500 shrink-0" />
@@ -143,8 +143,8 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        {/* Results Stream with Clean Custom Scrollbar & Overscroll Contain */}
-        <div 
+        {}
+        <div
           className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto overscroll-contain pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
@@ -200,7 +200,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           )}
         </div>
 
-        {/* Footer Hint */}
+        {}
         <div className="pt-3 border-t border-stone-900/80 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-stone-500 tracking-[0.2em] uppercase">
           <div className="flex items-center gap-1.5">
             <span>PRESS</span>

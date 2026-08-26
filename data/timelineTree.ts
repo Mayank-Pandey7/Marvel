@@ -32,7 +32,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 1,
     year: "1942–Present",
     status: "active",
-    color: "#f59e0b", // Gold
+    color: "#f59e0b",
     description: "The baseline reality curated by He Who Remains to isolate and prevent the rise of Kang variants.",
     catalyst: "He Who Remains TVA Dictum",
     keyEvents: [
@@ -49,7 +49,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 4,
     year: "2012",
     status: "stabilized",
-    color: "#10b981", // Emerald Green
+    color: "#10b981",
     description: "Formed when Scott Lang and Tony Stark caused a distraction during the 2012 Time Heist, allowing Loki to grab the dropped Tesseract and vanish into the Gobi Desert.",
     catalyst: "Tony Stark briefcase collision & 2012 Loki theft",
     keyEvents: [
@@ -65,7 +65,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 3,
     year: "2014",
     status: "pruned",
-    color: "#a855f7", // Violet
+    color: "#a855f7",
     description: "Created when 2014 Nebula synchronized memories with 2023 Nebula, revealing the entire Time Heist to 2014 Thanos. Thanos duplicated Pym Particles to jump with his warship to 2023 Earth.",
     catalyst: "Nebula neural interface cybernetic cross-feed",
     keyEvents: [
@@ -81,7 +81,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 4,
     year: "Alternate Present",
     status: "incursion_threat",
-    color: "#3b82f6", // Blue
+    color: "#3b82f6",
     description: "A utopian high-tech Earth governed by the Illuminati (Professor X, Reed Richards, Captain Carter, Black Bolt, Captain Marvel). Ravaged by Earth-616 Wanda Maximoff dreamwalking into her alternate self.",
     catalyst: "Scarlet Witch Darkhold Dreamwalking across Multiverse",
     keyEvents: [
@@ -97,7 +97,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 4,
     year: "Outside Space-Time",
     status: "active",
-    color: "#ef4444", // Crimson
+    color: "#ef4444",
     description: "The cosmic dumping ground where all pruned timeline branches and variant beings are cast to be consumed by the temporal beast Alioth.",
     catalyst: "TVA Pruning Batons & Reset Charges",
     keyEvents: [
@@ -113,7 +113,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
     phase: 5,
     year: "Eternal Present",
     status: "active",
-    color: "#22d3ee", // Cyan / Story-Tree
+    color: "#22d3ee",
     description: "When the Temporal Loom failed to contain infinite branching timelines, Loki destroyed the Loom, physically gathered all dying branches in his bare hands, and took the throne at the End of Time, weaving all realities into a flourishing living World Tree (Yggdrasil).",
     catalyst: "Loki's self-sacrifice ('For you. For all of us.')",
     keyEvents: [

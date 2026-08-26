@@ -42,17 +42,15 @@ function CharactersContent() {
     const q = searchQuery.trim().toLowerCase();
 
     return CHARACTERS.filter((c) => {
-      // 1. Precision Search Query Filter
+
       if (q) {
         const nameLower = c.name.toLowerCase();
         const aliasesLower = c.aliases.map((a) => a.toLowerCase());
         const idLower = c.id.toLowerCase();
 
-        // Direct name / alias / ID match
         const nameMatch = nameLower.includes(q) || idLower.includes(q);
         const aliasMatch = aliasesLower.some((a) => a.includes(q));
 
-        // Word-boundary check for role & faction (so searching "gor" matches "Gorr" but NOT "Wundagore")
         const queryWords = q.split(/\s+/).filter(Boolean);
         const factionWords = c.faction.toLowerCase().split(/[\s/,-]+/).filter(Boolean);
         const roleWords = c.role.toLowerCase().split(/[\s/,-]+/).filter(Boolean);
@@ -70,7 +68,6 @@ function CharactersContent() {
         }
       }
 
-      // 2. Faction filter
       if (selectedFaction !== "all") {
         const fac = c.faction.toLowerCase();
         const role = c.role.toLowerCase();
@@ -154,7 +151,7 @@ function CharactersContent() {
       return true;
     }).sort((a, b) => {
       if (!q) return 0;
-      // Prioritize exact name start / match
+
       const aNameStart = a.name.toLowerCase().startsWith(q) || a.aliases.some((al) => al.toLowerCase().startsWith(q));
       const bNameStart = b.name.toLowerCase().startsWith(q) || b.aliases.some((al) => al.toLowerCase().startsWith(q));
       if (aNameStart && !bNameStart) return -1;
@@ -167,11 +164,11 @@ function CharactersContent() {
     <PageShell backHref="/timeline" backLabel="TIMELINE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
-          
-          {/* OPEN SPATIAL SEARCH & TEXT FILTERS (NO LINES) */}
+
+          {}
           <div className="flex flex-col gap-5 pb-2">
-            
-            {/* Search Input with Clean Borderless Surface */}
+
+            {}
             <div className="relative flex items-center bg-white/[0.03] border border-white/5 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/20 transition-all">
               <Search size={14} className="text-stone-500 shrink-0 mr-3" />
               <input
@@ -191,10 +188,10 @@ function CharactersContent() {
               )}
             </div>
 
-            {/* Clean Minimal Text Filters */}
+            {}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              
-              {/* Factions (Swipeable on mobile) */}
+
+              {}
               <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {FACTIONS.map((f) => (
                   <button
@@ -215,7 +212,7 @@ function CharactersContent() {
 
           </div>
 
-          {/* OPEN SPATIAL CINEMATIC GALLERY (2-COLUMN ON MOBILE) */}
+          {}
           {filteredCharacters.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -246,8 +243,8 @@ function CharactersContent() {
                     href={`/characters/${character.id}`}
                     className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
-                    
-                    {/* FULL BLEED IMAGE WITH CINEMATIC GRADIENT (PORTRAIT ORIENTED FOR PERFECT FACE FRAMING) */}
+
+                    {}
                     <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/5 shadow-2xl">
                       <img
                         src={backdropUrl}
@@ -255,24 +252,24 @@ function CharactersContent() {
                         className="w-full h-full object-cover object-[center_15%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
 
-                      {/* Smooth Vignette */}
+                      {}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
                     </div>
 
-                    {/* OPEN TEXT AREA */}
+                    {}
                     <div className="flex flex-col gap-0.5 sm:gap-1">
-                      
-                      {/* Name */}
+
+                      {}
                       <h2 className="text-xs sm:text-base font-mono font-bold tracking-wider uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-1">
                         {character.name}
                       </h2>
 
-                      {/* Faction / Role */}
+                      {}
                       <div className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
                         {primaryAlias !== character.name ? `${primaryAlias} · ` : ""}{character.faction.split("/")[0].trim()}
                       </div>
 
-                      {/* Action Link */}
+                      {}
                       <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
                         <span>EXPLORE</span>
                         <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />

@@ -20,7 +20,6 @@ export default function PhaseSpine({
   const [selectedEarthModal, setSelectedEarthModal] = useState<MCUEarth | null>(null);
   const [selectedEarthId, setSelectedEarthId] = useState<string>("earth-616");
 
-  // Render centered, spacious Earth designation with high contrast support
   const renderEarthLabel = (earthId: string, designation: string, isWhiteBg: boolean = false) => {
     if (earthId === "battleworld") {
       return (
@@ -49,9 +48,7 @@ export default function PhaseSpine({
 
   return (
     <>
-      {/* ========================================================
-          MOBILE COMPACT PHASE & MULTIVERSE DRAWER TRIGGER
-         ======================================================== */}
+      {}
       <div className="fixed left-3 top-14 z-30 md:hidden flex items-center gap-1.5">
         <button
           onClick={() => setIsEarth616Expanded((prev) => !prev)}
@@ -61,7 +58,7 @@ export default function PhaseSpine({
         </button>
       </div>
 
-      {/* Mobile Slide-Out Phases & Multiverse Sheet */}
+      {}
       {isEarth616Expanded && (
         <div className="fixed inset-0 z-50 md:hidden flex select-none animate-in fade-in duration-200">
           <div
@@ -70,7 +67,7 @@ export default function PhaseSpine({
           />
           <aside className="relative z-10 w-full max-w-[320px] bg-[#000000] border-r border-stone-900 h-full p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300 shadow-[20px_0_50px_rgba(0,0,0,0.9)]">
             <div>
-              {/* Header */}
+              {}
               <div className="flex items-center justify-between pb-4 border-b border-stone-900 mb-6">
                 <span className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white">
                   SACRED TIMELINE HUD
@@ -84,14 +81,14 @@ export default function PhaseSpine({
                 </button>
               </div>
 
-              {/* Earth-616 Phases */}
+              {}
               <div className="border-b border-stone-900/80 pb-6 mb-6">
                 <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
                   EARTH-616 PHASES
                 </div>
 
                 <div className="flex flex-col gap-2.5">
-                  {/* Full Timeline Tree */}
+                  {}
                   <button
                     onClick={() => {
                       onSelectEarth616 && onSelectEarth616();
@@ -111,7 +108,7 @@ export default function PhaseSpine({
                     )}
                   </button>
 
-                  {/* Individual Phases 1 - 6 */}
+                  {}
                   {PHASES_CONFIG.map((p) => {
                     const isActive = p.id === currentPhase && !isFullOverview;
                     return (
@@ -139,7 +136,7 @@ export default function PhaseSpine({
                 </div>
               </div>
 
-              {/* Multiverse Earths */}
+              {}
               <div>
                 <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
                   MULTIVERSE CONTINUITIES
@@ -164,7 +161,7 @@ export default function PhaseSpine({
               </div>
             </div>
 
-            {/* Footer */}
+            {}
             <div className="pt-6 border-t border-stone-900 flex items-center justify-between text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
               <span>EARTH-616 CONTINUITY</span>
               <span>PHASE I — VI</span>
@@ -173,16 +170,14 @@ export default function PhaseSpine({
         </div>
       )}
 
-      {/* ========================================================
-          VERTICAL SIDE SPINE: OVERFLOW VISIBLE (DESKTOP)
-         ======================================================== */}
+      {}
       <aside className="fixed left-6 sm:left-10 top-24 z-40 select-none hidden md:flex flex-col items-start pointer-events-auto overflow-visible p-2">
-        {/* Spine Connecting Track Line */}
+        {}
         <div className="relative flex flex-col items-center py-2 overflow-visible">
-          {/* Centered vertical track line starting below the top node center */}
+          {}
           <div className="absolute top-6 bottom-0 left-7 -translate-x-1/2 w-[1.5px] bg-gradient-to-b from-stone-600 via-stone-700 to-transparent z-0 pointer-events-none" />
 
-          {/* Earths Node Track List */}
+          {}
           <div className="flex flex-col gap-5 relative z-10 overflow-visible">
             {MCU_EARTHS.map((earth) => {
               const is616 = earth.id === "earth-616";
@@ -190,7 +185,7 @@ export default function PhaseSpine({
 
               return (
                 <React.Fragment key={earth.id}>
-                  {/* Main Earth Circular Button Container */}
+                  {}
                   <div className="group relative flex items-center justify-center w-14 overflow-visible">
                     <button
                       onClick={() => {
@@ -214,13 +209,13 @@ export default function PhaseSpine({
                     >
                       {renderEarthLabel(earth.id, earth.designation, is616 && isEarth616Expanded)}
 
-                      {/* Rotating Glow Ring on Active Earth-616 */}
+                      {}
                       {is616 && isEarth616Expanded && (
                         <span className="absolute -inset-2 rounded-full border border-dotted border-white/35 animate-[spin_8s_linear_infinite] pointer-events-none" />
                       )}
                     </button>
 
-                    {/* Tooltip Label on Hover (Completely unclipped) */}
+                    {}
                     <div
                       onClick={() => {
                         if (is616) {
@@ -242,15 +237,13 @@ export default function PhaseSpine({
                     </div>
                   </div>
 
-                  {/* ========================================================
-                      EARTH-616 INLINE ROLL-DOWN ACCORDION (PHASE BRANCH)
-                     ======================================================== */}
+                  {}
                   {is616 && isEarth616Expanded && (
                     <div className="relative flex flex-col items-center gap-3 my-1 w-14 overflow-visible animate-in slide-in-from-top-3 fade-in duration-300">
-                      {/* Vertical connector line */}
+                      {}
                       <div className="w-[1.5px] h-3 bg-white/20 pointer-events-none" />
 
-                      {/* ALL (Full Timeline Overview) Node */}
+                      {}
                       <div className="group relative flex items-center justify-center w-14 overflow-visible animate-in slide-in-from-top-2 fade-in duration-200">
                         <button
                           onClick={() => onSelectEarth616 && onSelectEarth616()}
@@ -275,7 +268,7 @@ export default function PhaseSpine({
                         </div>
                       </div>
 
-                      {/* Phases I through VI Roll-Down Nodes */}
+                      {}
                       {PHASES_CONFIG.map((p, idx) => {
                         const isActive = p.id === currentPhase && !isFullOverview;
 
@@ -297,7 +290,7 @@ export default function PhaseSpine({
                               <span>{p.roman}</span>
                             </button>
 
-                            {/* Phase Tooltip: Float freely with clean visibility */}
+                            {}
                             <div
                               onClick={() => onSelectPhase && onSelectPhase(p.id)}
                               className={`absolute left-16 pl-4 transition-all duration-200 whitespace-nowrap flex flex-col cursor-pointer z-50 pointer-events-auto ${
@@ -319,7 +312,7 @@ export default function PhaseSpine({
                         );
                       })}
 
-                      {/* Vertical connector line ending */}
+                      {}
                       <div className="w-[1.5px] h-3 bg-white/20 pointer-events-none" />
                     </div>
                   )}
@@ -330,7 +323,7 @@ export default function PhaseSpine({
         </div>
       </aside>
 
-      {/* FULL-SCREEN MULTIVERSE REALITY DOSSIER PAGE */}
+      {}
       {selectedEarthModal && (
         <EarthDossierPage
           earth={selectedEarthModal}

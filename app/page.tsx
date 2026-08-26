@@ -8,7 +8,7 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Preload timeline and core destinations for zero-delay navigation
+
     router.prefetch("/timeline");
     router.prefetch("/characters");
     router.prefetch("/artifacts");

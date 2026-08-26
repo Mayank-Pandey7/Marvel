@@ -6,7 +6,6 @@ import { PHASES, MCU, MCUEntry } from "@/data/mcu";
 import SlideNavMenu from "./SlideNavMenu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
-// Edge-to-Edge Non-Overlapping Betel Leaf Geometry
 const EDGE_JOINED_BETEL_PATH = "M 100 100 Q 88 80 78 62 C 78 44, 90 28, 100 20 C 110 28, 122 44, 122 62 Q 112 80 100 100 Z";
 
 const BETEL_LEAVES = [
@@ -30,7 +29,6 @@ export default function DarkIntroSelector({
   const [hoveredMovieIndex, setHoveredMovieIndex] = useState<number | null>(null);
   const [navOpen, setNavOpen] = useState(false);
 
-  // Cinematic opening sequence stages: initial -> centered -> ascending -> ready
   const [introStage, setIntroStage] = useState<"initial" | "centered" | "ascending" | "ready">("initial");
 
   useEffect(() => {
@@ -44,28 +42,25 @@ export default function DarkIntroSelector({
     };
   }, []);
 
-  // Dynamic bounds for smooth continuous SLIDE animation of capsule and selector circle
   const [pillBounds, setPillBounds] = useState<{ left: number; width: number; height: number }>({ left: 0, width: 0, height: 0 });
   const [activeBtnBounds, setActiveBtnBounds] = useState<{ left: number; top: number; width: number; height: number }>({ left: 0, top: 0, width: 0, height: 0 });
-  
+
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Movies for the currently CLICKED active phase
   const currentPhaseMovies: MCUEntry[] = useMemo(() => {
     if (!activePhase) return [];
     return MCU.filter((m) => m.phase === activePhase);
   }, [activePhase]);
 
-  // Recalculate progress capsule and sliding selector circle bounding box
   useEffect(() => {
     const updateBounds = () => {
       const firstBtn = buttonRefs.current[0];
       const activeBtn = buttonRefs.current[selectedMovieIndex];
 
       if (firstBtn && activeBtn) {
-        // Use offset coordinates relative to container to prevent bounding rect jitter
+
         const btnWidth = activeBtn.offsetWidth || 28;
         const btnHeight = activeBtn.offsetHeight || 28;
         const diameter = Math.max(btnWidth, btnHeight) + 6;
@@ -104,7 +99,6 @@ export default function DarkIntroSelector({
     setSelectedMovieIndex(idx);
   };
 
-  // Ambient misty particle canvas animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -210,7 +204,7 @@ export default function DarkIntroSelector({
           animation: floatFull 3.6s ease-in-out infinite;
         }
       `}</style>
-      {/* Cinematic Background Doctor Doom Live Video Layer */}
+      {}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
       }`}>
@@ -228,10 +222,10 @@ export default function DarkIntroSelector({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
 
-      {/* Dynamic Background Canvas */}
+      {}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
 
-      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK */}
+      {}
       <div
         className={`fixed top-0 inset-x-0 h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-1000 ${
           introStage === "ready" ? "opacity-100" : "opacity-0"
@@ -239,7 +233,7 @@ export default function DarkIntroSelector({
         aria-hidden="true"
       />
 
-      {/* CINEMATIC ASCENDING BRAND TITLE (Original proportion with increased vertical letter height) */}
+      {}
       <div
         className="fixed z-40 pointer-events-none transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4"
         style={{
@@ -265,7 +259,7 @@ export default function DarkIntroSelector({
         </h1>
       </div>
 
-      {/* TOP BAR */}
+      {}
       <header className={`relative z-10 w-full px-4 sm:px-14 py-4 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
@@ -281,23 +275,23 @@ export default function DarkIntroSelector({
           </div>
         </button>
 
-        {/* Empty placeholder to balance flex container while ascending title docks above */}
+        {}
         <div className="invisible text-[7px] xs:text-[8px] sm:text-xs md:text-sm font-mono tracking-[0.14em] xs:tracking-[0.24em] sm:tracking-[0.45em] md:tracking-[0.6em] uppercase whitespace-nowrap">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </div>
 
-        {/* Spacer to keep center title balanced */}
+        {}
         <div className="w-6" />
       </header>
 
-      {/* BOTTOM-DOCKED INTERACTIVE CONTROLS */}
+      {}
       <main className={`relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-2 xs:px-4 mt-auto mb-3 overflow-visible transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
-        
-        {/* CONDITIONAL CONTROLS */}
+
+        {}
         {activePhase === null ? (
-          /* UNSELECTED PHASE PROMPT — click to directly show Phase 1 with trailer, flower & movies */
+
           <div className="flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
             <button
               onClick={() => handleSelectPhase(1)}
@@ -307,9 +301,9 @@ export default function DarkIntroSelector({
             </button>
           </div>
         ) : (
-          /* SELECTED PHASE: FLOWER + MOVIE TRACK + CONTINUE BUTTON (Floating unified HUD) */
+
           <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200 animate-float-full will-change-transform">
-            {/* Flower with increased size and animated glowing effects */}
+            {}
             <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
               <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
                 <defs>
@@ -374,10 +368,10 @@ export default function DarkIntroSelector({
               </svg>
             </div>
 
-            {/* DYNAMIC PROGRESS CAPSULE TRACK — Touch-scrollable on mobile */}
+            {}
             <div className="flex items-center justify-center my-1.5 select-none w-full max-w-full px-2 overflow-x-auto overflow-y-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <div ref={containerRef} className="relative inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-3 py-1.5 overflow-visible">
-                {/* 1. Dynamic Progress Capsule Pill */}
+                {}
                 {pillBounds.width > 0 && (
                   <div
                     className="absolute rounded-full border border-dotted border-white/60 bg-white/[0.04] pointer-events-none z-0 transition-[width,left] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -391,7 +385,7 @@ export default function DarkIntroSelector({
                   />
                 )}
 
-                {/* 2. Sliding Active Circle Ring */}
+                {}
                 {activeBtnBounds.width > 0 && (
                   <div
                     className="absolute pointer-events-none z-10 rounded-full border border-dotted border-white/95 bg-white/[0.12] transition-[left,width,height] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -405,7 +399,7 @@ export default function DarkIntroSelector({
                   />
                 )}
 
-                {/* Movie Number Buttons */}
+                {}
                 {currentPhaseMovies.map((movie, idx) => {
                   const isSelected = idx === selectedMovieIndex;
                   const isHovered = idx === hoveredMovieIndex;
@@ -436,7 +430,7 @@ export default function DarkIntroSelector({
               </div>
             </div>
 
-            {/* ACTIVE / HOVERED MOVIE CHRONOLOGY SUBTITLE */}
+            {}
             {(() => {
               const displayIndex = hoveredMovieIndex !== null ? hoveredMovieIndex : selectedMovieIndex;
               const displayMovie = currentPhaseMovies[displayIndex] || currentPhaseMovies[0];
@@ -458,7 +452,7 @@ export default function DarkIntroSelector({
               );
             })()}
 
-            {/* MINIMALIST 'C O N T I N U E' ACTION BUTTON */}
+            {}
             <div className="mt-2 mb-1 animate-in fade-in duration-700 delay-500 flex justify-center">
               <button
                 onClick={handleContinue}
@@ -472,7 +466,7 @@ export default function DarkIntroSelector({
 
       </main>
 
-      {/* BOTTOM FOOTER BAR (Only visible when a phase is actively selected) */}
+      {}
       <footer className={`relative z-10 w-full px-6 sm:px-14 py-3 sm:py-4 flex items-center justify-end text-[9px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
         introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-4"
       }`}>
@@ -483,7 +477,7 @@ export default function DarkIntroSelector({
         </div>
       </footer>
 
-      {/* Slide-out Navigation Drawer Menu */}
+      {}
       <SlideNavMenu isOpen={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );

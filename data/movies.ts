@@ -1,84 +1,76 @@
-/**
- * Represents a narrative causal connection between two MCU cinematic nodes.
- */
+
 export interface MovieConnection {
-  /** Target movie node identifier */
+
   toId: string;
-  /** Human-readable relationship context */
+
   relationship: string;
-  /** Type classification of the narrative thread */
+
   type: "direct_sequel" | "avengers_convergence" | "tesseract_arc" | "origin_thread" | "multiverse_branch";
 }
 
-/**
- * Core data structure representing a canonical Marvel Cinematic Universe timeline node.
- */
 export interface MovieNode {
-  /** Unique URL-friendly slug */
+
   id: string;
-  /** Full official theatrical title */
+
   title: string;
-  /** Condensed badge display title */
+
   shortTitle: string;
-  /** Theatrical release year */
+
   year: number;
-  /** Full ISO or human-readable release date */
+
   releaseDate: string;
-  /** MCU Phase index (1 through 6) */
+
   phase: number;
-  /** Chronological/theatrical order index */
+
   order: number;
-  /** Iconic theatrical dialogue quote */
+
   quote: string;
-  /** Character who delivered the quote */
+
   speaker: string;
-  /** Official promotional tagline */
+
   tagline: string;
-  /** Director(s) of the entry */
+
   director: string;
-  /** Theatrical runtime in minutes */
+
   runtime: number;
-  /** Primary protagonist name */
+
   leadCharacter: string;
-  /** Heroic / villainous alias */
+
   heroAlias: string;
-  /** Key artifacts featured in the film */
+
   keyRelics: string[];
-  /** Archival narrative overview */
+
   description: string;
-  /** Signature hex color accent */
+
   color: string;
-  /** Verified high-resolution official poster still */
+
   posterUrl?: string;
-  /** X coordinate on the 2000x10500 spatial canvas */
+
   x: number;
-  /** Y coordinate on the 2000x10500 spatial canvas */
+
   y: number;
-  /** Fine-tune vertical offset */
+
   offsetY: number;
-  /** Interconnected narrative links */
+
   connections: MovieConnection[];
 }
 
-/**
- * Multiversal reality record within the Marvel Cinematic Multiverse.
- */
 export interface MCUEarth {
-  /** Reality identifier slug */
+
   id: string;
-  /** Official designation code (e.g. Earth-616, Earth-838) */
+
   designation: string;
-  /** Common descriptive name */
+
   name: string;
-  /** Reality dossier narrative */
+
   description: string;
-  /** Key resident characters and variants */
+
   notableCharacters: string[];
-  /** Entries taking place in or referencing this reality */
+
   featuredMovies: string[];
-  /** Current multiversal stability state */
+
   status: "active" | "incursion_danger" | "destroyed" | "collapsed";
-  /** Hex color theme */
+
   color: string;
   hasPhases: boolean;
 }
@@ -173,9 +165,7 @@ export const PHASES_CONFIG = [
 ];
 
 export const UNIFIED_MCU_TREE: MovieNode[] = [
-  // ==========================================
-  // PHASE I: ORIGINS (2008 – 2012)
-  // ==========================================
+
   {
     id: "iron-man",
     title: "Iron Man",
@@ -334,9 +324,6 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // ==========================================
-  // PHASE II: ESCALATION (2013 – 2015)
-  // ==========================================
   {
     id: "iron-man-3",
     title: "Iron Man 3",
@@ -493,9 +480,6 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // ==========================================
-  // PHASE III: THE INFINITY CLIMAX (2016 – 2019)
-  // ==========================================
   {
     id: "cap-civil-war",
     title: "Captain America: Civil War",
@@ -779,9 +763,6 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // ==========================================
-  // PHASE IV: MULTIVERSE EXPANSION (2021 – 2022)
-  // ==========================================
   {
     id: "wandavision",
     title: "WandaVision",
@@ -1035,9 +1016,6 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // ==========================================
-  // PHASE V: FRACTURES & YGGDRASIL (2023 – 2025)
-  // ==========================================
   {
     id: "ant-man-quantumania",
     title: "Ant-Man and the Wasp: Quantumania",
@@ -1215,9 +1193,6 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // ==========================================
-  // PHASE VI: CONVERGENCE & SECRET WARS (2025 – 2027)
-  // ==========================================
   {
     id: "fantastic-four",
     title: "The Fantastic Four: First Steps",

@@ -12,7 +12,7 @@ export default function Timeline() {
   const { watched, order } = useWatched();
 
   const entries = useMemo(() => {
-    // Chronological order is approximated by in-story year; a simplification of true saga chronology.
+
     if (order === "chronological") return [...MCU].sort((a, b) => a.year - b.year);
     return MCU;
   }, [order]);
