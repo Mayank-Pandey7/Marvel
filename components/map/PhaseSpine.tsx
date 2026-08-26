@@ -20,13 +20,13 @@ export default function PhaseSpine({
   const [selectedEarthModal, setSelectedEarthModal] = useState<MCUEarth | null>(null);
   const [selectedEarthId, setSelectedEarthId] = useState<string>("earth-616");
 
-  // Render centered, spacious Earth designation (No clipping)
-  const renderEarthLabel = (earthId: string, designation: string) => {
+  // Render centered, spacious Earth designation with high contrast support
+  const renderEarthLabel = (earthId: string, designation: string, isWhiteBg: boolean = false) => {
     if (earthId === "battleworld") {
       return (
         <div className="flex flex-col items-center justify-center text-center select-none leading-tight pointer-events-none">
-          <span className="text-[7.5px] font-mono tracking-widest text-stone-400 uppercase">BATTLE</span>
-          <span className="text-[10px] font-mono font-black text-white tracking-wider">WORLD</span>
+          <span className={`text-[7.5px] font-mono tracking-widest uppercase ${isWhiteBg ? "text-stone-700 font-bold" : "text-stone-400"}`}>BATTLE</span>
+          <span className={`text-[10px] font-mono font-black tracking-wider ${isWhiteBg ? "text-black" : "text-white"}`}>WORLD</span>
         </div>
       );
     }
@@ -41,8 +41,8 @@ export default function PhaseSpine({
 
     return (
       <div className="flex flex-col items-center justify-center text-center select-none leading-tight pointer-events-none w-full">
-        <span className="text-[7px] font-mono tracking-[0.22em] text-stone-400 uppercase">EARTH</span>
-        <span className={`font-mono text-white ${numSizeClass}`}>{num}</span>
+        <span className={`text-[7.5px] font-mono tracking-[0.22em] uppercase font-bold ${isWhiteBg ? "text-stone-700" : "text-stone-400"}`}>EARTH</span>
+        <span className={`font-mono ${isWhiteBg ? "text-black font-black" : "text-white"} ${numSizeClass}`}>{num}</span>
       </div>
     );
   };
@@ -212,7 +212,7 @@ export default function PhaseSpine({
                       title={`${earth.designation} · ${earth.name}`}
                       aria-label={earth.designation}
                     >
-                      {renderEarthLabel(earth.id, earth.designation)}
+                      {renderEarthLabel(earth.id, earth.designation, is616 && isEarth616Expanded)}
 
                       {/* Rotating Glow Ring on Active Earth-616 */}
                       {is616 && isEarth616Expanded && (
