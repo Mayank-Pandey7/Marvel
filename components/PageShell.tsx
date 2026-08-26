@@ -54,7 +54,7 @@ export default function PageShell({
         </div>
 
         {}
-        <div className="flex items-center justify-center pointer-events-auto">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
           <Link
             href="/"
             className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.45em] sm:pl-[0.55em]"
@@ -64,19 +64,7 @@ export default function PageShell({
         </div>
 
         {}
-        <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
-          <Link
-            href="/movies"
-            className="hidden md:inline-flex items-center text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase transition-colors"
-          >
-            MOVIES
-          </Link>
-          <Link
-            href="/characters"
-            className="hidden md:inline-flex items-center text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase transition-colors"
-          >
-            CHARACTERS
-          </Link>
+        <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto">
           <Link
             href={backHref}
             className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"

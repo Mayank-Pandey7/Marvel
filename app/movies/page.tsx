@@ -7,6 +7,7 @@ import { Search, ArrowRight, Play, ExternalLink, Film, Calendar, Clock } from "l
 import PageShell from "@/components/PageShell";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
+import DeepMovieDetail from "@/components/map/DeepMovieDetail";
 
 const PHASE_FILTERS = [
   { id: "all", label: "ALL MOVIES & SERIES" },
@@ -150,14 +151,12 @@ function MoviesContent() {
                 const posterUrl = MCU_POSTER_MAP[movie.id]?.poster || "";
 
                 return (
-                  <div
+                  <Link
                     key={movie.id}
-                    className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out"
+                    href={`/movies/${movie.id}`}
+                    className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer"
                   >
-                    <Link
-                      href={`/timeline?phase=${movie.phase}&movie=${encodeURIComponent(movie.id)}`}
-                      className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-xl group-hover:border-white/30 transition-all block"
-                    >
+                    <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-xl group-hover:border-white/30 transition-all block">
                       {posterUrl ? (
                         <img
                           src={posterUrl}
@@ -173,7 +172,7 @@ function MoviesContent() {
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 pointer-events-none">
                         <span className="text-[9px] font-mono tracking-widest uppercase text-white flex items-center gap-1">
-                          <span>INSPECT IN TIMELINE</span>
+                          <span>OPEN DOSSIER</span>
                           <ArrowRight size={10} />
                         </span>
                       </div>
@@ -183,16 +182,15 @@ function MoviesContent() {
                           PHASE {movie.phase}
                         </span>
                       </div>
-                    </Link>
+                    </div>
 
                     <div className="flex flex-col gap-1">
-                      <Link
-                        href={`/timeline?phase=${movie.phase}&movie=${encodeURIComponent(movie.id)}`}
+                      <h3
                         className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-amber-300 transition-colors line-clamp-1"
                         title={movie.title}
                       >
                         {movie.title}
-                      </Link>
+                      </h3>
 
                       <div className="flex items-center gap-1.5 text-[9.5px] font-mono text-stone-500 uppercase tracking-widest">
                         <span>{movie.year}</span>
@@ -200,7 +198,7 @@ function MoviesContent() {
                         <span>{movie.runtime} MIN</span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
