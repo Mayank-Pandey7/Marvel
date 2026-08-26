@@ -125,97 +125,90 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
 };
 
 function resolveMovie(slug: string): MovieNode | null {
-  const norm = slug.toLowerCase().trim();
-  const canonical = MOVIE_SLUG_ALIASES[norm] || norm;
+  const normalizedSlug = slug.toLowerCase().trim();
 
-  let movie = UNIFIED_MCU_TREE.find(
-    (m) =>
-      m.id.toLowerCase() === canonical ||
-      m.id.toLowerCase() === norm ||
-      m.id.replace(/-/g, "") === canonical.replace(/-/g, "")
+  const directMatch = UNIFIED_MCU_TREE.find(
+    (m) => m.id.toLowerCase() === normalizedSlug
   );
+  if (directMatch) return directMatch;
 
-  if (!movie) {
-    const doomsdayItem = DOOMSDAY_WATCHLIST.find(
-      (d) =>
-        d.slug.toLowerCase() === canonical ||
-        d.id.toLowerCase() === canonical ||
-        d.slug.toLowerCase() === norm ||
-        d.id.toLowerCase() === norm
+  const aliasedId = MOVIE_SLUG_ALIASES[normalizedSlug];
+  if (aliasedId) {
+    const aliasMatch = UNIFIED_MCU_TREE.find(
+      (m) => m.id.toLowerCase() === aliasedId.toLowerCase()
     );
-
-    if (doomsdayItem) {
-      const existing = UNIFIED_MCU_TREE.find(
-        (m) =>
-          m.id.toLowerCase() === doomsdayItem.slug.toLowerCase() ||
-          m.id.toLowerCase() === doomsdayItem.id.toLowerCase()
-      );
-      if (existing) {
-        movie = {
-          ...existing,
-          posterUrl: doomsdayItem.posterUrl,
-          backdropUrl: doomsdayItem.backdropUrl,
-        };
-      } else {
-        movie = {
-          id: doomsdayItem.slug || doomsdayItem.id,
-          title: doomsdayItem.title,
-          phase: doomsdayItem.phase || 1,
-          year: doomsdayItem.year,
-          type: doomsdayItem.category === "Series" ? "series" : "movie",
-          tagline: doomsdayItem.tagline,
-          description: doomsdayItem.whyItMatters + "\n\n" + doomsdayItem.doomConnection,
-          runtime: 120,
-          connections: ["avengers-doomsday"],
-          posterUrl: doomsdayItem.posterUrl,
-          backdropUrl: doomsdayItem.backdropUrl,
-        } as MovieNode;
-      }
-    }
+    if (aliasMatch) return aliasMatch;
   }
 
-  if (!movie) {
-    const mcuEntry = MCU.find(
+  const mcuEntry = MCU.find((m) => m.id.toLowerCase() === normalizedSlug);
+  if (mcuEntry) {
+    const treeMatch = UNIFIED_MCU_TREE.find(
       (m) =>
-        m.id.toLowerCase() === canonical ||
-        m.id.toLowerCase() === norm ||
-        m.id.replace(/-/g, "") === canonical.replace(/-/g, "")
+        m.id.toLowerCase() === mcuEntry.id.toLowerCase() ||
+        m.title.toLowerCase() === mcuEntry.title.toLowerCase()
     );
-    if (mcuEntry) {
-      movie = {
-        id: mcuEntry.id,
-        title: mcuEntry.title,
-        phase: mcuEntry.phase,
-        year: mcuEntry.year,
-        type: mcuEntry.type,
-        tagline: mcuEntry.description.slice(0, 80) + "...",
-        description: mcuEntry.description,
-        runtime: 120,
-        connections: [],
-      } as MovieNode;
+    if (treeMatch) return treeMatch;
+  }
+
+  const doomsdayItem = DOOMSDAY_WATCHLIST.find(
+    (d) =>
+      d.id.toLowerCase() === normalizedSlug ||
+      d.slug.toLowerCase() === normalizedSlug ||
+      (aliasedId && (d.id.toLowerCase() === aliasedId.toLowerCase() || d.slug.toLowerCase() === aliasedId.toLowerCase())) ||
+      d.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===
+        normalizedSlug.replace(/[^a-z0-9]/g, "")
+  );
+  if (doomsdayItem) {
+    const treeMatch = UNIFIED_MCU_TREE.find(
+      (m) =>
+        m.id.toLowerCase() === doomsdayItem.slug.toLowerCase() ||
+        m.id.toLowerCase() === doomsdayItem.id.toLowerCase()
+    );
+    if (treeMatch) {
+      return {
+        ...treeMatch,
+        posterUrl: doomsdayItem.posterUrl,
+        backdropUrl: doomsdayItem.backdropUrl,
+      } as unknown as MovieNode;
     }
+
+    return {
+      id: doomsdayItem.slug || doomsdayItem.id,
+      title: doomsdayItem.title,
+      phase: doomsdayItem.phase || 1,
+      year: doomsdayItem.year,
+      type: doomsdayItem.category === "Series" ? "series" : "movie",
+      tagline: doomsdayItem.tagline,
+      description: doomsdayItem.whyItMatters + "\n\n" + doomsdayItem.doomConnection,
+      connections: ["avengers-doomsday"],
+      posterUrl: doomsdayItem.posterUrl,
+      backdropUrl: doomsdayItem.backdropUrl,
+    } as unknown as MovieNode;
   }
 
-  return movie || null;
+  const titleMatch = UNIFIED_MCU_TREE.find(
+    (m) =>
+      m.title.toLowerCase().replace(/[^a-z0-9]/g, "") ===
+      normalizedSlug.replace(/[^a-z0-9]/g, "")
+  );
+  if (titleMatch) return titleMatch;
+
+  return null;
 }
 
-export async function generateStaticParams() {
-  const ids = new Set<string>();
-  for (const m of UNIFIED_MCU_TREE) ids.add(m.id);
-  for (const d of DOOMSDAY_WATCHLIST) {
-    ids.add(d.id);
-    if (d.slug) ids.add(d.slug);
-  }
-  for (const key of Object.keys(MOVIE_SLUG_ALIASES)) ids.add(key);
-
-  return Array.from(ids).map((slug) => ({ slug }));
+export function generateStaticParams() {
+  const nodeSlugs = UNIFIED_MCU_TREE.map((m) => ({ slug: m.id }));
+  const aliasSlugs = Object.keys(MOVIE_SLUG_ALIASES).map((slug) => ({
+    slug,
+  }));
+  return [...nodeSlugs, ...aliasSlugs];
 }
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Promise<Metadata> {
+}): Metadata {
   const movie = resolveMovie(params.slug);
   if (!movie) return { title: "Movie Not Found | MCUVERSE" };
 
