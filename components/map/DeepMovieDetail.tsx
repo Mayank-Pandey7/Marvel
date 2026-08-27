@@ -137,18 +137,18 @@ export default function DeepMovieDetail({
     }, 400);
   };
 
-  if (!movie) return null;
-
   const mcuEntry = useMemo(() => {
+    if (!movie) return null;
     return MCU.find(
       (m) =>
         m.id === movie.id ||
         m.id.toLowerCase() === movie.id.toLowerCase() ||
         m.id.replace(/-/g, "") === movie.id.replace(/-/g, "")
     );
-  }, [movie.id]);
+  }, [movie?.id]);
 
   const featuredCharacters = useMemo(() => {
+    if (!movie) return [];
     const charIds = mcuEntry?.characters || [];
     const matched = CHARACTERS.filter(
       (c) =>
@@ -158,6 +158,8 @@ export default function DeepMovieDetail({
     );
     return matched.slice(0, 8);
   }, [mcuEntry, movie]);
+
+  if (!movie) return null;
 
   const connectedMovies = (movie.connections || [])
     .map((conn) => {
