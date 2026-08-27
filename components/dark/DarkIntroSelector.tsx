@@ -214,7 +214,6 @@ export default function DarkIntroSelector({
           muted
           playsInline
           preload="auto"
-          poster="/images/doomsday-bg.jpg"
           className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-90 filter brightness-105 contrast-110 select-none transform-gpu"
         >
           <source src="/trailers/doctor-doom.3840x2160.mp4" type="video/mp4" />
