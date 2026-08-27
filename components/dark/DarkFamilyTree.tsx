@@ -473,10 +473,11 @@ export default function DarkFamilyTree({
       contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
     }
 
+    // Debounce state update to avoid frequent re-renders during continuous wheel zoom
     if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
     wheelTimeoutRef.current = setTimeout(() => {
       setCamera({ ...cameraRef.current });
-    }, 80);
+    }, 200); // increased debounce interval for smoother experience
   };
 
   const handleDoubleClick = (e: React.MouseEvent) => {
