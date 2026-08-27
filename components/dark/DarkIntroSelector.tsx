@@ -28,7 +28,19 @@ export default function DarkIntroSelector({
   const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
   const [hoveredMovieIndex, setHoveredMovieIndex] = useState<number | null>(null);
   const [navOpen, setNavOpen] = useState(false);
-  const [introStage] = useState<"ready">("ready");
+
+  const [introStage, setIntroStage] = useState<"initial" | "centered" | "ascending" | "ready">("initial");
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setIntroStage("centered"), 80);
+    const t2 = setTimeout(() => setIntroStage("ascending"), 1000);
+    const t3 = setTimeout(() => setIntroStage("ready"), 1950);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
 
   const [pillBounds, setPillBounds] = useState<{ left: number; width: number; height: number }>({ left: 0, width: 0, height: 0 });
   const [activeBtnBounds, setActiveBtnBounds] = useState<{ left: number; top: number; width: number; height: number }>({ left: 0, top: 0, width: 0, height: 0 });
@@ -89,27 +101,27 @@ export default function DarkIntroSelector({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animId: number;
-    let width = (canvas.width = Math.min(window.innerWidth, 1920));
-    let height = (canvas.height = Math.min(window.innerHeight, 1080));
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = Math.min(window.innerWidth, 1920);
-      height = canvas.height = Math.min(window.innerHeight, 1080);
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
-    const clouds = Array.from({ length: 8 }, () => ({
+    const clouds = Array.from({ length: 12 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.15,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
       radius: Math.random() * 140 + 70,
-      baseOpacity: Math.random() * 0.025 + 0.01,
+      baseOpacity: Math.random() * 0.025 + 0.008,
       phase: Math.random() * Math.PI * 2,
     }));
 
@@ -119,7 +131,8 @@ export default function DarkIntroSelector({
       time += 0.008;
       ctx.clearRect(0, 0, width, height);
 
-      clouds.forEach((c) => {
+      for (let i = 0; i < clouds.length; i++) {
+        const c = clouds[i];
         c.x += c.vx;
         c.y += c.vy;
         if (c.x < -140) c.x = width + 140;
@@ -127,17 +140,17 @@ export default function DarkIntroSelector({
         if (c.y < -140) c.y = height + 140;
         if (c.y > height + 140) c.y = -140;
 
-        const dynamicOpacity = c.baseOpacity * (1 + 0.25 * Math.sin(time + c.phase));
+        const dynamicOpacity = c.baseOpacity * (1 + 0.2 * Math.sin(time + c.phase));
         const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.radius);
         grad.addColorStop(0, `rgba(255, 255, 255, ${dynamicOpacity})`);
-        grad.addColorStop(0.5, `rgba(180, 190, 210, ${dynamicOpacity * 0.3})`);
+        grad.addColorStop(0.6, `rgba(180, 190, 210, ${dynamicOpacity * 0.3})`);
         grad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
         ctx.fill();
-      });
+      }
 
       animId = requestAnimationFrame(render);
     };
@@ -191,13 +204,16 @@ export default function DarkIntroSelector({
           animation: floatFull 3.6s ease-in-out infinite;
         }
       `}</style>
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {}
+      <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 transform-gpu will-change-[opacity] ${
+        introStage === "ready" ? "opacity-100" : "opacity-0"
+      }`}>
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           poster="/images/doomsday-bg.jpg"
           className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-90 filter brightness-105 contrast-110 select-none transform-gpu"
         >
@@ -207,20 +223,40 @@ export default function DarkIntroSelector({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
 
+      {}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
 
+      {}
       <div
-        className="fixed top-0 inset-x-0 h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]"
+        className={`fixed top-0 inset-x-0 h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-1000 ${
+          introStage === "ready" ? "opacity-100" : "opacity-0"
+        }`}
         aria-hidden="true"
       />
 
-      <div className="fixed top-[26px] left-1/2 -translate-x-1/2 z-40 pointer-events-none flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4">
-        <h1 className="font-mono uppercase text-stone-100 font-light tracking-[0.2em] sm:tracking-[0.5em] text-[8px] xs:text-[10px] sm:text-xs md:text-sm inline-block whitespace-nowrap drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">
+      {}
+      <div
+        className="fixed top-[22px] sm:top-[26px] left-1/2 z-40 pointer-events-none flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4 will-change-transform"
+        style={{
+          transform:
+            introStage === "initial"
+              ? "translate3d(-50%, calc(50vh - 50px), 0) scale3d(0.92, 0.92, 1)"
+              : introStage === "centered"
+              ? "translate3d(-50%, calc(50vh - 50px), 0) scale3d(1.22, 1.22, 1)"
+              : "translate3d(-50%, 0, 0) scale3d(1, 1, 1)",
+          opacity: introStage === "initial" ? 0 : 1,
+          transition: "transform 900ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease-out",
+        }}
+      >
+        <h1 className="font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_16px_rgba(255,255,255,0.45)] inline-block whitespace-nowrap text-[7.5px] xs:text-[9px] sm:text-xs md:text-sm tracking-[0.2em] xs:tracking-[0.32em] sm:tracking-[0.5em] md:tracking-[0.65em] select-none">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </h1>
       </div>
 
-      <header className="relative z-10 w-full px-4 sm:px-14 py-4 sm:py-6 flex items-center justify-between">
+      {}
+      <header className={`relative z-10 w-full px-4 sm:px-14 py-4 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
+        introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}>
         <button
           onClick={() => setNavOpen(true)}
           className="text-stone-400 hover:text-white transition-colors p-1.5 cursor-pointer group flex items-center"
@@ -242,7 +278,10 @@ export default function DarkIntroSelector({
         <div className="w-6" />
       </header>
 
-      <main className="relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-2 xs:px-4 mt-auto mb-3 overflow-visible">
+      {}
+      <main className={`relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-2 xs:px-4 mt-auto mb-3 overflow-visible transition-opacity duration-1000 ${
+        introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}>
 
         {}
         {activePhase === null ? (

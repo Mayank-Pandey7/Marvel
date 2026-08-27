@@ -202,7 +202,7 @@ export default function UniverseMap({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animId: number;
@@ -214,7 +214,7 @@ export default function UniverseMap({
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     const particles = Array.from({ length: 48 }, () => ({
       x: Math.random() * width,
