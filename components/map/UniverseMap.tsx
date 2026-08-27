@@ -42,6 +42,8 @@ export default function UniverseMap({
     initialCamY?: number;
   }>({});
 
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     cameraRef.current = camera;
   }, [camera]);
@@ -49,7 +51,7 @@ export default function UniverseMap({
   const updateCameraTransform = useCallback((newCamera: { x: number; y: number; scale: number }, isSmooth: boolean = false) => {
     cameraRef.current = newCamera;
     if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = isSmooth ? "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)" : "none";
+      contentLayerRef.current.style.transition = isSmooth ? "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)" : "none";
       contentLayerRef.current.style.transform = `translate3d(${newCamera.x}px, ${newCamera.y}px, 0) scale(${newCamera.scale})`;
     }
     setCamera(newCamera);
@@ -394,8 +396,13 @@ export default function UniverseMap({
       contentLayerRef.current.style.transition = "none";
       contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
     }
-    setCamera({ ...cameraRef.current });
-    setIsFullOverview(false);
+
+    if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+    wheelTimeoutRef.current = setTimeout(() => {
+      setCamera({ ...cameraRef.current });
+    }, 60);
+
+    if (isFullOverview) setIsFullOverview(false);
   };
 
   const handleDoubleClick = (e: React.MouseEvent) => {

@@ -198,7 +198,7 @@ export default function DarkFamilyTree({
       cameraRef.current = { x: newX, y: newY, scale: targetScale };
       if (contentLayerRef.current) {
         if (isSmooth) {
-          contentLayerRef.current.style.transition = "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)";
+          contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
         } else {
           contentLayerRef.current.style.transition = "none";
         }
@@ -583,16 +583,36 @@ export default function DarkFamilyTree({
     }
   };
 
-  const zoomIn = () =>
-    setCamera((prev) => ({
-      ...prev,
-      scale: Math.min(prev.scale * 1.25, 1.8),
-    }));
-  const zoomOut = () =>
-    setCamera((prev) => ({
-      ...prev,
-      scale: Math.max(prev.scale * 0.8, 0.15),
-    }));
+  const zoomIn = () => {
+    const nextScale = Math.min(cameraRef.current.scale * 1.30, 1.8);
+    if (!containerRef.current) return;
+    const cx = containerRef.current.clientWidth / 2;
+    const cy = containerRef.current.clientHeight / 2;
+    const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+    const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+    cameraRef.current = { x: newX, y: newY, scale: nextScale };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
+    }
+    setCamera({ x: newX, y: newY, scale: nextScale });
+  };
+
+  const zoomOut = () => {
+    const nextScale = Math.max(cameraRef.current.scale * 0.75, 0.20);
+    if (!containerRef.current) return;
+    const cx = containerRef.current.clientWidth / 2;
+    const cy = containerRef.current.clientHeight / 2;
+    const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
+    const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+    cameraRef.current = { x: newX, y: newY, scale: nextScale };
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
+      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
+    }
+    setCamera({ x: newX, y: newY, scale: nextScale });
+  };
+
   const resetView = () => {
     focusOnCluster("all");
   };
@@ -988,13 +1008,11 @@ export default function DarkFamilyTree({
       {}
       <div
         ref={contentLayerRef}
-        className="absolute inset-0 origin-top-left pointer-events-auto"
+        className="absolute inset-0 origin-top-left pointer-events-auto will-change-transform"
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
           width: "5000px",
           height: "3000px",
-          transition: "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
-          willChange: "transform",
         }}
       >
         {}
