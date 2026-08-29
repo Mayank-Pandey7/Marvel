@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>MCU Character Filmstrip</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    body {
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .stage {
+      --pointer-x: 50%;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 440px;
+      overflow: hidden;
+      isolation: isolate;
+      perspective: 1450px;
+      cursor: ew-resize;
+      touch-action: none;
+      background: #000000;
+      border: 0;
+    }
+
+    .deck {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      transform-style: preserve-3d;
+    }
+
+    .card {
+      --focus: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(154px, 16.8vw, 238px);
+      aspect-ratio: 0.72;
+      padding: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      color: #f3e7ce;
+      background: #0a0a0f;
+      box-shadow:
+        0 calc(10px + var(--focus) * 24px) calc(20px + var(--focus) * 36px)
+          rgba(0, 0, 0, calc(0.7 + var(--focus) * 0.3)),
+        0 0 calc(var(--focus) * 28px) rgba(255, 255, 255, calc(var(--focus) * 0.35)),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      appearance: none;
+      outline: none;
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+      cursor: pointer;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      z-index: 3;
+      border: 1px solid rgba(255, 255, 255, calc(0.06 + var(--focus) * 0.14));
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .card:focus-visible {
+      box-shadow:
+        0 26px 50px rgba(0, 0, 0, 0.85),
+        0 0 0 3px rgba(255, 255, 255, 0.7);
+    }
+
+    .portrait {
+      position: absolute;
+      inset: 6px 6px 26%;
+      overflow: hidden;
+      border-radius: 8px 8px 0 0;
+      background: #000000;
+    }
+
+    .portrait img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      transform: scale(calc(1.02 + (1 - var(--focus)) * 0.06));
+      filter:
+        saturate(calc(0.85 + var(--focus) * 0.35))
+        contrast(1.06);
+      transition: filter 0.2s ease-out;
+    }
+
+    .footer {
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      left: 6px;
+      height: calc(26% - 6px);
+      display: grid;
+      grid-template-columns: clamp(24px, 2.8vw, 36px) 1fr;
+      align-items: center;
+      gap: clamp(6px, 0.7vw, 10px);
+      padding: clamp(6px, 0.7vw, 10px);
+      color: #f0dfc2;
+      background: #000000;
+      border-radius: 0 0 8px 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+    }
+
+    .index {
+      display: grid;
+      width: clamp(22px, 2.5vw, 32px);
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      color: #ffffff;
+      font: 600 clamp(7.5px, 0.65vw, 10px)/1 ui-monospace, "SFMono-Regular", monospace;
+    }
+
+    .meta {
+      min-width: 0;
+    }
+
+    .name,
+    .role {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .name {
+      color: #ffffff;
+      font-size: clamp(8.5px, 0.8vw, 12px);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      line-height: 1.15;
+    }
+
+    .role {
+      margin-top: clamp(2px, 0.3vw, 4px);
+      color: #d4d4d8;
+      font-size: clamp(5.5px, 0.45vw, 7.5px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 650px) {
+      .stage {
+        min-height: 540px;
+        cursor: ns-resize;
+        background: #000000;
+      }
+
+      .card {
+        width: clamp(142px, 47vw, 180px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card {
+        will-change: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage" aria-label="Interactive MCU Character Filmstrip">
+    <h1 class="sr-only">MCU Multiverse Filmstrip</h1>
+    <p class="sr-only">Move, scroll, or use the arrow keys to browse the canonical heroes and villains.</p>
+    <div class="deck" id="deck" data-testid="filmstrip"></div>
+  </main>
+
+  <script>
+    (() => {
+      const defaultProfiles = [
+  {
+    "id": "iron-man",
+    "name": "Tony Stark",
+    "role": "IRON MAN",
+    "portrait": "/images/characters/tony-stark.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "captain-america",
+    "name": "Steve Rogers",
+    "role": "CAPTAIN AMERICA",
+    "portrait": "/images/characters/steve-rogers.jpg",
+    "universe": "Earth-616 (Retired to Past Branch)"
+  },
+  {
+    "id": "thor",
+    "name": "Thor Odinson",
+    "role": "GOD OF THUNDER",
+    "portrait": "/images/characters/thor.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "hulk",
+    "name": "Bruce Banner",
+    "role": "THE INCREDIBLE HULK",
+    "portrait": "/images/characters/hulk.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "black-widow",
+    "name": "Natasha Romanoff",
+    "role": "BLACK WIDOW",
+    "portrait": "/images/characters/natasha-romanoff.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "hawkeye",
+    "name": "Clint Barton",
+    "role": "HAWKEYE",
+    "portrait": "/images/characters/hawkeye.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "loki",
+    "name": "Loki Laufeyson",
+    "role": "GOD OF MISCHIEF",
+    "portrait": "/images/characters/loki.jpg",
+    "universe": "Earth-616 / 2012 Branch / Citadel / Yggdrasil"
+  },
+  {
+    "id": "wanda",
+    "name": "Wanda Maximoff",
+    "role": "SCARLET WITCH",
+    "portrait": "/images/characters/wanda-maximoff.jpg",
+    "universe": "Earth-616 (Dreamwalked to Earth-838)"
+  },
+  {
+    "id": "doctor-strange",
+    "name": "Dr. Stephen Strange",
+    "role": "DOCTOR STRANGE",
+    "portrait": "/images/characters/doctor-strange.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "spider-man",
+    "name": "Peter Parker (Earth-616)",
+    "role": "SPIDER-MAN",
+    "portrait": "/images/characters/peter-parker.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "spider-man-maguire",
+    "name": "Peter Parker (Earth-96283)",
+    "role": "FRIENDLY NEIGHBORHOOD SPIDER-MAN",
+    "portrait": "/images/characters/spider-man-tobey.jpg",
+    "universe": "Earth-96283"
+  },
+  {
+    "id": "spider-man-garfield",
+    "name": "Peter Parker (Earth-120703)",
+    "role": "THE AMAZING SPIDER-MAN",
+    "portrait": "/images/characters/spider-man-andrew.jpg",
+    "universe": "Earth-120703"
+  },
+  {
+    "id": "deadpool",
+    "name": "Wade Wilson",
+    "role": "DEADPOOL",
+    "portrait": "/images/characters/deadpool.jpg",
+    "universe": "Earth-10005 (Travels via TVA Tempad)"
+  },
+  {
+    "id": "wolverine",
+    "name": "Logan",
+    "role": "WOLVERINE",
+    "portrait": "/images/characters/wolverine.jpg",
+    "universe": "Earth-10005 / Variant Reality"
+  },
+  {
+    "id": "reed-richards",
+    "name": "Reed Richards",
+    "role": "MISTER FANTASTIC",
+    "portrait": "/images/characters/reed-richards.jpg",
+    "universe": "Earth-616 Alternate (1960s Retro-Future) / Earth-838"
+  },
+  {
+    "id": "sue-storm",
+    "name": "Sue Storm",
+    "role": "THE INVISIBLE WOMAN",
+    "portrait": "/images/characters/sue-storm.jpg",
+    "universe": "Earth-616 Alternate (1960s Retro-Future)"
+  },
+  {
+    "id": "johnny-storm",
+    "name": "Johnny Storm",
+    "role": "THE HUMAN TORCH",
+    "portrait": "/images/characters/johnny-storm.jpg",
+    "universe": "Earth-10005 / The Void / Earth-616 Alternate"
+  },
+  {
+    "id": "ben-grimm",
+    "name": "Ben Grimm",
+    "role": "THE THING",
+    "portrait": "/images/characters/ben-grimm.jpg",
+    "universe": "Earth-616 Alternate (1960s Retro-Future)"
+  },
+  {
+    "id": "galactus",
+    "name": "Galactus",
+    "role": "THE DEVOURER OF WORLDS",
+    "portrait": "/images/characters/galactus.jpg",
+    "universe": "Cosmic Multiverse"
+  },
+  {
+    "id": "professor-x",
+    "name": "Charles Xavier",
+    "role": "PROFESSOR X",
+    "portrait": "/images/characters/charles-xavier.jpg",
+    "universe": "Earth-838 / Earth-10005"
+  },
+  {
+    "id": "magneto",
+    "name": "Erik Lehnsherr",
+    "role": "MAGNETO",
+    "portrait": "/images/characters/erik-lehnsherr.jpg",
+    "universe": "Earth-10005 / Multiverse"
+  },
+  {
+    "id": "gambit",
+    "name": "Remy LeBeau",
+    "role": "GAMBIT",
+    "portrait": "/images/characters/gambit.jpg",
+    "universe": "The Void / Unmade Reality"
+  },
+  {
+    "id": "x-23",
+    "name": "Laura Kinney",
+    "role": "X-23",
+    "portrait": "/images/characters/x-23.jpg",
+    "universe": "Earth-10005 (Pruned to The Void, Rescued)"
+  },
+  {
+    "id": "beast",
+    "name": "Dr. Hank McCoy",
+    "role": "BEAST",
+    "portrait": "/images/characters/beast.jpg",
+    "universe": "Earth-TBD (Alternate Mutant Reality)"
+  },
+  {
+    "id": "daredevil",
+    "name": "Matt Murdock",
+    "role": "DAREDEVIL",
+    "portrait": "/images/characters/matt-murdock.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "punisher",
+    "name": "Frank Castle",
+    "role": "THE PUNISHER",
+    "portrait": "/images/characters/frank-castle.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "kingpin",
+    "name": "Wilson Fisk",
+    "role": "KINGPIN",
+    "portrait": "/images/characters/wilson-fisk.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "star-lord",
+    "name": "Peter Quill",
+    "role": "STAR-LORD",
+    "portrait": "/images/characters/peter-quill.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "rocket-raccoon",
+    "name": "Rocket Raccoon",
+    "role": "ROCKET",
+    "portrait": "/images/characters/rocket-raccoon.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "yelena-belova",
+    "name": "Yelena Belova",
+    "role": "WHITE WIDOW",
+    "portrait": "/images/characters/yelena-belova.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "bucky-barnes",
+    "name": "Bucky Barnes",
+    "role": "THE WINTER SOLDIER",
+    "portrait": "/images/characters/bucky-barnes.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "thanos",
+    "name": "Thanos",
+    "role": "THE MAD TITAN",
+    "portrait": "/images/characters/thanos.jpg",
+    "universe": "Earth-616 / 2014 Branch"
+  },
+  {
+    "id": "kang-the-conqueror",
+    "name": "Kang the Conqueror",
+    "role": "KANG",
+    "portrait": "/images/characters/kang-the-conqueror.jpg",
+    "universe": "31st Century / Quantum Realm / Citadel at the End of Time / Council of Kangs"
+  },
+  {
+    "id": "doctor-doom",
+    "name": "Victor von Doom",
+    "role": "DOCTOR DOOM",
+    "portrait": "/images/characters/doctor-doom.jpg",
+    "universe": "Multiverse / Battleworld / Latveria"
+  },
+  {
+    "id": "ultron",
+    "name": "Ultron",
+    "role": "THE INFINITE MACHINE",
+    "portrait": "/images/characters/ultron.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "green-goblin",
+    "name": "Norman Osborn",
+    "role": "GREEN GOBLIN",
+    "portrait": "/images/characters/green-goblin.jpg",
+    "universe": "Earth-96283 (Incursion into Earth-616)"
+  },
+  {
+    "id": "doc-ock",
+    "name": "Dr. Otto Octavius",
+    "role": "DOCTOR OCTOPUS",
+    "portrait": "/images/characters/doc-ock.jpg",
+    "universe": "Earth-96283 (Incursion into Earth-616)"
+  },
+  {
+    "id": "hela",
+    "name": "Hela",
+    "role": "GODDESS OF DEATH",
+    "portrait": "/images/characters/hela.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "killmonger",
+    "name": "N'Jadaka / Erik Killmonger",
+    "role": "ERIK STEVENS",
+    "portrait": "/images/characters/killmonger.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "namor",
+    "name": "Namor",
+    "role": "K'UK'ULKAN",
+    "portrait": "/images/characters/namor.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "sam-wilson",
+    "name": "Sam Wilson",
+    "role": "CAPTAIN AMERICA",
+    "portrait": "/images/characters/sam-wilson.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "shuri",
+    "name": "Shuri",
+    "role": "BLACK PANTHER",
+    "portrait": "/images/characters/shuri.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "shang-chi",
+    "name": "Shang-Chi",
+    "role": "SHAUN",
+    "portrait": "/images/characters/shang-chi.jpg",
+    "universe": "Earth-616 / Ta Lo"
+  },
+  {
+    "id": "captain-marvel",
+    "name": "Carol Danvers",
+    "role": "CAPTAIN MARVEL",
+    "portrait": "/images/characters/captain-marvel.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "ant-man",
+    "name": "Scott Lang",
+    "role": "ANT-MAN",
+    "portrait": "/images/characters/scott-lang.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "wong",
+    "name": "Wong",
+    "role": "SORCERER SUPREME",
+    "portrait": "/images/characters/wong.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "america-chavez",
+    "name": "America Chavez",
+    "role": "AMERICA",
+    "portrait": "/images/characters/america-chavez.jpg",
+    "universe": "Utopian Parallel / Earth-616 (Kamar-Taj)"
+  },
+  {
+    "id": "vision",
+    "name": "Vision",
+    "role": "VISION",
+    "portrait": "/images/characters/vision.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "moon-knight",
+    "name": "Marc Spector / Steven Grant",
+    "role": "MOON KNIGHT",
+    "portrait": "/images/characters/moon-knight.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "ms-marvel",
+    "name": "Kamala Khan",
+    "role": "MS. MARVEL",
+    "portrait": "/images/characters/ms-marvel.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "the-watcher",
+    "name": "Uatu the Watcher",
+    "role": "THE WATCHER",
+    "portrait": "/images/characters/the-watcher.jpg",
+    "universe": "Multiverse Nexus"
+  },
+  {
+    "id": "red-skull",
+    "name": "Johann Schmidt",
+    "role": "RED SKULL",
+    "portrait": "/images/characters/red-skull.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "gorr",
+    "name": "Gorr the God Butcher",
+    "role": "GORR",
+    "portrait": "/images/characters/gorr.jpg",
+    "universe": "Earth-616 / Shadow Realm"
+  },
+  {
+    "id": "mysterio",
+    "name": "Quentin Beck",
+    "role": "MYSTERIO",
+    "portrait": "/images/characters/mysterio.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "vulture",
+    "name": "Adrian Toomes",
+    "role": "THE VULTURE",
+    "portrait": "/images/characters/vulture.jpg",
+    "universe": "Earth-616 (Displaced to Earth-688)"
+  },
+  {
+    "id": "wenwu",
+    "name": "Xu Wenwu",
+    "role": "THE MANDARIN",
+    "portrait": "/images/characters/xu-wenwu.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "agatha-harkness",
+    "name": "Agatha Harkness",
+    "role": "AGNES",
+    "portrait": "/images/characters/agatha-harkness.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "high-evolutionary",
+    "name": "The High Evolutionary",
+    "role": "HERBERT WYNDHAM",
+    "portrait": "/images/characters/high-evolutionary.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "red-hulk",
+    "name": "Thaddeus 'Thunderbolt' Ross",
+    "role": "RED HULK",
+    "portrait": "/images/characters/red-hulk.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "zemo",
+    "name": "Helmut Zemo",
+    "role": "BARON ZEMO",
+    "portrait": "/images/characters/zemo.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "ronan",
+    "name": "Ronan the Accuser",
+    "role": "THE ACCUSER",
+    "portrait": "/images/characters/ronan.jpg",
+    "universe": "Earth-616"
+  },
+  {
+    "id": "cassandra-nova",
+    "name": "Cassandra Nova",
+    "role": "THE VOID QUEEN",
+    "portrait": "/images/characters/cassandra-nova.jpg",
+    "universe": "The Void (End of Time)"
+  }
+];
+
+      const profiles = (window.__CUSTOM_PROFILES__ && Array.isArray(window.__CUSTOM_PROFILES__) && window.__CUSTOM_PROFILES__.length > 0)
+        ? window.__CUSTOM_PROFILES__
+        : defaultProfiles;
+
+      const stage = document.querySelector("#stage");
+      const deck = document.querySelector("#deck");
+      const cards = profiles.map((profile, index) => {
+        const card = document.createElement("button");
+        card.className = "card";
+        card.type = "button";
+        card.dataset.index = String(index);
+        card.setAttribute("aria-label", `Focus ${profile.name}, ${profile.role}`);
+        card.innerHTML = `
+          <span class="portrait">
+            <img src="${profile.portrait}" alt="Portrait of ${profile.name}" loading="lazy">
+          </span>
+          <span class="footer">
+            <span class="index">${String(index + 1).padStart(2, "0")}</span>
+            <span class="meta">
+              <span class="name">${profile.name}</span>
+              <span class="role">${profile.role}</span>
+            </span>
+          </span>`;
+        deck.append(card);
+        return card;
+      });
+
+      const count = cards.length;
+      const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const state = {
+        phase: 0,
+        target: 0,
+        base: 0,
+        pointerX: 0,
+        pointerY: 0,
+        active: false,
+        lastInput: performance.now()
+      };
+
+      function wrappedDelta(index, phase) {
+        let delta = index - phase;
+        while (delta > count / 2) delta -= count;
+        while (delta < -count / 2) delta += count;
+        return delta;
+      }
+
+      function nearestIndex() {
+        return (Math.round(state.phase) % count + count) % count;
+      }
+
+      function moveTo(index) {
+        const current = nearestIndex();
+        let delta = index - current;
+        if (delta > count / 2) delta -= count;
+        if (delta < -count / 2) delta += count;
+        state.base += delta;
+        state.target = state.base;
+        state.active = false;
+        state.lastInput = performance.now();
+      }
+
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+          const profile = profiles[index];
+          if (nearestIndex() === index && profile && profile.id) {
+            window.parent.postMessage({ type: "character-select", characterId: profile.id }, "*");
+          } else {
+            moveTo(index);
+          }
+        });
+        card.addEventListener("focus", () => moveTo(index));
+      });
+
+      stage.addEventListener("pointermove", (event) => {
+        const rect = stage.getBoundingClientRect();
+        const nx = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2));
+        const ny = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2));
+        state.pointerX = nx;
+        state.pointerY = ny;
+        state.active = true;
+        state.target = state.base + (innerWidth < 650 ? ny * 2.2 : nx * 3.1);
+        state.lastInput = performance.now();
+        stage.style.setProperty("--pointer-x", `${(nx + 1) * 50}%`);
+      });
+
+      stage.addEventListener("pointerleave", () => {
+        state.active = false;
+        state.pointerX = 0;
+        state.pointerY = 0;
+        state.target = state.base;
+        stage.style.setProperty("--pointer-x", "50%");
+      });
+
+      stage.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        const direction = Math.sign(Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX);
+        if (!direction) return;
+        state.base += direction;
+        state.target = state.base;
+        state.active = false;
+        state.lastInput = performance.now();
+      }, { passive: false });
+
+      addEventListener("keydown", (event) => {
+        const forward = event.key === "ArrowRight" || event.key === "ArrowDown";
+        const backward = event.key === "ArrowLeft" || event.key === "ArrowUp";
+        if (!forward && !backward) return;
+        event.preventDefault();
+        state.base += forward ? 1 : -1;
+        state.target = state.base;
+        state.active = false;
+        state.lastInput = performance.now();
+      });
+
+      window.addEventListener("message", (event) => {
+        if (!event.data) return;
+        if (event.data.type === "step-prev" || event.data.type === "step-left") {
+          state.base -= 1;
+          state.target = state.base;
+          state.active = false;
+          state.lastInput = performance.now();
+        } else if (event.data.type === "step-next" || event.data.type === "step-right") {
+          state.base += 1;
+          state.target = state.base;
+          state.active = false;
+          state.lastInput = performance.now();
+        }
+      });
+
+      let previousTime = performance.now();
+
+      function render(time) {
+        const deltaTime = Math.min(32, time - previousTime);
+        previousTime = time;
+        const ease = reducedMotion ? 1 : 1 - Math.pow(0.001, deltaTime / 1000);
+
+        if (!state.active && time - state.lastInput > 3600) {
+          const idle = time - state.lastInput - 3600;
+          state.target = state.base + Math.sin(idle * 0.00042) * 2.45;
+        }
+
+        state.phase += (state.target - state.phase) * ease;
+        const compact = innerWidth < 650;
+        const activeIndex = nearestIndex();
+        const horizontalSpacing = Math.min(168, Math.max(112, innerWidth * 0.116));
+        const verticalSpacing = Math.min(122, Math.max(88, innerHeight * 0.112));
+
+        cards.forEach((card, index) => {
+          const delta = wrappedDelta(index, state.phase);
+          const distance = Math.abs(delta);
+          const focus = Math.exp(-distance * distance * 1.28);
+          const side = Math.max(0, 1 - distance / 5);
+          const direction = Math.sign(delta);
+          const x = compact
+            ? delta * 24 + Math.sin(delta * 0.9) * 25
+            : delta * horizontalSpacing;
+          const y = compact
+            ? delta * verticalSpacing
+            : distance * 8 + state.pointerY * focus * 10;
+          const z = focus * 145 - distance * 148;
+          const scale = 0.54 + side * 0.15 + focus * 0.54;
+          const rotateX = compact ? delta * 2.1 : -state.pointerY * focus * 3.5;
+          const rotateY = compact
+            ? -delta * 5
+            : -direction * (distance > 0.2 ? 14 + Math.min(distance, 3) * 5 : 0) + state.pointerX * focus * 3;
+          const rotateZ = compact ? delta * -1.4 : delta * 0.7;
+
+          card.style.setProperty("--focus", focus.toFixed(4));
+          card.style.zIndex = String(Math.round(1000 - distance * 100));
+          card.style.opacity = String(Math.max(0.13, side * 0.76 + focus * 0.24));
+          card.style.filter = `blur(${Math.max(0, distance - 1.5) * 0.38}px)`;
+          card.style.transform = [
+            "translate(-50%, -50%)",
+            `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px)`,
+            `rotateX(${rotateX.toFixed(2)}deg)`,
+            `rotateY(${rotateY.toFixed(2)}deg)`,
+            `rotateZ(${rotateZ.toFixed(2)}deg)`,
+            `scale(${scale.toFixed(4)})`
+          ].join(" ");
+          card.setAttribute("aria-current", index === activeIndex ? "true" : "false");
+        });
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    })();
+  </script>
+</body>
+</html>

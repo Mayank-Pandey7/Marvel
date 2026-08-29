@@ -79,3 +79,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
   }
 }
+
+.shader-frame {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  min-height: 440px;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 650px) {
+  .shader-frame {
+    height: 560px;
+    min-height: 560px;
+  }
+}
+

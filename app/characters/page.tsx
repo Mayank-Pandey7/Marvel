@@ -3,10 +3,11 @@
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, Eye, EyeOff } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { CHARACTERS, type Character } from "@/data/characters";
 import { getCharacterBackdrop } from "@/data/characterBackdrops";
+import { Scene } from "@/components/Scene";
 
 const FACTIONS = [
   { id: "all", label: "ALL" },
@@ -26,6 +27,7 @@ function CharactersContent() {
 
   const [searchQuery, setSearchQuery] = useState(paramQuery || "");
   const [selectedFaction, setSelectedFaction] = useState(paramFaction || "all");
+  const [showSpinWheel, setShowSpinWheel] = useState(true);
 
   useEffect(() => {
     if (paramFaction) {
@@ -165,33 +167,52 @@ function CharactersContent() {
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 
-          {}
+          {/* 1. TOP SEARCH & CONTROLS */}
           <div className="flex flex-col gap-5 pb-2">
 
-            {}
-            <div className="relative flex items-center bg-white/[0.03] border border-white/5 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/20 transition-all">
-              <Search size={14} className="text-stone-500 shrink-0 mr-3" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH CHARACTERS..."
-                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="text-stone-500 hover:text-stone-300 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
-                >
-                  CLEAR
-                </button>
-              )}
+            {/* Top Bar: View Spin Wheel Toggle (Left) + Search Input (Right) */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
+              
+              {/* 3D Wheel Toggle (Left, Clean Glass UI with Eye Icon) */}
+              <button
+                onClick={() => setShowSpinWheel(!showSpinWheel)}
+                title={showSpinWheel ? "Hide 3D Wheel" : "View 3D Wheel"}
+                className={`flex items-center justify-center gap-2 bg-white/[0.04] border ${
+                  showSpinWheel ? "border-white/30 text-white bg-white/[0.08]" : "border-white/10 text-stone-400"
+                } hover:border-white/40 hover:bg-white/[0.10] px-4 py-2 sm:py-2.5 rounded-full transition-all text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase cursor-pointer shrink-0`}
+              >
+                {showSpinWheel ? (
+                  <Eye size={14} className="text-stone-200" />
+                ) : (
+                  <EyeOff size={14} className="text-stone-500" />
+                )}
+                <span>3D WHEEL</span>
+              </button>
+
+              {/* Fixed-length Search Input Bar (Right) */}
+              <div className="relative w-full sm:w-80 md:w-96 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 sm:py-2.5 rounded-full focus-within:border-white/30 transition-all">
+                <Search size={14} className="text-stone-400 shrink-0 mr-3" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="SEARCH CHARACTERS..."
+                  className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="text-stone-400 hover:text-stone-200 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                  >
+                    CLEAR
+                  </button>
+                )}
+              </div>
+
             </div>
 
-            {}
+            {/* Faction Filter Buttons */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-
-              {}
               <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {FACTIONS.map((f) => (
                   <button
@@ -207,80 +228,87 @@ function CharactersContent() {
                   </button>
                 ))}
               </div>
-
             </div>
 
           </div>
 
-          {}
-          {filteredCharacters.length === 0 ? (
-            <div className="text-center py-28">
-              <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
-                NO RECORDS FOUND
-              </h3>
-              <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
-                No record matches the active query parameters.
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedFaction("all");
-                }}
-                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
-              >
-                RESET FILTERS
-              </button>
+          {/* 2. MAIN VIEW: EITHER 3D PERSPECTIVE WHEEL OR CHARACTER GRID CARDS */}
+          {showSpinWheel ? (
+            <div className="relative w-full overflow-hidden bg-black border-0 shadow-none transition-all duration-500">
+              <Scene characters={filteredCharacters} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-              {filteredCharacters.map((character) => {
-                const primaryAlias = character.aliases[0] || character.role.split(",")[0] || "OPERATIVE";
-                const backdropUrl = getCharacterBackdrop(character.id);
-
-                return (
-                  <Link
-                    key={character.id}
-                    href={`/characters/${character.id}`}
-                    className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
+            <>
+              {filteredCharacters.length === 0 ? (
+                <div className="text-center py-28">
+                  <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
+                    NO RECORDS FOUND
+                  </h3>
+                  <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
+                    No record matches the active query parameters.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery("");
+                      setSelectedFaction("all");
+                    }}
+                    className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
                   >
+                    RESET FILTERS
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                  {filteredCharacters.map((character) => {
+                    const primaryAlias = character.aliases[0] || character.role.split(",")[0] || "OPERATIVE";
+                    const backdropUrl = getCharacterBackdrop(character.id);
 
-                    {}
-                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/5 shadow-2xl">
-                      <img
-                        src={backdropUrl}
-                        alt={character.name}
-                        className="w-full h-full object-cover object-[center_15%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
-                      />
+                    return (
+                      <Link
+                        key={character.id}
+                        href={`/characters/${character.id}`}
+                        className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
+                      >
 
-                      {}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
-                    </div>
+                        {}
+                        <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/5 shadow-2xl">
+                          <img
+                            src={backdropUrl}
+                            alt={character.name}
+                            className="w-full h-full object-cover object-[center_15%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
+                          />
 
-                    {}
-                    <div className="flex flex-col gap-0.5 sm:gap-1">
+                          {}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
+                        </div>
 
-                      {}
-                      <h2 className="text-xs sm:text-base font-mono font-bold tracking-wider uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-1">
-                        {character.name}
-                      </h2>
+                        {}
+                        <div className="flex flex-col gap-0.5 sm:gap-1">
 
-                      {}
-                      <div className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
-                        {primaryAlias !== character.name ? `${primaryAlias} · ` : ""}{character.faction.split("/")[0].trim()}
-                      </div>
+                          {}
+                          <h2 className="text-xs sm:text-base font-mono font-bold tracking-wider uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-1">
+                            {character.name}
+                          </h2>
 
-                      {}
-                      <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
-                        <span>EXPLORE</span>
-                        <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
+                          {}
+                          <div className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
+                            {primaryAlias !== character.name ? `${primaryAlias} · ` : ""}{character.faction.split("/")[0].trim()}
+                          </div>
 
-                    </div>
+                          {}
+                          <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
+                            <span>EXPLORE</span>
+                            <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+                          </div>
 
-                  </Link>
-                );
-              })}
-            </div>
+                        </div>
+
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </>
           )}
 
         </div>

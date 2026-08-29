@@ -40,6 +40,49 @@ export default function DarkFamilyTree({
   const [spoilerPhase, setSpoilerPhase] = useState<number>(currentPhase || 6);
 
   const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.75 });
+  const cameraRef = useRef({ x: 0, y: 0, scale: 0.75 });
+  const contentLayerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const rafIdRef = useRef<number | null>(null);
+  const pendingCamRef = useRef<{ x: number; y: number; scale: number } | null>(null);
+  const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const scheduleSyncCameraState = useCallback(() => {
+    if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+    syncTimeoutRef.current = setTimeout(() => {
+      setCamera({ ...cameraRef.current });
+    }, 150);
+  }, []);
+
+  const updateCameraTransform = useCallback(
+    (newCamera: { x: number; y: number; scale: number }, isSmooth: boolean = false) => {
+      cameraRef.current = newCamera;
+      if (!contentLayerRef.current) return;
+
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+
+      if (isSmooth) {
+        contentLayerRef.current.style.transition = "transform 0.32s cubic-bezier(0.2, 0, 0, 1)";
+        contentLayerRef.current.style.transform = `translate3d(${newCamera.x}px, ${newCamera.y}px, 0) scale(${newCamera.scale})`;
+        scheduleSyncCameraState();
+      } else {
+        contentLayerRef.current.style.transition = "none";
+        pendingCamRef.current = newCamera;
+        rafIdRef.current = requestAnimationFrame(() => {
+          if (contentLayerRef.current && pendingCamRef.current) {
+            contentLayerRef.current.style.transform = `translate3d(${pendingCamRef.current.x}px, ${pendingCamRef.current.y}px, 0) scale(${pendingCamRef.current.scale})`;
+          }
+          rafIdRef.current = null;
+        });
+      }
+    },
+    [scheduleSyncCameraState]
+  );
 
   const touchStartRef = useRef<{
     x: number;
@@ -58,11 +101,6 @@ export default function DarkFamilyTree({
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeCluster, setActiveCluster] = useState<string>("all");
   const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const contentLayerRef = useRef<HTMLDivElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const cameraRef = useRef({ x: 0, y: 0, scale: 0.58 });
 
   useEffect(() => {
     cameraRef.current = camera;
@@ -195,18 +233,9 @@ export default function DarkFamilyTree({
       const newX = width / 2 - targetX * targetScale;
       const newY = height / 2 - targetY * targetScale;
 
-      cameraRef.current = { x: newX, y: newY, scale: targetScale };
-      if (contentLayerRef.current) {
-        if (isSmooth) {
-          contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
-        } else {
-          contentLayerRef.current.style.transition = "none";
-        }
-        contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${targetScale})`;
-      }
-      setCamera({ x: newX, y: newY, scale: targetScale });
+      updateCameraTransform({ x: newX, y: newY, scale: targetScale }, isSmooth);
     },
-    []
+    [updateCameraTransform]
   );
 
   const focusOnNode = useCallback(
@@ -420,18 +449,13 @@ export default function DarkFamilyTree({
     if (!isDraggingRef.current) return;
     const nextX = e.clientX - dragStartRef.current.x;
     const nextY = e.clientY - dragStartRef.current.y;
-    cameraRef.current.x = nextX;
-    cameraRef.current.y = nextY;
-
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${cameraRef.current.scale})`;
-    }
+    updateCameraTransform({ x: nextX, y: nextY, scale: cameraRef.current.scale }, false);
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
     if (isDraggingRef.current) {
       isDraggingRef.current = false;
-      setCamera({ ...cameraRef.current });
+      scheduleSyncCameraState();
     }
     const dist = Math.hypot(
       e.clientX - (dragStartRef.current.x + cameraRef.current.x),
@@ -467,17 +491,8 @@ export default function DarkFamilyTree({
     const newX = mouseX - (mouseX - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
     const newY = mouseY - (mouseY - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
 
-    cameraRef.current = { x: newX, y: newY, scale: nextScale };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "none";
-      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
-    }
-
-    // Debounce state update to avoid frequent re-renders during continuous wheel zoom
-    if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-    wheelTimeoutRef.current = setTimeout(() => {
-      setCamera({ ...cameraRef.current });
-    }, 200); // increased debounce interval for smoother experience
+    updateCameraTransform({ x: newX, y: newY, scale: nextScale }, false);
+    scheduleSyncCameraState();
   };
 
   const handleDoubleClick = (e: React.MouseEvent) => {
@@ -497,12 +512,7 @@ export default function DarkFamilyTree({
     const newX = mouseX - (mouseX - cameraRef.current.x) * (targetScale / cameraRef.current.scale);
     const newY = mouseY - (mouseY - cameraRef.current.y) * (targetScale / cameraRef.current.scale);
 
-    cameraRef.current = { x: newX, y: newY, scale: targetScale };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
-      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${targetScale})`;
-    }
-    setCamera({ x: newX, y: newY, scale: targetScale });
+    updateCameraTransform({ x: newX, y: newY, scale: targetScale }, true);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -548,12 +558,7 @@ export default function DarkFamilyTree({
     if (e.touches.length === 1) {
       const nextX = e.touches[0].clientX - touchStartRef.current.x;
       const nextY = e.touches[0].clientY - touchStartRef.current.y;
-      cameraRef.current.x = nextX;
-      cameraRef.current.y = nextY;
-
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${cameraRef.current.scale})`;
-      }
+      updateCameraTransform({ x: nextX, y: nextY, scale: cameraRef.current.scale }, false);
     } else if (e.touches.length === 2 && touchStartRef.current.dist) {
       const t1 = e.touches[0];
       const t2 = e.touches[1];
@@ -570,17 +575,14 @@ export default function DarkFamilyTree({
       const nextX = midX - (midX - touchStartRef.current.x) * (nextScale / (touchStartRef.current.initialScale || 0.58));
       const nextY = midY - (midY - touchStartRef.current.y) * (nextScale / (touchStartRef.current.initialScale || 0.58));
 
-      cameraRef.current = { x: nextX, y: nextY, scale: nextScale };
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transform = `translate3d(${nextX}px, ${nextY}px, 0) scale(${nextScale})`;
-      }
+      updateCameraTransform({ x: nextX, y: nextY, scale: nextScale }, false);
     }
   };
 
   const handleTouchEnd = () => {
     if (isDraggingRef.current) {
       isDraggingRef.current = false;
-      setCamera({ ...cameraRef.current });
+      scheduleSyncCameraState();
     }
   };
 
@@ -591,12 +593,7 @@ export default function DarkFamilyTree({
     const cy = containerRef.current.clientHeight / 2;
     const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
     const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
-    cameraRef.current = { x: newX, y: newY, scale: nextScale };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
-      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
-    }
-    setCamera({ x: newX, y: newY, scale: nextScale });
+    updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
   };
 
   const zoomOut = () => {
@@ -606,12 +603,7 @@ export default function DarkFamilyTree({
     const cy = containerRef.current.clientHeight / 2;
     const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
     const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
-    cameraRef.current = { x: newX, y: newY, scale: nextScale };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)";
-      contentLayerRef.current.style.transform = `translate3d(${newX}px, ${newY}px, 0) scale(${nextScale})`;
-    }
-    setCamera({ x: newX, y: newY, scale: nextScale });
+    updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
   };
 
   const resetView = () => {
@@ -1006,23 +998,23 @@ export default function DarkFamilyTree({
 
       {}
       {}
-      {}
+      {/* Canvas Layer */}
       <div
         ref={contentLayerRef}
-        className="absolute inset-0 origin-top-left pointer-events-auto will-change-transform"
+        className="absolute inset-0 origin-top-left pointer-events-auto will-change-transform transform-gpu [backface-visibility:hidden] [perspective:1000px] [transform-style:preserve-3d]"
         style={{
           transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
           width: "5000px",
           height: "3000px",
         }}
       >
-        {}
+        {/* Orthogonal SVG Lineage Network */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 5000 3000"
           style={{ overflow: "visible" }}
         >
-          {}
+          {/* Render All Tree Connections */}
           {visibleConnections.map((conn) => {
             const data = pathMap.get(conn.id);
             if (!data) return null;
@@ -1048,7 +1040,7 @@ export default function DarkFamilyTree({
                 onMouseEnter={() => setHoveredConnId(conn.id)}
                 onMouseLeave={() => setHoveredConnId(null)}
               >
-                {}
+                {/* Thick Invisible Hover Target */}
                 <path
                   d={data.path}
                   fill="none"
@@ -1057,7 +1049,7 @@ export default function DarkFamilyTree({
                   className="cursor-pointer pointer-events-auto"
                 />
 
-                {}
+                {/* Visible Orthogonal Line */}
                 <path
                   d={data.path}
                   fill="none"
@@ -1073,11 +1065,11 @@ export default function DarkFamilyTree({
                   className="transition-colors duration-150 pointer-events-none"
                 />
 
-                {}
+                {/* Junction Plus/Intersection Badge */}
                 {data.junction && (
                   <g
                     transform={`translate(${data.junction.x}, ${data.junction.y})`}
-                    className="pointer-events-none transition-all duration-200"
+                    className="pointer-events-none transition-colors duration-200"
                   >
                     <circle
                       r="4.5"
@@ -1104,7 +1096,7 @@ export default function DarkFamilyTree({
                   </g>
                 )}
 
-                {}
+                {/* Direct Lineage Direction Arrows */}
                 {data.arrow && data.arrow.dir === "down" && (
                   <polygon
                     points={`${data.arrow.x},${data.arrow.y + 1} ${data.arrow.x - 3},${data.arrow.y - 4} ${data.arrow.x + 3},${data.arrow.y - 4}`}
@@ -1132,9 +1124,7 @@ export default function DarkFamilyTree({
           })}
         </svg>
 
-        {}
-        {}
-        {}
+        {/* Character Dossier Portrait Nodes */}
         {visibleNodes.map((node) => {
           const isSelected = selectedNode?.id === node.id;
           const isHovered = hoveredNodeId === node.id;
@@ -1153,12 +1143,12 @@ export default function DarkFamilyTree({
               onClick={(e) => focusOnNode(node, e)}
               onMouseEnter={() => setHoveredNodeId(node.id)}
               onMouseLeave={() => setHoveredNodeId((prev) => (prev === node.id ? null : prev))}
-              className={`absolute cursor-pointer flex flex-col items-center group transition-all duration-500 ease-out ${
+              className={`absolute cursor-pointer flex flex-col items-center group transition-opacity duration-200 ${
                 isOutsideActiveFamily
-                  ? "opacity-25 blur-[3px] pointer-events-auto select-none z-0 hover:opacity-100 hover:blur-0"
+                  ? "opacity-20 pointer-events-auto select-none z-0 hover:opacity-100"
                   : isConnected || !activeFocusId
-                  ? "opacity-100 blur-0 pointer-events-auto z-10"
-                  : "opacity-65 blur-0 pointer-events-auto z-10"
+                  ? "opacity-100 pointer-events-auto z-10"
+                  : "opacity-65 pointer-events-auto z-10"
               }`}
               style={{
                 left: `${node.x - 25}px`,

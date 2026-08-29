@@ -491,7 +491,7 @@ export default function NodeArtwork({
           src={data.poster}
           alt={data.fallbackText || movieId}
           onError={() => setImgError(true)}
-          className={`w-full h-full object-cover object-center transition-all duration-500 ${
+          className={`w-full h-full object-cover object-center transition-[transform,filter] duration-200 ${
             isActive
               ? "scale-110 brightness-110 contrast-105"
               : "scale-100 brightness-100 contrast-100 group-hover:scale-105 group-hover:brightness-105"
