@@ -27,7 +27,8 @@ export default function UniverseMap({
   const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
 
-      const contentLayerRef = useRef<HTMLDivElement | null>(null);
+            const contentLayerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const isDraggingRef = useRef(false);
   const isPinchingRef = useRef(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
@@ -40,44 +41,93 @@ export default function UniverseMap({
     initialCamY?: number;
   }>({});
 
-  const cameraRef = useRef({ x: 0, y: 0, scale: 0.58 });
-  const rafPendingRef = useRef(false);
+  // Physics-based Continuous Camera State
+  const camRef = useRef({ x: 0, y: 0, scale: 0.58 });
   const targetCamRef = useRef({ x: 0, y: 0, scale: 0.58 });
+  const zoomVelRef = useRef(0);
+  const zoomAnchorRef = useRef<{ mouseX: number; mouseY: number; worldX: number; worldY: number } | null>(null);
+  const animLoopIdRef = useRef<number | null>(null);
 
-  const renderTransform = useCallback((x: number, y: number, scale: number, smooth: boolean = false) => {
-    cameraRef.current = { x, y, scale };
-    targetCamRef.current = { x, y, scale };
-    if (!contentLayerRef.current) return;
-
-    if (smooth) {
-      contentLayerRef.current.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
-    } else {
-      contentLayerRef.current.style.transition = "none";
-    }
-    contentLayerRef.current.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`;
-  }, []);
-
-  const requestRenderTransform = useCallback((x: number, y: number, scale: number) => {
-    targetCamRef.current = { x, y, scale };
-    cameraRef.current = { x, y, scale };
-
-    if (!rafPendingRef.current) {
-      rafPendingRef.current = true;
-      requestAnimationFrame(() => {
-        if (contentLayerRef.current) {
-          contentLayerRef.current.style.transition = "none";
-          contentLayerRef.current.style.transform = `translate3d(${targetCamRef.current.x.toFixed(1)}px, ${targetCamRef.current.y.toFixed(1)}px, 0) scale(${targetCamRef.current.scale.toFixed(4)})`;
-        }
-        rafPendingRef.current = false;
-      });
+  const applyTransform = useCallback((x: number, y: number, scale: number) => {
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
     }
   }, []);
+
+  const runContinuousLoop = useCallback(() => {
+    if (animLoopIdRef.current !== null) return;
+
+    const tick = () => {
+      const cam = camRef.current;
+      const tgt = targetCamRef.current;
+      const anchor = zoomAnchorRef.current;
+
+      // 1. Velocity-based Smooth Wheel Zoom
+      if (Math.abs(zoomVelRef.current) > 0.00008 && anchor) {
+        // Clamp max zoom speed per frame to guarantee 60fps buttery smoothness
+        const clampedVel = Math.max(Math.min(zoomVelRef.current, 0.04), -0.04);
+        const newScale = Math.min(Math.max(cam.scale * (1 + clampedVel), 0.08), 2.2);
+
+        // Invariant Anchor: Keep pixel under cursor completely stationary
+        cam.scale = newScale;
+        cam.x = anchor.mouseX - anchor.worldX * newScale;
+        cam.y = anchor.mouseY - anchor.worldY * newScale;
+        tgt.x = cam.x;
+        tgt.y = cam.y;
+        tgt.scale = cam.scale;
+
+        // Friction damping (0.86 provides luxurious fluid glide)
+        zoomVelRef.current *= 0.86;
+
+        applyTransform(cam.x, cam.y, cam.scale);
+        animLoopIdRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      zoomVelRef.current = 0;
+      zoomAnchorRef.current = null;
+
+      // 2. Smooth Pan / Phase / Movie Centering Glide
+      const dx = tgt.x - cam.x;
+      const dy = tgt.y - cam.y;
+      const ds = tgt.scale - cam.scale;
+
+      const isSettled = Math.abs(dx) < 0.08 && Math.abs(dy) < 0.08 && Math.abs(ds) < 0.0003;
+
+      if (isSettled && !isDraggingRef.current && !isPinchingRef.current) {
+        cam.x = tgt.x;
+        cam.y = tgt.y;
+        cam.scale = tgt.scale;
+        applyTransform(cam.x, cam.y, cam.scale);
+        animLoopIdRef.current = null;
+        return;
+      }
+
+      cam.x += dx * 0.18;
+      cam.y += dy * 0.18;
+      cam.scale += ds * 0.18;
+
+      applyTransform(cam.x, cam.y, cam.scale);
+      animLoopIdRef.current = requestAnimationFrame(tick);
+    };
+
+    animLoopIdRef.current = requestAnimationFrame(tick);
+  }, [applyTransform]);
 
   const updateCameraTransform = useCallback(
     (newCamera: { x: number; y: number; scale: number }, isSmooth: boolean = false) => {
-      renderTransform(newCamera.x, newCamera.y, newCamera.scale, isSmooth);
+      zoomAnchorRef.current = null;
+      zoomVelRef.current = 0;
+      targetCamRef.current = { ...newCamera };
+
+      if (!isSmooth) {
+        camRef.current = { ...newCamera };
+        applyTransform(newCamera.x, newCamera.y, newCamera.scale);
+      } else {
+        runContinuousLoop();
+      }
     },
-    [renderTransform]
+    [applyTransform, runContinuousLoop]
   );
 
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
@@ -90,13 +140,13 @@ export default function UniverseMap({
   const [introStep, setIntroStep] = useState<"ready">("ready");
   const [isTreeVisible, setIsTreeVisible] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsTreeVisible(true), 50);
     if (contentLayerRef.current) {
-      contentLayerRef.current.style.transform = `translate3d(${cameraRef.current.x}px, ${cameraRef.current.y}px, 0) scale(${cameraRef.current.scale})`;
+      contentLayerRef.current.style.transform = `translate3d(${camRef.current.x}px, ${camRef.current.y}px, 0) scale(${camRef.current.scale})`;
     }
     return () => clearTimeout(timer);
   }, []);
@@ -229,28 +279,26 @@ export default function UniverseMap({
 
   
 
-      const handleMouseDown = (e: React.MouseEvent) => {
+          const handleMouseDown = (e: React.MouseEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
     isDraggingRef.current = true;
+    zoomVelRef.current = 0;
+    zoomAnchorRef.current = null;
     dragStartRef.current = {
-      x: e.clientX - cameraRef.current.x,
-      y: e.clientY - cameraRef.current.y,
+      x: e.clientX - camRef.current.x,
+      y: e.clientY - camRef.current.y,
     };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "none";
-    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDraggingRef.current) return;
     const newX = e.clientX - dragStartRef.current.x;
     const newY = e.clientY - dragStartRef.current.y;
-    cameraRef.current.x = newX;
-    cameraRef.current.y = newY;
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "none";
-      contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${cameraRef.current.scale.toFixed(4)})`;
-    }
+    camRef.current.x = newX;
+    camRef.current.y = newY;
+    targetCamRef.current.x = newX;
+    targetCamRef.current.y = newY;
+    applyTransform(newX, newY, camRef.current.scale);
   };
 
   const handleMouseUp = () => {
@@ -259,16 +307,15 @@ export default function UniverseMap({
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "none";
-    }
 
     if (e.touches.length === 1) {
       isDraggingRef.current = true;
       isPinchingRef.current = false;
+      zoomVelRef.current = 0;
+      zoomAnchorRef.current = null;
       dragStartRef.current = {
-        x: e.touches[0].clientX - cameraRef.current.x,
-        y: e.touches[0].clientY - cameraRef.current.y,
+        x: e.touches[0].clientX - camRef.current.x,
+        y: e.touches[0].clientY - camRef.current.y,
       };
     } else if (e.touches.length === 2) {
       isDraggingRef.current = false;
@@ -281,11 +328,11 @@ export default function UniverseMap({
 
       touchStartRef.current = {
         dist: Math.max(dist, 10),
-        initialScale: cameraRef.current.scale,
+        initialScale: camRef.current.scale,
         midX,
         midY,
-        initialCamX: cameraRef.current.x,
-        initialCamY: cameraRef.current.y,
+        initialCamX: camRef.current.x,
+        initialCamY: camRef.current.y,
       };
     }
   };
@@ -294,12 +341,11 @@ export default function UniverseMap({
     if (e.touches.length === 1 && isDraggingRef.current) {
       const newX = e.touches[0].clientX - dragStartRef.current.x;
       const newY = e.touches[0].clientY - dragStartRef.current.y;
-      cameraRef.current.x = newX;
-      cameraRef.current.y = newY;
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transition = "none";
-        contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${cameraRef.current.scale.toFixed(4)})`;
-      }
+      camRef.current.x = newX;
+      camRef.current.y = newY;
+      targetCamRef.current.x = newX;
+      targetCamRef.current.y = newY;
+      applyTransform(newX, newY, camRef.current.scale);
     } else if (e.touches.length === 2 && isPinchingRef.current && touchStartRef.current.dist && touchStartRef.current.initialScale !== undefined) {
       const t1 = e.touches[0];
       const t2 = e.touches[1];
@@ -313,17 +359,19 @@ export default function UniverseMap({
 
       const initialMidX = touchStartRef.current.midX || currentMidX;
       const initialMidY = touchStartRef.current.midY || currentMidY;
-      const initialCamX = touchStartRef.current.initialCamX || cameraRef.current.x;
-      const initialCamY = touchStartRef.current.initialCamY || cameraRef.current.y;
+      const initialCamX = touchStartRef.current.initialCamX || camRef.current.x;
+      const initialCamY = touchStartRef.current.initialCamY || camRef.current.y;
 
       const newX = currentMidX - (initialMidX - initialCamX) * zoomFactor;
       const newY = currentMidY - (initialMidY - initialCamY) * zoomFactor;
 
-      cameraRef.current = { x: newX, y: newY, scale: nextScale };
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transition = "none";
-        contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${nextScale.toFixed(4)})`;
-      }
+      camRef.current.x = newX;
+      camRef.current.y = newY;
+      camRef.current.scale = nextScale;
+      targetCamRef.current.x = newX;
+      targetCamRef.current.y = newY;
+      targetCamRef.current.scale = nextScale;
+      applyTransform(newX, newY, nextScale);
     }
   };
 
@@ -332,8 +380,8 @@ export default function UniverseMap({
       isDraggingRef.current = true;
       isPinchingRef.current = false;
       dragStartRef.current = {
-        x: e.touches[0].clientX - cameraRef.current.x,
-        y: e.touches[0].clientY - cameraRef.current.y,
+        x: e.touches[0].clientX - camRef.current.x,
+        y: e.touches[0].clientY - camRef.current.y,
       };
     } else if (e.touches.length === 0) {
       isDraggingRef.current = false;
@@ -342,37 +390,9 @@ export default function UniverseMap({
     }
   };
 
-  const handleWheel = (e: React.WheelEvent) => {
-    if (
-      searchOpen ||
-      (e.target as HTMLElement).closest(
-        "aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container"
-      )
-    ) {
-      return;
-    }
-    e.preventDefault();
-    const delta = Math.max(Math.min(e.deltaY, 80), -80);
-    const zoomFactor = Math.exp(-delta * 0.0015);
-    const nextScale = Math.min(Math.max(cameraRef.current.scale * zoomFactor, 0.08), 2.2);
+  
 
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const newX = mouseX - (mouseX - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
-    const newY = mouseY - (mouseY - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
-
-    cameraRef.current = { x: newX, y: newY, scale: nextScale };
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transition = "none";
-      contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${nextScale.toFixed(4)})`;
-    }
-    if (isFullOverview) setIsFullOverview(false);
-  };
-
-  const handleDoubleClick = (e: React.MouseEvent) => {
+      const handleDoubleClick = (e: React.MouseEvent) => {
     if (
       (e.target as HTMLElement).closest(
         "button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .phase-banner"
@@ -385,11 +405,12 @@ export default function UniverseMap({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const targetScale = Math.min(cameraRef.current.scale * 1.35, 2.2);
-    const newX = mouseX - (mouseX - cameraRef.current.x) * (targetScale / cameraRef.current.scale);
-    const newY = mouseY - (mouseY - cameraRef.current.y) * (targetScale / cameraRef.current.scale);
+    const worldX = (mouseX - camRef.current.x) / camRef.current.scale;
+    const worldY = (mouseY - camRef.current.y) / camRef.current.scale;
+    zoomAnchorRef.current = { mouseX, mouseY, worldX, worldY };
+    zoomVelRef.current = 0.035;
 
-    updateCameraTransform({ x: newX, y: newY, scale: targetScale }, true);
+    runContinuousLoop();
     setIsFullOverview(false);
   };
 
@@ -526,12 +547,13 @@ export default function UniverseMap({
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
           onClick={() => {
-            const nextScale = Math.min(cameraRef.current.scale * 1.30, 2.2);
+            const nextScale = Math.min(targetCamRef.current.scale * 1.35, 2.2);
             if (!containerRef.current) return;
             const cx = containerRef.current.clientWidth / 2;
             const cy = containerRef.current.clientHeight / 2;
-            const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
-            const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+            const scaleRatio = nextScale / targetCamRef.current.scale;
+            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
+            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
             updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
             setIsFullOverview(false);
           }}
@@ -542,12 +564,13 @@ export default function UniverseMap({
         </button>
         <button
           onClick={() => {
-            const nextScale = Math.max(cameraRef.current.scale * 0.75, 0.08);
+            const nextScale = Math.max(targetCamRef.current.scale * 0.72, 0.08);
             if (!containerRef.current) return;
             const cx = containerRef.current.clientWidth / 2;
             const cy = containerRef.current.clientHeight / 2;
-            const newX = cx - (cx - cameraRef.current.x) * (nextScale / cameraRef.current.scale);
-            const newY = cy - (cy - cameraRef.current.y) * (nextScale / cameraRef.current.scale);
+            const scaleRatio = nextScale / targetCamRef.current.scale;
+            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
+            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
             updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
             setIsFullOverview(false);
           }}
@@ -591,6 +614,16 @@ export default function UniverseMap({
           viewBox="0 0 2000 10500"
           shapeRendering="optimizeSpeed"
         >
+          <defs>
+            <style>{`
+              @keyframes laserPulse {
+                to { stroke-dashoffset: -24; }
+              }
+              .active-energy-flow {
+                animation: laserPulse 1.2s linear infinite;
+              }
+            `}</style>
+          </defs>
           
 
           {/* Phase Divider Banners */}
@@ -642,21 +675,34 @@ export default function UniverseMap({
               const pathD = `M ${fromMovie.x} ${fromMovie.y} Q ${midX} ${midY} ${toMovie.x} ${toMovie.y}`;
 
               return (
-                <path
-                  key={`conn-${fromMovie.id}-${toMovie.id}`}
-                  d={pathD}
-                  fill="none"
-                  vectorEffect="non-scaling-stroke"
-                  stroke={
-                    isDirectlyConnected
-                      ? (fromMovie.color || "#ffffff")
-                      : isDimmed
-                      ? "rgba(255, 255, 255, 0.03)"
-                      : "rgba(255, 255, 255, 0.15)"
-                  }
-                  strokeWidth={isDirectlyConnected ? 2 : 1}
-                  strokeDasharray={isDirectlyConnected ? "4 4" : "2 4"}
-                />
+                <g key={`conn-${fromMovie.id}-${toMovie.id}`}>
+                  <path
+                    d={pathD}
+                    fill="none"
+                    vectorEffect="non-scaling-stroke"
+                    stroke={
+                      isDirectlyConnected
+                        ? (fromMovie.color || "#ffffff")
+                        : isDimmed
+                        ? "rgba(255, 255, 255, 0.03)"
+                        : "rgba(255, 255, 255, 0.15)"
+                    }
+                    strokeWidth={isDirectlyConnected ? 2.5 : 1}
+                    strokeDasharray={isDirectlyConnected ? "6 6" : "2 4"}
+                    className={isDirectlyConnected ? "active-energy-flow" : ""}
+                  />
+                  {isDirectlyConnected && (
+                    <path
+                      d={pathD}
+                      fill="none"
+                      vectorEffect="non-scaling-stroke"
+                      stroke="#ffffff"
+                      strokeWidth={1.2}
+                      strokeDasharray="4 4"
+                      className="active-energy-flow"
+                    />
+                  )}
+                </g>
               );
             })
           )}
@@ -675,7 +721,7 @@ export default function UniverseMap({
               onClick={() => focusOnMovie(movie)}
               onMouseEnter={() => setHoveredMovieId(movie.id)}
               onMouseLeave={() => setHoveredMovieId(null)}
-              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group pointer-events-auto movie-node-card transform-gpu [contain:layout_style_paint] ${
+              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group pointer-events-auto movie-node-card transform-gpu [contain:layout_style] ${
                 isFaded ? "opacity-20 pointer-events-auto" : "opacity-100"
               }`}
               style={{
@@ -756,7 +802,11 @@ export default function UniverseMap({
               >
                 {}
                 {(isSelected || isHovered) && (
-                  <span className="absolute -inset-2 rounded-full border border-dotted border-white/35 animate-[spin_8s_linear_infinite]" />
+                  <>
+                    <span className="absolute -inset-3 rounded-full border border-dashed border-white/40 animate-[spin_12s_linear_infinite] pointer-events-none" />
+                    <span className="absolute -inset-1.5 rounded-full border border-dotted border-white/60 animate-[spin_6s_linear_infinite_reverse] pointer-events-none" />
+                    <span className="absolute inset-0 rounded-full bg-white/[0.08] animate-ping pointer-events-none" />
+                  </>
                 )}
 
                 {}
@@ -770,8 +820,10 @@ export default function UniverseMap({
 
                 {}
                 <div
-                  className={`absolute -bottom-2 bg-black/95 border px-2 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-md ${
-                    isSelected || isHovered ? "border-white/40 text-stone-300 font-semibold" : "border-stone-800 text-stone-500"
+                  className={`absolute -bottom-3 z-20 bg-black/95 border px-2.5 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-xl ${
+                    isSelected || isHovered
+                      ? "border-white/50 text-white font-bold ring-2 ring-white/20"
+                      : "border-stone-700 text-stone-400"
                   }`}
                 >
                   {movie.year}
@@ -780,7 +832,7 @@ export default function UniverseMap({
 
               {}
               <div
-                className={`mt-4 flex flex-col items-center text-center transition-transform duration-150 ${
+                className={`mt-5 flex flex-col items-center text-center transition-transform duration-150 pointer-events-none ${
                   isSelected || isHovered ? "scale-105" : ""
                 }`}
               >
