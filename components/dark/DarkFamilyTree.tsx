@@ -841,13 +841,11 @@ export default function DarkFamilyTree({
 
         {}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
-          <Link
-            href="/timeline"
-            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white scale-110 transition-all select-none"
-            title="MCU Timeline Map"
+          <span
+            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white scale-110 select-none cursor-default"
           >
             MARVEL
-          </Link>
+          </span>
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
@@ -1193,10 +1191,9 @@ export default function DarkFamilyTree({
                     </div>
 
                     <img
-                      src={node.photoUrl ? `${node.photoUrl}?v=202608` : ""}
+                      src={node.photoUrl || ""}
                       alt={node.name}
                       loading="lazy"
-                      referrerPolicy="no-referrer"
                       className="absolute inset-0 w-full h-full object-cover object-[center_15%] brightness-100 contrast-105 transition-opacity duration-300 z-10"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = "none";
