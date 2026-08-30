@@ -75,38 +75,47 @@ export default function EarthDossierPage({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
       </div>
 
-      {/* 2. MINIMALIST TOP HEADER */}
+      {/* Top Navbar Blur & Gradient Vignette */}
+      <div
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/95 via-[#000000]/70 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        aria-hidden="true"
+      />
+
+      {/* 2. MINIMALIST TOP HEADER (Matching /characters & PageShell standard) */}
       <header
-        className={`relative z-20 w-full px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+        className={`fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
-        {/* Left: Clean Borderless Return Button */}
-        <button
-          onClick={handleClose}
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
-        >
-          <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-          <span>RETURN</span>
-        </button>
-
-        {/* Center: Brand Title */}
-        <div className="text-center pointer-events-none">
-          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
-            M A R V E L
-          </h1>
+        {/* Left: Close button */}
+        <div className="flex items-center pointer-events-auto">
+          <button
+            onClick={handleClose}
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
+            title="Close Reality Dossier"
+            aria-label="Close Reality Dossier"
+          >
+            <ArrowLeft size={16} />
+          </button>
         </div>
 
-        {/* Right side: Empty for clean balanced look */}
-        <div className="w-16 sm:w-20" />
+        {/* Center: Exact Centered MARVEL (Never wraps) */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
+          <span className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
+            MARVEL
+          </span>
+        </div>
+
+        {/* Right side spacer for centered balance */}
+        <div className="w-8" />
       </header>
 
-      {/* 3. MAIN MULTIVERSE DOSSIER STAGE */}
-      <main className="relative z-20 flex-1 px-6 sm:px-16 md:px-20 py-6 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      {/* 3. MAIN MULTIVERSE DOSSIER STAGE (BOTTOM-ANCHORED EXPANSIVE STAGE) */}
+      <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-12 overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
-        {/* LEFT COLUMN: TITLE & NARRATIVE BRIEFING */}
+        {/* LEFT COLUMN: TITLE & NARRATIVE BRIEFING (ANCHORED TOWARDS BOTTOM-LEFT) */}
         <div
-          className={`flex-1 max-w-2xl flex flex-col justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+          className={`flex-1 max-w-2xl flex flex-col justify-end transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >

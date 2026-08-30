@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, ArrowRight, Sparkles, Compass } from "lucide-react";
-import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
-import NodeArtwork, { MCU_POSTER_MAP } from "./NodeArtwork";
+import { ArrowLeft, Sparkles, Compass } from "lucide-react";
+import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
+import { MCU_POSTER_MAP } from "./NodeArtwork";
 
-// High-Resolution 100% Verified TMDB Cinematic Backdrop Images for Every MCU Movie
+// Verified High-Resolution Authentic Ambient Backdrops
 export const MCU_BACKDROP_MAP: Record<string, string> = {
   // Phase 1
   "iron-man": "/images/backdrops/iron-man.jpg",
@@ -13,43 +13,42 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "hulk": "/images/backdrops/the-incredible-hulk.jpg",
   "iron-man-2": "/images/backdrops/iron-man-2.jpg",
   "thor": "/images/backdrops/thor.jpg",
-  "captain-america": "/images/backdrops/captain-america.jpg",
   "captain-america-the-first-avenger": "/images/backdrops/captain-america-first-avenger.jpg",
-  "captain-america-first-avenger": "/images/backdrops/captain-america-first-avenger.jpg",
   "cap-first-avenger": "/images/backdrops/captain-america-first-avenger.jpg",
+  "captain-america": "/images/backdrops/captain-america-first-avenger.jpg",
   "the-avengers": "/images/backdrops/the-avengers.jpg",
   "avengers": "/images/backdrops/the-avengers.jpg",
 
   // Phase 2
   "iron-man-3": "/images/backdrops/iron-man-3.jpg",
-  "thor-the-dark-world": "/images/backdrops/thor-the-dark-world.jpg",
+  "thor-the-dark-world": "/images/backdrops/thor-dark-world.jpg",
   "thor-dark-world": "/images/backdrops/thor-dark-world.jpg",
-  "captain-america-the-winter-soldier": "/images/backdrops/captain-america-the-winter-soldier.jpg",
-  "captain-america-winter-soldier": "/images/backdrops/captain-america-winter-soldier.jpg",
-  "cap-winter-soldier": "/images/backdrops/captain-america-winter-soldier.jpg",
-  "guardians-of-the-galaxy": "/images/backdrops/guardians-of-the-galaxy.jpg",
-  "gotg": "/images/backdrops/guardians-of-the-galaxy.jpg",
+  "captain-america-the-winter-soldier": "/images/backdrops/cap-winter-soldier.jpg",
+  "cap-winter-soldier": "/images/backdrops/cap-winter-soldier.jpg",
+  "captain-america-winter-soldier": "/images/backdrops/cap-winter-soldier.jpg",
+  "guardians-of-the-galaxy": "/images/backdrops/gotg.jpg",
+  "gotg": "/images/backdrops/gotg.jpg",
   "avengers-age-of-ultron": "/images/backdrops/avengers-age-of-ultron.jpg",
   "avengers-aou": "/images/backdrops/avengers-age-of-ultron.jpg",
   "ant-man": "/images/backdrops/ant-man.jpg",
 
   // Phase 3
-  "captain-america-civil-war": "/images/backdrops/captain-america-civil-war.jpg",
-  "cap-civil-war": "/images/backdrops/captain-america-civil-war.jpg",
+  "captain-america-civil-war": "/images/backdrops/cap-civil-war.jpg",
+  "cap-civil-war": "/images/backdrops/cap-civil-war.jpg",
   "doctor-strange": "/images/backdrops/doctor-strange.jpg",
-  "guardians-of-the-galaxy-vol-2": "/images/backdrops/guardians-of-the-galaxy-vol-2.jpg",
-  "gotg2": "/images/backdrops/guardians-of-the-galaxy-vol-2.jpg",
+  "guardians-of-the-galaxy-vol-2": "/images/backdrops/gotg2.jpg",
+  "gotg2": "/images/backdrops/gotg2.jpg",
   "spider-man-homecoming": "/images/backdrops/spider-man-homecoming.jpg",
   "spiderman-homecoming": "/images/backdrops/spider-man-homecoming.jpg",
   "thor-ragnarok": "/images/backdrops/thor-ragnarok.jpg",
   "black-panther": "/images/backdrops/black-panther.jpg",
-  "avengers-infinity-war": "/images/backdrops/avengers-infinity-war.jpg",
-  "infinity-war": "/images/backdrops/avengers-infinity-war.jpg",
+  "avengers-infinity-war": "/images/backdrops/infinity-war.jpg",
+  "infinity-war": "/images/backdrops/infinity-war.jpg",
   "ant-man-and-the-wasp": "/images/backdrops/ant-man-and-the-wasp.jpg",
   "ant-man-wasp": "/images/backdrops/ant-man-and-the-wasp.jpg",
   "captain-marvel": "/images/backdrops/captain-marvel.jpg",
-  "avengers-endgame": "/images/backdrops/avengers-endgame.jpg",
-  "endgame": "/images/backdrops/avengers-endgame.jpg",
+  "avengers-endgame": "/images/backdrops/endgame.jpg",
+  "endgame": "/images/backdrops/endgame.jpg",
   "spider-man-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
   "spiderman-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
 
@@ -85,8 +84,8 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   // Phase 5
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
   "ant-man-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
-  "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-of-the-galaxy-vol-3.jpg",
-  "guardians-vol3": "/images/backdrops/guardians-of-the-galaxy-vol-3.jpg",
+  "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
+  "guardians-vol3": "/images/backdrops/guardians-vol3.jpg",
   "secret-invasion": "/images/backdrops/secret-invasion.jpg",
   "loki-season-2": "/images/backdrops/loki.jpg",
   "loki-s2": "/images/backdrops/loki.jpg",
@@ -144,11 +143,11 @@ export default function DeepMovieDetail({
 
   // Resolve connected movie objects across all phases
   const connectedMovies = (movie.connections || [])
-    .map((conn) => {
-      const target = UNIFIED_MCU_TREE.find((m) => m.id === (typeof conn === "string" ? conn : conn.toId));
+    .map((conn: any) => {
+      const target = UNIFIED_MCU_TREE.find((m: any) => m.id === (typeof conn === "string" ? conn : conn.toId));
       return target ? { target, relationship: (conn as any).relationship || "Related Storyline", type: (conn as any).type || "Narrative" } : null;
     })
-    .filter(Boolean);
+    .filter((c): c is { target: MovieNode; relationship: string; type: string } => c !== null);
 
   const posterCandidate = (movie as any).posterUrl;
   const isPosterCandidateValid = posterCandidate && !posterCandidate.startsWith("/posters/");
@@ -208,51 +207,60 @@ export default function DeepMovieDetail({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
       </div>
 
-      {/* 2. MINIMALIST TOP HEADER */}
+      {/* Top Navbar Blur & Gradient Vignette */}
+      <div
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/95 via-[#000000]/70 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        aria-hidden="true"
+      />
+
+      {/* 2. MINIMALIST TOP HEADER (Matching /characters & PageShell standard) */}
       <header
-        className={`relative z-20 w-full px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-auto transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+        className={`fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
-        {/* Left: Clean Borderless Return Button */}
-        <button
-          onClick={handleClose}
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent hover:bg-white/10 text-stone-400 hover:text-white text-[10px] font-mono tracking-widest uppercase transition-all cursor-pointer"
-        >
-          <ArrowLeft size={13} className="text-stone-400 group-hover:-translate-x-1 transition-transform" />
-          <span>RETURN</span>
-        </button>
-
-        {/* Center: Brand Title */}
-        <div className="text-center pointer-events-none">
-          <h1 className="font-mono uppercase text-stone-200 font-light text-xs sm:text-sm tracking-[0.7em] drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]">
-            M A R V E L
-          </h1>
+        {/* Left: Close button */}
+        <div className="flex items-center pointer-events-auto">
+          <button
+            onClick={handleClose}
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
+            title="Close Dossier"
+            aria-label="Close Dossier"
+          >
+            <ArrowLeft size={16} />
+          </button>
         </div>
 
-        {/* Right side: Empty for clean balanced look */}
-        <div className="w-16 sm:w-20" />
+        {/* Center: Exact Centered MARVEL (Never wraps) */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
+          <span className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
+            MARVEL
+          </span>
+        </div>
+
+        {/* Right side spacer for centered balance */}
+        <div className="w-8" />
       </header>
 
-      {/* 3. MAIN DOSSIER STAGE (DARK CINEMATIC LAYOUT WITH OFFICIAL POSTER) */}
-      <main className="relative z-20 flex-1 px-6 sm:px-12 md:px-16 py-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 overflow-y-auto max-w-7xl mx-auto w-full [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      {/* 3. MAIN DOSSIER STAGE (EXPANSIVE EDGE-TO-EDGE BOTTOM-ANCHORED CINEMATIC STAGE) */}
+      <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-16 xl:gap-20 overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         
-        {/* LEFT COLUMN: OFFICIAL POSTER + NARRATIVE DOSSIER */}
+        {/* LEFT COLUMN: OFFICIAL POSTER + NARRATIVE DOSSIER (ANCHORED TOWARDS BOTTOM-LEFT) */}
         <div
-          className={`flex-1 flex flex-col sm:flex-row items-center sm:items-start gap-8 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+          className={`flex-1 max-w-4xl flex flex-col sm:flex-row items-start sm:items-end gap-6 sm:gap-8 w-full transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
-          {/* OFFICIAL HIGH-RES THEATRICAL MOVIE POSTER */}
-          <div className="w-44 sm:w-52 md:w-60 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative">
+          {/* OFFICIAL HIGH-RES THEATRICAL MOVIE POSTER (LEFT-ALIGNED) */}
+          <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start">
             <img
               src={posterSrc}
               alt={movie.title}
               loading="eager"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (!target.src.includes("image.tmdb.org")) {
-                  target.src = "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                if (!target.src.endsWith("/images/posters/the-avengers.jpg")) {
+                  target.src = "/images/posters/the-avengers.jpg";
                 }
               }}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -260,8 +268,8 @@ export default function DeepMovieDetail({
             <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
           </div>
 
-          {/* NARRATIVE INFORMATION */}
-          <div className="flex-1 flex flex-col justify-center min-w-0">
+          {/* NARRATIVE INFORMATION (LEFT-ALIGNED) */}
+          <div className="flex-1 flex flex-col justify-end min-w-0 pb-1 text-left items-start w-full">
             {/* Phase & Era Designation */}
             <div className="flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.3em] text-stone-400 uppercase font-semibold">
               <span className="px-2 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
@@ -338,7 +346,7 @@ export default function DeepMovieDetail({
                   KEY RELICS & ARTIFACTS
                 </span>
                 <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {movie.keyRelics.map((relic) => (
+                  {movie.keyRelics.map((relic: string) => (
                     <span
                       key={relic}
                       className="inline-flex items-center gap-1.5 text-[11px] font-mono text-stone-300 hover:text-white transition-colors"
@@ -353,14 +361,14 @@ export default function DeepMovieDetail({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: FLOATING VERTICAL TIMELINE NODE & DIRECT CONNECTIONS */}
+        {/* RIGHT COLUMN: FLOATING VERTICAL TIMELINE NODE & DIRECT CONNECTIONS (ANCHORED TOWARDS BOTTOM-RIGHT) */}
         <div
-          className={`w-full lg:w-[420px] flex flex-col items-center lg:items-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
+          className={`w-full lg:w-[400px] xl:w-[440px] flex flex-col items-start lg:items-end justify-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
             isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
           }`}
         >
           {/* Vertical Timeline Pin */}
-          <div className="flex flex-col items-center mb-5">
+          <div className="flex flex-col items-start lg:items-center mb-5">
             <span className="text-[10.5px] font-mono tracking-[0.35em] uppercase text-stone-400 font-bold mb-1">
               {movie.heroAlias}
             </span>
@@ -385,54 +393,43 @@ export default function DeepMovieDetail({
               </span>
             </div>
 
-            <div className="flex flex-col gap-2 max-h-80 overflow-y-auto pr-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {connectedMovies.map((conn) => {
+            <div className="flex flex-col gap-2.5 max-h-[380px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
+              {connectedMovies.map((conn: any) => {
                 if (!conn) return null;
                 const { target, relationship } = conn;
-                const targetPoster = MCU_POSTER_MAP[target.id]?.poster || "";
-
                 return (
                   <button
                     key={target.id}
                     onClick={() => onNavigateToConnectedMovie(target)}
-                    className="group w-full flex items-center justify-between p-2 rounded-xl bg-transparent hover:bg-white/[0.05] transition-colors duration-200 text-left cursor-pointer"
+                    className="w-full p-2.5 rounded-xl bg-transparent border-0 flex items-start gap-3.5 text-left group cursor-pointer transition-all duration-300 hover:bg-white/[0.04]"
                   >
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      {/* Mini Theatrical Poster */}
-                      <div className="w-11 h-15 aspect-[2/3] rounded-lg overflow-hidden shrink-0 bg-stone-900 shadow-sm relative">
-                        {targetPoster ? (
-                          <img
-                            src={targetPoster}
-                            alt={target.title}
-                            loading="lazy"
-                            className="w-full h-full object-cover object-center"
-                          />
-                        ) : (
-                          <NodeArtwork movieId={target.id} rounded="rounded-lg" />
-                        )}
-                      </div>
-
-                      {/* Movie Information */}
-                      <div className="flex flex-col min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono font-bold text-stone-200 group-hover:text-white uppercase tracking-wider line-clamp-1 transition-colors">
-                            {target.title}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1.5 text-[8.5px] font-mono text-stone-400 uppercase tracking-widest mt-0.5 group-hover:text-stone-300 transition-colors">
-                          <span>PHASE {target.phase}</span>
-                          <span>•</span>
-                          <span>{target.year}</span>
-                        </div>
-
-                        <p className="text-[11px] font-sans text-stone-300 leading-snug line-clamp-2 mt-1 group-hover:text-stone-100 transition-colors">
-                          {relationship}
-                        </p>
-                      </div>
+                    {/* Small Connection Poster Preview */}
+                    <div className="w-10 h-14 rounded-lg overflow-hidden border border-white/10 shrink-0 bg-stone-900">
+                      <img
+                        src={
+                          MCU_POSTER_MAP[target.id]?.poster ||
+                          (target as any).posterUrl ||
+                          "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"
+                        }
+                        alt={target.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
 
-                    <ArrowRight size={13} className="text-stone-500 group-hover:text-stone-300 transition-colors pl-2 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="font-mono text-xs text-stone-100 font-medium group-hover:text-white transition-colors truncate">
+                          {target.title}
+                        </span>
+                      </div>
+                      <div className="text-[10px] font-mono text-stone-400 mt-0.5 tracking-wider">
+                        PHASE {target.phase} • {target.year}
+                      </div>
+                      <div className="text-[11px] font-sans text-stone-300 font-light mt-1 line-clamp-2 leading-relaxed">
+                        {relationship}
+                      </div>
+                    </div>
                   </button>
                 );
               })}

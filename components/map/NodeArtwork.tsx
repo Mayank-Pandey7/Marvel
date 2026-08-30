@@ -63,12 +63,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "THOR 2",
   },
   "cap-winter-soldier": {
-    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+    poster: "https://image.tmdb.org/t/p/original/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
     color: "#4b6584",
     fallbackText: "WINTER SOLDIER",
   },
   "captain-america-winter-soldier": {
-    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+    poster: "https://image.tmdb.org/t/p/original/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
     color: "#4b6584",
     fallbackText: "WINTER SOLDIER",
   },
@@ -100,12 +100,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
 
   // Phase 3: Reckoning
   "cap-civil-war": {
-    poster: "https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+    poster: "https://image.tmdb.org/t/p/original/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
     color: "#3867d6",
     fallbackText: "CIVIL WAR",
   },
   "captain-america-civil-war": {
-    poster: "https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+    poster: "https://image.tmdb.org/t/p/original/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
     color: "#3867d6",
     fallbackText: "CIVIL WAR",
   },
@@ -140,17 +140,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "RAGNAROK",
   },
   "black-panther": {
-    poster: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+    poster: "https://image.tmdb.org/t/p/original/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
     color: "#a55eea",
     fallbackText: "BLACK PANTHER",
   },
   "infinity-war": {
-    poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    poster: "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
     color: "#ffd32a",
     fallbackText: "INFINITY WAR",
   },
   "avengers-infinity-war": {
-    poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    poster: "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
     color: "#ffd32a",
     fallbackText: "INFINITY WAR",
   },
@@ -170,12 +170,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "CAPTAIN MARVEL",
   },
   "endgame": {
-    poster: "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
+    poster: "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
     color: "#a55eea",
     fallbackText: "ENDGAME",
   },
   "avengers-endgame": {
-    poster: "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
+    poster: "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
     color: "#a55eea",
     fallbackText: "ENDGAME",
   },
@@ -242,12 +242,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "HAWKEYE",
   },
   "spiderman-no-way-home": {
-    poster: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+    poster: "https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
     color: "#ff3838",
     fallbackText: "NO WAY HOME",
   },
   "spider-man-no-way-home": {
-    poster: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+    poster: "https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
     color: "#ff3838",
     fallbackText: "NO WAY HOME",
   },
@@ -359,12 +359,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "ECHO",
   },
   "deadpool-and-wolverine": {
-    poster: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+    poster: "https://image.tmdb.org/t/p/original/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
     color: "#eb3b5a",
     fallbackText: "D&W",
   },
   "deadpool-wolverine": {
-    poster: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+    poster: "https://image.tmdb.org/t/p/original/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
     color: "#eb3b5a",
     fallbackText: "D&W",
   },
