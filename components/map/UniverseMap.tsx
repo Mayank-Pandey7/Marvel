@@ -27,10 +27,74 @@ export default function UniverseMap({
   const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
 
-  // Universe Camera State (Pan & Zoom on a 2000px wide by 10500px tall vertical cosmic tree)
-  const [camera, setCamera] = useState({ x: 0, y: 0, scale: 0.58 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    // High-Performance GPU Direct Matrix Transform Engine (Zero Virtual DOM Overhead)
+  const contentLayerRef = useRef<HTMLDivElement | null>(null);
+  const camRef = useRef({ x: 0, y: 0, scale: 0.58 });
+  const targetCamRef = useRef({ x: 0, y: 0, scale: 0.58 });
+  const isDraggingRef = useRef(false);
+  const isPinchingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const touchStartRef = useRef<{
+    dist?: number;
+    initialScale?: number;
+    midX?: number;
+    midY?: number;
+    initialCamX?: number;
+    initialCamY?: number;
+  }>({});
+  const animFrameIdRef = useRef<number | null>(null);
+
+  const applyTransform = useCallback((x: number, y: number, scale: number) => {
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+    }
+  }, []);
+
+  const runSmoothGlide = useCallback(() => {
+    if (animFrameIdRef.current !== null) return;
+
+    const tick = () => {
+      const cam = camRef.current;
+      const tgt = targetCamRef.current;
+
+      const dx = tgt.x - cam.x;
+      const dy = tgt.y - cam.y;
+      const ds = tgt.scale - cam.scale;
+
+      const isSettled = Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1 && Math.abs(ds) < 0.0005;
+
+      if (isSettled && !isDraggingRef.current && !isPinchingRef.current) {
+        cam.x = tgt.x;
+        cam.y = tgt.y;
+        cam.scale = tgt.scale;
+        applyTransform(cam.x, cam.y, cam.scale);
+        animFrameIdRef.current = null;
+        return;
+      }
+
+      cam.x += dx * 0.28;
+      cam.y += dy * 0.28;
+      cam.scale += ds * 0.28;
+
+      applyTransform(cam.x, cam.y, cam.scale);
+      animFrameIdRef.current = requestAnimationFrame(tick);
+    };
+
+    animFrameIdRef.current = requestAnimationFrame(tick);
+  }, [applyTransform]);
+
+  const updateCameraTransform = useCallback(
+    (newCamera: { x: number; y: number; scale: number }, isSmooth: boolean = false) => {
+      targetCamRef.current = { ...newCamera };
+      if (!isSmooth) {
+        camRef.current = { ...newCamera };
+        applyTransform(newCamera.x, newCamera.y, newCamera.scale);
+      } else {
+        runSmoothGlide();
+      }
+    },
+    [applyTransform, runSmoothGlide]
+  );
 
   // Selected & Hovered Movie Nodes
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
@@ -51,6 +115,9 @@ export default function UniverseMap({
   // Smooth Cinematic Tree Entrance on Mount
   useEffect(() => {
     const timer = setTimeout(() => setIsTreeVisible(true), 50);
+    if (contentLayerRef.current) {
+      contentLayerRef.current.style.transform = `translate3d(${camRef.current.x}px, ${camRef.current.y}px, 0) scale(${camRef.current.scale})`;
+    }
     return () => clearTimeout(timer);
   }, []);
 
@@ -116,7 +183,7 @@ export default function UniverseMap({
     // Frame so the Phase Heading banner is clearly visible right at the top
     const targetY = 120 - targetMeta.startY * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
     setActivePhase(phaseNum);
     setCurrentPhase(phaseNum);
     setSelectedMovie(null);
@@ -135,7 +202,7 @@ export default function UniverseMap({
     const targetX = width / 2 - 1000 * targetScale;
     const targetY = height / 2 - 5200 * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) });
+    updateCameraTransform({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) }, true);
     setSelectedMovie(null);
     setIsFullOverview(true);
   }, []);
@@ -150,7 +217,7 @@ export default function UniverseMap({
       const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
       if (targetMovie) {
         const targetY = 220 - targetMovie.y * targetScale;
-        setCamera({ x: targetX, y: targetY, scale: targetScale });
+        updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
         setActivePhase(targetMovie.phase);
         setCurrentPhase(targetMovie.phase);
         setSelectedMovie(null); // Keep modal closed so the tree section is visible!
@@ -161,7 +228,7 @@ export default function UniverseMap({
 
     const targetMeta = PHASES_CONFIG.find((p) => p.id === (initialPhase || 1)) || PHASES_CONFIG[0];
     const targetY = 120 - targetMeta.startY * targetScale;
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
     setActivePhase(initialPhase || 1);
     setCurrentPhase(initialPhase || 1);
     setSelectedMovie(null);
@@ -180,162 +247,114 @@ export default function UniverseMap({
     const targetX = clientWidth / 2 - movie.x * targetScale;
     const targetY = clientHeight / 2 - movie.y * targetScale;
 
-    setCamera({ x: targetX, y: targetY, scale: targetScale });
+    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
     setSelectedMovie(movie);
     setIsFullOverview(false);
   }, [setCurrentPhase]);
 
   // Ambient Star Dust / Micro-Particle Canvas Animation
+  
+
+      // Ultra-Fast Hardware Pointer Engine for 120-240Hz zero-latency pan & zoom
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    let animId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let isPointerDown = false;
+    let startX = 0;
+    let startY = 0;
+    let activePointerId: number | null = null;
 
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
-
-    const particles = Array.from({ length: 48 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      radius: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.4 + 0.1,
-    }));
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      animId = requestAnimationFrame(render);
+    const onPointerDown = (e: PointerEvent) => {
+      if (
+        (e.target as HTMLElement).closest(
+          "button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container"
+        )
+      ) {
+        return;
+      }
+      isPointerDown = true;
+      activePointerId = e.pointerId;
+      startX = e.clientX - camRef.current.x;
+      startY = e.clientY - camRef.current.y;
+      try {
+        container.setPointerCapture(e.pointerId);
+      } catch (_) {}
     };
 
-    render();
+    const onPointerMove = (e: PointerEvent) => {
+      if (!isPointerDown) return;
+      const newX = e.clientX - startX;
+      const newY = e.clientY - startY;
+
+      camRef.current.x = newX;
+      camRef.current.y = newY;
+      targetCamRef.current.x = newX;
+      targetCamRef.current.y = newY;
+
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${camRef.current.scale.toFixed(4)})`;
+      }
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (activePointerId === e.pointerId || isPointerDown) {
+        isPointerDown = false;
+        activePointerId = null;
+        try {
+          container.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+      }
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (
+        (e.target as HTMLElement).closest(
+          "aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container"
+        )
+      ) {
+        return;
+      }
+      e.preventDefault();
+
+      const rect = container.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const currentScale = camRef.current.scale;
+      const worldX = (mouseX - camRef.current.x) / currentScale;
+      const worldY = (mouseY - camRef.current.y) / currentScale;
+
+      const delta = Math.max(Math.min(e.deltaY, 100), -100);
+      const zoomFactor = Math.exp(-delta * 0.0018);
+      const nextScale = Math.min(Math.max(currentScale * zoomFactor, 0.08), 2.2);
+
+      const nextX = mouseX - worldX * nextScale;
+      const nextY = mouseY - worldY * nextScale;
+
+      camRef.current = { x: nextX, y: nextY, scale: nextScale };
+      targetCamRef.current = { x: nextX, y: nextY, scale: nextScale };
+
+      if (contentLayerRef.current) {
+        contentLayerRef.current.style.transform = `translate3d(${nextX.toFixed(1)}px, ${nextY.toFixed(1)}px, 0) scale(${nextScale.toFixed(4)})`;
+      }
+    };
+
+    container.addEventListener("pointerdown", onPointerDown, { passive: true });
+    container.addEventListener("pointermove", onPointerMove, { passive: true });
+    container.addEventListener("pointerup", onPointerUp, { passive: true });
+    container.addEventListener("pointercancel", onPointerUp, { passive: true });
+    container.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerUp);
+      container.removeEventListener("wheel", onWheel);
     };
   }, []);
 
-  // Mouse & Touch Pan Handling
-  const touchStartRef = useRef<{ x: number; y: number; dist?: number }>({ x: 0, y: 0 });
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - camera.x, y: e.clientY - camera.y });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
-    setCamera((prev) => ({
-      ...prev,
-      x: newX,
-      y: newY,
-    }));
-  };
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (searchOpen || (e.target as HTMLElement).closest("button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container")) return;
-    if (e.touches.length === 1) {
-      setIsDragging(true);
-      setDragStart({ x: e.touches[0].clientX - camera.x, y: e.touches[0].clientY - camera.y });
-    } else if (e.touches.length === 2) {
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      touchStartRef.current = {
-        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
-        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
-        dist,
-      };
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 1 && isDragging) {
-      const newX = e.touches[0].clientX - dragStart.x;
-      const newY = e.touches[0].clientY - dragStart.y;
-      setCamera((prev) => ({
-        ...prev,
-        x: newX,
-        y: newY,
-      }));
-    } else if (e.touches.length === 2 && touchStartRef.current.dist) {
-      const currentDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      const scaleFactor = currentDist / touchStartRef.current.dist;
-      setCamera((prev) => ({
-        ...prev,
-        scale: Math.min(Math.max(prev.scale * scaleFactor, 0.08), 2.2),
-      }));
-      touchStartRef.current.dist = currentDist;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    touchStartRef.current.dist = undefined;
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    // If search modal is open or scrolling over an interactive panel, don't zoom the background universe map
-    if (
-      searchOpen ||
-      (e.target as HTMLElement).closest(
-        "aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container"
-      )
-    ) {
-      return;
-    }
-    e.preventDefault();
-    const delta = Math.max(Math.min(e.deltaY, 120), -120);
-    const zoomFactor = Math.exp(-delta * 0.0016);
-    const newScale = Math.min(Math.max(camera.scale * zoomFactor, 0.18), 1.65);
-
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const newX = mouseX - (mouseX - camera.x) * (newScale / camera.scale);
-    const newY = mouseY - (mouseY - camera.y) * (newScale / camera.scale);
-
-    setCamera({ x: newX, y: newY, scale: newScale });
-    setIsFullOverview(false);
-  };
-
-  // Double Click Canvas Zoom In
   const handleDoubleClick = (e: React.MouseEvent) => {
     if (
       (e.target as HTMLElement).closest(
@@ -349,11 +368,15 @@ export default function UniverseMap({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const targetScale = Math.min(camera.scale * 1.35, 1.65);
-    const newX = mouseX - (mouseX - camera.x) * (targetScale / camera.scale);
-    const newY = mouseY - (mouseY - camera.y) * (targetScale / camera.scale);
+    const currentScale = camRef.current.scale;
+    const worldX = (mouseX - camRef.current.x) / currentScale;
+    const worldY = (mouseY - camRef.current.y) / currentScale;
 
-    setCamera({ x: newX, y: newY, scale: targetScale });
+    const nextScale = Math.min(currentScale * 1.5, 2.2);
+    const nextX = mouseX - worldX * nextScale;
+    const nextY = mouseY - worldY * nextScale;
+
+    updateCameraTransform({ x: nextX, y: nextY, scale: nextScale }, true);
     setIsFullOverview(false);
   };
 
@@ -375,20 +398,20 @@ export default function UniverseMap({
   return (
     <div
       ref={containerRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchEnd}
-      onWheel={handleWheel}
+      
+      
+      
+      
+      
+      
+      
+      
+      
       onDoubleClick={handleDoubleClick}
       className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
     >
       {/* 1. Star Dust & Atmosphere Canvas Layer */}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
+      
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
       {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (TIGHT & COMPACT) */}
@@ -448,7 +471,7 @@ export default function UniverseMap({
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)]  select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
@@ -493,14 +516,32 @@ export default function UniverseMap({
       {/* 4. Bottom Controls (Zoom In/Out, Earth-616 Overview, Reset) - Positioned safely away from left PhaseSpine */}
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.min(prev.scale * 1.25, 1.65) }))}
+          onClick={() => {
+            const nextScale = Math.min(targetCamRef.current.scale * 1.35, 2.2);
+            if (!containerRef.current) return;
+            const cx = containerRef.current.clientWidth / 2;
+            const cy = containerRef.current.clientHeight / 2;
+            const scaleRatio = nextScale / targetCamRef.current.scale;
+            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
+            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
+            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
+          }}
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
-          onClick={() => setCamera((prev) => ({ ...prev, scale: Math.max(prev.scale * 0.8, 0.18) }))}
+          onClick={() => {
+            const nextScale = Math.max(targetCamRef.current.scale * 0.72, 0.08);
+            if (!containerRef.current) return;
+            const cx = containerRef.current.clientWidth / 2;
+            const cy = containerRef.current.clientHeight / 2;
+            const scaleRatio = nextScale / targetCamRef.current.scale;
+            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
+            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
+            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
+          }}
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
           title="Zoom Out"
         >
@@ -508,7 +549,7 @@ export default function UniverseMap({
         </button>
         <button
           onClick={showFullEarth616Timeline}
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all backdrop-blur-md cursor-pointer shadow-lg ${
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs  backdrop-blur-md cursor-pointer shadow-lg ${
             isFullOverview
               ? "bg-white text-black border-white"
               : "bg-black/80 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
@@ -548,19 +589,16 @@ export default function UniverseMap({
 
       {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
       <div
-        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left ${
-          isDragging
-            ? "transition-none"
-            : "transition-[transform,opacity] duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-        } ${isTreeVisible ? "opacity-100" : "opacity-0"}`}
-        style={{
-          transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale})`,
-        }}
+        ref={contentLayerRef}
+        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left transform-gpu [backface-visibility:hidden] will-change-transform transition-opacity duration-500 ${
+          isTreeVisible ? "opacity-100" : "opacity-0"
+        }`}
       >
         {/* SVG Network: ONLY Interrelated Movie-to-Movie Narrative Threads & Phase Markers */}
         <svg
-          className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
+          className="absolute inset-0 w-full h-full overflow-visible pointer-events-none transform-gpu"
           viewBox="0 0 2000 10500"
+          shapeRendering="optimizeSpeed"
         >
           <defs>
             <filter id="universe-line-glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -571,18 +609,7 @@ export default function UniverseMap({
               </feMerge>
             </filter>
 
-            <style>{`
-              @keyframes timelineFlow {
-                0% { stroke-dashoffset: 60; }
-                100% { stroke-dashoffset: 0; }
-              }
-              .flowing-connection {
-                animation: timelineFlow 3s linear infinite;
-              }
-              .faint-connection {
-                animation: timelineFlow 8s linear infinite;
-              }
-            `}</style>
+            
           </defs>
 
           {/* Phase Era Pill Banners (Clickable to Direct to that Phase) */}
@@ -601,7 +628,7 @@ export default function UniverseMap({
                 fill="#05050a"
                 stroke={activePhase === p.id && !isFullOverview ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
                 strokeWidth={activePhase === p.id && !isFullOverview ? "1.8" : "1"}
-                className="transition-all duration-300 group-hover:stroke-white group-hover:fill-[#0c0c14]"
+                className=" group-hover:stroke-white group-hover:fill-[#0c0c14]"
               />
 
               <text
@@ -650,7 +677,7 @@ export default function UniverseMap({
                       opacity="0.9"
                       filter="url(#universe-line-glow)"
                       strokeDasharray="6 6"
-                      className="flowing-connection transition-all duration-500"
+                      vectorEffect="non-scaling-stroke"
                     />
                   )}
 
@@ -666,7 +693,7 @@ export default function UniverseMap({
                     }
                     strokeWidth={isDirectlyConnected ? "2" : "1.2"}
                     strokeDasharray={isDirectlyConnected ? "4 4" : "3 5"}
-                    className={`${isDirectlyConnected ? "flowing-connection" : "faint-connection"} transition-all duration-500`}
+                    className={`${isDirectlyConnected ? "flowing-connection" : "faint-connection"} `}
                   />
                 </g>
               );
@@ -687,7 +714,7 @@ export default function UniverseMap({
               onClick={() => focusOnMovie(movie)}
               onMouseEnter={() => setHoveredMovieId(movie.id)}
               onMouseLeave={() => setHoveredMovieId(null)}
-              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-500 pointer-events-auto movie-node-card ${
+              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group  pointer-events-auto movie-node-card ${
                 isFaded ? "opacity-25 filter blur-[0.6px]" : "opacity-100"
               }`}
               style={{
@@ -758,7 +785,7 @@ export default function UniverseMap({
 
               {/* Circular Universe Node Core (Clean Minimal Monochrome) */}
               <div
-                className={`relative rounded-full flex items-center justify-center transition-all duration-300 ${
+                className={`relative rounded-full flex items-center justify-center  ${
                   isSelected
                     ? "w-28 h-28 sm:w-32 sm:h-32 scale-110 shadow-[0_0_40px_rgba(255,255,255,0.7)]"
                     : isHovered
@@ -792,7 +819,7 @@ export default function UniverseMap({
 
               {/* Node Title & Hero Metadata */}
               <div
-                className={`mt-4 flex flex-col items-center text-center transition-all duration-300 ${
+                className={`mt-4 flex flex-col items-center text-center  ${
                   isSelected || isHovered ? "scale-105" : ""
                 }`}
               >
