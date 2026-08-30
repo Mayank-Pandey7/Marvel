@@ -11,7 +11,7 @@ import DeepMovieDetail from "@/components/map/DeepMovieDetail";
 import { MovieScene } from "@/components/MovieScene";
 
 const PHASE_FILTERS = [
-  { id: "all", label: "ALL MOVIES & SERIES" },
+  { id: "all", label: "ALL" },
   { id: "1", label: "PHASE 1" },
   { id: "2", label: "PHASE 2" },
   { id: "3", label: "PHASE 3" },

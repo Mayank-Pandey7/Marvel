@@ -118,33 +118,6 @@ export function MovieScene({ movies }: MovieSceneProps) {
     return () => window.removeEventListener("message", handleMessage);
   }, [router]);
 
-  const handlePrev = () => {
-    const iframe = containerRef.current?.querySelector("iframe");
-    if (iframe?.contentWindow) {
-      iframe.contentWindow.postMessage({ type: "step-prev" }, "*");
-    }
-  };
-
-  const handleNext = () => {
-    const iframe = containerRef.current?.querySelector("iframe");
-    if (iframe?.contentWindow) {
-      iframe.contentWindow.postMessage({ type: "step-next" }, "*");
-    }
-  };
-
-  if (movies && movies.length === 0) {
-    return (
-      <div className="shader-frame w-full h-[480px] sm:h-[520px] relative bg-black overflow-hidden border-0 flex flex-col items-center justify-center text-center p-6">
-        <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
-          NO 3D WHEEL MOVIES FOUND
-        </h3>
-        <p className="text-xs font-mono tracking-wide text-stone-500 mt-2 max-w-sm">
-          No movie records match the active search query or phase filter.
-        </p>
-      </div>
-    );
-  }
-
   useEffect(() => {
     // Apply normal weight styling inside carousel iframe if available
     const applyIframeStyles = () => {
@@ -172,6 +145,33 @@ export function MovieScene({ movies }: MovieSceneProps) {
     const t = setTimeout(applyIframeStyles, 400);
     return () => clearTimeout(t);
   }, []);
+
+  const handlePrev = () => {
+    const iframe = containerRef.current?.querySelector("iframe");
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage({ type: "step-prev" }, "*");
+    }
+  };
+
+  const handleNext = () => {
+    const iframe = containerRef.current?.querySelector("iframe");
+    if (iframe?.contentWindow) {
+      iframe.contentWindow.postMessage({ type: "step-next" }, "*");
+    }
+  };
+
+  if (movies && movies.length === 0) {
+    return (
+      <div className="shader-frame w-full h-[480px] sm:h-[520px] relative bg-black overflow-hidden border-0 flex flex-col items-center justify-center text-center p-6">
+        <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
+          NO 3D WHEEL MOVIES FOUND
+        </h3>
+        <p className="text-xs font-mono tracking-wide text-stone-500 mt-2 max-w-sm">
+          No movie records match the active search query or phase filter.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div
