@@ -438,8 +438,8 @@ export default function UniverseMap({
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest) */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest, hidden on mobile) */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-3">
             {onSwitchToFamilyTree && (
               <button
                 onClick={onSwitchToFamilyTree}
@@ -461,13 +461,11 @@ export default function UniverseMap({
 
         {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
-          <Link 
-            href="/timeline" 
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity select-none"
-            title="MCU Timeline Map"
+          <span 
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white select-none cursor-default"
           >
             MARVEL
-          </Link>
+          </span>
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}

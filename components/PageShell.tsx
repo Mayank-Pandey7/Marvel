@@ -2,18 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Search, Menu } from "lucide-react";
+import { ArrowLeft, Search, Menu, X } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
 import SlideNavMenu from "./dark/SlideNavMenu";
 
 export default function PageShell({
   children,
   backHref = "/timeline",
-  backLabel = "TIMELINE"
+  backLabel = "TIMELINE",
+  showCloseButton = false,
+  hideSearch = false,
 }: {
   children: React.ReactNode;
   backHref?: string;
   backLabel?: string;
+  showCloseButton?: boolean;
+  hideSearch?: boolean;
 }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -53,37 +57,51 @@ export default function PageShell({
           </button>
         </div>
 
-        {}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-          <Link
-            href="/"
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-white/80 transition-opacity select-none pl-[0.45em] sm:pl-[0.55em]"
+        {/* Center: Non-clickable MARVEL Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+          <span
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none cursor-default pl-[0.45em] sm:pl-[0.55em]"
           >
             MARVEL
-          </Link>
+          </span>
         </div>
 
         {}
         <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto">
-          <Link
-            href={backHref}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
-          >
-            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
-            <span>{backLabel}</span>
-          </Link>
+          {showCloseButton ? (
+            <Link
+              href={backHref}
+              className="text-stone-400 hover:text-white p-1.5 transition-colors cursor-pointer rounded-full hover:bg-white/10"
+              title="Close and Return to Timeline"
+              aria-label="Close and Return to Timeline"
+            >
+              <X size={18} />
+            </Link>
+          ) : (
+            <>
+              <Link
+                href={backHref}
+                className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
+              >
+                <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
+                <span className="hidden sm:inline">{backLabel}</span>
+              </Link>
 
-          <button
-            onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
-            title="Search MCU (Ctrl+K)"
-          >
-            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
-            <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
-              /
-            </kbd>
-          </button>
+              {!hideSearch && (
+                <button
+                  onClick={() => setSearchOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+                  title="Search MCU (Ctrl+K)"
+                >
+                  <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+                  <span className="hidden sm:inline">SEARCH</span>
+                  <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+                    /
+                  </kbd>
+                </button>
+              )}
+            </>
+          )}
         </div>
       </header>
 
