@@ -16,10 +16,11 @@ const config: Config = {
         panel: "#08080d",
       },
       fontFamily: {
-        sans: ["'Geist Pixel'", "ui-monospace", "monospace", "sans-serif"],
+        sans: ["'Geist Pixel'", "monospace", "sans-serif"],
         display: ["'Geist Pixel'", "monospace", "sans-serif"],
         body: ["'Geist Pixel'", "monospace", "sans-serif"],
-        mono: ["'Geist Pixel'", "ui-monospace", "SFMono-Regular", "monospace"],
+        mono: ["'Geist Pixel'", "monospace", "sans-serif"],
+        pixel: ["'Geist Pixel'", "monospace", "sans-serif"],
       },
     },
   },
