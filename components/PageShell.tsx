@@ -57,13 +57,15 @@ export default function PageShell({
           </button>
         </div>
 
-        {/* Center: Non-clickable MARVEL Brand Header */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
-          <span
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none cursor-default pl-[0.45em] sm:pl-[0.55em]"
+        {/* Center: Clickable MARVEL Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
+          <Link
+            href="/timeline"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer pl-[0.45em] sm:pl-[0.55em]"
+            title="Return to Timeline"
           >
             MARVEL
-          </span>
+          </Link>
         </div>
 
         {}

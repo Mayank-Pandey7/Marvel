@@ -162,9 +162,13 @@ export default function TimelineScrollableView() {
 
         {/* Center: Brand Logo & DOOMSDAY Trigger */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
-          <span className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white scale-110 select-none cursor-default">
+          <Link
+            href="/familytree"
+            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-stone-300 transition-colors scale-110 select-none cursor-pointer"
+            title="Switch to Family Tree"
+          >
             MARVEL
-          </span>
+          </Link>
           <span className="text-stone-600 font-mono text-xs select-none">|</span>
           <Link
             href="/multiverse"
