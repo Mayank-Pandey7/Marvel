@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
-import { UNIFIED_MCU_TREE, PHASES_CONFIG, type MovieNode } from "@/data/movies";
+import { UNIFIED_MCU_TREE, PHASES_CONFIG, MCU_MAJOR_EVENTS, MCU_EARTHS, type MovieNode, type MCUMajorEvent, type MCUEarth } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
-import NodeArtwork, { MCU_POSTER_MAP } from "./NodeArtwork";
-import PhaseSpine from "./PhaseSpine";
+import { MCU_POSTER_MAP } from "./NodeArtwork";
 import SearchInvestigation from "./SearchInvestigation";
 import DeepMovieDetail from "./DeepMovieDetail";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import Link from "next/link";
 import { useDoomsdayTransition } from "@/components/doomsday/DoomsdayTransition";
-import { Search, ZoomIn, ZoomOut, RotateCcw, ArrowLeft, Globe, Menu, Users } from "lucide-react";
+import { Search, Plus, Minus, RotateCcw, ArrowLeft, Menu, Crosshair, Star, MousePointer2, Lightbulb, PlusCircle } from "lucide-react";
 
 export default function UniverseMap({
   onReturn,
@@ -26,22 +25,17 @@ export default function UniverseMap({
   const { currentPhase, setCurrentPhase } = useTimelineState();
   const { triggerDoomsdayTransition } = useDoomsdayTransition();
   const [activePhase, setActivePhase] = useState<number>(initialPhase || currentPhase || 1);
+  const [selectedEarthId, setSelectedEarthId] = useState<string>("earth-616");
 
-    // High-Performance GPU Direct Matrix Transform Engine (Zero Virtual DOM Overhead)
+  // Favorite Starred Movie IDs
+  const [starredMovieIds, setStarredMovieIds] = useState<Set<string>>(new Set(["the-avengers", "endgame", "infinity-war"]));
+
+  // High-Performance GPU Direct Matrix Transform Engine
   const contentLayerRef = useRef<HTMLDivElement | null>(null);
-  const camRef = useRef({ x: 0, y: 0, scale: 0.58 });
-  const targetCamRef = useRef({ x: 0, y: 0, scale: 0.58 });
+  const camRef = useRef({ x: 260, y: 15, scale: 0.92 });
+  const targetCamRef = useRef({ x: 260, y: 15, scale: 0.92 });
   const isDraggingRef = useRef(false);
-  const isPinchingRef = useRef(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
-  const touchStartRef = useRef<{
-    dist?: number;
-    initialScale?: number;
-    midX?: number;
-    midY?: number;
-    initialCamX?: number;
-    initialCamY?: number;
-  }>({});
   const animFrameIdRef = useRef<number | null>(null);
 
   const applyTransform = useCallback((x: number, y: number, scale: number) => {
@@ -63,7 +57,7 @@ export default function UniverseMap({
 
       const isSettled = Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1 && Math.abs(ds) < 0.0005;
 
-      if (isSettled && !isDraggingRef.current && !isPinchingRef.current) {
+      if (isSettled && !isDraggingRef.current) {
         cam.x = tgt.x;
         cam.y = tgt.y;
         cam.scale = tgt.scale;
@@ -72,9 +66,9 @@ export default function UniverseMap({
         return;
       }
 
-      cam.x += dx * 0.28;
-      cam.y += dy * 0.28;
-      cam.scale += ds * 0.28;
+      cam.x += dx * 0.22;
+      cam.y += dy * 0.22;
+      cam.scale += ds * 0.22;
 
       applyTransform(cam.x, cam.y, cam.scale);
       animFrameIdRef.current = requestAnimationFrame(tick);
@@ -103,824 +97,672 @@ export default function UniverseMap({
   // Modals & Navigation
   const [searchOpen, setSearchOpen] = useState(false);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
-  const [isFullOverview, setIsFullOverview] = useState(false);
-
-  // Direct ready state so title never overlaps the timeline tree
-  const [introStep, setIntroStep] = useState<"ready">("ready");
   const [isTreeVisible, setIsTreeVisible] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Smooth Cinematic Tree Entrance on Mount
+  // Direct Phase Navigation (Horizontal glide)
+  const directToPhase = useCallback(
+    (phaseId: number) => {
+      setActivePhase(phaseId);
+      setCurrentPhase(phaseId);
+
+      const targetPhase = PHASES_CONFIG.find((p) => p.id === phaseId) || PHASES_CONFIG[0];
+      if (!containerRef.current) return;
+
+      const targetScale = 0.92;
+      const phaseStartX = targetPhase.startX;
+      // Offset accounting for left sidebar width (~240px)
+      const newX = 260 - phaseStartX * targetScale;
+      const newY = 15;
+
+      updateCameraTransform({ x: newX, y: newY, scale: targetScale }, true);
+    },
+    [setCurrentPhase, updateCameraTransform]
+  );
+
+  // Focus on specific movie
+  const focusOnMovie = useCallback(
+    (movie: MovieNode) => {
+      setSelectedMovie(movie);
+      setActivePhase(movie.phase);
+      setCurrentPhase(movie.phase);
+
+      if (!containerRef.current) return;
+      const viewportWidth = containerRef.current.clientWidth;
+      const viewportHeight = containerRef.current.clientHeight;
+      const targetScale = 1.0;
+
+      const newX = viewportWidth / 2 - movie.x * targetScale;
+      const newY = viewportHeight / 2 - movie.y * targetScale;
+
+      updateCameraTransform({ x: newX, y: newY, scale: targetScale }, true);
+    },
+    [setCurrentPhase, updateCameraTransform]
+  );
+
+  // Initial Mount centering
   useEffect(() => {
-    const timer = setTimeout(() => setIsTreeVisible(true), 50);
-    if (contentLayerRef.current) {
-      contentLayerRef.current.style.transform = `translate3d(${camRef.current.x}px, ${camRef.current.y}px, 0) scale(${camRef.current.scale})`;
-    }
+    const timer = setTimeout(() => {
+      setIsTreeVisible(true);
+      directToPhase(initialPhase || 1);
+    }, 60);
     return () => clearTimeout(timer);
-  }, []);
-
-  // Sync with timeline context
-  useEffect(() => {
-    if (currentPhase && currentPhase !== activePhase) {
-      setActivePhase(currentPhase);
-    }
-  }, [currentPhase]);
+  }, [directToPhase, initialPhase]);
 
   // Current active Phase metadata
   const currentPhaseMeta = useMemo(() => {
     return PHASES_CONFIG.find((p) => p.id === activePhase) || PHASES_CONFIG[0];
   }, [activePhase]);
 
-  // Global Keyboard Shortcuts & Browser Page Zoom Interceptor
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Prevent whole-page browser zoom on Ctrl + / Ctrl - / Ctrl 0
-      if (
-        (e.ctrlKey || e.metaKey) &&
-        (e.key === "+" || e.key === "-" || e.key === "=" || e.key === "0" || e.key === "_")
-      ) {
-        e.preventDefault();
-      }
+  // Active connected movie IDs
+  const activeConnectedIds = useMemo(() => {
+    const activeId = selectedMovie?.id || hoveredMovieId;
+    if (!activeId) return new Set<string>();
 
-      if (e.key === "/" && !searchOpen) {
-        e.preventDefault();
-        setSearchOpen(true);
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        setSearchOpen((prev) => !prev);
-      }
-      if (e.key === "Escape") {
-        if (selectedMovie) setSelectedMovie(null);
-      }
-    };
+    const connected = new Set<string>([activeId]);
+    const current = UNIFIED_MCU_TREE.find((m) => m.id === activeId);
 
-    const handleWheelZoomPrevent = (e: WheelEvent) => {
-      // Prevent browser whole-page zoom on Ctrl + Wheel
-      if (e.ctrlKey) {
-        e.preventDefault();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("wheel", handleWheelZoomPrevent, { passive: false });
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("wheel", handleWheelZoomPrevent);
-    };
-  }, [searchOpen, selectedMovie]);
-
-  // DIRECT TO SPECIFIC PHASE (Frames comfortably with timeline tree trunk centered in viewport)
-  const directToPhase = useCallback((phaseNum: number) => {
-    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
-    const targetMeta = PHASES_CONFIG.find((p) => p.id === phaseNum) || PHASES_CONFIG[0];
-    
-    const targetScale = 0.58;
-    // Exactly center the 2000px wide timeline tree (trunk at X=1000) in middle of screen
-    const targetX = width / 2 - 1000 * targetScale;
-    // Frame so the Phase Heading banner is clearly visible right at the top
-    const targetY = 120 - targetMeta.startY * targetScale;
-
-    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
-    setActivePhase(phaseNum);
-    setCurrentPhase(phaseNum);
-    setSelectedMovie(null);
-    setIsFullOverview(false);
-  }, [setCurrentPhase]);
-
-  // EARTH-616 FULL TIMELINE OVERVIEW (Shows the entire vertical tree)
-  const showFullEarth616Timeline = useCallback(() => {
-    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
-    const height = containerRef.current?.clientHeight || (typeof window !== "undefined" ? window.innerHeight : 900);
-    
-    const scaleX = width / 2200;
-    const scaleY = height / 10600;
-    const targetScale = Math.min(scaleX, scaleY) * 0.96;
-
-    const targetX = width / 2 - 1000 * targetScale;
-    const targetY = height / 2 - 5200 * targetScale;
-
-    updateCameraTransform({ x: targetX, y: targetY, scale: Math.max(targetScale, 0.08) }, true);
-    setSelectedMovie(null);
-    setIsFullOverview(true);
-  }, []);
-
-  // Frame Timeline Tree Perfectly Centered in Viewport on Initial Entry from Home/Continue
-  useEffect(() => {
-    const width = containerRef.current?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1400);
-    const targetScale = 0.58;
-    const targetX = width / 2 - 1000 * targetScale;
-
-    if (targetMovieId) {
-      const targetMovie = UNIFIED_MCU_TREE.find((m) => m.id === targetMovieId);
-      if (targetMovie) {
-        const targetY = 220 - targetMovie.y * targetScale;
-        updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
-        setActivePhase(targetMovie.phase);
-        setCurrentPhase(targetMovie.phase);
-        setSelectedMovie(null); // Keep modal closed so the tree section is visible!
-        setIsFullOverview(false);
-        return;
-      }
+    if (current) {
+      current.connections.forEach((conn) => connected.add(conn.toId));
+      UNIFIED_MCU_TREE.forEach((m) => {
+        if (m.connections.some((c) => c.toId === activeId)) {
+          connected.add(m.id);
+        }
+      });
     }
 
-    const targetMeta = PHASES_CONFIG.find((p) => p.id === (initialPhase || 1)) || PHASES_CONFIG[0];
-    const targetY = 120 - targetMeta.startY * targetScale;
-    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
-    setActivePhase(initialPhase || 1);
-    setCurrentPhase(initialPhase || 1);
-    setSelectedMovie(null);
-    setIsFullOverview(false);
-  }, [initialPhase, targetMovieId, setCurrentPhase]);
+    return connected;
+  }, [selectedMovie, hoveredMovieId]);
 
-  // Pan Camera to Center onto a Target Movie Node
-  const focusOnMovie = useCallback((movie: MovieNode) => {
-    setActivePhase(movie.phase);
-    setCurrentPhase(movie.phase);
+  // Toggle favorite
+  const toggleStarMovie = (e: React.MouseEvent, movieId: string) => {
+    e.stopPropagation();
+    setStarredMovieIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(movieId)) next.delete(movieId);
+      else next.add(movieId);
+      return next;
+    });
+  };
 
+  // Drag Event Listeners
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if ((e.target as HTMLElement).closest(".interactive-node, button, a")) return;
+    isDraggingRef.current = true;
+    dragStartRef.current = {
+      x: e.clientX - targetCamRef.current.x,
+      y: e.clientY - targetCamRef.current.y,
+    };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    const newX = e.clientX - dragStartRef.current.x;
+    const newY = e.clientY - dragStartRef.current.y;
+    updateCameraTransform({ x: newX, y: newY, scale: targetCamRef.current.scale }, false);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    isDraggingRef.current = false;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
     if (!containerRef.current) return;
-    const { clientWidth, clientHeight } = containerRef.current;
-    const targetScale = 0.85;
-    
-    const targetX = clientWidth / 2 - movie.x * targetScale;
-    const targetY = clientHeight / 2 - movie.y * targetScale;
 
-    updateCameraTransform({ x: targetX, y: targetY, scale: targetScale }, true);
-    setSelectedMovie(movie);
-    setIsFullOverview(false);
-  }, [setCurrentPhase]);
+    const zoomFactor = e.deltaY < 0 ? 1.12 : 0.9;
+    const nextScale = Math.min(Math.max(targetCamRef.current.scale * zoomFactor, 0.35), 1.5);
 
-  // Ambient Star Dust / Micro-Particle Canvas Animation
-  
-
-      // Ultra-Fast Hardware Pointer Engine for 120-240Hz zero-latency pan & zoom
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let isPointerDown = false;
-    let startX = 0;
-    let startY = 0;
-    let activePointerId: number | null = null;
-
-    const onPointerDown = (e: PointerEvent) => {
-      if (
-        (e.target as HTMLElement).closest(
-          "button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .no-map-drag, .search-modal-container"
-        )
-      ) {
-        return;
-      }
-      isPointerDown = true;
-      activePointerId = e.pointerId;
-      startX = e.clientX - camRef.current.x;
-      startY = e.clientY - camRef.current.y;
-      try {
-        container.setPointerCapture(e.pointerId);
-      } catch (_) {}
-    };
-
-    const onPointerMove = (e: PointerEvent) => {
-      if (!isPointerDown) return;
-      const newX = e.clientX - startX;
-      const newY = e.clientY - startY;
-
-      camRef.current.x = newX;
-      camRef.current.y = newY;
-      targetCamRef.current.x = newX;
-      targetCamRef.current.y = newY;
-
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transform = `translate3d(${newX.toFixed(1)}px, ${newY.toFixed(1)}px, 0) scale(${camRef.current.scale.toFixed(4)})`;
-      }
-    };
-
-    const onPointerUp = (e: PointerEvent) => {
-      if (activePointerId === e.pointerId || isPointerDown) {
-        isPointerDown = false;
-        activePointerId = null;
-        try {
-          container.releasePointerCapture(e.pointerId);
-        } catch (_) {}
-      }
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      if (
-        (e.target as HTMLElement).closest(
-          "aside, nav, header, .movie-detail-card, .no-map-drag, [data-scrollable], .search-modal-container"
-        )
-      ) {
-        return;
-      }
-      e.preventDefault();
-
-      const rect = container.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      const currentScale = camRef.current.scale;
-      const worldX = (mouseX - camRef.current.x) / currentScale;
-      const worldY = (mouseY - camRef.current.y) / currentScale;
-
-      const delta = Math.max(Math.min(e.deltaY, 100), -100);
-      const zoomFactor = Math.exp(-delta * 0.0018);
-      const nextScale = Math.min(Math.max(currentScale * zoomFactor, 0.08), 2.2);
-
-      const nextX = mouseX - worldX * nextScale;
-      const nextY = mouseY - worldY * nextScale;
-
-      camRef.current = { x: nextX, y: nextY, scale: nextScale };
-      targetCamRef.current = { x: nextX, y: nextY, scale: nextScale };
-
-      if (contentLayerRef.current) {
-        contentLayerRef.current.style.transform = `translate3d(${nextX.toFixed(1)}px, ${nextY.toFixed(1)}px, 0) scale(${nextScale.toFixed(4)})`;
-      }
-    };
-
-    container.addEventListener("pointerdown", onPointerDown, { passive: true });
-    container.addEventListener("pointermove", onPointerMove, { passive: true });
-    container.addEventListener("pointerup", onPointerUp, { passive: true });
-    container.addEventListener("pointercancel", onPointerUp, { passive: true });
-    container.addEventListener("wheel", onWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener("pointerdown", onPointerDown);
-      container.removeEventListener("pointermove", onPointerMove);
-      container.removeEventListener("pointerup", onPointerUp);
-      container.removeEventListener("pointercancel", onPointerUp);
-      container.removeEventListener("wheel", onWheel);
-    };
-  }, []);
-
-  const handleDoubleClick = (e: React.MouseEvent) => {
-    if (
-      (e.target as HTMLElement).closest(
-        "button, a, input, aside, nav, header, [role='button'], .movie-detail-card, .phase-banner"
-      )
-    ) {
-      return;
-    }
-    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const currentScale = camRef.current.scale;
-    const worldX = (mouseX - camRef.current.x) / currentScale;
-    const worldY = (mouseY - camRef.current.y) / currentScale;
+    const scaleRatio = nextScale / targetCamRef.current.scale;
+    const newX = mouseX - (mouseX - targetCamRef.current.x) * scaleRatio;
+    const newY = mouseY - (mouseY - targetCamRef.current.y) * scaleRatio;
 
-    const nextScale = Math.min(currentScale * 1.5, 2.2);
-    const nextX = mouseX - worldX * nextScale;
-    const nextY = mouseY - worldY * nextScale;
-
-    updateCameraTransform({ x: nextX, y: nextY, scale: nextScale }, true);
-    setIsFullOverview(false);
+    updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
   };
 
-  // Set of connected movie IDs for highlighting
-  const activeConnectedIds = useMemo(() => {
-    const activeMovie = selectedMovie || (hoveredMovieId ? UNIFIED_MCU_TREE.find((m) => m.id === hoveredMovieId) : null);
-    if (!activeMovie) return new Set<string>();
-
-    const set = new Set<string>([activeMovie.id]);
-    activeMovie.connections.forEach((c) => set.add(c.toId));
-    UNIFIED_MCU_TREE.forEach((m) => {
-      if (m.connections.some((c) => c.toId === activeMovie.id)) {
-        set.add(m.id);
-      }
-    });
-    return set;
-  }, [selectedMovie, hoveredMovieId]);
+  // Expanded Universes List
+  const UNIVERSES_LIST = [
+    { id: "earth-616", name: "EARTH-616", subtitle: "Sacred Timeline" },
+    { id: "earth-838", name: "EARTH-838", subtitle: "Doctor Strange 2" },
+    { id: "earth-10005", name: "EARTH-10005", subtitle: "X-Men Universe" },
+    { id: "earth-96283", name: "EARTH-96283", subtitle: "Spider-Verse" },
+    { id: "earth-trn414", name: "EARTH-TRN414", subtitle: "The Batman Universe" },
+  ];
 
   return (
     <div
       ref={containerRef}
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      onDoubleClick={handleDoubleClick}
-      className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onWheel={handleWheel}
+      className="relative w-screen h-screen overflow-hidden bg-[#040406] text-stone-100 select-none cursor-grab active:cursor-grabbing touch-none font-mono"
     >
-      {/* 1. Star Dust & Atmosphere Canvas Layer */}
-      
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
-
-      {/* TOP AMBIENT FADING BLUR BACKGROUND MASK (TIGHT & COMPACT) */}
-      <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
-        aria-hidden="true"
-      />
-
-
-
-      {/* 2. TOP HEADER (LEFT & RIGHT CONTROLS) */}
-      {/* ------------------------------------------------------------- */}
-      {/* TOP HEADER: RESPONSIVE MATCH WITH DARKFAMILYTREE              */}
-      {/* ------------------------------------------------------------- */}
-      <header className="fixed top-0 inset-x-0 z-30 px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between pointer-events-none transition-opacity duration-1000">
-        {/* Left: Minimalist Menu & Mode Switcher (Matching RETURN typography) */}
-        <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+      {/* 1. TOP MAIN HEADER */}
+      <header className="fixed top-0 inset-x-0 z-40 px-4 sm:px-6 py-3 flex items-center justify-between pointer-events-none">
+        {/* Left: View Mode Switcher */}
+        <div className="flex items-center gap-3 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
             aria-label="Open Universe Navigation"
-            title="Open Universe Navigation"
           >
             <Menu size={16} />
           </button>
 
-          {/* View Mode Switcher (Matching RETURN style: borderless, font-mono tracking-widest, hidden on mobile) */}
-          <div className="hidden md:flex items-center gap-2 sm:gap-3">
+          <div className="hidden sm:flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase">
             {onSwitchToFamilyTree && (
               <button
                 onClick={onSwitchToFamilyTree}
-                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
-                title="Switch to Sacred Family Tree Lineage View"
+                className="text-stone-400 hover:text-white transition-colors cursor-pointer"
               >
                 FAMILY TREE
               </button>
             )}
-            <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
-            <button
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
-              title="Sacred Timeline Map View"
-            >
-              TIMELINE MAP
-            </button>
+            <span className="text-stone-600">/</span>
+            <span className="text-white font-bold">TIMELINE MAP</span>
           </div>
         </div>
 
-        {/* Center: MARVEL / DOOMSDAY & THE SACRED TIMELINE Brand Header */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex flex-col items-center justify-center">
-          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
-            <span className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white select-none cursor-default">
-              MARVEL
-            </span>
-            <span className="text-stone-600 font-mono text-xs select-none">/</span>
-            <button
-              onClick={triggerDoomsdayTransition}
-              className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] select-none cursor-pointer bg-transparent border-none"
-              title="Initialize Road to Doomsday Incursion"
-            >
-              DOOMSDAY
-            </button>
-          </div>
-          <span className="text-[7.5px] sm:text-[8.5px] font-mono tracking-[0.3em] uppercase text-stone-400 mt-0.5 select-none">
-            THE SACRED TIMELINE
+        {/* Center: MARVEL | DOOMSDAY Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-2.5">
+          <span className="text-xs sm:text-sm font-bold tracking-[0.4em] uppercase text-white select-none cursor-default">
+            MARVEL
           </span>
+          <span className="text-stone-600 text-xs select-none">|</span>
+          <button
+            onClick={triggerDoomsdayTransition}
+            className="text-xs sm:text-sm font-bold tracking-[0.4em] uppercase text-[#10b981] hover:text-[#34d399] drop-shadow-[0_0_12px_rgba(16,185,129,0.5)] select-none cursor-pointer bg-transparent border-none"
+            title="Initialize Road to Doomsday Incursion"
+          >
+            DOOMSDAY
+          </button>
         </div>
 
-        {/* Right: Return + Search Button */}
-        <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
+        {/* Right: Search */}
+        <div className="flex items-center gap-3 pointer-events-auto">
           {onReturn && (
             <button
               onClick={onReturn}
-              className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
-              title="Return to Timeline Selector"
+              className="hidden sm:inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] tracking-[0.2em] uppercase transition-colors cursor-pointer"
             >
-              <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
-              <span className="hidden sm:inline">RETURN</span>
+              <ArrowLeft size={12} />
+              <span>RETURN</span>
             </button>
           )}
 
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
-            title="Search All Timeline Nodes (/ or Ctrl+K)"
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] tracking-[0.2em] uppercase transition-colors cursor-pointer p-1"
           >
-            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={13} />
             <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
-              /
-            </kbd>
+            <kbd className="hidden md:inline-block text-[9px] text-stone-500 ml-0.5">/</kbd>
           </button>
         </div>
       </header>
 
-      {/* 3. Phase Spine Side Indicator (With Earth-616 Root at Top and All MCU Earths Catalogue) */}
-      <PhaseSpine
-        currentPhase={activePhase}
-        isFullOverview={isFullOverview}
-        onSelectPhase={(p) => directToPhase(p)}
-        onSelectEarth616={showFullEarth616Timeline}
-      />
+      {/* 2. LEFT SIDEBAR ("UNIVERSES") */}
+      <aside className="fixed top-14 bottom-4 left-4 z-40 w-44 sm:w-48 bg-[#06060a]/90 border border-stone-800/90 rounded-2xl p-3 sm:p-4 backdrop-blur-xl shadow-2xl flex flex-col justify-between pointer-events-auto">
+        <div className="flex flex-col gap-3">
+          <span className="text-[9px] tracking-[0.25em] text-[#10b981] uppercase font-bold pl-1">
+            UNIVERSES
+          </span>
 
-      {/* 4. Bottom Controls (Zoom In/Out, Earth-616 Overview, Reset) - Positioned safely away from left PhaseSpine */}
-      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-10 z-30 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
+          <div className="flex flex-col gap-2.5">
+            {UNIVERSES_LIST.map((u) => {
+              const isSelected = selectedEarthId === u.id;
+              return (
+                <button
+                  key={u.id}
+                  onClick={() => setSelectedEarthId(u.id)}
+                  className={`flex items-start gap-2.5 p-2 rounded-xl text-left transition-all duration-300 cursor-pointer border ${
+                    isSelected
+                      ? "bg-[#0b1d16] border-[#10b981]/90 text-white shadow-[0_0_15px_rgba(16,185,129,0.25)]"
+                      : "bg-transparent border-transparent text-stone-400 hover:text-stone-200 hover:bg-white/5"
+                  }`}
+                >
+                  <div className={`w-3.5 h-3.5 rounded-full mt-0.5 flex items-center justify-center shrink-0 border ${
+                    isSelected ? "border-[#10b981]" : "border-stone-600"
+                  }`}>
+                    {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className={`text-[10px] font-bold tracking-wider ${isSelected ? "text-white" : "text-stone-300"}`}>
+                      {u.name}
+                    </span>
+                    <span className="text-[8px] text-stone-500 tracking-wide mt-0.5">
+                      {u.subtitle}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Add Universe Button */}
         <button
-          onClick={() => {
-            const nextScale = Math.min(targetCamRef.current.scale * 1.35, 2.2);
-            if (!containerRef.current) return;
-            const cx = containerRef.current.clientWidth / 2;
-            const cy = containerRef.current.clientHeight / 2;
-            const scaleRatio = nextScale / targetCamRef.current.scale;
-            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
-            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
-            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
-          }}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
-          title="Zoom In"
+          onClick={() => alert("Multiverse portal registration active. Connect external timeline reality.")}
+          className="w-full py-2 px-3 rounded-xl border border-[#10b981]/60 text-[#34d399] hover:bg-[#10b981]/10 text-[9px] tracking-widest uppercase font-bold flex items-center justify-center gap-1.5 transition-all duration-300 cursor-pointer shadow-[0_0_10px_rgba(16,185,129,0.15)]"
         >
-          <ZoomIn size={13} />
+          <span>+ ADD UNIVERSE</span>
         </button>
-        <button
-          onClick={() => {
-            const nextScale = Math.max(targetCamRef.current.scale * 0.72, 0.08);
-            if (!containerRef.current) return;
-            const cx = containerRef.current.clientWidth / 2;
-            const cy = containerRef.current.clientHeight / 2;
-            const scaleRatio = nextScale / targetCamRef.current.scale;
-            const newX = cx - (cx - targetCamRef.current.x) * scaleRatio;
-            const newY = cy - (cy - targetCamRef.current.y) * scaleRatio;
-            updateCameraTransform({ x: newX, y: newY, scale: nextScale }, true);
-          }}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
-          title="Zoom Out"
-        >
-          <ZoomOut size={13} />
-        </button>
-        <button
-          onClick={showFullEarth616Timeline}
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs  backdrop-blur-md cursor-pointer shadow-lg ${
-            isFullOverview
-              ? "bg-white text-black border-white"
-              : "bg-black/80 border-stone-800 hover:border-white/60 text-stone-400 hover:text-white"
-          }`}
-          title="Earth-616 Full Timeline Overview"
-        >
-          <Globe size={12} />
-        </button>
-        <button
-          onClick={() => directToPhase(1)}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 border border-stone-800 hover:border-white/60 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
-          title="Direct to Phase I"
-        >
-          <RotateCcw size={12} />
-        </button>
+      </aside>
+
+      {/* 3. TOP PHASE TAB BAR (Horizontal Segmented Tabs) */}
+      <div className="fixed top-13 left-52 sm:left-56 right-64 sm:right-72 z-30 flex items-center gap-2.5 overflow-x-auto no-scrollbar pointer-events-auto py-1">
+        {PHASES_CONFIG.map((phase) => {
+          const isActive = activePhase === phase.id;
+          return (
+            <button
+              key={`phase-tab-${phase.id}`}
+              onClick={() => directToPhase(phase.id)}
+              className={`px-5 py-2 rounded-xl text-[10px] tracking-[0.2em] uppercase transition-all duration-300 whitespace-nowrap cursor-pointer flex flex-col items-center justify-center shrink-0 border ${
+                isActive
+                  ? "bg-[#0b1d16] border-[#10b981] text-[#34d399] shadow-[0_0_20px_rgba(16,185,129,0.3)] font-bold"
+                  : "bg-[#07070b]/80 border-stone-800 text-stone-400 hover:text-white hover:border-stone-600 backdrop-blur-md"
+              }`}
+            >
+              <span className="text-[8.5px] opacity-80">PHASE {phase.roman}</span>
+              <span className={isActive ? "text-white font-bold" : ""}>{phase.subtitle || phase.title}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* 5. Bottom Timeline Status (Shifted safely above or next to controls) */}
-      <div className="hidden lg:block fixed bottom-16 right-10 z-30 pointer-events-none text-right font-mono text-[9.5px] text-stone-400 tracking-[0.25em] uppercase">
-        <span className="text-white font-bold">
-          {isFullOverview ? "EARTH-616 TIMELINE TREE" : `PHASE ${currentPhaseMeta.roman}`}
-        </span>
-        <span className="mx-2">•</span>
-        <span>{isFullOverview ? "2008 — 2027" : currentPhaseMeta.years}</span>
-        <span className="mx-2">•</span>
-        <span className="text-stone-300 font-semibold">{UNIFIED_MCU_TREE.length} MOVIES ON TREE</span>
-      </div>
-
-      {/* Mobile compact badge */}
-      <div className="md:hidden fixed bottom-4 right-4 z-30 pointer-events-none font-mono text-[8.5px] text-stone-400 tracking-wider uppercase bg-black/70 px-2.5 py-1 rounded-full border border-stone-800/80 backdrop-blur-md">
-        <span className="text-white font-bold">
-          {isFullOverview ? "ALL PHASES" : `PHASE ${currentPhaseMeta.roman}`}
-        </span>
-        <span className="mx-1.5">•</span>
-        <span>{isFullOverview ? "2008–27" : currentPhaseMeta.years}</span>
-      </div>
-
-      {/* 7. MASTER SPATIAL VERTICAL UNIVERSE CANVAS (2000px Wide by 10500px Tall) */}
+      {/* 4. MASTER HORIZONTAL SPATIAL CANVAS (10,500px Wide) */}
       <div
         ref={contentLayerRef}
-        className={`absolute top-0 left-0 w-[2000px] h-[10500px] pointer-events-none origin-top-left transform-gpu [backface-visibility:hidden] will-change-transform transition-opacity duration-500 ${
+        className={`absolute top-0 left-0 w-[10500px] h-[1200px] pointer-events-none origin-top-left transform-gpu [backface-visibility:hidden] will-change-transform transition-opacity duration-500 ${
           isTreeVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {/* SVG Network: Orthogonal Schematic Circuit Bus & Chronological Year Stems */}
+        {/* SVG Horizontal Spine Line & Connectors */}
         <svg
-          className="absolute inset-0 w-full h-full overflow-visible pointer-events-none transform-gpu"
-          viewBox="0 0 2000 10500"
+          className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
+          viewBox="0 0 10500 1200"
           shapeRendering="optimizeSpeed"
         >
           <defs>
-            <filter id="universe-line-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
+            <filter id="spine-glow-teal" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-
-            {/* Downward Arrow Markers for Convergence Buses */}
-            <marker
-              id="bus-arrow-active"
-              viewBox="0 0 10 10"
-              refX="5"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ffffff" />
-            </marker>
-
-            <marker
-              id="bus-arrow-dim"
-              viewBox="0 0 10 10"
-              refX="5"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255, 255, 255, 0.4)" />
-            </marker>
+            <filter id="spine-glow-purple" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
-          {/* Phase Era Pill Banners & Top Year Axis Stems */}
-          {PHASES_CONFIG.map((p) => {
-            const phaseMovies = UNIFIED_MCU_TREE.filter((m) => m.phase === p.id);
-            const topY = Math.min(...phaseMovies.map((m) => m.y));
-            const topRowMovies = phaseMovies.filter((m) => Math.abs(m.y - topY) < 50);
+          {/* Continuous Horizontal Timeline Mainline Spine */}
+          <line
+            x1="80"
+            y1="230"
+            x2="10350"
+            y2="230"
+            stroke="rgba(255, 255, 255, 0.4)"
+            strokeWidth="2.5"
+          />
 
-            return (
-              <g key={`phase-block-${p.id}`}>
-                {/* Phase Banner */}
-                <g
-                  onClick={() => directToPhase(p.id)}
-                  className="cursor-pointer pointer-events-auto group phase-banner"
-                >
-                  <rect
-                    x="740"
-                    y={p.startY - 18}
-                    width="520"
-                    height="36"
-                    rx="18"
-                    fill="#05050a"
-                    stroke={activePhase === p.id && !isFullOverview ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
-                    strokeWidth={activePhase === p.id && !isFullOverview ? "1.8" : "1"}
-                    className="group-hover:stroke-white group-hover:fill-[#0c0c14] transition-all duration-300"
-                  />
+          {/* Spine Nodes & Drop Stems */}
+          {UNIFIED_MCU_TREE.map((movie) => {
+            const isAvengersHub = movie.id === "the-avengers" || movie.id === "avengers-aou" || movie.id === "infinity-war" || movie.id === "endgame" || movie.id === "avengers-doomsday" || movie.id === "avengers-secret-wars" || movie.id === "spiderman-no-way-home";
+            const isConnected = activeConnectedIds.has(movie.id);
 
-                  <text
-                    x="1000"
-                    y={p.startY + 4}
-                    textAnchor="middle"
-                    fill={activePhase === p.id && !isFullOverview ? "#ffffff" : "#d4d4d8"}
-                    fontSize="12"
-                    fontFamily="monospace"
-                    fontWeight="bold"
-                    letterSpacing="0.25em"
-                    className="select-none transition-colors group-hover:fill-white"
-                  >
-                    PHASE {p.roman} · {p.title} ({p.years})
-                  </text>
-                </g>
-
-                {/* Chronological Year Axis & Vertical Stems */}
-                {topRowMovies.map((m) => {
-                  const yearY = p.startY + 65;
-                  return (
-                    <g key={`year-stem-${m.id}`} className="pointer-events-none select-none">
-                      {/* Year Label */}
-                      <text
-                        x={m.x}
-                        y={yearY}
-                        textAnchor="middle"
-                        fill="rgba(255, 255, 255, 0.65)"
-                        fontSize="11"
-                        fontFamily="monospace"
-                        fontWeight="bold"
-                        letterSpacing="0.2em"
-                      >
-                        {m.year}
-                      </text>
-
-                      {/* Vertical Stem Line from Year Header to Movie Node */}
-                      <line
-                        x1={m.x}
-                        y1={yearY + 12}
-                        x2={m.x}
-                        y2={m.y - 48}
-                        stroke="rgba(255, 255, 255, 0.25)"
-                        strokeWidth="1.2"
-                        strokeDasharray="3 4"
-                      />
-                    </g>
-                  );
-                })}
-              </g>
-            );
-          })}
-
-          {/* ORTHOGONAL CIRCUIT BUS CONNECTIONS WITH DIRECTIONAL ARROWS */}
-          {UNIFIED_MCU_TREE.flatMap((fromMovie) =>
-            fromMovie.connections.map((conn) => {
-              const toMovie = UNIFIED_MCU_TREE.find((m) => m.id === conn.toId);
-              if (!toMovie) return null;
-
-              const isDirectlyConnected =
-                (selectedMovie && (selectedMovie.id === fromMovie.id || selectedMovie.id === toMovie.id)) ||
-                (hoveredMovieId && (hoveredMovieId === fromMovie.id || hoveredMovieId === toMovie.id));
-
-              const isDimmed =
-                (selectedMovie || hoveredMovieId) && !isDirectlyConnected;
-
-              const dx = toMovie.x - fromMovie.x;
-              const dy = toMovie.y - fromMovie.y;
-
-              // Compute clean orthogonal circuit path: Vertical drop -> Horizontal bus rail -> Vertical drop into node
-              let pathD = '';
-              const startY = fromMovie.y + 48;
-              const endY = toMovie.y - 48;
-
-              if (Math.abs(dx) < 6) {
-                // Direct vertical alignment
-                pathD = `M ${fromMovie.x} ${startY} V ${endY}`;
-              } else {
-                // Bus routing: drop down to intermediate bus line, travel horizontally, then drop to target
-                const busY = dy > 0 ? fromMovie.y + Math.max(80, dy * 0.5) : fromMovie.y - 60;
-                pathD = `M ${fromMovie.x} ${startY} V ${busY} H ${toMovie.x} V ${endY}`;
-              }
-
+            // Skip rendering spine dot for secondary stacked rows (e.g. Captain America 2011)
+            if (movie.id === "captain-america") {
               return (
-                <g key={`conn-${fromMovie.id}-${toMovie.id}`}>
-                  {/* Glowing halo on active/hovered connection */}
-                  {isDirectlyConnected && (
-                    <path
-                      d={pathD}
-                      fill="none"
-                      stroke={fromMovie.color || "#ffffff"}
-                      strokeWidth="3.5"
-                      opacity="0.95"
-                      filter="url(#universe-line-glow)"
-                      strokeDasharray="6 6"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  )}
-
-                  {/* Primary orthogonal circuit line */}
+                <g key={`spine-node-${movie.id}`}>
+                  {/* Branch line from 2011 Thor column down to Captain America */}
                   <path
-                    d={pathD}
+                    d={`M 880 430 H 880 V 680`}
                     fill="none"
-                    stroke={
-                      isDirectlyConnected
-                        ? "#ffffff"
-                        : isDimmed
-                        ? "rgba(255, 255, 255, 0.04)"
-                        : "rgba(255, 255, 255, 0.3)"
-                    }
-                    strokeWidth={isDirectlyConnected ? "2" : "1.2"}
-                    strokeDasharray={isDirectlyConnected ? "4 4" : "3 4"}
-                    markerEnd={isDirectlyConnected ? "url(#bus-arrow-active)" : isDimmed ? "" : "url(#bus-arrow-dim)"}
-                    className={isDirectlyConnected ? "flowing-connection" : "faint-connection"}
+                    stroke="rgba(255, 255, 255, 0.35)"
+                    strokeWidth="1.5"
                   />
                 </g>
               );
-            })
-          )}
+            }
+
+            return (
+              <g key={`spine-node-${movie.id}`}>
+                {/* Year Label above spine */}
+                <text
+                  x={movie.x}
+                  y="185"
+                  textAnchor="middle"
+                  fill={isAvengersHub ? "#ffffff" : "rgba(255, 255, 255, 0.7)"}
+                  fontSize={isAvengersHub ? "15" : "13"}
+                  fontWeight="bold"
+                  letterSpacing="0.15em"
+                  className="select-none"
+                >
+                  {movie.year}
+                </text>
+
+                {/* Spine Node Dot */}
+                <circle
+                  cx={movie.x}
+                  cy="230"
+                  r={isAvengersHub ? "7.5" : "5.5"}
+                  fill="#030306"
+                  stroke={isAvengersHub ? "#c084fc" : "#2dd4bf"}
+                  strokeWidth="2.5"
+                  filter={isAvengersHub ? "url(#spine-glow-purple)" : "url(#spine-glow-teal)"}
+                />
+
+                {/* Vertical Stem dropping from spine dot to card */}
+                <line
+                  x1={movie.x}
+                  y1="237"
+                  x2={movie.x}
+                  y2="280"
+                  stroke={isAvengersHub ? "#c084fc" : "rgba(255, 255, 255, 0.35)"}
+                  strokeWidth="1.5"
+                />
+
+                {/* Multi-release 2011 branch connector */}
+                {movie.id === "thor" && (
+                  <path
+                    d="M 880 340 H 880 V 580"
+                    fill="none"
+                    stroke="rgba(255, 255, 255, 0.35)"
+                    strokeWidth="1.5"
+                  />
+                )}
+              </g>
+            );
+          })}
         </svg>
 
-        {/* Interactive Movie Nodes Positioned Vertically in Space */}
+        {/* 5. HANGING MOVIE POSTER CARDS */}
         {UNIFIED_MCU_TREE.map((movie) => {
           const isSelected = selectedMovie?.id === movie.id;
           const isHovered = hoveredMovieId === movie.id;
           const isConnected = activeConnectedIds.has(movie.id);
           const isFaded = (selectedMovie || hoveredMovieId) && !isConnected;
+          const isStarred = starredMovieIds.has(movie.id);
+          const isAvengersHub = movie.id === "the-avengers" || movie.id === "avengers-aou" || movie.id === "infinity-war" || movie.id === "endgame" || movie.id === "avengers-doomsday" || movie.id === "avengers-secret-wars" || movie.id === "spiderman-no-way-home";
+
+          // Major Event connected below
+          const majorEvent = MCU_MAJOR_EVENTS.find((ev) => ev.connectedMovieId === movie.id);
 
           return (
-            <div
-              key={movie.id}
-              onClick={() => focusOnMovie(movie)}
-              onMouseEnter={() => setHoveredMovieId(movie.id)}
-              onMouseLeave={() => setHoveredMovieId(null)}
-              className={`absolute cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group  pointer-events-auto movie-node-card ${
-                isFaded ? "opacity-25 filter blur-[0.6px]" : "opacity-100"
-              }`}
-              style={{
-                left: `${movie.x}px`,
-                top: `${movie.y}px`,
-                zIndex: isSelected ? 45 : isHovered ? 40 : 10,
-              }}
-            >
-              {/* Minimalist TVA Cinematic Dossier Popover on Hover */}
-              {isHovered && !isSelected && (
-                <div className="absolute bottom-[115%] left-1/2 -translate-x-1/2 mb-3 w-[340px] pointer-events-none z-50 animate-in fade-in zoom-in-95 duration-200 ease-out">
-                  <div className="p-3.5 rounded-2xl bg-[#09090b]/95 border border-white/15 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95),0_0_25px_rgba(255,255,255,0.06)] flex gap-3.5 text-left">
-                    {/* Official Movie Poster Thumbnail */}
-                    <div className="w-20 aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 shrink-0 shadow-xl border border-white/15 relative">
-                      <img
-                        src={MCU_POSTER_MAP[movie.id]?.poster || ""}
-                        alt={movie.title}
-                        loading="eager"
-                        className="w-full h-full object-cover object-center"
-                      />
-                      <div className="absolute inset-0 border border-white/10 rounded-xl pointer-events-none" />
-                    </div>
-
-                    {/* Movie Information Column */}
-                    <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
-                      {/* Header Row: Phase Badge + Year + Runtime */}
-                      <div className="flex items-center justify-between text-[9px] font-mono tracking-wider uppercase">
-                        <div className="flex items-center gap-1.5">
-                          <span className="px-2 py-0.5 rounded-full bg-white/10 text-white font-bold border border-white/10">
-                            PHASE {movie.phase}
-                          </span>
-                          <span className="text-stone-400 font-semibold">{movie.year}</span>
-                        </div>
-                        <span className="text-stone-500 font-medium">{movie.runtime} MIN</span>
-                      </div>
-
-                      {/* Title & Protagonist */}
-                      <div className="my-1.5">
-                        <h4 className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-tight line-clamp-1 drop-shadow-sm">
-                          {movie.title}
-                        </h4>
-                        <p className="text-[9.5px] font-mono tracking-wide uppercase text-stone-400 line-clamp-1 mt-0.5">
-                          {movie.heroAlias} {movie.leadCharacter && `· ${movie.leadCharacter}`}
-                        </p>
-                      </div>
-
-                      {/* Tagline / Narrative Quote */}
-                      <p className="text-[10px] font-sans italic text-stone-300 line-clamp-2 leading-snug">
-                        &ldquo;{movie.tagline || movie.quote || movie.description}&rdquo;
-                      </p>
-
-                      {/* Footer: Links & Action Prompt */}
-                      <div className="pt-2 mt-1 border-t border-white/10 flex items-center justify-between text-[8.5px] font-mono tracking-widest uppercase">
-                        <span className="text-stone-400 font-medium">
-                          {movie.connections.length} {movie.connections.length === 1 ? "CONNECTION" : "CONNECTIONS"}
-                        </span>
-                        <span className="text-white font-bold flex items-center gap-1">
-                          EXPLORE <span className="text-[10px]">→</span>
-                        </span>
-                      </div>
-                    </div>
+            <React.Fragment key={`movie-card-group-${movie.id}`}>
+              {/* Primary Movie Poster Card */}
+              <div
+                onClick={() => focusOnMovie(movie)}
+                onMouseEnter={() => setHoveredMovieId(movie.id)}
+                onMouseLeave={() => setHoveredMovieId(null)}
+                className={`interactive-node absolute -translate-x-1/2 cursor-pointer pointer-events-auto transition-all duration-300 flex flex-col items-center ${
+                  isFaded ? "opacity-25 filter blur-[0.6px]" : "opacity-100"
+                } ${isSelected || isHovered ? "scale-105 z-30" : "z-10"}`}
+                style={{
+                  left: `${movie.x}px`,
+                  top: `${movie.y - 100}px`,
+                  width: "135px",
+                }}
+              >
+                <div
+                  className={`w-full rounded-2xl bg-[#09090f] overflow-hidden border transition-all duration-300 flex flex-col shadow-2xl ${
+                    isAvengersHub
+                      ? "border-purple-500 shadow-[0_0_25px_rgba(168,85,247,0.45)]"
+                      : isSelected || isHovered
+                      ? "border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+                      : "border-stone-800/90 hover:border-stone-600"
+                  }`}
+                >
+                  {/* Poster Image */}
+                  <div className="w-full aspect-[2/3] relative bg-stone-900 overflow-hidden">
+                    <img
+                      src={MCU_POSTER_MAP[movie.id]?.poster || movie.posterUrl || ""}
+                      alt={movie.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06060a] via-transparent to-transparent pointer-events-none" />
                   </div>
 
-                  {/* Clean Subtle Glow Tip */}
-                  <div className="w-3 h-3 bg-[#09090b]/95 border-r border-b border-white/15 rotate-45 mx-auto -mt-1.5 shadow-lg" />
+                  {/* Card Bottom Meta */}
+                  <div className="p-2 pt-1 flex flex-col items-center text-center bg-[#06060a]">
+                    <span className="text-[9.5px] font-bold tracking-widest text-[#38bdf8]">
+                      {movie.year}
+                    </span>
+                    <h4 className="text-[10px] font-bold tracking-wider text-white uppercase line-clamp-1 mt-0.5">
+                      {movie.shortTitle || movie.title}
+                    </h4>
+
+                    {/* Star Button */}
+                    <button
+                      onClick={(e) => toggleStarMovie(e, movie.id)}
+                      className={`mt-1 text-xs transition-colors p-0.5 cursor-pointer ${
+                        isStarred ? "text-yellow-400" : "text-stone-600 hover:text-stone-300"
+                      }`}
+                      title={isStarred ? "Favorited" : "Add to favorites"}
+                    >
+                      <Star size={11} fill={isStarred ? "currentColor" : "none"} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Major Event Connected Sub-Card (Gold border + Diamond node) */}
+              {majorEvent && (
+                <div
+                  className="interactive-node absolute -translate-x-1/2 pointer-events-auto flex flex-col items-center z-10"
+                  style={{
+                    left: `${movie.x}px`,
+                    top: `${movie.y + 160}px`,
+                    width: "135px",
+                  }}
+                >
+                  {/* Connector Diamond Node */}
+                  <div className="w-2.5 h-2.5 bg-amber-400 rotate-45 mb-1.5 shadow-[0_0_10px_rgba(251,191,36,0.7)]" />
+
+                  {/* Major Event Card */}
+                  <div className="w-full rounded-2xl bg-[#0d0d12] overflow-hidden border border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] flex flex-col">
+                    <div className="w-full aspect-[16/10] relative bg-stone-900 overflow-hidden">
+                      <img
+                        src={majorEvent.image}
+                        alt={majorEvent.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#09090e] via-transparent to-transparent pointer-events-none" />
+                    </div>
+                    <div className="p-2 pt-1 flex flex-col items-center text-center bg-[#09090e]">
+                      <span className="text-[9px] font-bold tracking-widest text-amber-400">
+                        {majorEvent.year}
+                      </span>
+                      <h4 className="text-[9.5px] font-bold tracking-wider text-white uppercase line-clamp-1">
+                        {majorEvent.shortTitle}
+                      </h4>
+                      <span className="text-[7.5px] tracking-widest text-amber-400 uppercase mt-0.5 font-bold">
+                        MAJOR EVENT
+                      </span>
+                    </div>
+                  </div>
                 </div>
               )}
-
-              {/* Circular Universe Node Core (Clean Minimal Monochrome) */}
-              <div
-                className={`relative rounded-full flex items-center justify-center  ${
-                  isSelected
-                    ? "w-28 h-28 sm:w-32 sm:h-32 scale-110 shadow-[0_0_40px_rgba(255,255,255,0.7)]"
-                    : isHovered
-                    ? "w-24 h-24 sm:w-28 sm:h-28 scale-110 shadow-[0_0_25px_rgba(255,255,255,0.4)]"
-                    : "w-20 h-20 sm:w-24 sm:h-24 shadow-[0_0_15px_rgba(0,0,0,0.8)]"
-                }`}
-              >
-                {/* Clean Dotted Orbit Ring on Hover or Select */}
-                {(isSelected || isHovered) && (
-                  <span className="absolute -inset-2 rounded-full border border-dotted border-white/70 animate-[spin_8s_linear_infinite]" />
-                )}
-
-                {/* Node Artwork Emblem */}
-                <div
-                  className={`w-full h-full rounded-full border transition-colors p-0.5 bg-black overflow-hidden ${
-                    isSelected || isHovered ? "border-white" : "border-stone-800"
-                  }`}
-                >
-                  <NodeArtwork movieId={movie.id} isActive={isSelected || isHovered} />
-                </div>
-
-                {/* Release Year Badge */}
-                <div
-                  className={`absolute -bottom-2 bg-black/95 border px-2 py-0.5 rounded-full text-[9px] font-mono transition-colors shadow-md ${
-                    isSelected || isHovered ? "border-white text-white font-bold" : "border-stone-800 text-stone-400"
-                  }`}
-                >
-                  {movie.year}
-                </div>
-              </div>
-
-              {/* Node Title & Hero Metadata */}
-              <div
-                className={`mt-4 flex flex-col items-center text-center  ${
-                  isSelected || isHovered ? "scale-105" : ""
-                }`}
-              >
-                <h3
-                  className={`font-mono text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
-                    isSelected || isHovered
-                      ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                      : "text-stone-300"
-                  }`}
-                >
-                  {movie.title}
-                </h3>
-                <span className="text-[9px] font-mono text-stone-500 tracking-wider mt-0.5 uppercase">
-                  PHASE {movie.phase} · {movie.heroAlias}
-                </span>
-              </div>
-            </div>
+            </React.Fragment>
           );
         })}
       </div>
 
-      {/* 8. Deep Contextual Movie Detail Panel */}
+      {/* 6. RIGHT-SIDE HUD PANEL ("NOW VIEWING") */}
+      <aside className="fixed top-13 right-4 sm:right-6 z-40 w-56 sm:w-60 bg-[#06060a]/90 border border-stone-800/90 rounded-2xl p-4 sm:p-5 backdrop-blur-xl shadow-2xl flex flex-col gap-3.5 pointer-events-auto">
+        {/* Header section */}
+        <div>
+          <span className="text-[8.5px] tracking-[0.25em] text-[#10b981] uppercase font-bold">
+            NOW VIEWING
+          </span>
+          <h2 className="text-base sm:text-lg font-black text-white tracking-widest uppercase mt-0.5">
+            EARTH-616
+          </h2>
+          <span className="text-[9px] tracking-[0.2em] text-stone-400 uppercase">
+            SACRED TIMELINE
+          </span>
+        </div>
+
+        {/* Amber accent divider */}
+        <div className="w-10 h-0.5 bg-amber-500/90 rounded-full" />
+
+        {/* Phase Info */}
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[9.5px] tracking-widest text-[#10b981] font-bold uppercase">
+            PHASE {currentPhaseMeta.roman}
+          </span>
+          <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+            {currentPhaseMeta.title}
+          </h3>
+          <span className="text-[9.5px] text-stone-400 mt-0.5">
+            {currentPhaseMeta.years}
+          </span>
+          <div className="mt-2 flex flex-col gap-0.5 text-[9.5px]">
+            <span className="text-stone-300 font-semibold">{currentPhaseMeta.count} FILMS</span>
+            <span className="text-purple-400 font-bold">{currentPhaseMeta.majorEvents || 1} MAJOR EVENT</span>
+          </div>
+        </div>
+
+        {/* Timeline Navigation Controls */}
+        <div className="pt-2 border-t border-stone-800 flex flex-col gap-1.5">
+          <span className="text-[8px] tracking-[0.2em] text-[#10b981] uppercase font-bold">
+            TIMELINE NAVIGATION
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => {
+                const nextScale = Math.max(targetCamRef.current.scale * 0.82, 0.35);
+                updateCameraTransform({ ...targetCamRef.current, scale: nextScale }, true);
+              }}
+              className="flex-1 py-1.5 bg-stone-900/90 border border-stone-700 hover:border-white rounded-lg flex items-center justify-center text-xs text-stone-300 hover:text-white transition-colors cursor-pointer"
+              title="Zoom Out"
+            >
+              <Minus size={13} />
+            </button>
+            <button
+              onClick={() => {
+                const nextScale = Math.min(targetCamRef.current.scale * 1.22, 1.5);
+                updateCameraTransform({ ...targetCamRef.current, scale: nextScale }, true);
+              }}
+              className="flex-1 py-1.5 bg-stone-900/90 border border-stone-700 hover:border-white rounded-lg flex items-center justify-center text-xs text-stone-300 hover:text-white transition-colors cursor-pointer"
+              title="Zoom In"
+            >
+              <Plus size={13} />
+            </button>
+            <button
+              onClick={() => directToPhase(activePhase)}
+              className="flex-1 py-1.5 bg-stone-900/90 border border-stone-700 hover:border-white rounded-lg flex items-center justify-center text-xs text-stone-300 hover:text-white transition-colors cursor-pointer"
+              title="Center Active Phase"
+            >
+              <Crosshair size={13} />
+            </button>
+            <button
+              onClick={() => directToPhase(1)}
+              className="flex-1 py-1.5 bg-stone-900/90 border border-stone-700 hover:border-white rounded-lg flex items-center justify-center text-xs text-stone-300 hover:text-white transition-colors cursor-pointer"
+              title="Reset to Phase 1"
+            >
+              <RotateCcw size={13} />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* 7. BOTTOM-RIGHT TIMELINE OVERVIEW (Scrubber Bar with Wave Lines) */}
+      <div className="fixed bottom-4 right-4 sm:right-6 z-40 bg-[#06060a]/90 border border-stone-800/90 rounded-2xl px-4 py-2.5 backdrop-blur-xl shadow-2xl flex flex-col gap-1.5 pointer-events-auto w-60 sm:w-68">
+        <div className="flex items-center justify-between text-[8px] tracking-widest text-stone-400 uppercase">
+          <span>2008</span>
+          <span className="text-[#10b981] font-bold">TIMELINE OVERVIEW</span>
+          <span>2027</span>
+        </div>
+
+        {/* Visual Frequency / Timeline Waves */}
+        <div className="relative h-6 w-full flex items-center justify-between gap-1 overflow-hidden cursor-pointer"
+          onClick={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickRatio = (e.clientX - rect.left) / rect.width;
+            const phaseIndex = Math.min(Math.floor(clickRatio * 6) + 1, 6);
+            directToPhase(phaseIndex);
+          }}
+        >
+          {Array.from({ length: 32 }).map((_, i) => {
+            const height = ((i * 7) % 16) + 6;
+            const isPhaseSelected = Math.floor((i / 32) * 6) + 1 === activePhase;
+            return (
+              <div
+                key={`wave-${i}`}
+                className={`w-[2px] rounded-full transition-all duration-300 ${
+                  isPhaseSelected ? "bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.8)]" : "bg-stone-700"
+                }`}
+                style={{ height: `${height}px` }}
+              />
+            );
+          })}
+
+          {/* Active Viewport Window Indicator */}
+          <div
+            className="absolute inset-y-0 border-2 border-[#10b981] rounded-lg pointer-events-none transition-all duration-300"
+            style={{
+              left: `${((activePhase - 1) / 6) * 100}%`,
+              width: "16.66%",
+            }}
+          />
+        </div>
+
+        <span className="text-[7.5px] text-stone-500 tracking-wider text-center mt-0.5">
+          👆 DRAG TO NAVIGATE
+        </span>
+      </div>
+
+      {/* 8. BOTTOM LEGEND BAR */}
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-30 pointer-events-none hidden md:flex items-center gap-6 bg-[#06060a]/90 border border-stone-800 px-5 py-2 rounded-full backdrop-blur-md text-[8.5px] tracking-wider uppercase text-stone-400">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full border-2 border-[#2dd4bf]" />
+          <span>MOVIE</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full border-2 border-[#c084fc]" />
+          <span>MAJOR EVENT</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 bg-amber-400 rotate-45" />
+          <span>HISTORICAL EVENT</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-stone-500">------</span>
+          <span>CONNECTION</span>
+        </div>
+      </div>
+
+      {/* 9. BOTTOM-LEFT INTERACTIVE HELPER */}
+      <div className="fixed bottom-4 left-52 sm:left-56 z-30 pointer-events-none flex items-center gap-2 text-[8.5px] tracking-[0.2em] uppercase text-stone-400 bg-black/60 px-3 py-1.5 rounded-full border border-stone-800/80 backdrop-blur-md">
+        <MousePointer2 size={11} className="text-[#10b981]" />
+        <span>HOVER ON A MOVIE TO SEE CONNECTIONS</span>
+      </div>
+
+      {/* 10. BOTTOM CENTER TIP */}
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none hidden lg:flex items-center gap-1.5 text-[8px] tracking-wider uppercase text-stone-500">
+        <Lightbulb size={10} className="text-stone-400" />
+        <span>TIP: CLICK ON ANY MOVIE TO VIEW DETAILS, CAST, CONNECTIONS AND MORE.</span>
+      </div>
+
+      {/* 11. DEEP CONTEXTUAL MOVIE DETAIL PANEL */}
       {selectedMovie && (
         <DeepMovieDetail
           movie={selectedMovie}
@@ -929,15 +771,18 @@ export default function UniverseMap({
         />
       )}
 
-      {/* 9. Investigation Search Overlay Modal */}
+      {/* 12. SEARCH MODAL */}
       <SearchInvestigation
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
         onSelectMovie={(movie) => focusOnMovie(movie)}
       />
 
-      {/* 10. Slide-Out Navigation Menu */}
-      <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
+      {/* 13. SLIDE NAVIGATION MENU */}
+      <SlideNavMenu
+        isOpen={navMenuOpen}
+        onClose={() => setNavMenuOpen(false)}
+      />
     </div>
   );
 }
