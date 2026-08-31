@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import TimelineDoomsdayLayout from "@/components/timeline/TimelineDoomsdayLayout";
 import {
   Search,
   Menu,
@@ -63,6 +64,7 @@ export default function TimelineScrollableView() {
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [layoutMode, setLayoutMode] = useState<'grid' | 'doomsday'>('doomsday');
 
   // All 44 canonical movies sorted by sequence order (1 to 44)
   const allMovies = useMemo(() => {
@@ -254,21 +256,49 @@ export default function TimelineScrollableView() {
             </div>
           </div>
 
-          {/* Phase Filter Tabs matching the site */}
-          <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase border-b border-white/5 pt-1">
-            {PHASE_FILTERS.map((f) => (
+          {/* Phase Filter Tabs matching the site + Layout Toggle */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/5 pb-1">
+            <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase pt-1">
+              {PHASE_FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => handleSelectPhase(f.id as number | "all")}
+                  className={`transition-colors cursor-pointer py-1 shrink-0 whitespace-nowrap ${
+                    activePhaseFilter === f.id
+                      ? "text-white font-bold border-b border-white pb-2 -mb-[1px]"
+                      : "text-stone-500 hover:text-stone-300 pb-2"
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Layout Toggle Button */}
+            <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0 bg-white/5 border border-white/10 rounded-lg p-1 text-[10px] font-mono tracking-widest uppercase">
               <button
-                key={f.id}
-                onClick={() => handleSelectPhase(f.id as number | "all")}
-                className={`transition-colors cursor-pointer py-1 shrink-0 whitespace-nowrap ${
-                  activePhaseFilter === f.id
-                    ? "text-white font-bold border-b border-white pb-2 -mb-[1px]"
-                    : "text-stone-500 hover:text-stone-300 pb-2"
+                onClick={() => setLayoutMode("doomsday")}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  layoutMode === "doomsday"
+                    ? "bg-white text-black font-bold shadow"
+                    : "text-stone-400 hover:text-white"
                 }`}
+                title="Doomsday Snake-Path View"
               >
-                {f.label}
+                PATH VIEW
               </button>
-            ))}
+              <button
+                onClick={() => setLayoutMode("grid")}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  layoutMode === "grid"
+                    ? "bg-white text-black font-bold shadow"
+                    : "text-stone-400 hover:text-white"
+                }`}
+                title="Grid View"
+              >
+                GRID VIEW
+              </button>
+            </div>
           </div>
         </div>
 
@@ -292,95 +322,90 @@ export default function TimelineScrollableView() {
             </button>
           </div>
         ) : (
-          <div className="flex flex-col gap-14">
-            {TIMELINE_PHASES.map((phase) => {
-              const movies = moviesByPhase.get(phase.id) || [];
-              if (movies.length === 0) return null;
-
-              return (
-                <section
-                  key={`phase-section-${phase.id}`}
-                  id={`phase-section-${phase.id}`}
-                  className="flex flex-col gap-6 scroll-mt-28"
-                >
-                  {/* Phase Era Header Banner */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded">
-                        PHASE {phase.roman}
-                      </span>
-                      <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
-                        {phase.title}
+          layoutMode === 'grid' ? (
+            <div className="flex flex-col gap-14">
+              {TIMELINE_PHASES.map((phase) => {
+                const movies = moviesByPhase.get(phase.id) || [];
+                if (movies.length === 0) return null;
+                return (
+                  <section
+                    key={`phase-section-${phase.id}`}
+                    id={`phase-section-${phase.id}`}
+                    className="flex flex-col gap-6 scroll-mt-28"
+                  >
+                    {/* Phase Era Header Banner */}
+                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded">
+                          PHASE {phase.roman}
+                        </span>
+                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                          {phase.title}
+                        </span>
+                      </div>
+                      <span className="text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
+                        {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
                       </span>
                     </div>
-                    <span className="text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
-                      {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
-                    </span>
-                  </div>
-
-                  {/* Movies Grid (Matching Movies & Characters Page Card Styling) */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
-                    {movies.map((movie) => {
-                      const posterUrl = getMoviePoster(movie);
-
-                      return (
-                        <Link
-                          key={movie.id}
-                          href={`/timeline/${movie.id}`}
-                          className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer"
-                        >
-                          {/* Poster Container with Glass Border & Glow */}
-                          <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
-                            <img
-                              src={posterUrl}
-                              alt={movie.title}
-                              loading="lazy"
-                              className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
-                            />
-
-
-
-                            {/* Top Sequence & Phase Badge */}
-                            <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
-                              <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-white">
-                                #{String(movie.order).padStart(2, "0")}
-                              </span>
-                              <span className="text-[8px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/15 text-stone-300">
-                                P{movie.phase}
-                              </span>
+                    {/* Movies Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                      {movies.map((movie) => {
+                        const posterUrl = getMoviePoster(movie);
+                        return (
+                          <Link
+                            key={movie.id}
+                            href={`/timeline/${movie.id}`}
+                            className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer"
+                          >
+                            {/* Poster Container */}
+                            <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                              <img
+                                src={posterUrl}
+                                alt={movie.title}
+                                loading="lazy"
+                                className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+                              />
+                              {/* Badges */}
+                              <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
+                                <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-white">
+                                  #{String(movie.order).padStart(2, "0")}
+                                </span>
+                                <span className="text-[8px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/15 text-stone-300">
+                                  P{movie.phase}
+                                </span>
+                              </div>
+                              {/* Release Year */}
+                              <div className="absolute bottom-2.5 right-2.5">
+                                <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
+                                  {movie.year}
+                                </span>
+                              </div>
                             </div>
-
-                            {/* Release Year */}
-                            <div className="absolute bottom-2.5 right-2.5">
-                              <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
-                                {movie.year}
-                              </span>
+                            {/* Metadata */}
+                            <div className="flex flex-col gap-1">
+                              <h3
+                                className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-amber-300 transition-colors line-clamp-1"
+                                title={movie.title}
+                              >
+                                {movie.title}
+                              </h3>
+                              <div className="flex items-center gap-1.5 text-[9.5px] font-mono text-stone-500 uppercase tracking-widest line-clamp-1">
+                                <span className="text-stone-400">{movie.heroAlias}</span>
+                                <span>•</span>
+                                <span>{movie.runtime} MIN</span>
+                              </div>
                             </div>
-                          </div>
-
-                          {/* Movie Metadata Details */}
-                          <div className="flex flex-col gap-1">
-                            <h3
-                              className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-amber-300 transition-colors line-clamp-1"
-                              title={movie.title}
-                            >
-                              {movie.title}
-                            </h3>
-
-                            <div className="flex items-center gap-1.5 text-[9.5px] font-mono text-stone-500 uppercase tracking-widest line-clamp-1">
-                              <span className="text-stone-400">{movie.heroAlias}</span>
-                              <span>•</span>
-                              <span>{movie.runtime} MIN</span>
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </section>
-              );
-            })}
-          </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+          ) : (
+            <TimelineDoomsdayLayout movies={filteredMovies} />
+          )
         )}
       </div>
 
