@@ -16,7 +16,7 @@ export default function MovieSlugDetail({ movie }: { movie: MovieNode }) {
           if (typeof window !== "undefined" && window.history.length > 1) {
             router.back();
           } else {
-            router.push(`/timeline?phase=${movie.phase || 1}&movie=${movie.id}`);
+            router.push("/movies");
           }
         }}
         onNavigateToConnectedMovie={(target) => {

@@ -211,3 +211,5 @@ export function MovieScene({ movies }: MovieSceneProps) {
     </div>
   );
 }
+
+export default MovieScene;

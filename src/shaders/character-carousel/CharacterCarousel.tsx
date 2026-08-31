@@ -283,3 +283,5 @@ export function CharacterFilmstrip(props: Omit<CharacterCarouselProps, "variant"
 export function CharacterWave(props: Omit<CharacterCarouselProps, "variant">) {
   return <CharacterCarousel {...props} variant="wave" />;
 }
+
+export default CharacterCarousel;

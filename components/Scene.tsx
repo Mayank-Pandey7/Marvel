@@ -85,3 +85,5 @@ export function Scene({ characters }: SceneProps) {
     </div>
   );
 }
+
+export default Scene;

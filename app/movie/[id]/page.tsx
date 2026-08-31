@@ -60,7 +60,7 @@ export default function MovieDossierPage({ params }: { params: { id: string } })
     if (window.history.length > 1) {
       router.back();
     } else {
-      router.push(`/timeline?phase=${movieNode.phase}&movie=${encodeURIComponent(movieNode.id)}`);
+      router.push("/movies");
     }
   };
 

@@ -5,13 +5,9 @@ import { useRouter } from "next/navigation";
 import DarkFamilyTree from "@/components/dark/DarkFamilyTree";
 
 function FamilyTreeContent() {
-  const router = useRouter();
-
   return (
     <main className="w-screen h-screen overflow-hidden bg-[#040406]">
-      <DarkFamilyTree
-        onSwitchToTimeline={() => router.push("/timeline")}
-      />
+      <DarkFamilyTree />
     </main>
   );
 }

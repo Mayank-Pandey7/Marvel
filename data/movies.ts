@@ -155,94 +155,13 @@ export const MCU_EARTHS: MCUEarth[] = [
   },
 ];
 
-export interface MCUMajorEvent {
-  id: string;
-  phase: number;
-  year: number;
-  title: string;
-  shortTitle: string;
-  location: string;
-  description: string;
-  connectedMovieId: string;
-  image: string;
-}
-
-export const MCU_MAJOR_EVENTS: MCUMajorEvent[] = [
-  {
-    id: "battle-of-new-york",
-    phase: 1,
-    year: 2012,
-    title: "Battle of New York",
-    shortTitle: "BATTLE OF NEW YORK",
-    location: "Manhattan, New York",
-    description: "The Avengers unite for the first time to repel Loki and the Chitauri invasion army, sealing the Space Stone wormhole.",
-    connectedMovieId: "the-avengers",
-    image: "https://image.tmdb.org/t/p/w780/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg",
-  },
-  {
-    id: "battle-of-sokovia",
-    phase: 2,
-    year: 2015,
-    title: "Battle of Sokovia",
-    shortTitle: "BATTLE OF SOKOVIA",
-    location: "Novi Grad, Sokovia",
-    description: "The Avengers prevent Ultron from causing human extinction by destroying the vibranium-levitated city of Novi Grad.",
-    connectedMovieId: "avengers-aou",
-    image: "https://image.tmdb.org/t/p/w780/tMefBSflR6PGQLv7WvFPpKLZkyk.jpg",
-  },
-  {
-    id: "battle-of-earth",
-    phase: 3,
-    year: 2019,
-    title: "Battle of Earth",
-    shortTitle: "BATTLE OF EARTH",
-    location: "Avengers Compound, Upstate New York",
-    description: "All reunited heroes of the MCU assemble through Doctor Strange's portals to defeat Thanos and his cosmic army with Tony Stark's snap.",
-    connectedMovieId: "endgame",
-    image: "https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-  },
-  {
-    id: "multiverse-fracture",
-    phase: 4,
-    year: 2021,
-    title: "Multiverse Convergence",
-    shortTitle: "STATUE OF LIBERTY CLASH",
-    location: "Liberty Island, New York",
-    description: "Three generations of Spider-Men unite against multiversal villains before Peter Parker casts the spell of forgetting.",
-    connectedMovieId: "spiderman-no-way-home",
-    image: "https://image.tmdb.org/t/p/w780/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
-  },
-  {
-    id: "incursion-point",
-    phase: 5,
-    year: 2024,
-    title: "Earth-10005 Incursion",
-    shortTitle: "X-MEN REALITY BREACH",
-    location: "Earth-10005 / The Void",
-    description: "Deadpool and Wolverine stabilize the anchor-being decay of Earth-10005, triggering multiversal timeline ripple effects.",
-    connectedMovieId: "thunderbolts",
-    image: "https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-  },
-  {
-    id: "battleworld-secret-wars",
-    phase: 6,
-    year: 2026,
-    title: "Doom's Incursion Convergence",
-    shortTitle: "BATTLEWORLD FORGED",
-    location: "Battleworld / Multiverse Core",
-    description: "Doctor Doom salvages the dying multiverse from catastrophic incursions, uniting realities for the final Secret Wars.",
-    connectedMovieId: "avengers-doomsday",
-    image: "https://image.tmdb.org/t/p/w780/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
-  },
-];
-
 export const PHASES_CONFIG = [
-  { id: 1, roman: "I", title: "THE BEGINNING", subtitle: "THE BEGINNING", years: "2008 — 2012", count: 6, majorEvents: 1, startX: 0, width: 1400 },
-  { id: 2, roman: "II", title: "AFTERMATH", subtitle: "AFTERMATH", years: "2013 — 2015", count: 6, majorEvents: 1, startX: 1400, width: 1400 },
-  { id: 3, roman: "III", title: "THE INFINITY SAGA", subtitle: "THE INFINITY SAGA", years: "2016 — 2019", count: 11, majorEvents: 1, startX: 2800, width: 2600 },
-  { id: 4, roman: "IV", title: "MULTIVERSE EXPANSION", subtitle: "MULTIVERSE", years: "2021 — 2022", count: 10, majorEvents: 1, startX: 5400, width: 2400 },
-  { id: 5, roman: "V", title: "FRACTURES & YGGDRASIL", subtitle: "FRACTURES", years: "2023 — 2025", count: 7, majorEvents: 1, startX: 7800, width: 1800 },
-  { id: 6, roman: "VI", title: "CONVERGENCE & SECRET WARS", subtitle: "SECRET WARS", years: "2025 — 2027", count: 4, majorEvents: 1, startX: 9600, width: 1400 },
+  { id: 1, roman: "I", title: "THE BEGINNING", years: "2008 — 2012", count: 6, startY: 200, centerY: 850 },
+  { id: 2, roman: "II", title: "ESCALATION", years: "2013 — 2015", count: 6, startY: 1600, centerY: 2250 },
+  { id: 3, roman: "III", title: "THE INFINITY CLIMAX", years: "2016 — 2019", count: 11, startY: 3000, centerY: 4050 },
+  { id: 4, roman: "IV", title: "MULTIVERSE EXPANSION", years: "2021 — 2022", count: 10, startY: 5200, centerY: 6050 },
+  { id: 5, roman: "V", title: "FRACTURES & YGGDRASIL", years: "2023 — 2025", count: 7, startY: 7000, centerY: 7750 },
+  { id: 6, roman: "VI", title: "CONVERGENCE & SECRET WARS", years: "2025 — 2027", count: 4, startY: 8700, centerY: 9400 },
 ];
 
 export const UNIFIED_MCU_TREE: MovieNode[] = [
@@ -265,7 +184,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Miniature Arc Reactor", "Mark III Armor"],
     description: "Billionaire engineer Tony Stark builds a powered suit to escape captivity, forging the modern age of heroes and drawing the attention of S.H.I.E.L.D.",
     color: "#e55039",
-    x: 220, y: 380,
+    x: 600, y: 520,
     offsetY: -120,
     connections: [
       { toId: "iron-man-2", relationship: "Technological escalation & palladium toxicity", type: "direct_sequel" },
@@ -291,7 +210,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Super Soldier Serum variant", "Gamma Radiator"],
     description: "Scientist Bruce Banner seeks a cure for the gamma radiation that transforms him into a monstrous titan while pursued by General Ross.",
     color: "#2ed573",
-    x: 440, y: 380,
+    x: 800, y: 520,
     offsetY: 120,
     connections: [
       { toId: "the-avengers", relationship: "Banner recruited by Natasha Romanoff in Kolkata", type: "avengers_convergence" },
@@ -315,7 +234,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Badassium New Element", "Mark IV Suitcase Armor"],
     description: "Tony Stark resists government pressure to surrender his technology while discovering his father's blueprints for a clean energy element.",
     color: "#fa8231",
-    x: 660, y: 380,
+    x: 1000, y: 520,
     offsetY: -140,
     connections: [
       { toId: "thor", relationship: "Coulson departs to New Mexico for Mjolnir's crater", type: "origin_thread" },
@@ -341,7 +260,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Mjolnir", "The Casket of Ancient Winters", "Bifrost Bridge"],
     description: "The warrior Thor is banished to Earth stripped of his powers until he learns humility and stops Loki's usurpation of the Asgardian throne.",
     color: "#4bcffa",
-    x: 880, y: 380,
+    x: 1200, y: 520,
     offsetY: 140,
     connections: [
       { toId: "the-avengers", relationship: "Loki attacks Earth; Thor descends to retrieve his brother & the Tesseract", type: "avengers_convergence" },
@@ -366,7 +285,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Tesseract (Space Stone)", "Vibranium Shield", "Super Soldier Formula"],
     description: "During WWII, Steve Rogers is transformed into Captain America, battling Red Skull and HYDRA before awakening in the 21st century.",
     color: "#3867d6",
-    x: 880, y: 680,
+    x: 1400, y: 520,
     offsetY: -120,
     connections: [
       { toId: "the-avengers", relationship: "Awakened in modern New York to lead the Avengers", type: "avengers_convergence" },
@@ -391,7 +310,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Tesseract", "Loki's Scepter (Mind Stone)", "Helicarrier"],
     description: "When Loki invades Earth with the Chitauri army, Nick Fury unites Earth's greatest champions to defend New York City.",
     color: "#ff3838",
-    x: 1120, y: 380,
+    x: 1000, y: 780,
     offsetY: 0,
     connections: [
       { toId: "iron-man-3", relationship: "Tony Stark suffers PTSD from the wormhole nuclear missile flight", type: "direct_sequel" },
@@ -417,7 +336,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Mark 42 Armor", "Extremis Virus"],
     description: "Confronting panic attacks after New York, Tony Stark faces the Mandarin and Aldrich Killian with bare hands and sheer intellect.",
     color: "#fa8231",
-    x: 1380, y: 380,
+    x: 650, y: 1900,
     offsetY: -120,
     connections: [
       { toId: "avengers-aou", relationship: "Stark seeks planetary automated defense, giving rise to Ultron", type: "avengers_convergence" },
@@ -441,7 +360,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Aether (Reality Stone)", "Mjolnir"],
     description: "Thor allies with Loki to prevent the Dark Elf Malekith from using the Reality Stone to submerge the cosmos into eternal darkness.",
     color: "#a55eea",
-    x: 1600, y: 380,
+    x: 850, y: 1900,
     offsetY: 120,
     connections: [
       { toId: "gotg", relationship: "Aether delivered to the Collector on Knowhere", type: "tesseract_arc" },
@@ -466,7 +385,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Project Insight Helicarriers", "Cybernetic Arm"],
     description: "Steve Rogers and Natasha Romanoff discover that HYDRA has grown inside S.H.I.E.L.D., encountering the brainwashed Winter Soldier.",
     color: "#4b6584",
-    x: 1820, y: 380,
+    x: 1150, y: 1900,
     offsetY: -140,
     connections: [
       { toId: "avengers-aou", relationship: "S.H.I.E.L.D. collapse leaves the Avengers acting autonomously", type: "avengers_convergence" },
@@ -491,7 +410,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Orb (Power Stone)", "The Milano"],
     description: "A band of cosmic misfits unite to protect the Power Stone from Ronan the Accuser, bringing Thanos directly into focus.",
     color: "#20bf6b",
-    x: 2040, y: 380,
+    x: 1350, y: 1900,
     offsetY: 140,
     connections: [
       { toId: "gotg2", relationship: "The Guardians become renowned across the cosmos", type: "direct_sequel" },
@@ -516,7 +435,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Mind Stone", "Vibranium Synthezoid (Vision)", "Sokovian Meteor Engine"],
     description: "When Tony Stark's AI program Ultron becomes sentient and attempts human extinction, the Avengers assemble with Wanda, Pietro, and Vision.",
     color: "#eb3b5a",
-    x: 2280, y: 380,
+    x: 1000, y: 2160,
     offsetY: -120,
     connections: [
       { toId: "ant-man", relationship: "New upstate NY Avengers facility operational", type: "direct_sequel" },
@@ -542,7 +461,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Ant-Man Suit", "Pym Particles", "Yellowjacket Suit"],
     description: "Master thief Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, protect the secret behind his spectacular Ant-Man suit.",
     color: "#ff3838",
-    x: 2500, y: 380,
+    x: 1000, y: 2420,
     offsetY: 120,
     connections: [
       { toId: "cap-civil-war", relationship: "Recruited by Sam Wilson to join Team Cap", type: "direct_sequel" },
@@ -567,7 +486,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Sokovia Accords", "Vibranium Habit"],
     description: "Political oversight splits the Avengers into opposing camps, fracturing the team right before Thanos's universal invasion.",
     color: "#3867d6",
-    x: 2740, y: 380,
+    x: 1000, y: 3200,
     offsetY: -120,
     connections: [
       { toId: "spiderman-homecoming", relationship: "Stark mentors Peter Parker after the Leipzig battle", type: "direct_sequel" },
@@ -593,7 +512,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Eye of Agamotto (Time Stone)", "Cloak of Levitation"],
     description: "Neurosurgeon Stephen Strange masters the mystic arts, guarding reality and the Time Stone from dark dimensional threats.",
     color: "#20bf6b",
-    x: 2960, y: 380,
+    x: 500, y: 3480,
     offsetY: 120,
     connections: [
       { toId: "thor-ragnarok", relationship: "Strange assists Thor in finding Odin in Norway", type: "direct_sequel" },
@@ -618,7 +537,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Yaka Arrow", "Ego Celestial Seed"],
     description: "The Guardians uncover Peter Quill's celestial lineage, defeating his planet-devouring father Ego.",
     color: "#2ed573",
-    x: 3180, y: 380,
+    x: 750, y: 3480,
     offsetY: -140,
     connections: [
       { toId: "infinity-war", relationship: "The Guardians intercept Thor's distress signal in space", type: "avengers_convergence" },
@@ -642,7 +561,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Stark Tech Spider Suit", "Chitauri Salvage"],
     description: "Peter Parker balances sophomore year of high school with proving himself against Adrian Toomes's Vulture.",
     color: "#ff3838",
-    x: 3400, y: 380,
+    x: 1000, y: 3480,
     offsetY: 140,
     connections: [
       { toId: "infinity-war", relationship: "Peter boards the Q-Ship to Titan with Tony Stark", type: "avengers_convergence" },
@@ -666,7 +585,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Crown of Surtur", "Eternal Flame", "The Tesseract"],
     description: "Imprisoned on Sakaar, Thor must duel Hulk and unleash Ragnarok to defeat goddess of death Hela.",
     color: "#4bcffa",
-    x: 3620, y: 380,
+    x: 1250, y: 3480,
     offsetY: -120,
     connections: [
       { toId: "infinity-war", relationship: "Thanos intercepts the Asgardian refugee ship directly", type: "avengers_convergence" },
@@ -690,7 +609,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Heart-Shaped Herb", "Vibranium Kinetic Suit"],
     description: "T'Challa defends Wakanda's throne and technology against Erik Killmonger, opening Wakanda to the world.",
     color: "#7158e2",
-    x: 3840, y: 380,
+    x: 1500, y: 3480,
     offsetY: 120,
     connections: [
       { toId: "infinity-war", relationship: "Wakanda serves as the battlefield to protect Vision's Mind Stone", type: "avengers_convergence" },
@@ -714,7 +633,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Infinity Gauntlet", "Stormbreaker", "All 6 Stones"],
     description: "Thanos gathers all six Infinity Stones and snaps his fingers, wiping out half of all life across the cosmos.",
     color: "#8854d0",
-    x: 4080, y: 380,
+    x: 1000, y: 3740,
     offsetY: 0,
     connections: [
       { toId: "ant-man-wasp", relationship: "Scott Lang trapped in Quantum Realm as the Pym family dusts", type: "direct_sequel" },
@@ -740,7 +659,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Tunnel", "Healing Particles"],
     description: "Scott Lang and Hope van Dyne rescue Janet van Dyne from the subatomic Quantum Realm.",
     color: "#fc5c65",
-    x: 4300, y: 380,
+    x: 750, y: 3960,
     offsetY: 140,
     connections: [
       { toId: "endgame", relationship: "Scott emerges into 2023 with the key to temporal travel", type: "avengers_convergence" },
@@ -764,7 +683,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Light-Speed Engine", "Intergalactic Pager"],
     description: "In 1995, Carol Danvers discovers her cosmic photon powers, protecting Skrull refugees and inspiring Fury's Initiative.",
     color: "#ffd32a",
-    x: 4520, y: 380,
+    x: 1250, y: 3960,
     offsetY: -140,
     connections: [
       { toId: "endgame", relationship: "Carol rescues Tony Stark from deep space and returns to Earth", type: "avengers_convergence" },
@@ -788,7 +707,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Nano Gauntlet", "Quantum GPS", "Past Stones"],
     description: "The surviving Avengers pull off a temporal Time Heist, restore the universe, and bring an end to Thanos.",
     color: "#ff3838",
-    x: 4760, y: 380,
+    x: 1000, y: 4200,
     offsetY: 0,
     connections: [
       { toId: "spiderman-far-from-home", relationship: "Peter navigates life and EDITH glasses in a post-Stark world", type: "direct_sequel" },
@@ -814,7 +733,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["E.D.I.T.H. Glasses", "Combat Drones"],
     description: "Peter Parker stops Quentin Beck (Mysterio) in London, but his secret identity is broadcast worldwide.",
     color: "#e55039",
-    x: 5000, y: 380,
+    x: 1000, y: 4440,
     offsetY: 120,
     connections: [
       { toId: "spiderman-no-way-home", relationship: "Public unmasking forces Peter to seek Doctor Strange's memory spell", type: "direct_sequel" },
@@ -839,7 +758,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Darkhold", "The Hex Barrier"],
     description: "Grief-stricken Wanda creates a sitcom reality in Westview, awakening her ancient power as the Scarlet Witch.",
     color: "#eb3b5a",
-    x: 5240, y: 380,
+    x: 550, y: 5400,
     offsetY: -120,
     connections: [
       { toId: "doctor-strange-multiverse", relationship: "Scarlet Witch uses the Darkhold to hunt America Chavez across realities", type: "multiverse_branch" },
@@ -863,7 +782,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["TemPad", "Citadel at End of Time"],
     description: "At the TVA, variant Loki meets He Who Remains, and Sylvie slays him, unleashing infinite branching timelines.",
     color: "#2ed573",
-    x: 5460, y: 380,
+    x: 750, y: 5400,
     offsetY: 120,
     connections: [
       { toId: "spiderman-no-way-home", relationship: "Multiverse instability allows alternate villains to cross Earth-616", type: "multiverse_branch" },
@@ -888,7 +807,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Red Dust Antidote", "Taskmaster HUD"],
     description: "Natasha confronts the Red Room conspiracy, passing the torch to Yelena Belova.",
     color: "#fa8231",
-    x: 5680, y: 380,
+    x: 950, y: 5400,
     offsetY: -140,
     connections: [
       { toId: "thunderbolts", relationship: "Yelena recruited by Val for the new black-ops team", type: "direct_sequel" },
@@ -912,7 +831,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Ten Rings", "Dragon Scale"],
     description: "Shang-Chi masters the thousand-year-old Ten Rings in mystical Ta Lo, discovering their cosmic beacon.",
     color: "#4bcffa",
-    x: 5900, y: 380,
+    x: 1150, y: 5400,
     offsetY: 140,
     connections: [
       { toId: "doctor-strange-multiverse", relationship: "Ten Rings signal analyzed by Wong and Banner", type: "origin_thread" },
@@ -936,7 +855,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Machina di Kadavus", "Nano-Fabricator"],
     description: "A botched spell ruptures the multiverse, uniting three generations of Spider-Men to cure their greatest villains.",
     color: "#ff3838",
-    x: 6360, y: 380,
+    x: 850, y: 5680,
     offsetY: 0,
     connections: [
       { toId: "doctor-strange-multiverse", relationship: "Spell consequences cause universal dimensional fractures", type: "multiverse_branch" },
@@ -961,7 +880,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Book of Vishanti", "The Darkhold", "Star Portals"],
     description: "Doctor Strange journeys across alternate dimensions to protect America Chavez from the corrupted Scarlet Witch.",
     color: "#8854d0",
-    x: 6600, y: 380,
+    x: 1150, y: 5680,
     offsetY: -120,
     connections: [
       { toId: "avengers-doomsday", relationship: "Multiversal incursions accelerate toward universal collapse", type: "multiverse_branch" },
@@ -985,7 +904,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Stormbreaker", "Reconstructed Mjolnir", "Necrosword"],
     description: "Thor and Jane Foster stop Gorr the God Butcher at the Gates of Eternity.",
     color: "#4bcffa",
-    x: 7040, y: 380,
+    x: 1000, y: 5960,
     offsetY: 140,
     connections: [
       { toId: "black-panther-wakanda", relationship: "Pantheon deities referenced in Omnipotence City", type: "origin_thread" },
@@ -1009,7 +928,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Synthetic Herb", "Midnight Angel Armor"],
     description: "Wakanda defends against global powers and the undersea mutant nation of Talokan.",
     color: "#7158e2",
-    x: 7260, y: 380,
+    x: 1300, y: 5960,
     offsetY: -120,
     connections: [
       { toId: "thunderbolts", relationship: "Val's CIA agenda leads to Thunderbolts* formation", type: "direct_sequel" },
@@ -1033,7 +952,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Domo", "Uni-Mind", "Tiamut Island"],
     description: "Immortal protectors stop the celestial emergence of Tiamut from inside Earth's mantle.",
     color: "#ffd32a",
-    x: 6120, y: 380,
+    x: 1350, y: 5400,
     offsetY: 120,
     connections: [
       { toId: "thunderbolts", relationship: "Celestial Tiamut petrified island yields global adamantium", type: "origin_thread" },
@@ -1057,7 +976,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Crescent Darts", "Scarab of Ammit"],
     description: "Marc Spector channels the divine power of the Egyptian moon god Khonshu.",
     color: "#f5f6fa",
-    x: 6820, y: 380,
+    x: 700, y: 5960,
     offsetY: 0,
     connections: [
       { toId: "doctor-strange-multiverse", relationship: "Supernatural pantheon expansion", type: "origin_thread" },
@@ -1082,7 +1001,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Time Chair Core", "Quantum Realm"],
     description: "The Lang-Pym family clashes with exiled warlord Kang in the microscopic Quantum Realm.",
     color: "#eb3b5a",
-    x: 7520, y: 380,
+    x: 600, y: 7180,
     offsetY: -120,
     connections: [
       { toId: "loki-s2", relationship: "Council of Kangs mobilizes across the dying timeline strands", type: "multiverse_branch" },
@@ -1106,7 +1025,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Orgocorp Biological Core", "Bowie"],
     description: "The Guardians save Rocket's life and defeat his sadistic creator, the High Evolutionary.",
     color: "#20bf6b",
-    x: 7740, y: 380,
+    x: 800, y: 7180,
     offsetY: 120,
     connections: [
       { toId: "the-marvels", relationship: "Cosmic coordinate jumps weaken spatial fabric", type: "origin_thread" },
@@ -1130,7 +1049,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Temporal Loom", "Yggdrasil Multiverse Tree"],
     description: "Loki weaves infinite timelines into the living Multiverse Tree, anchoring all reality.",
     color: "#2ed573",
-    x: 8180, y: 380,
+    x: 1000, y: 7180,
     offsetY: -140,
     connections: [
       { toId: "the-marvels", relationship: "Timeline stability maintained during reality tears", type: "multiverse_branch" },
@@ -1155,7 +1074,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Bands", "X-Men Reality Tear"],
     description: "Carol, Kamala, and Monica swap places across space, tearing open a portal to the X-Men universe.",
     color: "#ffd32a",
-    x: 8400, y: 380,
+    x: 1400, y: 7180,
     offsetY: 140,
     connections: [
       { toId: "avengers-doomsday", relationship: "Monica trapped in parallel X-Men reality prior to Incursions", type: "multiverse_branch" },
@@ -1179,7 +1098,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Harvest (Super Skrull DNA)"],
     description: "Nick Fury uncovers a secret infiltration of Earth by radicalized shapeshifting Skrulls.",
     color: "#4b6584",
-    x: 7960, y: 380,
+    x: 1200, y: 7180,
     offsetY: -120,
     connections: [
       { toId: "the-marvels", relationship: "Fury returns to S.A.B.E.R. space station", type: "direct_sequel" },
@@ -1203,7 +1122,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["The Witches' Road", "Black Coven Sigil"],
     description: "Agatha walks the legendary Witches' Road, awakening Billy Maximoff's powers as Wiccan.",
     color: "#a55eea",
-    x: 8620, y: 380,
+    x: 800, y: 7460,
     offsetY: 120,
     connections: [
       { toId: "thunderbolts", relationship: "Billy searches for Tommy across multiversal realities", type: "multiverse_branch" },
@@ -1227,7 +1146,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Sentry Serum", "The Void Core"],
     description: "A squad of antiheroes and assassins are sent on a black-ops mission, unleashing Robert Reynolds (The Sentry).",
     color: "#fa8231",
-    x: 8860, y: 380,
+    x: 1200, y: 7460,
     offsetY: 0,
     connections: [
       { toId: "avengers-doomsday", relationship: "Sentry's cosmic power collides with incursion collapse", type: "avengers_convergence" },
@@ -1252,7 +1171,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Fantasticar", "Galactus Beacon"],
     description: "In a retro-futuristic 1960s universe, Marvel's First Family defends against Galactus before incursion collision.",
     color: "#4bcffa",
-    x: 9140, y: 380,
+    x: 750, y: 8800,
     offsetY: -120,
     connections: [
       { toId: "avengers-doomsday", relationship: "Reed Richards confronts Victor von Doom as realities collide", type: "multiverse_branch" },
@@ -1276,7 +1195,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Classic Cloth Suit", "Police Scanner"],
     description: "Forgotten by the world, Peter operates as a street-level hero in NYC as universal incursions approach.",
     color: "#ff3838",
-    x: 9380, y: 380,
+    x: 1250, y: 8800,
     offsetY: 120,
     connections: [
       { toId: "avengers-doomsday", relationship: "Peter joins Earth's surviving champions against Doctor Doom", type: "avengers_convergence" },
@@ -1300,7 +1219,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Doombot Swarms", "Incursion Collapse Points"],
     description: "Victor von Doom steps from the multiversal shadows as universal incursions threaten all existence, forcing heroes from across every timeline to unite.",
     color: "#2ed573",
-    x: 9640, y: 380,
+    x: 1000, y: 9100,
     offsetY: -120,
     connections: [
       { toId: "avengers-secret-wars", relationship: "Realities collapse directly into Battleworld", type: "multiverse_branch" },
@@ -1324,7 +1243,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Battleworld Patchwork Reality", "The Multiverse Tree Core"],
     description: "The ultimate climax of the Marvel Cinematic Universe: heroes and villains from across the Multiverse collide in Battleworld to decide the final fate of reality.",
     color: "#ffd32a",
-    x: 9920, y: 380,
+    x: 1000, y: 9380,
     offsetY: 0,
     connections: [
       { toId: "fantastic-four", relationship: "Reed Richards restores the unified Sacred Timeline", type: "multiverse_branch" },

@@ -286,37 +286,37 @@ export default function DarkIntroSelector({
         {activePhase === null ? (
 
           <div className="relative flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
-            {/* Synchronized floating container for callout + button */}
-            <div className="relative animate-float-prompt will-change-transform flex flex-col items-center">
-              {/* Handwritten 'follow me' callout on the right side, pure white, no glow */}
-              <div className="absolute -top-11 sm:-top-13 right-2 sm:-right-8 flex flex-col items-start pointer-events-none select-none z-30 rotate-3 transform-gpu">
-                <span className="font-handwriting text-2xl sm:text-3xl text-white font-normal tracking-wide">
-                  follow me
-                </span>
-                <svg
-                  width="44"
-                  height="34"
-                  viewBox="0 0 44 34"
-                  fill="none"
-                  className="ml-2 -mt-1 text-white/80 overflow-visible"
-                >
-                  <path
-                    d="M38 2C34 15 22 23 8 27M8 27L17 27M8 27L13 18"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-
-              <button
-                onClick={() => handleSelectPhase(1)}
-                className="group relative text-xs sm:text-sm md:text-base font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-115 hover:tracking-[0.55em] sm:hover:tracking-[0.65em] active:scale-95 transition-all duration-300 ease-out py-2.5 px-6 cursor-pointer bg-transparent border-none outline-none select-none"
+            <button
+              onClick={() => handleSelectPhase(1)}
+              className="group relative animate-float-prompt text-xs sm:text-sm md:text-base font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
+            >
+              {/* Sketch-type hand-drawn circle / ellipse */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-50 group-hover:opacity-90 transition-opacity duration-300 scale-110 sm:scale-115"
+                viewBox="0 0 340 60"
+                fill="none"
+                preserveAspectRatio="none"
               >
-                SELECT PHASE &amp; MOVIE
-              </button>
-            </div>
+                {/* Primary organic sketched loop */}
+                <path
+                  d="M16 30 C 14 12, 60 5, 170 5 C 280 5, 326 14, 324 30 C 322 46, 270 55, 165 55 C 55 55, 18 45, 20 28 C 22 15, 68 7, 160 7 C 245 7, 318 16, 320 32"
+                  stroke="rgba(255, 255, 255, 0.75)"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Subtle sketch secondary overlay line */}
+                <path
+                  d="M26 34 C 24 16, 75 8, 175 8 C 275 8, 316 17, 314 32 C 312 47, 260 53, 160 53 C 65 53, 28 44, 30 30"
+                  stroke="rgba(255, 255, 255, 0.35)"
+                  strokeWidth="1.0"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+
+              <span className="relative z-10">SELECT PHASE &amp; MOVIE</span>
+            </button>
           </div>
         ) : (
 
@@ -470,13 +470,38 @@ export default function DarkIntroSelector({
               );
             })()}
 
-            {}
+            {/* CONTINUE CTA with Sketch Circle */}
             <div className="mt-2 mb-1 animate-in fade-in duration-700 delay-500 flex justify-center">
               <button
                 onClick={handleContinue}
-                className="group relative text-xs sm:text-sm font-mono tracking-[0.45em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-115 hover:tracking-[0.65em] sm:hover:tracking-[0.75em] active:scale-95 transition-all duration-300 ease-out py-2.5 px-6 cursor-pointer bg-transparent border-none outline-none select-none will-change-transform"
+                className="group relative text-xs sm:text-sm font-mono tracking-[0.45em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
               >
-                C O N T I N U E
+                {/* Sketch-type hand-drawn circle / ellipse */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-50 group-hover:opacity-90 transition-opacity duration-300 scale-110 sm:scale-115"
+                  viewBox="0 0 260 56"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  {/* Primary organic sketched loop */}
+                  <path
+                    d="M14 28 C 12 12, 45 5, 130 5 C 215 5, 248 13, 246 28 C 244 43, 205 51, 125 51 C 42 51, 15 42, 17 26 C 19 14, 52 7, 120 7 C 188 7, 242 15, 244 30"
+                    stroke="rgba(255, 255, 255, 0.75)"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Subtle sketch secondary overlay line */}
+                  <path
+                    d="M22 32 C 20 15, 58 7, 135 7 C 212 7, 240 15, 238 29 C 236 43, 195 49, 120 49 C 50 49, 23 41, 25 28"
+                    stroke="rgba(255, 255, 255, 0.35)"
+                    strokeWidth="1.0"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+
+                <span className="relative z-10">C O N T I N U E</span>
               </button>
             </div>
           </div>

@@ -8,8 +8,8 @@ import SlideNavMenu from "./dark/SlideNavMenu";
 
 export default function PageShell({
   children,
-  backHref = "/timeline",
-  backLabel = "TIMELINE",
+  backHref = "/familytree",
+  backLabel = "FAMILY TREE",
   showCloseButton = false,
   hideSearch = false,
 }: {

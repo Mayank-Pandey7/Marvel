@@ -67,7 +67,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       subtitle: `Culprit: ${n.culprit} · ${n.year}`,
       action: () => {
         onClose();
-        router.push("/timeline");
+        router.push("/movies");
       }
     }));
 
@@ -83,7 +83,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       subtitle: `Phase ${m.phase} · ${m.year}`,
       action: () => {
         onClose();
-        router.push(`/timeline?phase=${m.phase}&movie=${encodeURIComponent(m.id)}`);
+        router.push(`/movie/${m.id}`);
       }
     }));
 

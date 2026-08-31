@@ -294,9 +294,9 @@ export default function RoadToDoomsday() {
         {}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <Link
-            href="/timeline"
+            href="/familytree"
             className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
-            title="Return to Timeline"
+            title="Return to Sacred Family Tree"
           >
             <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
             <span className="hidden sm:inline">RETURN</span>
@@ -676,7 +676,7 @@ export default function RoadToDoomsday() {
               </button>
 
               <Link
-                href={activeItem.phase ? `/movie/${activeItem.id}` : "/timeline"}
+                href={activeItem.phase ? `/movie/${activeItem.id}` : "/movies"}
                 className="py-2.5 px-4 rounded-sm bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white border border-stone-800 text-[10.5px] font-mono tracking-widest uppercase transition-colors flex items-center gap-1.5"
               >
                 <span>EXPLORE ENTRY</span>

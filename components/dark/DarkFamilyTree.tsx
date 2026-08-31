@@ -682,10 +682,11 @@ export default function DarkFamilyTree({
 
       const parentBottom = Math.max(fromNode.y + totalH, startY);
       const midY = conn.midY || (parentBottom + toNode.y) / 2;
-      const r = Math.min(12, Math.abs(endX - startX) / 2, Math.abs(endY - midY) / 2);
-      const dirX = endX > startX ? 1 : -1;
 
-      const path = `M ${startX} ${startY} V ${midY - r} Q ${startX} ${midY} ${startX + dirX * r} ${midY} H ${endX - dirX * r} Q ${endX} ${midY} ${endX} ${midY + r} V ${endY}`;
+      const path =
+        Math.abs(startX - endX) < 1
+          ? `M ${startX} ${startY} V ${endY}`
+          : `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`;
 
       return {
         path,
@@ -727,11 +728,8 @@ export default function DarkFamilyTree({
         const endX = isFromRight ? toNode.x + w : toNode.x;
         const endY = toNode.y + h * 0.45;
         const channelX = (startX + endX) / 2;
-        const r = 8;
-        const dirY = endY > startY ? 1 : -1;
-        const dirX = endX > channelX ? 1 : -1;
 
-        const path = `M ${startX} ${startY} H ${channelX - (isFromRight ? -r : r)} Q ${channelX} ${startY} ${channelX} ${startY + dirY * r} V ${endY - dirY * r} Q ${channelX} ${endY} ${channelX + dirX * r} ${endY} H ${endX}`;
+        const path = `M ${startX} ${startY} H ${channelX} V ${endY} H ${endX}`;
 
         return {
           path,
@@ -749,11 +747,12 @@ export default function DarkFamilyTree({
       const endY = toNode.y;
       const parentBottom = fromNode.y + totalH;
       const midY = conn.midY || (parentBottom + toNode.y) / 2;
-      const r = 10;
-      const dirX = endX > startX ? 1 : -1;
 
       return {
-        path: `M ${startX} ${startY} V ${midY - r} Q ${startX} ${midY} ${startX + dirX * r} ${midY} H ${endX - dirX * r} Q ${endX} ${midY} ${endX} ${midY + r} V ${endY}`,
+        path:
+          Math.abs(startX - endX) < 1
+            ? `M ${startX} ${startY} V ${endY}`
+            : `M ${startX} ${startY} V ${midY} H ${endX} V ${endY}`,
         arrow: conn.hasArrow
           ? { x: endX, y: endY - 3, dir: "down" }
           : undefined,
@@ -762,10 +761,11 @@ export default function DarkFamilyTree({
 
     const parentBottom = fromNode.y + totalH;
     const midY = (parentBottom + toNode.y) / 2;
-    const r = 10;
-    const dirX = toCenterX > fromCenterX ? 1 : -1;
     return {
-      path: `M ${fromCenterX} ${fromNode.y + totalH} V ${midY - r} Q ${fromCenterX} ${midY} ${fromCenterX + dirX * r} ${midY} H ${toCenterX - dirX * r} Q ${toCenterX} ${midY} ${toCenterX} ${midY + r} V ${toNode.y}`,
+      path:
+        Math.abs(fromCenterX - toCenterX) < 1
+          ? `M ${fromCenterX} ${fromNode.y + totalH} V ${toNode.y}`
+          : `M ${fromCenterX} ${fromNode.y + totalH} V ${midY} H ${toCenterX} V ${toNode.y}`,
       arrow: { x: toCenterX, y: toNode.y - 3, dir: "down" },
     };
   };
@@ -818,24 +818,21 @@ export default function DarkFamilyTree({
             <Menu size={16} />
           </button>
 
-          {}
+          {/* Title Header */}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
-            <button
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold transition-colors cursor-pointer"
-              title="Sacred Family Tree Lineage View"
+            <span
+              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold select-none"
             >
               FAMILY TREE
-            </button>
+            </span>
             <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
-            {onSwitchToTimeline && (
-              <button
-                onClick={onSwitchToTimeline}
-                className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
-                title="Switch to MCU Chronological Timeline Map"
-              >
-                TIMELINE MAP
-              </button>
-            )}
+            <Link
+              href="/timeline"
+              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
+              title="Switch to Sequential Timeline"
+            >
+              TIMELINE
+            </Link>
           </div>
         </div>
 

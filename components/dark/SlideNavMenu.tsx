@@ -31,7 +31,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
 
   if (!isOpen) return null;
 
-  const isTimelineActive = pathname === "/timeline" || pathname === "/";
   const isFamilyTreeActive = pathname === "/familytree";
 
   return (
@@ -51,7 +50,7 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
         <div>
           <div className="flex justify-between items-center mb-8 pb-4 border-b border-stone-900">
             <Link
-              href="/timeline"
+              href="/familytree"
               onClick={onClose}
               className="text-xs font-mono font-bold tracking-[0.45em] uppercase text-white hover:text-white/80 transition-opacity pl-[0.45em]"
             >
@@ -69,9 +68,9 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
 
           <div className="flex flex-col gap-6">
 
-            <div className="md:hidden border-b border-stone-900/80 pb-6">
+            <div className="border-b border-stone-900/80 pb-6">
               <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
-                VIEW MODES
+                DISCOVER REALITIES
               </div>
 
               <div className="flex flex-col gap-2.5">
@@ -79,13 +78,13 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                   href="/timeline"
                   onClick={onClose}
                   className={`text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group ${
-                    isTimelineActive
+                    pathname === "/timeline"
                       ? "text-white font-bold"
                       : "text-stone-400 hover:text-white"
                   }`}
                 >
-                  <span>Sacred Timeline Map</span>
-                  {isTimelineActive && (
+                  <span>Sacred Timeline Sequence</span>
+                  {pathname === "/timeline" && (
                     <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
                   )}
                 </Link>
@@ -101,6 +100,36 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 >
                   <span>Sacred Family Tree</span>
                   {isFamilyTreeActive && (
+                    <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                  )}
+                </Link>
+
+                <Link
+                  href="/movies"
+                  onClick={onClose}
+                  className={`text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group ${
+                    pathname === "/movies"
+                      ? "text-white font-bold"
+                      : "text-stone-400 hover:text-white"
+                  }`}
+                >
+                  <span>Movies & Series Wheel</span>
+                  {pathname === "/movies" && (
+                    <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                  )}
+                </Link>
+
+                <Link
+                  href="/multiverse"
+                  onClick={onClose}
+                  className={`text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1 flex items-center justify-between group ${
+                    pathname === "/multiverse"
+                      ? "text-white font-bold"
+                      : "text-stone-400 hover:text-white"
+                  }`}
+                >
+                  <span>Multiverse Earths</span>
+                  {pathname === "/multiverse" && (
                     <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
                   )}
                 </Link>
@@ -261,7 +290,7 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                     Cosmic Relics Vault
                   </Link>
                   <Link
-                    href="/timeline"
+                    href="/multiverse"
                     onClick={onClose}
                     className="text-[10px] font-mono tracking-[0.18em] uppercase text-stone-400 hover:text-white hover:translate-x-1 transition-all py-0.5"
                   >

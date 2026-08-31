@@ -329,10 +329,10 @@ function MultiverseContent() {
               <div className="mt-4 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-stone-500 max-w-2xl">
                 <span>DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
                 <Link
-                  href="/timeline"
+                  href="/familytree"
                   className="text-stone-400 hover:text-white flex items-center gap-1 transition-colors"
                 >
-                  <span>TIMELINE TREE</span>
+                  <span>FAMILY TREE</span>
                   <ArrowRight size={11} />
                 </Link>
               </div>
@@ -394,7 +394,7 @@ function MultiverseContent() {
   }
 
   return (
-    <PageShell backHref="/timeline" backLabel="TIMELINE">
+    <PageShell backHref="/familytree" backLabel="FAMILY TREE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 

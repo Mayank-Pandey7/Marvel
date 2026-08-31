@@ -8,16 +8,15 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-
     router.prefetch("/timeline");
+    router.prefetch("/familytree");
+    router.prefetch("/movies");
     router.prefetch("/characters");
     router.prefetch("/artifacts");
   }, [router]);
 
-  const handleContinueFromIntro = (phase?: number, movieId?: string) => {
-    const targetPhase = phase || 1;
-    const movieQuery = movieId ? `&movie=${encodeURIComponent(movieId)}` : "";
-    router.push(`/timeline?phase=${targetPhase}${movieQuery}`);
+  const handleContinueFromIntro = () => {
+    router.push("/familytree");
   };
 
   return <DarkIntroSelector onContinue={handleContinueFromIntro} />;

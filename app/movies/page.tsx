@@ -88,7 +88,7 @@ function MoviesContent() {
   }, [allMovies, searchQuery, selectedPhase]);
 
   return (
-    <PageShell backHref="/timeline" showCloseButton={true}>
+    <PageShell backHref="/familytree" showCloseButton={true}>
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 
@@ -205,12 +205,7 @@ function MoviesContent() {
                             </div>
                           )}
 
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 pointer-events-none">
-                            <span className="text-[9px] font-mono tracking-widest uppercase text-white flex items-center gap-1">
-                              <span>OPEN DOSSIER</span>
-                              <ArrowRight size={10} />
-                            </span>
-                          </div>
+
 
                           <div className="absolute top-2.5 left-2.5">
                             <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-stone-300">
