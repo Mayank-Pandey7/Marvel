@@ -285,7 +285,29 @@ export default function DarkIntroSelector({
         {}
         {activePhase === null ? (
 
-          <div className="flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
+          <div className="relative flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
+            {/* Handwritten 'follow me' callout with curved arrow */}
+            <div className="absolute -top-11 sm:-top-13 left-1/2 -translate-x-24 sm:-translate-x-32 flex flex-col items-start pointer-events-none select-none z-30">
+              <span className="font-handwriting text-xl sm:text-2xl text-sky-400 font-semibold tracking-wide drop-shadow-[0_0_8px_rgba(56,189,248,0.45)]">
+                follow me
+              </span>
+              <svg
+                width="42"
+                height="32"
+                viewBox="0 0 42 32"
+                fill="none"
+                className="ml-8 -mt-1 text-white/70 overflow-visible"
+              >
+                <path
+                  d="M4 2C6 14 18 22 34 26M34 26L26 26M34 26L31 18"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
             <button
               onClick={() => handleSelectPhase(1)}
               className="group relative animate-float-prompt text-xs sm:text-sm md:text-base font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-115 hover:tracking-[0.55em] sm:hover:tracking-[0.65em] active:scale-95 transition-all duration-300 ease-out py-2.5 px-6 cursor-pointer bg-transparent border-none outline-none select-none will-change-transform"

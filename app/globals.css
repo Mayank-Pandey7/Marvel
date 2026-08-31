@@ -1,8 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Geist+Pixel&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-handwriting, .font-handwriting * {
+  font-family: 'Caveat', cursive, sans-serif !important;
+}
 
 *, *::before, *::after {
   font-family: 'Geist Pixel', monospace, sans-serif !important;
