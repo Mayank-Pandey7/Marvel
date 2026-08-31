@@ -459,21 +459,24 @@ export default function UniverseMap({
           </div>
         </div>
 
-        {/* Center: Mathematically Exact Centered MARVEL | DOOMSDAY Brand Header */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3">
-          <span 
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white select-none cursor-default"
-          >
-            MARVEL
+        {/* Center: MARVEL / DOOMSDAY & THE SACRED TIMELINE Brand Header */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex flex-col items-center justify-center">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
+            <span className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white select-none cursor-default">
+              MARVEL
+            </span>
+            <span className="text-stone-600 font-mono text-xs select-none">/</span>
+            <button
+              onClick={triggerDoomsdayTransition}
+              className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)] select-none cursor-pointer bg-transparent border-none"
+              title="Initialize Road to Doomsday Incursion"
+            >
+              DOOMSDAY
+            </button>
+          </div>
+          <span className="text-[7.5px] sm:text-[8.5px] font-mono tracking-[0.3em] uppercase text-stone-400 mt-0.5 select-none">
+            THE SACRED TIMELINE
           </span>
-          <span className="text-stone-600 font-mono text-xs select-none">|</span>
-          <button
-            onClick={triggerDoomsdayTransition}
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)]  select-none cursor-pointer bg-transparent border-none"
-            title="Initialize Road to Doomsday Incursion"
-          >
-            DOOMSDAY
-          </button>
         </div>
 
         {/* Right: Return + Search Button */}
@@ -592,7 +595,7 @@ export default function UniverseMap({
           isTreeVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {/* SVG Network: ONLY Interrelated Movie-to-Movie Narrative Threads & Phase Markers */}
+        {/* SVG Network: Orthogonal Schematic Circuit Bus & Chronological Year Stems */}
         <svg
           className="absolute inset-0 w-full h-full overflow-visible pointer-events-none transform-gpu"
           viewBox="0 0 2000 10500"
@@ -607,45 +610,109 @@ export default function UniverseMap({
               </feMerge>
             </filter>
 
-            
+            {/* Downward Arrow Markers for Convergence Buses */}
+            <marker
+              id="bus-arrow-active"
+              viewBox="0 0 10 10"
+              refX="5"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ffffff" />
+            </marker>
+
+            <marker
+              id="bus-arrow-dim"
+              viewBox="0 0 10 10"
+              refX="5"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255, 255, 255, 0.4)" />
+            </marker>
           </defs>
 
-          {/* Phase Era Pill Banners (Clickable to Direct to that Phase) */}
-          {PHASES_CONFIG.map((p) => (
-            <g
-              key={`phase-divider-${p.id}`}
-              onClick={() => directToPhase(p.id)}
-              className="cursor-pointer pointer-events-auto group phase-banner"
-            >
-              <rect
-                x="760"
-                y={p.startY - 18}
-                width="480"
-                height="36"
-                rx="18"
-                fill="#05050a"
-                stroke={activePhase === p.id && !isFullOverview ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
-                strokeWidth={activePhase === p.id && !isFullOverview ? "1.8" : "1"}
-                className=" group-hover:stroke-white group-hover:fill-[#0c0c14]"
-              />
+          {/* Phase Era Pill Banners & Top Year Axis Stems */}
+          {PHASES_CONFIG.map((p) => {
+            const phaseMovies = UNIFIED_MCU_TREE.filter((m) => m.phase === p.id);
+            const topY = Math.min(...phaseMovies.map((m) => m.y));
+            const topRowMovies = phaseMovies.filter((m) => Math.abs(m.y - topY) < 50);
 
-              <text
-                x="1000"
-                y={p.startY + 4}
-                textAnchor="middle"
-                fill={activePhase === p.id && !isFullOverview ? "#ffffff" : "#d4d4d8"}
-                fontSize="12"
-                fontFamily="monospace"
-                fontWeight="bold"
-                letterSpacing="0.25em"
-                className="select-none transition-colors group-hover:fill-white"
-              >
-                PHASE {p.roman} · {p.title} ({p.years})
-              </text>
-            </g>
-          ))}
+            return (
+              <g key={`phase-block-${p.id}`}>
+                {/* Phase Banner */}
+                <g
+                  onClick={() => directToPhase(p.id)}
+                  className="cursor-pointer pointer-events-auto group phase-banner"
+                >
+                  <rect
+                    x="740"
+                    y={p.startY - 18}
+                    width="520"
+                    height="36"
+                    rx="18"
+                    fill="#05050a"
+                    stroke={activePhase === p.id && !isFullOverview ? "#ffffff" : "rgba(255, 255, 255, 0.25)"}
+                    strokeWidth={activePhase === p.id && !isFullOverview ? "1.8" : "1"}
+                    className="group-hover:stroke-white group-hover:fill-[#0c0c14] transition-all duration-300"
+                  />
 
-          {/* ONLY INTERRELATED MOVIE-TO-MOVIE NARRATIVE THREADS */}
+                  <text
+                    x="1000"
+                    y={p.startY + 4}
+                    textAnchor="middle"
+                    fill={activePhase === p.id && !isFullOverview ? "#ffffff" : "#d4d4d8"}
+                    fontSize="12"
+                    fontFamily="monospace"
+                    fontWeight="bold"
+                    letterSpacing="0.25em"
+                    className="select-none transition-colors group-hover:fill-white"
+                  >
+                    PHASE {p.roman} · {p.title} ({p.years})
+                  </text>
+                </g>
+
+                {/* Chronological Year Axis & Vertical Stems */}
+                {topRowMovies.map((m) => {
+                  const yearY = p.startY + 65;
+                  return (
+                    <g key={`year-stem-${m.id}`} className="pointer-events-none select-none">
+                      {/* Year Label */}
+                      <text
+                        x={m.x}
+                        y={yearY}
+                        textAnchor="middle"
+                        fill="rgba(255, 255, 255, 0.65)"
+                        fontSize="11"
+                        fontFamily="monospace"
+                        fontWeight="bold"
+                        letterSpacing="0.2em"
+                      >
+                        {m.year}
+                      </text>
+
+                      {/* Vertical Stem Line from Year Header to Movie Node */}
+                      <line
+                        x1={m.x}
+                        y1={yearY + 12}
+                        x2={m.x}
+                        y2={m.y - 48}
+                        stroke="rgba(255, 255, 255, 0.25)"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 4"
+                      />
+                    </g>
+                  );
+                })}
+              </g>
+            );
+          })}
+
+          {/* ORTHOGONAL CIRCUIT BUS CONNECTIONS WITH DIRECTIONAL ARROWS */}
           {UNIFIED_MCU_TREE.flatMap((fromMovie) =>
             fromMovie.connections.map((conn) => {
               const toMovie = UNIFIED_MCU_TREE.find((m) => m.id === conn.toId);
@@ -658,27 +725,40 @@ export default function UniverseMap({
               const isDimmed =
                 (selectedMovie || hoveredMovieId) && !isDirectlyConnected;
 
-              // Organic smooth curved arc flowing directly between the two interrelated movies
-              const midX = (fromMovie.x + toMovie.x) / 2 + (fromMovie.x < 1000 ? -60 : 60);
-              const midY = (fromMovie.y + toMovie.y) / 2;
+              const dx = toMovie.x - fromMovie.x;
+              const dy = toMovie.y - fromMovie.y;
 
-              const pathD = `M ${fromMovie.x} ${fromMovie.y} Q ${midX} ${midY} ${toMovie.x} ${toMovie.y}`;
+              // Compute clean orthogonal circuit path: Vertical drop -> Horizontal bus rail -> Vertical drop into node
+              let pathD = '';
+              const startY = fromMovie.y + 48;
+              const endY = toMovie.y - 48;
+
+              if (Math.abs(dx) < 6) {
+                // Direct vertical alignment
+                pathD = `M ${fromMovie.x} ${startY} V ${endY}`;
+              } else {
+                // Bus routing: drop down to intermediate bus line, travel horizontally, then drop to target
+                const busY = dy > 0 ? fromMovie.y + Math.max(80, dy * 0.5) : fromMovie.y - 60;
+                pathD = `M ${fromMovie.x} ${startY} V ${busY} H ${toMovie.x} V ${endY}`;
+              }
 
               return (
                 <g key={`conn-${fromMovie.id}-${toMovie.id}`}>
+                  {/* Glowing halo on active/hovered connection */}
                   {isDirectlyConnected && (
                     <path
                       d={pathD}
                       fill="none"
                       stroke={fromMovie.color || "#ffffff"}
                       strokeWidth="3.5"
-                      opacity="0.9"
+                      opacity="0.95"
                       filter="url(#universe-line-glow)"
                       strokeDasharray="6 6"
                       vectorEffect="non-scaling-stroke"
                     />
                   )}
 
+                  {/* Primary orthogonal circuit line */}
                   <path
                     d={pathD}
                     fill="none"
@@ -687,11 +767,12 @@ export default function UniverseMap({
                         ? "#ffffff"
                         : isDimmed
                         ? "rgba(255, 255, 255, 0.04)"
-                        : "rgba(255, 255, 255, 0.28)"
+                        : "rgba(255, 255, 255, 0.3)"
                     }
                     strokeWidth={isDirectlyConnected ? "2" : "1.2"}
-                    strokeDasharray={isDirectlyConnected ? "4 4" : "3 5"}
-                    className={`${isDirectlyConnected ? "flowing-connection" : "faint-connection"} `}
+                    strokeDasharray={isDirectlyConnected ? "4 4" : "3 4"}
+                    markerEnd={isDirectlyConnected ? "url(#bus-arrow-active)" : isDimmed ? "" : "url(#bus-arrow-dim)"}
+                    className={isDirectlyConnected ? "flowing-connection" : "faint-connection"}
                   />
                 </g>
               );
