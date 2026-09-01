@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
-import SlideNavMenu from "./SlideNavMenu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
 const EDGE_JOINED_BETEL_PATH = "M 100 100 Q 88 80 78 62 C 78 44, 90 28, 100 20 C 110 28, 122 44, 122 62 Q 112 80 100 100 Z";
@@ -27,7 +26,6 @@ export default function DarkIntroSelector({
   const [selectedMovieIndex, setSelectedMovieIndex] = useState<number>(0);
   const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
   const [hoveredMovieIndex, setHoveredMovieIndex] = useState<number | null>(null);
-  const [navOpen, setNavOpen] = useState(false);
 
   const [introStage, setIntroStage] = useState<"initial" | "centered" | "ascending" | "ready">("initial");
 
@@ -254,29 +252,8 @@ export default function DarkIntroSelector({
         </h1>
       </div>
 
-      {/* 3. Header Navbar with Slide Menu Trigger */}
-      <header className={`relative z-30 w-full px-4 sm:px-14 py-3.5 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
-        introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
-      }`}>
-        <button
-          onClick={() => setNavOpen(true)}
-          className="text-stone-300 hover:text-white transition-colors p-2 cursor-pointer group flex items-center bg-black/40 backdrop-blur-xs rounded-lg border border-white/10"
-          aria-label="Open Navigation Menu"
-          title="Open Navigation Menu"
-        >
-          <div className="w-5 flex flex-col gap-1.5">
-            <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
-            <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
-          </div>
-        </button>
-
-        {/* Hidden placeholder for spacing */}
-        <div className="invisible text-[7px] xs:text-[8px] sm:text-xs md:text-sm font-mono tracking-[0.14em] xs:tracking-[0.24em] sm:tracking-[0.45em] md:tracking-[0.6em] uppercase whitespace-nowrap">
-          M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
-        </div>
-
-        <div className="w-6" />
-      </header>
+      {/* Top Header Placeholder (Clean Minimalist Layout) */}
+      <div className="relative z-30 w-full px-4 sm:px-14 py-3.5 sm:py-6 flex items-center justify-between pointer-events-none" />
 
       {/* 4. Main Interactive Intro Area */}
       <main className={`relative z-20 flex flex-col items-center justify-end flex-1 w-full max-w-4xl mx-auto px-2 xs:px-4 pb-6 sm:pb-8 md:pb-10 overflow-visible transition-opacity duration-1000 ${
@@ -518,9 +495,6 @@ export default function DarkIntroSelector({
           </span>
         </div>
       </footer>
-
-      {/* 6. Global Navigation Menu */}
-      <SlideNavMenu isOpen={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
 }

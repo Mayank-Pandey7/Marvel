@@ -46,6 +46,20 @@ const PHASE_FILTERS = [
   { id: 6, label: "PHASE VI" },
 ];
 
+const VIEW_ICONS = {
+  path: Route,
+  wheel: Disc3,
+  grid: LayoutGrid,
+} as const;
+
+type LayoutModeKey = keyof typeof VIEW_ICONS;
+
+const VIEW_LABELS: Record<LayoutModeKey, string> = {
+  path: "PATH VIEW",
+  wheel: "3D WHEEL",
+  grid: "GRID VIEW",
+};
+
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import { MCU } from "@/data/mcu";
 
@@ -466,26 +480,48 @@ export default function TimelineScrollableView() {
         </div>
       )}
 
-      {/* View Layout Mode Switcher with Animated IconSwap */}
-      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none">
+      {/* View Layout Mode Switcher with IconSwap */}
+      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex items-center gap-1.5 origin-top-right scale-[0.82] sm:scale-100">
+        {/* Active Mode IconSwap Indicator */}
         <button
           onClick={() => {
             setLayoutMode((prev) => (prev === "path" ? "wheel" : prev === "wheel" ? "grid" : "path"));
           }}
-          className="relative flex items-center bg-black/85 backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-black/95 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-2 text-[8.5px] sm:text-[10px] font-mono tracking-wider uppercase text-white shadow-xl pointer-events-auto whitespace-nowrap transition-all duration-200 cursor-pointer active:scale-95 group origin-top-right scale-[0.88] sm:scale-100"
-          title={`Active View: ${layoutMode.toUpperCase()} VIEW (Click to cycle view mode)`}
+          className="relative flex items-center justify-center w-8 h-8 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white shadow-xl pointer-events-auto cursor-pointer hover:border-white/50 active:scale-95 transition-all overflow-hidden will-change-transform"
+          aria-label={layoutMode}
+          title={`Switch view (Current: ${VIEW_LABELS[layoutMode]})`}
         >
           <IconSwap>
-            <IconSwapItem key={layoutMode} className="flex items-center gap-1.5">
-              {layoutMode === "path" && <Route size={13} className="text-emerald-400 group-hover:scale-110 transition-transform" />}
-              {layoutMode === "wheel" && <Disc3 size={13} className="text-amber-400 group-hover:scale-110 transition-transform" />}
-              {layoutMode === "grid" && <LayoutGrid size={13} className="text-cyan-400 group-hover:scale-110 transition-transform" />}
-              <span className="font-bold">
-                {layoutMode === "path" ? "PATH VIEW" : layoutMode === "wheel" ? "3D WHEEL" : "GRID VIEW"}
-              </span>
+            <IconSwapItem key={layoutMode} className="flex items-center justify-center">
+              {React.createElement(VIEW_ICONS[layoutMode], {
+                size: 15,
+                className:
+                  layoutMode === "path"
+                    ? "text-emerald-400"
+                    : layoutMode === "wheel"
+                    ? "text-amber-400"
+                    : "text-cyan-400",
+              })}
             </IconSwapItem>
           </IconSwap>
         </button>
+
+        {/* View Mode Selection Buttons */}
+        <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl pointer-events-auto whitespace-nowrap">
+          {(Object.keys(VIEW_ICONS) as LayoutModeKey[]).map((key) => (
+            <button
+              key={key}
+              onClick={() => setLayoutMode(key)}
+              className={`rounded-full border-none px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                layoutMode === key
+                  ? "bg-white text-black font-bold shadow-md"
+                  : "text-stone-400 hover:text-white"
+              }`}
+            >
+              {VIEW_LABELS[key]}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* 2. MAIN CONTAINER */}
