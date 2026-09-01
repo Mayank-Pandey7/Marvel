@@ -177,7 +177,7 @@ export default function DarkIntroSelector({
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen max-h-screen z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans"
+      className="fixed inset-0 w-full h-[100dvh] max-h-[100dvh] min-h-[100dvh] z-50 flex flex-col justify-between select-none bg-[#000000] text-stone-300 overflow-hidden font-sans"
     >
       <style>{`
         @keyframes floatPrompt {
@@ -185,7 +185,7 @@ export default function DarkIntroSelector({
             transform: translateY(0px);
           }
           50% {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
           }
         }
         .animate-float-prompt {
@@ -199,14 +199,14 @@ export default function DarkIntroSelector({
             transform: translateY(0px);
           }
           50% {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
           }
         }
         .animate-float-full {
           animation: floatFull 3.6s ease-in-out infinite;
         }
       `}</style>
-      {}
+      {/* 1. Cinematic Background Video Backdrop */}
       <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 transform-gpu will-change-[opacity] ${
         introStage === "ready" ? "opacity-100" : "opacity-0"
       }`}>
@@ -224,77 +224,75 @@ export default function DarkIntroSelector({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
 
-      {}
+      {/* Background Starfield Particles */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
 
-      {}
+      {/* Top Header Blur Vignette */}
       <div
-        className={`fixed top-0 inset-x-0 h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-1000 ${
+        className={`fixed top-0 inset-x-0 h-28 sm:h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-1000 ${
           introStage === "ready" ? "opacity-100" : "opacity-0"
         }`}
         aria-hidden="true"
       />
 
-      {}
+      {/* 2. Brand Title Header Animation */}
       <div
-        className="fixed top-[22px] sm:top-[26px] left-1/2 z-40 pointer-events-none flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4 will-change-transform"
+        className="fixed top-4 sm:top-[26px] left-1/2 z-40 pointer-events-none flex items-center justify-center text-center w-full max-w-full px-2 sm:px-4 will-change-transform"
         style={{
           transform:
             introStage === "initial"
               ? "translate3d(-50%, calc(50vh - 50px), 0) scale3d(0.92, 0.92, 1)"
               : introStage === "centered"
-              ? "translate3d(-50%, calc(50vh - 50px), 0) scale3d(1.22, 1.22, 1)"
+              ? "translate3d(-50%, calc(50vh - 50px), 0) scale3d(1.15, 1.15, 1)"
               : "translate3d(-50%, 0, 0) scale3d(1, 1, 1)",
           opacity: introStage === "initial" ? 0 : 1,
           transition: "transform 900ms cubic-bezier(0.16, 1, 0.3, 1), opacity 450ms ease-out",
         }}
       >
-        <h1 className="font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_16px_rgba(255,255,255,0.45)] inline-block whitespace-nowrap text-[7.5px] xs:text-[9px] sm:text-xs md:text-sm tracking-[0.2em] xs:tracking-[0.32em] sm:tracking-[0.5em] md:tracking-[0.65em] select-none">
+        <h1 className="font-mono uppercase text-stone-100 font-light drop-shadow-[0_0_16px_rgba(255,255,255,0.45)] inline-block whitespace-nowrap text-[8px] xs:text-[9.5px] sm:text-xs md:text-sm tracking-[0.2em] xs:tracking-[0.32em] sm:tracking-[0.5em] md:tracking-[0.65em] select-none">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </h1>
       </div>
 
-      {}
-      <header className={`relative z-10 w-full px-4 sm:px-14 py-4 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
+      {/* 3. Header Navbar with Slide Menu Trigger */}
+      <header className={`relative z-30 w-full px-4 sm:px-14 py-3.5 sm:py-6 flex items-center justify-between transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
         <button
           onClick={() => setNavOpen(true)}
-          className="text-stone-400 hover:text-white transition-colors p-1.5 cursor-pointer group flex items-center"
+          className="text-stone-300 hover:text-white transition-colors p-2 cursor-pointer group flex items-center bg-black/40 backdrop-blur-xs rounded-lg border border-white/10"
           aria-label="Open Navigation Menu"
           title="Open Navigation Menu"
         >
           <div className="w-5 flex flex-col gap-1.5">
-            <span className="h-[1px] w-5 bg-current block group-hover:w-6 transition-all" />
-            <span className="h-[1px] w-3.5 bg-current block group-hover:w-5 transition-all" />
+            <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
+            <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
           </div>
         </button>
 
-        {}
+        {/* Hidden placeholder for spacing */}
         <div className="invisible text-[7px] xs:text-[8px] sm:text-xs md:text-sm font-mono tracking-[0.14em] xs:tracking-[0.24em] sm:tracking-[0.45em] md:tracking-[0.6em] uppercase whitespace-nowrap">
           M A R V E L &nbsp; C I N E M A T I C &nbsp; U N I V E R S E
         </div>
 
-        {}
         <div className="w-6" />
       </header>
 
-      {}
-      <main className={`relative z-20 flex flex-col items-center justify-end w-full max-w-4xl mx-auto px-2 xs:px-4 mt-auto mb-3 overflow-visible transition-opacity duration-1000 ${
+      {/* 4. Main Interactive Intro Area */}
+      <main className={`relative z-20 flex flex-col items-center justify-end flex-1 w-full max-w-4xl mx-auto px-2 xs:px-4 pb-6 sm:pb-8 md:pb-10 overflow-visible transition-opacity duration-1000 ${
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
 
-        {}
+        {/* State A: Idle Initial State — Organic Hand-Drawn Prompt */}
         {activePhase === null ? (
-
-          <div className="relative flex flex-col items-center justify-center my-3 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] translate-y-4 sm:translate-y-6 mb-6">
+          <div className="relative flex flex-col items-center justify-center my-auto sm:my-4 text-center px-4 animate-in fade-in duration-1000 min-h-[44px]">
             <button
               onClick={() => handleSelectPhase(1)}
-              className="group relative animate-float-prompt text-xs sm:text-sm md:text-base font-mono tracking-[0.35em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
+              className="group relative animate-float-prompt text-[11px] xs:text-xs sm:text-sm md:text-base font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-6 xs:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
             >
               {/* Sketch-type hand-drawn circle / ellipse */}
               <svg
-                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-50 group-hover:opacity-90 transition-opacity duration-300 scale-110 sm:scale-115"
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-60 group-hover:opacity-100 transition-opacity duration-300 scale-105 sm:scale-115"
                 viewBox="0 0 340 60"
                 fill="none"
                 preserveAspectRatio="none"
@@ -302,7 +300,7 @@ export default function DarkIntroSelector({
                 {/* Primary organic sketched loop */}
                 <path
                   d="M16 30 C 14 12, 60 5, 170 5 C 280 5, 326 14, 324 30 C 322 46, 270 55, 165 55 C 55 55, 18 45, 20 28 C 22 15, 68 7, 160 7 C 245 7, 318 16, 320 32"
-                  stroke="rgba(255, 255, 255, 0.75)"
+                  stroke="rgba(255, 255, 255, 0.85)"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -310,21 +308,21 @@ export default function DarkIntroSelector({
                 {/* Subtle sketch secondary overlay line */}
                 <path
                   d="M26 34 C 24 16, 75 8, 175 8 C 275 8, 316 17, 314 32 C 312 47, 260 53, 160 53 C 65 53, 28 44, 30 30"
-                  stroke="rgba(255, 255, 255, 0.35)"
+                  stroke="rgba(255, 255, 255, 0.4)"
                   strokeWidth="1.0"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
 
-              <span className="relative z-10">SELECT PHASE &amp; MOVIE</span>
+              <span className="relative z-10 whitespace-nowrap">SELECT PHASE &amp; MOVIE</span>
             </button>
           </div>
         ) : (
 
-          <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200 animate-float-full will-change-transform">
-            {}
-            <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-1 transition-transform duration-700 ease-out hover:scale-105">
+          <div className="flex flex-col items-center w-full animate-in fade-in zoom-in-95 duration-700 delay-200 animate-float-full will-change-transform max-w-full">
+            {/* Phase Petals SVG Wheel */}
+            <div className="relative w-36 h-36 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 flex items-center justify-center my-0.5 sm:my-1 transition-transform duration-700 ease-out hover:scale-105">
               <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200">
                 <defs>
                   <radialGradient id="smoky-leaf-sel" cx="50%" cy="28%" r="75%">
@@ -388,10 +386,10 @@ export default function DarkIntroSelector({
               </svg>
             </div>
 
-            {}
-            <div className="flex items-center justify-center my-1.5 select-none w-full max-w-full px-2 overflow-x-auto overflow-y-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div ref={containerRef} className="relative inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-3 py-1.5 overflow-visible">
-                {}
+            {/* Movie Selector Number Bar */}
+            <div className="flex items-center justify-center my-1 select-none w-full max-w-full px-2 overflow-x-auto overflow-y-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div ref={containerRef} className="relative inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-2.5 py-1 overflow-visible">
+                {/* Dotted Range Pill */}
                 {pillBounds.width > 0 && (
                   <div
                     className="absolute rounded-full border border-dotted border-white/60 bg-white/[0.04] pointer-events-none z-0 transition-[width,left] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -405,7 +403,7 @@ export default function DarkIntroSelector({
                   />
                 )}
 
-                {}
+                {/* Dotted Active Node */}
                 {activeBtnBounds.width > 0 && (
                   <div
                     className="absolute pointer-events-none z-10 rounded-full border border-dotted border-white/95 bg-white/[0.12] transition-[left,width,height] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -419,7 +417,6 @@ export default function DarkIntroSelector({
                   />
                 )}
 
-                {}
                 {currentPhaseMovies.map((movie, idx) => {
                   const isSelected = idx === selectedMovieIndex;
                   const isHovered = idx === hoveredMovieIndex;
@@ -450,14 +447,14 @@ export default function DarkIntroSelector({
               </div>
             </div>
 
-            {}
+            {/* Movie Title & Release Year display */}
             {(() => {
               const displayIndex = hoveredMovieIndex !== null ? hoveredMovieIndex : selectedMovieIndex;
               const displayMovie = currentPhaseMovies[displayIndex] || currentPhaseMovies[0];
 
               return (
-                <div className="text-center my-0.5 min-h-[34px] flex flex-col items-center justify-center px-4 transition-all duration-200">
-                  <div className="text-[11px] sm:text-xs font-mono tracking-[0.2em] text-stone-100 uppercase font-bold flex items-center gap-2">
+                <div className="text-center my-0.5 min-h-[30px] flex flex-col items-center justify-center px-3 transition-all duration-200">
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs font-mono tracking-[0.16em] sm:tracking-[0.2em] text-stone-100 uppercase font-bold flex items-center gap-1.5 flex-wrap justify-center">
                     <span>
                       {String(displayIndex + 1).padStart(2, "0")} · {displayMovie?.title?.toUpperCase() || currentPhaseMeta?.title}
                     </span>
@@ -465,7 +462,7 @@ export default function DarkIntroSelector({
                       ({displayMovie?.year || currentPhaseMeta?.years})
                     </span>
                   </div>
-                  <div className="text-[10px] text-stone-400 font-mono tracking-wider max-w-md line-clamp-1 mt-0.5">
+                  <div className="text-[9px] sm:text-[10px] text-stone-400 font-mono tracking-wider max-w-md line-clamp-1 mt-0.5">
                     PHASE {currentPhaseMeta?.roman} · {currentPhaseMeta?.title}
                   </div>
                 </div>
@@ -473,14 +470,14 @@ export default function DarkIntroSelector({
             })()}
 
             {/* CONTINUE CTA with Sketch Circle */}
-            <div className="mt-2 mb-1 animate-in fade-in duration-700 delay-500 flex justify-center">
+            <div className="mt-1.5 sm:mt-2 mb-0.5 animate-in fade-in duration-700 delay-500 flex justify-center">
               <button
                 onClick={handleContinue}
-                className="group relative text-xs sm:text-sm font-mono tracking-[0.45em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
+                className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 sm:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
               >
                 {/* Sketch-type hand-drawn circle / ellipse */}
                 <svg
-                  className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-50 group-hover:opacity-90 transition-opacity duration-300 scale-110 sm:scale-115"
+                  className="absolute inset-0 w-full h-full pointer-events-none overflow-visible opacity-60 group-hover:opacity-100 transition-opacity duration-300 scale-105 sm:scale-115"
                   viewBox="0 0 260 56"
                   fill="none"
                   preserveAspectRatio="none"
@@ -488,7 +485,7 @@ export default function DarkIntroSelector({
                   {/* Primary organic sketched loop */}
                   <path
                     d="M14 28 C 12 12, 45 5, 130 5 C 215 5, 248 13, 246 28 C 244 43, 205 51, 125 51 C 42 51, 15 42, 17 26 C 19 14, 52 7, 120 7 C 188 7, 242 15, 244 30"
-                    stroke="rgba(255, 255, 255, 0.75)"
+                    stroke="rgba(255, 255, 255, 0.85)"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -496,14 +493,14 @@ export default function DarkIntroSelector({
                   {/* Subtle sketch secondary overlay line */}
                   <path
                     d="M22 32 C 20 15, 58 7, 135 7 C 212 7, 240 15, 238 29 C 236 43, 195 49, 120 49 C 50 49, 23 41, 25 28"
-                    stroke="rgba(255, 255, 255, 0.35)"
+                    stroke="rgba(255, 255, 255, 0.4)"
                     strokeWidth="1.0"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <span className="relative z-10">C O N T I N U E</span>
+                <span className="relative z-10 whitespace-nowrap">C O N T I N U E</span>
               </button>
             </div>
           </div>
@@ -511,18 +508,18 @@ export default function DarkIntroSelector({
 
       </main>
 
-      {}
-      <footer className={`relative z-10 w-full px-6 sm:px-14 py-3 sm:py-4 flex items-center justify-end text-[9px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
-        introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-4"
+      {/* 5. Subtle Footer Status */}
+      <footer className={`relative z-10 w-full px-4 sm:px-14 py-2 sm:py-3 flex items-center justify-end text-[8.5px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
+        introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none hidden sm:flex"
       }`}>
         <div className="flex items-center gap-2 text-stone-400 select-none">
-          <span className="tracking-[0.25em] font-mono text-[9px] sm:text-[10px] text-stone-400 font-bold uppercase">
+          <span className="tracking-[0.25em] font-mono text-[8.5px] sm:text-[10px] text-stone-400 font-bold uppercase">
             THE SACRED TIMELINE
           </span>
         </div>
       </footer>
 
-      {}
+      {/* 6. Global Navigation Menu */}
       <SlideNavMenu isOpen={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );

@@ -47,7 +47,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 

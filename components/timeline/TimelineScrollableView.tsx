@@ -15,7 +15,11 @@ import {
   ArrowLeft,
   Sparkles,
   Layers,
+  Route,
+  Disc3,
+  LayoutGrid,
 } from "lucide-react";
+import { IconSwap, IconSwapItem } from "@/components/icon-swap";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
@@ -86,6 +90,7 @@ export default function TimelineScrollableView() {
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
   const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>('path');
 
   // Synchronize Phase and Selected Movie from URL Query Params or State Context
@@ -238,6 +243,7 @@ export default function TimelineScrollableView() {
   // Scroll to a specific Phase section
   const handleSelectPhase = (phaseId: number | "all") => {
     setActivePhaseFilter(phaseId);
+    setIsPhaseDrawerOpen(false);
     if (phaseId !== "all") {
       setCurrentPhase(phaseId);
       const el = document.getElementById(`phase-section-${phaseId}`);
@@ -255,7 +261,7 @@ export default function TimelineScrollableView() {
 
       {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
@@ -357,43 +363,129 @@ export default function TimelineScrollableView() {
         </div>
       </header>
 
-      {/* Fixed View Layout Mode Switcher with Smooth Sliding Indicator */}
-      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none">
-        <div className="relative flex items-center bg-black/85 backdrop-blur-md border border-white/15 rounded-full p-[2px] sm:p-1 text-[7.5px] sm:text-[10px] font-mono tracking-tight sm:tracking-wider uppercase shadow-xl pointer-events-auto whitespace-nowrap shrink-0 scale-[0.78] sm:scale-100 origin-top-right">
-          <button
-            onClick={() => setLayoutMode("path")}
-            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
-              layoutMode === "path"
-                ? "bg-white text-black font-bold shadow-md scale-100"
-                : "text-stone-400 hover:text-white"
-            }`}
-            title="Sacred Timeline Snake-Path View"
-          >
-            PATH VIEW
-          </button>
-          <button
-            onClick={() => setLayoutMode("wheel")}
-            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
-              layoutMode === "wheel"
-                ? "bg-white text-black font-bold shadow-md scale-100"
-                : "text-stone-400 hover:text-white"
-            }`}
-            title="3D Scroll Wheel View"
-          >
-            3D WHEEL
-          </button>
-          <button
-            onClick={() => setLayoutMode("grid")}
-            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
-              layoutMode === "grid"
-                ? "bg-white text-black font-bold shadow-md scale-100"
-                : "text-stone-400 hover:text-white"
-            }`}
-            title="Grid View"
-          >
-            GRID VIEW
-          </button>
+      {/* Mobile Phase Pill */}
+      <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
+        <button
+          onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
+          className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/10"
+        >
+          <span>{activePhaseFilter === "all" ? "ALL PHASES" : `PHASE ${activePhaseFilter}`}</span>
+        </button>
+      </div>
+
+      {/* Mobile Phase Drawer Modal */}
+      {isPhaseDrawerOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex select-none animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsPhaseDrawerOpen(false)}
+          />
+          <aside className="relative z-10 w-full max-w-[320px] bg-[#000000] border-r border-stone-900 h-full p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300 shadow-[20px_0_50px_rgba(0,0,0,0.9)]">
+            <div>
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-stone-900 mb-6">
+                <span className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white">
+                  SACRED TIMELINE
+                </span>
+                <button
+                  onClick={() => setIsPhaseDrawerOpen(false)}
+                  className="text-stone-400 hover:text-white transition-colors p-1 cursor-pointer"
+                  aria-label="Close Phase Drawer"
+                >
+                  <X size={16} strokeWidth={1.5} />
+                </button>
+              </div>
+
+              {/* Phase Selection */}
+              <div className="border-b border-stone-900/80 pb-6 mb-6">
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
+                  FILTER BY PHASE
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  <button
+                    onClick={() => handleSelectPhase("all")}
+                    className={`w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group cursor-pointer ${
+                      activePhaseFilter === "all"
+                        ? "text-white font-bold"
+                        : "text-stone-400 hover:text-white"
+                    }`}
+                  >
+                    <span>ALL PHASES (44)</span>
+                    {activePhaseFilter === "all" ? (
+                      <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                    ) : (
+                      <span className="text-[8.5px] text-stone-500 font-normal">COMPLETE SAGA</span>
+                    )}
+                  </button>
+                  {TIMELINE_PHASES.map((p) => {
+                    const isActive = p.id === activePhaseFilter;
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() => handleSelectPhase(p.id)}
+                        className={`w-full text-[10px] font-mono tracking-[0.18em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group cursor-pointer ${
+                          isActive
+                            ? "text-white font-bold"
+                            : "text-stone-400 hover:text-white"
+                        }`}
+                      >
+                        <span>Phase {p.roman}</span>
+                        {isActive ? (
+                          <span className="text-[8px] font-mono tracking-widest text-stone-400 uppercase">ACTIVE</span>
+                        ) : (
+                          <span className="text-[8.5px] text-stone-500 font-normal">
+                            {p.years}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Info */}
+              <div>
+                <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-2">
+                  PHASE ERA
+                </div>
+                <p className="text-[9.5px] font-mono text-stone-500 leading-relaxed">
+                  {activePhaseFilter === "all"
+                    ? "Viewing all 44 canonical MCU films from Phase I to Phase VI in chronological order."
+                    : TIMELINE_PHASES.find((p) => p.id === activePhaseFilter)?.desc}
+                </p>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="pt-6 border-t border-stone-900 flex items-center justify-between text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
+              <span>{filteredMovies.length} MOVIES VISIBLE</span>
+              <span>{activePhaseFilter === "all" ? "ALL PHASES" : `PHASE ${activePhaseFilter}`}</span>
+            </div>
+          </aside>
         </div>
+      )}
+
+      {/* View Layout Mode Switcher with Animated IconSwap */}
+      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none">
+        <button
+          onClick={() => {
+            setLayoutMode((prev) => (prev === "path" ? "wheel" : prev === "wheel" ? "grid" : "path"));
+          }}
+          className="relative flex items-center bg-black/85 backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-black/95 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-2 text-[8.5px] sm:text-[10px] font-mono tracking-wider uppercase text-white shadow-xl pointer-events-auto whitespace-nowrap transition-all duration-200 cursor-pointer active:scale-95 group origin-top-right scale-[0.88] sm:scale-100"
+          title={`Active View: ${layoutMode.toUpperCase()} VIEW (Click to cycle view mode)`}
+        >
+          <IconSwap>
+            <IconSwapItem key={layoutMode} className="flex items-center gap-1.5">
+              {layoutMode === "path" && <Route size={13} className="text-emerald-400 group-hover:scale-110 transition-transform" />}
+              {layoutMode === "wheel" && <Disc3 size={13} className="text-amber-400 group-hover:scale-110 transition-transform" />}
+              {layoutMode === "grid" && <LayoutGrid size={13} className="text-cyan-400 group-hover:scale-110 transition-transform" />}
+              <span className="font-bold">
+                {layoutMode === "path" ? "PATH VIEW" : layoutMode === "wheel" ? "3D WHEEL" : "GRID VIEW"}
+              </span>
+            </IconSwapItem>
+          </IconSwap>
+        </button>
       </div>
 
       {/* 2. MAIN CONTAINER */}

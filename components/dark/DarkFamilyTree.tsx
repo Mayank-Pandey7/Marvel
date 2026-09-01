@@ -798,7 +798,7 @@ export default function DarkFamilyTree({
 
       {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-20 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-20 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
@@ -818,12 +818,6 @@ export default function DarkFamilyTree({
 
           {/* Title Header */}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
-            <span
-              className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-white font-bold select-none"
-            >
-              FAMILY TREE
-            </span>
-            <span className="text-stone-600 font-mono text-[10.5px] sm:text-[12px]">/</span>
             <Link
               href="/timeline"
               className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
@@ -831,6 +825,12 @@ export default function DarkFamilyTree({
             >
               TIMELINE
             </Link>
+            <span className="text-stone-600 font-mono text-[10.5px] sm:text-[12px]">/</span>
+            <span
+              className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-white font-bold select-none"
+            >
+              FAMILY TREE
+            </span>
           </div>
         </div>
 
