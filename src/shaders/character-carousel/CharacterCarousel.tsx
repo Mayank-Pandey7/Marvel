@@ -21,6 +21,7 @@ export type CharacterCarouselVariant = "filmstrip" | "wave";
 export type CharacterCarouselProps = {
   variant?: CharacterCarouselVariant;
   items?: CharacterItem[];
+  fullPoster?: boolean;
   speed?: number;
   scale?: number;
   opacity?: number;
@@ -63,7 +64,75 @@ function clamp(value: number, minimum: number, maximum: number) {
   return Math.min(maximum, Math.max(minimum, value));
 }
 
-function buildFocusedDocument(variant: CharacterCarouselVariant, items: CharacterItem[]) {
+function buildFocusedDocument(variant: CharacterCarouselVariant, items: CharacterItem[], fullPoster?: boolean) {
+  const fullPosterStyles = fullPoster ? `
+.card {
+  padding: 6px !important;
+  aspect-ratio: 0.67 !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: #0a0a0f !important;
+  box-shadow:
+    0 calc(10px + var(--focus) * 24px) calc(20px + var(--focus) * 36px)
+      rgba(0, 0, 0, calc(0.7 + var(--focus) * 0.3)),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+  overflow: hidden !important;
+}
+.card::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 5px !important;
+  z-index: 3 !important;
+  border: 1px solid rgba(255, 255, 255, calc(0.14 + var(--focus) * 0.25)) !important;
+  border-radius: 9px !important;
+  pointer-events: none !important;
+}
+.portrait {
+  position: absolute !important;
+  inset: 6px !important;
+  width: calc(100% - 12px) !important;
+  height: calc(100% - 12px) !important;
+  border-radius: 8px !important;
+  background: #000000 !important;
+  overflow: hidden !important;
+}
+.portrait img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 8px !important;
+}
+.footer {
+  display: none !important;
+}
+` : `
+.portrait {
+  background: #08080c !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+.footer {
+  background: #09090e !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 0 0 8px 8px !important;
+}
+.index {
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+}
+.name {
+  color: #ffffff !important;
+  font-size: clamp(8.5px, 0.82vw, 12px) !important;
+  font-weight: 800 !important;
+}
+.role {
+  color: #d4d4d8 !important;
+  font-size: clamp(5.5px, 0.48vw, 8px) !important;
+  font-weight: 700 !important;
+}
+`;
+
   const focusStyles = `<style data-character-carousel-focus>
 :root {
   --character-carousel-scale: 1;
@@ -102,7 +171,6 @@ html, body {
   box-shadow:
     0 calc(10px + var(--focus) * 24px) calc(20px + var(--focus) * 36px)
       rgba(0, 0, 0, calc(0.7 + var(--focus) * 0.3)),
-    0 0 calc(var(--focus) * 28px) rgba(255, 255, 255, calc(var(--focus) * 0.35)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
   cursor: pointer;
 }
@@ -110,29 +178,7 @@ html, body {
   border: 1px solid rgba(255, 255, 255, calc(0.06 + var(--focus) * 0.15)) !important;
   border-radius: 8px !important;
 }
-.portrait {
-  background: #08080c !important;
-  border-radius: 8px 8px 0 0 !important;
-}
-.footer {
-  background: #09090e !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 0 0 8px 8px !important;
-}
-.index {
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  color: #ffffff !important;
-}
-.name {
-  color: #ffffff !important;
-  font-size: clamp(8.5px, 0.82vw, 12px) !important;
-  font-weight: 800 !important;
-}
-.role {
-  color: #d4d4d8 !important;
-  font-size: clamp(5.5px, 0.48vw, 8px) !important;
-  font-weight: 700 !important;
-}
+${fullPosterStyles}
 </style>`;
 
   const customDataScript = `<script data-character-data>
@@ -185,6 +231,7 @@ window.__CUSTOM_PROFILES__ = ${JSON.stringify(items)};
 export function CharacterCarousel({
   variant = CHARACTER_CAROUSEL_DEFAULTS.variant,
   items,
+  fullPoster,
   speed = CHARACTER_CAROUSEL_DEFAULTS.speed,
   scale = CHARACTER_CAROUSEL_DEFAULTS.scale,
   opacity = CHARACTER_CAROUSEL_DEFAULTS.opacity,
@@ -207,7 +254,7 @@ export function CharacterCarousel({
     return items && items.length > 0 ? items : DEFAULT_MCU_CHARACTERS;
   }, [items]);
 
-  const source = useMemo(() => buildFocusedDocument(variant, resolvedItems), [variant, resolvedItems]);
+  const source = useMemo(() => buildFocusedDocument(variant, resolvedItems, fullPoster), [variant, resolvedItems, fullPoster]);
 
   const postControls = useCallback(() => {
     iframeRef.current?.contentWindow?.postMessage({

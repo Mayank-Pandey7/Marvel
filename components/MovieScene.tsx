@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { CharacterCarousel, type CharacterItem } from "@designcodeio/threeui";
 import "@designcodeio/threeui/style.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -69,15 +70,15 @@ interface MovieSceneProps {
 
 export function MovieScene({ movies }: MovieSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const items: CharacterItem[] | undefined = movies?.map((m) => {
     const poster = getMoviePoster(m);
-    const backdrop = MOVIE_BACKDROPS[m.id] || poster;
     return {
       id: m.id,
       name: m.title,
       role: `PHASE ${m.phase} · ${m.year} · ${m.runtime} MIN`,
-      portrait: backdrop,
+      portrait: poster,
       universe: m.heroAlias ? m.heroAlias.toUpperCase() : `PHASE ${m.phase}`,
     };
   });
@@ -132,17 +133,21 @@ export function MovieScene({ movies }: MovieSceneProps) {
         <ChevronRight size={24} className="sm:w-7 sm:h-7" />
       </button>
 
-      {/* 3D Filmstrip Perspective Rail for MCU Movies */}
+      {/* 3D Filmstrip Perspective Rail for MCU Movies with Full Edge-to-Edge Posters */}
       <CharacterCarousel
         key={items ? items.map((i) => i.id).join(",") : "all-movies"}
         variant="filmstrip"
         items={items}
+        fullPoster={true}
         speed={1.00}
-        scale={1.15}
+        scale={1.18}
         opacity={1.00}
         hue={0}
         saturation={1.00}
         brightness={1.00}
+        onSelectCharacter={(movieId: string) => {
+          router.push(`/timeline/${movieId}`);
+        }}
       />
     </div>
   );

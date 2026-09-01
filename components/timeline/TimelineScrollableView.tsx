@@ -43,6 +43,7 @@ const PHASE_FILTERS = [
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
+import { MCU } from "@/data/mcu";
 
 export function getMoviePoster(node: { id: string; posterUrl?: string }) {
   const posterEntry =
@@ -51,9 +52,27 @@ export function getMoviePoster(node: { id: string; posterUrl?: string }) {
     MCU_POSTER_MAP[node.id.replace(/-/g, "")] ||
     MCU_POSTER_MAP[node.id.replace(/_/g, "-")];
 
-  if (posterEntry?.poster) return posterEntry.poster;
-  if (node.posterUrl) return node.posterUrl;
-  return "/images/posters/the-avengers.jpg";
+  let poster = posterEntry?.poster || node.posterUrl || "";
+
+  if (!poster || poster === "/images/posters/the-avengers.jpg") {
+    if (node.id === "avengers" || node.id === "the-avengers") {
+      return "https://image.tmdb.org/t/p/w780/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg";
+    }
+    const mcuItem = MCU.find((m) => m.id === node.id);
+    if (mcuItem?.poster) poster = mcuItem.poster;
+  }
+
+  if (!poster) return "https://image.tmdb.org/t/p/w780/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg";
+
+  // Automatically upgrade TMDB images to high-resolution w780
+  if (poster.includes("image.tmdb.org/t/p/w500/")) {
+    return poster.replace("/t/p/w500/", "/t/p/w780/");
+  }
+  if (poster.includes("image.tmdb.org/t/p/w300/")) {
+    return poster.replace("/t/p/w300/", "/t/p/w780/");
+  }
+
+  return poster;
 }
 
 export default function TimelineScrollableView() {
