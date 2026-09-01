@@ -25,10 +25,10 @@ export default function MovieDetail({
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10">
       <Link
-        href="/movies"
+        href="/timeline"
         className="inline-flex items-center gap-1 text-xs font-mono tracking-wider uppercase text-stone-400 hover:text-white mb-6 transition-colors"
       >
-        <ChevronLeft size={14} /> Back to Movies Wheel
+        <ChevronLeft size={14} /> Back to Sacred Timeline
       </Link>
 
       <Reveal>
@@ -57,11 +57,11 @@ export default function MovieDetail({
 
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href="/movies"
+            href="/timeline"
             className="inline-flex items-center gap-2 px-5 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-xs font-mono tracking-wider uppercase rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
           >
             <Share2 size={13} />
-            <span>Explore in Movies Wheel</span>
+            <span>Explore in Timeline</span>
           </Link>
         </div>
       </Reveal>

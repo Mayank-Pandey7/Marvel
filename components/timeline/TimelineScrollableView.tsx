@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TimelineDoomsdayLayout from "@/components/timeline/TimelineDoomsdayLayout";
+import MovieScene from "@/components/MovieScene";
 import {
   Search,
   Menu,
@@ -57,18 +58,130 @@ export function getMoviePoster(node: { id: string; posterUrl?: string }) {
 
 export default function TimelineScrollableView() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { currentPhase, setCurrentPhase } = useTimelineState();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [activePhaseFilter, setActivePhaseFilter] = useState<number | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [layoutMode, setLayoutMode] = useState<'grid' | 'doomsday'>('doomsday');
+  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>('path');
 
-  // All 44 canonical movies sorted by sequence order (1 to 44)
+  // Synchronize Phase and Selected Movie from URL Query Params or State Context
+  useEffect(() => {
+    const phaseParam = searchParams.get("phase");
+    const movieParam = searchParams.get("movie");
+
+    if (phaseParam) {
+      const p = parseInt(phaseParam, 10);
+      if (p >= 1 && p <= 6) {
+        setActivePhaseFilter(p);
+        setCurrentPhase(p);
+      }
+    }
+
+    if (movieParam) {
+      const timer = setTimeout(() => {
+        const target =
+          document.getElementById(`movie-node-${movieParam}`) ||
+          document.querySelector(`[data-movie-id="${movieParam}"]`) ||
+          document.querySelector(`[href*="${movieParam}"]`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 450);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams, setCurrentPhase]);
+
+  // Global Keyboard Shortcuts for / and Ctrl+K / Cmd+K Search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (e.key === "/" && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        setSearchOpen(true);
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Animated starfield particles matching Family Tree background
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const particles = Array.from({ length: 48 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      radius: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.4 + 0.1,
+    }));
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
+
+  // All 44 canonical movies sorted by chronological phase & release order (1 to 44)
   const allMovies = useMemo(() => {
-    return [...UNIFIED_MCU_TREE].sort((a, b) => a.order - b.order);
+    return [...UNIFIED_MCU_TREE].sort((a, b) => {
+      if (a.phase !== b.phase) return a.phase - b.phase;
+      return a.order - b.order;
+    });
   }, []);
 
   // Filtered movies
@@ -116,45 +229,39 @@ export default function TimelineScrollableView() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
-      {/* Background Starfield Pattern & Ambient Gradient */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.10),rgba(255,255,255,0))] pointer-events-none" />
-      <div
-        className="fixed inset-0 pointer-events-none opacity-10"
-        style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
+    <div className="relative min-h-screen w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
+      {/* Background Starfield Canvas & Dark Vignette (Identical to Family Tree) */}
+      <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {/* Header Backdrop Gradient */}
+      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* 1. SYNCHRONIZED GLOBAL HEADER NAVBAR (EXACT MATCH WITH FAMILY TREE) */}
-      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
+      {/* 1. SYNCHRONIZED GLOBAL HEADER NAVBAR (INCREASED HEIGHT) */}
+      <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none">
         {/* Left Side: Navigation Menu & Title Switcher */}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
             title="Open Universe Navigation"
             aria-label="Open Universe Navigation"
           >
-            <Menu size={16} />
+            <Menu size={18} />
           </button>
 
           {/* Title Header */}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
-            <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold select-none">
+            <span className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-white font-bold select-none">
               TIMELINE
             </span>
-            <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
+            <span className="text-stone-600 font-mono text-[10.5px] sm:text-[12px]">/</span>
             <Link
               href="/familytree"
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
+              className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
               title="Switch to Character Family Tree"
             >
               FAMILY TREE
@@ -163,19 +270,19 @@ export default function TimelineScrollableView() {
         </div>
 
         {/* Center: Brand Logo & DOOMSDAY Trigger */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3.5">
           <Link
-            href="/familytree"
-            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-stone-300 transition-colors scale-110 select-none cursor-pointer"
-            title="Switch to Family Tree"
+            href="/timeline"
+            className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer"
+            title="Sacred Timeline"
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-xs select-none">|</span>
+          <span className="text-stone-600 font-mono text-sm select-none">|</span>
           <Link
-            href="/multiverse"
-            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
-            title="Explore Multiverse Realities"
+            href="/doomsday"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
+            title="Explore Road to Doomsday"
           >
             DOOMSDAY
           </Link>
@@ -185,15 +292,15 @@ export default function TimelineScrollableView() {
         <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
           {/* Phase Direct Jump Switcher */}
           <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-            <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-500">
+            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-500">
               PHASE:
             </span>
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1 sm:gap-1.5">
               {[1, 2, 3, 4, 5, 6].map((p) => (
                 <button
                   key={p}
                   onClick={() => handleSelectPhase(p)}
-                  className={`text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                  className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
                     activePhaseFilter === p
                       ? "text-white font-bold"
                       : "text-stone-400 hover:text-white"
@@ -203,108 +310,85 @@ export default function TimelineScrollableView() {
                   {p}
                 </button>
               ))}
+              <button
+                onClick={() => handleSelectPhase("all")}
+                className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1.5 py-0.5 ${
+                  activePhaseFilter === "all"
+                    ? "text-white font-bold"
+                    : "text-stone-400 hover:text-white"
+                }`}
+                title="Show All Phases"
+              >
+                ALL
+              </button>
             </div>
           </div>
 
-          <Link
-            href="/familytree"
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
-          >
-            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">RETURN</span>
-          </Link>
-
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
             title="Search MCU (Ctrl+K or /)"
           >
-            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />
             <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-500 ml-0.5">
               /
             </kbd>
           </button>
         </div>
       </header>
 
-      {/* 2. MAIN CONTAINER */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pt-20 sm:pt-24 pb-28 flex flex-col gap-8">
-        
-        {/* Top Controls: Search Bar & Phase Filters matching Movies Page */}
-        <div className="flex flex-col gap-5 pb-2">
-          
-          {/* Top Row: Full Prominent Search Input Bar at the Top */}
-          <div className="w-full">
-            <div className="relative w-full flex items-center bg-white/[0.04] border border-white/10 px-4 py-2.5 sm:py-3 rounded-full focus-within:border-white/30 transition-all shadow-lg">
-              <Search size={15} className="text-stone-400 shrink-0 mr-3" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH TIMELINE MOVIES & HEROES..."
-                className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="text-stone-400 hover:text-stone-200 text-[10px] font-mono tracking-widest px-2.5 py-0.5 uppercase cursor-pointer"
-                >
-                  CLEAR
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Phase Filter Tabs matching the site + Layout Toggle */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/5 pb-1">
-            <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase pt-1">
-              {PHASE_FILTERS.map((f) => (
-                <button
-                  key={f.id}
-                  onClick={() => handleSelectPhase(f.id as number | "all")}
-                  className={`transition-colors cursor-pointer py-1 shrink-0 whitespace-nowrap ${
-                    activePhaseFilter === f.id
-                      ? "text-white font-bold border-b border-white pb-2 -mb-[1px]"
-                      : "text-stone-500 hover:text-stone-300 pb-2"
-                  }`}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Layout Toggle Button */}
-            <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0 bg-white/5 border border-white/10 rounded-lg p-1 text-[10px] font-mono tracking-widest uppercase">
-              <button
-                onClick={() => setLayoutMode("doomsday")}
-                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
-                  layoutMode === "doomsday"
-                    ? "bg-white text-black font-bold shadow"
-                    : "text-stone-400 hover:text-white"
-                }`}
-                title="Doomsday Snake-Path View"
-              >
-                PATH VIEW
-              </button>
-              <button
-                onClick={() => setLayoutMode("grid")}
-                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
-                  layoutMode === "grid"
-                    ? "bg-white text-black font-bold shadow"
-                    : "text-stone-400 hover:text-white"
-                }`}
-                title="Grid View"
-              >
-                GRID VIEW
-              </button>
-            </div>
-          </div>
+      {/* Fixed View Layout Mode Switcher with Smooth Sliding Indicator (Top-Right) */}
+      <div className="fixed top-14 sm:top-20 right-4 sm:right-8 z-40 pointer-events-none">
+        <div className="relative flex items-center bg-black/80 backdrop-blur-md border border-white/15 rounded-full p-1 text-[9px] sm:text-[10px] font-mono tracking-wider uppercase shadow-xl pointer-events-auto">
+          <button
+            onClick={() => setLayoutMode("path")}
+            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+              layoutMode === "path"
+                ? "bg-white text-black font-bold shadow-md scale-100"
+                : "text-stone-400 hover:text-white"
+            }`}
+            title="Sacred Timeline Snake-Path View"
+          >
+            PATH VIEW
+          </button>
+          <button
+            onClick={() => setLayoutMode("wheel")}
+            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+              layoutMode === "wheel"
+                ? "bg-white text-black font-bold shadow-md scale-100"
+                : "text-stone-400 hover:text-white"
+            }`}
+            title="3D Scroll Wheel View"
+          >
+            3D WHEEL
+          </button>
+          <button
+            onClick={() => setLayoutMode("grid")}
+            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+              layoutMode === "grid"
+                ? "bg-white text-black font-bold shadow-md scale-100"
+                : "text-stone-400 hover:text-white"
+            }`}
+            title="Grid View"
+          >
+            GRID VIEW
+          </button>
         </div>
+      </div>
+
+      {/* 2. MAIN CONTAINER */}
+      <div
+        className={`relative z-10 mx-auto flex flex-col gap-4 transition-all duration-500 ease-out ${
+          layoutMode === "wheel"
+            ? "w-full max-w-none px-0 pt-16 sm:pt-20 min-h-[calc(100vh-80px)] justify-center"
+            : "max-w-5xl px-3 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-20"
+        }`}
+      >
 
         {/* 3. TIMELINE MOVIES LIST (ALL 44 ENTRIES) */}
         {filteredMovies.length === 0 ? (
-          <div className="py-20 text-center flex flex-col items-center justify-center">
+          <div className="py-20 text-center flex flex-col items-center justify-center animate-in fade-in duration-300">
             <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-stone-300 font-bold">
               NO TIMELINE MOVIES FOUND
             </h3>
@@ -316,96 +400,112 @@ export default function TimelineScrollableView() {
                 setSearchQuery("");
                 setActivePhaseFilter("all");
               }}
-              className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/5 border border-white/10 px-4 py-1.5 rounded-full"
+              className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/5 border border-white/10 px-4 py-1.5 rounded-full hover:bg-white/10 transition-colors"
             >
               RESET FILTERS
             </button>
           </div>
-        ) : (
-          layoutMode === 'grid' ? (
-            <div className="flex flex-col gap-14">
-              {TIMELINE_PHASES.map((phase) => {
-                const movies = moviesByPhase.get(phase.id) || [];
-                if (movies.length === 0) return null;
-                return (
-                  <section
-                    key={`phase-section-${phase.id}`}
-                    id={`phase-section-${phase.id}`}
-                    className="flex flex-col gap-6 scroll-mt-28"
-                  >
-                    {/* Phase Era Header Banner */}
-                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded">
-                          PHASE {phase.roman}
-                        </span>
-                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
-                          {phase.title}
-                        </span>
-                      </div>
-                      <span className="text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
-                        {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
+        ) : layoutMode === "wheel" ? (
+          <div
+            key="view-wheel"
+            className="relative w-full overflow-hidden bg-transparent border-0 shadow-none flex items-center justify-center animate-in fade-in-0 slide-in-from-bottom-8 zoom-in-95 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          >
+            <MovieScene movies={filteredMovies} />
+          </div>
+        ) : layoutMode === "grid" ? (
+          <div
+            key="view-grid"
+            className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          >
+            {TIMELINE_PHASES.map((phase) => {
+              const movies = moviesByPhase.get(phase.id) || [];
+              if (movies.length === 0) return null;
+              return (
+                <section
+                  key={`phase-section-${phase.id}`}
+                  id={`phase-section-${phase.id}`}
+                  className="flex flex-col gap-6 scroll-mt-28"
+                >
+                  {/* Phase Era Header Banner */}
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded">
+                        PHASE {phase.roman}
+                      </span>
+                      <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                        {phase.title}
                       </span>
                     </div>
-                    {/* Movies Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
-                      {movies.map((movie) => {
-                        const posterUrl = getMoviePoster(movie);
-                        return (
-                          <Link
-                            key={movie.id}
-                            href={`/timeline/${movie.id}`}
-                            className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer"
-                          >
-                            {/* Poster Container */}
-                            <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
-                              <img
-                                src={posterUrl}
-                                alt={movie.title}
-                                loading="lazy"
-                                className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
-                              />
-                              {/* Badges */}
-                              <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
-                                <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-white">
-                                  #{String(movie.order).padStart(2, "0")}
-                                </span>
-                                <span className="text-[8px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/15 text-stone-300">
-                                  P{movie.phase}
-                                </span>
-                              </div>
-                              {/* Release Year */}
-                              <div className="absolute bottom-2.5 right-2.5">
-                                <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
-                                  {movie.year}
-                                </span>
-                              </div>
+                    <span className="text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
+                      {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
+                    </span>
+                  </div>
+                  {/* Movies Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                    {movies.map((movie) => {
+                      const posterUrl = getMoviePoster(movie);
+                      const globalOrderIndex = UNIFIED_MCU_TREE.findIndex((m) => m.id === movie.id);
+                      const displayNumber = globalOrderIndex >= 0 ? globalOrderIndex + 1 : movie.order;
+
+                      return (
+                        <Link
+                          key={movie.id}
+                          href={`/timeline/${movie.id}`}
+                          className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
+                        >
+                          {/* Poster Container */}
+                          <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                            <img
+                              src={posterUrl}
+                              alt={movie.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+                            />
+                            {/* Badges */}
+                            <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
+                              <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-white">
+                                #{String(displayNumber).padStart(2, "0")}
+                              </span>
+                              <span className="text-[8px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/15 text-stone-300">
+                                P{movie.phase}
+                              </span>
                             </div>
-                            {/* Metadata */}
-                            <div className="flex flex-col gap-1">
-                              <h3
-                                className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-amber-300 transition-colors line-clamp-1"
-                                title={movie.title}
-                              >
-                                {movie.title}
-                              </h3>
-                              <div className="flex items-center gap-1.5 text-[9.5px] font-mono text-stone-500 uppercase tracking-widest line-clamp-1">
-                                <span className="text-stone-400">{movie.heroAlias}</span>
-                                <span>•</span>
-                                <span>{movie.runtime} MIN</span>
-                              </div>
+                            {/* Release Year */}
+                            <div className="absolute bottom-2.5 right-2.5">
+                              <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
+                                {movie.year}
+                              </span>
                             </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-          ) : (
+                          </div>
+                          {/* Metadata */}
+                          <div className="flex flex-col gap-1">
+                            <h3
+                              className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors line-clamp-1"
+                              title={movie.title}
+                            >
+                              {movie.title}
+                            </h3>
+                            <div className="flex items-center gap-1.5 text-[9.5px] font-mono text-stone-500 uppercase tracking-widest line-clamp-1">
+                              <span className="text-stone-400">{movie.heroAlias}</span>
+                              <span>•</span>
+                              <span>{movie.runtime} MIN</span>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        ) : (
+          <div
+            key="view-path"
+            className="animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          >
             <TimelineDoomsdayLayout movies={filteredMovies} />
-          )
+          </div>
         )}
       </div>
 

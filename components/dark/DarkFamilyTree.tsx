@@ -796,39 +796,37 @@ export default function DarkFamilyTree({
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {}
+      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-20 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-20 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {}
-      {}
-      {}
-      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
+      {/* 1. SYNCHRONIZED GLOBAL HEADER NAVBAR (EXACT MATCHING HEIGHT) */}
+      <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none">
 
-        {}
+        {/* Left Side: Menu Trigger & Title Switcher */}
         <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
             title="Open Universe Navigation"
             aria-label="Open Universe Navigation"
           >
-            <Menu size={16} />
+            <Menu size={18} />
           </button>
 
           {/* Title Header */}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
             <span
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-white font-bold select-none"
+              className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-white font-bold select-none"
             >
               FAMILY TREE
             </span>
-            <span className="text-stone-600 font-mono text-[9.5px] sm:text-[11px]">/</span>
+            <span className="text-stone-600 font-mono text-[10.5px] sm:text-[12px]">/</span>
             <Link
               href="/timeline"
-              className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
+              className="text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-400 hover:text-white transition-colors cursor-pointer"
               title="Switch to Sequential Timeline"
             >
               TIMELINE
@@ -836,30 +834,30 @@ export default function DarkFamilyTree({
           </div>
         </div>
 
-        {}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3">
+        {/* Center: Brand Logo & DOOMSDAY Trigger */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3.5">
           <Link
             href="/timeline"
-            className="text-[11px] xs:text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-white hover:text-stone-300 transition-colors scale-110 select-none cursor-pointer"
+            className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer"
             title="Switch to Timeline"
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-xs select-none">|</span>
+          <span className="text-stone-600 font-mono text-sm select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.25em] xs:tracking-[0.35em] sm:tracking-[0.45em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY
           </button>
         </div>
 
-        {}
+        {/* Right Side: Phase Jump Switcher, Return & Search */}
         <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
-          {}
+          {/* Phase Direct Jump Switcher */}
           <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-            <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase text-stone-500">
+            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-500">
               PHASE:
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -867,7 +865,7 @@ export default function DarkFamilyTree({
                 <button
                   key={p}
                   onClick={() => handleSelectPhase(p)}
-                  className={`text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                  className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] transition-colors cursor-pointer px-1.5 py-0.5 ${
                     spoilerPhase === p
                       ? "text-white font-bold"
                       : spoilerPhase > p
@@ -882,30 +880,22 @@ export default function DarkFamilyTree({
             </div>
           </div>
 
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
-          >
-            <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">RETURN</span>
-          </Link>
-
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[9.5px] sm:text-[11px] font-mono tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
             title="Search MCU (Ctrl+K or /)"
           >
-            <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />
             <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-500 ml-0.5">
               /
             </kbd>
           </button>
         </div>
       </header>
 
-      {}
-      <div className="fixed left-3 top-14 z-30 md:hidden flex items-center gap-1.5">
+      {/* Mobile Phase Pill */}
+      <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
         <button
           onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
           className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform"

@@ -1,150 +1,86 @@
-import { useRef, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+"use client";
+
+import React, { useRef } from "react";
 import { CharacterCarousel, type CharacterItem } from "@designcodeio/threeui";
 import "@designcodeio/threeui/style.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type MovieNode } from "@/data/movies";
-import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
+import { getMoviePoster } from "@/components/timeline/TimelineScrollableView";
+
+const MOVIE_BACKDROPS: Record<string, string> = {
+  "iron-man": "/images/backdrops/iron-man.jpg",
+  "incredible-hulk": "/images/backdrops/incredible-hulk.jpg",
+  "iron-man-2": "/images/backdrops/iron-man-2.jpg",
+  "thor": "/images/backdrops/thor.jpg",
+  "captain-america-first-avenger": "/images/backdrops/cap-first-avenger.jpg",
+  "the-avengers": "/images/backdrops/the-avengers.jpg",
+  "iron-man-3": "/images/backdrops/iron-man-3.jpg",
+  "thor-the-dark-world": "/images/backdrops/thor-dark-world.jpg",
+  "captain-america-the-winter-soldier": "/images/backdrops/cap-winter-soldier.jpg",
+  "guardians-of-the-galaxy": "/images/backdrops/gotg.jpg",
+  "avengers-age-of-ultron": "/images/backdrops/avengers-age-of-ultron.jpg",
+  "ant-man": "/images/backdrops/ant-man.jpg",
+  "captain-america-civil-war": "/images/backdrops/cap-civil-war.jpg",
+  "doctor-strange": "/images/backdrops/doctor-strange.jpg",
+  "guardians-of-the-galaxy-vol-2": "/images/backdrops/gotg2.jpg",
+  "spider-man-homecoming": "/images/backdrops/spider-man-homecoming.jpg",
+  "thor-ragnarok": "/images/backdrops/thor-ragnarok.jpg",
+  "black-panther": "/images/backdrops/black-panther.jpg",
+  "avengers-infinity-war": "/images/backdrops/infinity-war.jpg",
+  "ant-man-and-the-wasp": "/images/backdrops/ant-man-and-the-wasp.jpg",
+  "captain-marvel": "/images/backdrops/captain-marvel.jpg",
+  "avengers-endgame": "/images/backdrops/endgame.jpg",
+  "spider-man-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
+  "wandavision": "/images/backdrops/wandavision.jpg",
+  "the-falcon-and-the-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
+  "loki": "/images/backdrops/loki.jpg",
+  "black-widow": "/images/backdrops/black-widow.jpg",
+  "shang-chi": "/images/backdrops/shang-chi.jpg",
+  "eternals": "https://image.tmdb.org/t/p/w1280/lFByFSLV5WDJEv3KabbdAF959F2.jpg",
+  "hawkeye": "/images/backdrops/hawkeye.jpg",
+  "spider-man-no-way-home": "/images/backdrops/spider-man-no-way-home.jpg",
+  "moon-knight": "/images/backdrops/moon-knight.jpg",
+  "doctor-strange-in-the-multiverse-of-madness": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "ms-marvel": "/images/backdrops/ms-marvel.jpg",
+  "thor-love-and-thunder": "/images/backdrops/thor-love-thunder.jpg",
+  "she-hulk-attorney-at-law": "/images/backdrops/she-hulk.jpg",
+  "black-panther-wakanda-forever": "/images/backdrops/black-panther.jpg",
+  "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
+  "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
+  "secret-invasion": "https://image.tmdb.org/t/p/w1280/3rINdUPSy9AklJg74jWHOyUXuZd.jpg",
+  "the-marvels": "https://image.tmdb.org/t/p/w1280/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
+  "echo": "/images/backdrops/echo.jpg",
+  "deadpool-and-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
+  "agatha-all-along": "/images/backdrops/agatha-all-along.jpg",
+  "captain-america-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
+  "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
+  "thunderbolts": "/images/backdrops/thunderbolts.jpg",
+  "the-fantastic-four-first-steps": "/images/backdrops/fantastic-four.jpg",
+  "blade": "/images/backdrops/blade.jpg",
+  "spiderman-brand-new-day": "/images/backdrops/spiderman-brand-new-day.jpg",
+  "avengers-doomsday": "/images/backdrops/avengers-doomsday.jpg",
+  "avengers-secret-wars": "/images/backdrops/battleworld.jpg",
+  "battleworld": "/images/backdrops/battleworld.jpg",
+};
 
 interface MovieSceneProps {
   movies?: MovieNode[];
 }
 
-function formatMovieTitleForWheel(title: string): string {
-  const mapping: Record<string, string> = {
-    "Iron Man": "IRON MAN",
-    "The Incredible Hulk": "THE HULK",
-    "Iron Man 2": "IRON MAN 2",
-    "Thor": "THOR",
-    "Captain America: The First Avenger": "CAPTAIN 1",
-    "The Avengers": "AVENGERS",
-    "Iron Man 3": "IRON MAN 3",
-    "Thor: The Dark World": "THOR 2",
-    "Captain America: The Winter Soldier": "CAPTAIN 2",
-    "Guardians of the Galaxy": "GUARDIANS",
-    "Avengers: Age of Ultron": "AVENGERS 2",
-    "Ant-Man": "ANT-MAN",
-    "Captain America: Civil War": "CIVIL WAR",
-    "Doctor Strange": "DR STRANGE",
-    "Guardians of the Galaxy Vol. 2": "GUARDIANS 2",
-    "Spider-Man: Homecoming": "SPIDER-MAN",
-    "Thor: Ragnarok": "THOR 3",
-    "Black Panther": "PANTHER",
-    "Avengers: Infinity War": "AVENGERS 3",
-    "Ant-Man and the Wasp": "ANT-MAN 2",
-    "Captain Marvel": "CAP MARVEL",
-    "Avengers: Endgame": "AVENGERS 4",
-    "Spider-Man: Far From Home": "SPIDER-MAN 2",
-    "WandaVision": "WANDAVISION",
-    "The Falcon and the Winter Soldier": "FALCON & WS",
-    "Loki (Season 1)": "LOKI S1",
-    "Loki (Season 2)": "LOKI S2",
-    "Loki": "LOKI",
-    "Black Widow": "BLACK WIDOW",
-    "What If...? (Season 1)": "WHAT IF S1",
-    "What If...? (Season 2)": "WHAT IF S2",
-    "Shang-Chi and the Legend of the Ten Rings": "SHANG-CHI",
-    "Eternals": "ETERNALS",
-    "Hawkeye": "HAWKEYE",
-    "Spider-Man: No Way Home": "SPIDER-MAN 3",
-    "Moon Knight": "MOON KNIGHT",
-    "Doctor Strange in the Multiverse of Madness": "DR STRANGE 2",
-    "Ms. Marvel": "MS. MARVEL",
-    "Thor: Love and Thunder": "THOR 4",
-    "I Am Groot": "I AM GROOT",
-    "She-Hulk: Attorney at Law": "SHE-HULK",
-    "Werewolf by Night": "WEREWOLF",
-    "Black Panther: Wakanda Forever": "WAKANDA",
-    "The Guardians of the Galaxy Holiday Special": "HOLIDAY",
-    "Ant-Man and the Wasp: Quantumania": "ANT-MAN 3",
-    "Guardians of the Galaxy Vol. 3": "GUARDIANS 3",
-    "Secret Invasion": "INVASION",
-    "The Marvels": "THE MARVELS",
-    "Echo": "ECHO",
-    "Deadpool & Wolverine": "DEADPOOL 3",
-    "Agatha All Along": "AGATHA",
-    "Captain America: Brave New World": "CAPTAIN 4",
-    "Thunderbolts*": "THUNDERBOLTS",
-    "The Fantastic Four: First Steps": "FANTASTIC 4",
-    "Spider-Man: Brand New Day": "SPIDER-MAN 4",
-    "Avengers: Doomsday": "DOOMSDAY",
-    "Avengers: Secret Wars": "SECRET WARS",
-    "Daredevil: Born Again": "DAREDEVIL",
-    "Blade": "BLADE",
-    "Ironheart": "IRONHEART"
-  };
-
-  if (mapping[title]) return mapping[title];
-
-  if (title.includes(":")) {
-    return title.split(":")[1].trim().toUpperCase();
-  }
-  return title.toUpperCase();
-}
-
 export function MovieScene({ movies }: MovieSceneProps) {
-  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.68);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScale(window.innerWidth < 640 ? 0.58 : 0.68);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const items: CharacterItem[] | undefined = movies?.map((m) => {
-    const poster = MCU_POSTER_MAP[m.id]?.poster || "/images/backdrops/iron-man-1.jpg";
+    const poster = getMoviePoster(m);
+    const backdrop = MOVIE_BACKDROPS[m.id] || poster;
     return {
       id: m.id,
-      name: formatMovieTitleForWheel(m.title),
-      role: `Phase ${m.phase} · ${m.year}`,
-      portrait: poster,
-      universe: `Phase ${m.phase}`,
+      name: m.title,
+      role: `PHASE ${m.phase} · ${m.year} · ${m.runtime} MIN`,
+      portrait: backdrop,
+      universe: m.heroAlias ? m.heroAlias.toUpperCase() : `PHASE ${m.phase}`,
     };
   });
-
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (!event.data) return;
-      if (event.data.type === "character-select" && event.data.characterId) {
-        router.push(`/movies/${event.data.characterId}`);
-      }
-    };
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, [router]);
-
-  useEffect(() => {
-    // Apply normal weight styling inside carousel iframe if available
-    const applyIframeStyles = () => {
-      const iframe = containerRef.current?.querySelector("iframe");
-      if (iframe?.contentDocument) {
-        try {
-          const style = iframe.contentDocument.createElement("style");
-          style.textContent = `
-            * {
-              font-weight: 400 !important;
-              -webkit-font-smoothing: antialiased !important;
-              -moz-osx-font-smoothing: grayscale !important;
-            }
-            h1, h2, h3, p, span, div {
-              font-weight: 400 !important;
-              letter-spacing: 0.04em !important;
-            }
-          `;
-          iframe.contentDocument.head?.appendChild(style);
-        } catch {
-          // Cross-origin safe
-        }
-      }
-    };
-    const t = setTimeout(applyIframeStyles, 400);
-    return () => clearTimeout(t);
-  }, []);
 
   const handlePrev = () => {
     const iframe = containerRef.current?.querySelector("iframe");
@@ -162,12 +98,12 @@ export function MovieScene({ movies }: MovieSceneProps) {
 
   if (movies && movies.length === 0) {
     return (
-      <div className="shader-frame w-full h-[480px] sm:h-[520px] relative bg-black overflow-hidden border-0 flex flex-col items-center justify-center text-center p-6">
+      <div className="shader-frame w-full h-[calc(100vh-140px)] min-h-[580px] relative bg-transparent overflow-hidden border-0 flex flex-col items-center justify-center text-center p-6">
         <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
           NO 3D WHEEL MOVIES FOUND
         </h3>
         <p className="text-xs font-mono tracking-wide text-stone-500 mt-2 max-w-sm">
-          No movie records match the active search query or phase filter.
+          No movie records match the active search or phase filter.
         </p>
       </div>
     );
@@ -176,33 +112,33 @@ export function MovieScene({ movies }: MovieSceneProps) {
   return (
     <div
       ref={containerRef}
-      className="group/carousel shader-frame w-full h-[420px] sm:h-[480px] relative bg-black overflow-hidden border-0 select-none font-normal"
+      className="group/carousel shader-frame w-full h-[calc(100vh-140px)] min-h-[580px] sm:min-h-[650px] relative bg-transparent overflow-hidden border-0 select-none flex items-center justify-center"
     >
       {/* Left Navigation Button */}
       <button
         onClick={handlePrev}
         aria-label="Previous Movie"
-        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+        className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
       >
-        <ChevronLeft size={22} className="sm:w-6 sm:h-6" />
+        <ChevronLeft size={24} className="sm:w-7 sm:h-7" />
       </button>
 
       {/* Right Navigation Button */}
       <button
         onClick={handleNext}
         aria-label="Next Movie"
-        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+        className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
       >
-        <ChevronRight size={22} className="sm:w-6 sm:h-6" />
+        <ChevronRight size={24} className="sm:w-7 sm:h-7" />
       </button>
 
-      {/* 3D Filmstrip Perspective Rail with Responsive Scaled Dimensions */}
+      {/* 3D Filmstrip Perspective Rail for MCU Movies */}
       <CharacterCarousel
         key={items ? items.map((i) => i.id).join(",") : "all-movies"}
         variant="filmstrip"
         items={items}
         speed={1.00}
-        scale={scale}
+        scale={1.15}
         opacity={1.00}
         hue={0}
         saturation={1.00}

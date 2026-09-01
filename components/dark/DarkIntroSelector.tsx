@@ -22,7 +22,7 @@ export default function DarkIntroSelector({
 }: {
   onContinue: (phase?: number, movieId?: string) => void;
 }) {
-  const { setCurrentPhase } = useTimelineState();
+  const { currentPhase, setCurrentPhase } = useTimelineState();
   const [activePhase, setActivePhase] = useState<number | null>(null);
   const [selectedMovieIndex, setSelectedMovieIndex] = useState<number>(0);
   const [hoveredPhase, setHoveredPhase] = useState<number | null>(null);
@@ -32,9 +32,11 @@ export default function DarkIntroSelector({
   const [introStage, setIntroStage] = useState<"initial" | "centered" | "ascending" | "ready">("initial");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setIntroStage("centered"), 80);
-    const t2 = setTimeout(() => setIntroStage("ascending"), 1000);
-    const t3 = setTimeout(() => setIntroStage("ready"), 1950);
+    const t1 = setTimeout(() => setIntroStage("centered"), 30);
+    const t2 = setTimeout(() => setIntroStage("ascending"), 280);
+    const t3 = setTimeout(() => {
+      setIntroStage("ready");
+    }, 600);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);

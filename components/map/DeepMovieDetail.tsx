@@ -63,7 +63,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "black-widow": "/images/backdrops/black-widow.jpg",
   "shang-chi": "/images/backdrops/shang-chi.jpg",
   "shang-chi-and-the-legend-of-the-ten-rings": "/images/backdrops/shang-chi.jpg",
-  "eternals": "/images/backdrops/eternals.jpg",
+  "eternals": "https://image.tmdb.org/t/p/w1280/lFByFSLV5WDJEv3KabbdAF959F2.jpg",
   "hawkeye": "/images/backdrops/hawkeye.jpg",
   "spider-man-no-way-home": "/images/backdrops/spider-man-no-way-home.jpg",
   "spiderman-no-way-home": "/images/backdrops/spider-man-no-way-home.jpg",
@@ -72,40 +72,40 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "doctor-strange-multiverse-of-madness": "/images/backdrops/doctor-strange-multiverse.jpg",
   "doctor-strange-multiverse": "/images/backdrops/doctor-strange-multiverse.jpg",
   "ms-marvel": "/images/backdrops/ms-marvel.jpg",
-  "thor-love-and-thunder": "/images/backdrops/thor-love-and-thunder.jpg",
-  "thor-love-thunder": "/images/backdrops/thor-love-and-thunder.jpg",
-  "she-hulk-attorney-at-law": "/images/backdrops/she-hulk-attorney-at-law.jpg",
+  "thor-love-and-thunder": "/images/backdrops/thor-love-thunder.jpg",
+  "thor-love-thunder": "/images/backdrops/thor-love-thunder.jpg",
+  "she-hulk-attorney-at-law": "/images/backdrops/she-hulk.jpg",
   "she-hulk": "/images/backdrops/she-hulk.jpg",
-  "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
-  "black-panther-wakanda": "/images/backdrops/black-panther-wakanda-forever.jpg",
-  "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/the-guardians-of-the-galaxy-holiday-special.jpg",
-  "guardians-holiday": "/images/backdrops/the-guardians-of-the-galaxy-holiday-special.jpg",
+  "black-panther-wakanda-forever": "/images/backdrops/black-panther.jpg",
+  "black-panther-wakanda": "/images/backdrops/black-panther.jpg",
+  "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/gotg.jpg",
+  "guardians-holiday": "/images/backdrops/gotg.jpg",
 
   // Phase 5
-  "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
-  "ant-man-quantumania": "/images/backdrops/ant-man-and-the-wasp-quantumania.jpg",
+  "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
+  "ant-man-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
   "guardians-vol3": "/images/backdrops/guardians-vol3.jpg",
-  "secret-invasion": "/images/backdrops/secret-invasion.jpg",
+  "secret-invasion": "https://image.tmdb.org/t/p/w1280/3rINdUPSy9AklJg74jWHOyUXuZd.jpg",
   "loki-season-2": "/images/backdrops/loki.jpg",
   "loki-s2": "/images/backdrops/loki.jpg",
-  "the-marvels": "/images/backdrops/the-marvels.jpg",
+  "the-marvels": "https://image.tmdb.org/t/p/w1280/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
   "echo": "/images/backdrops/echo.jpg",
   "deadpool-and-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
   "deadpool-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
   "agatha-all-along": "/images/backdrops/agatha-all-along.jpg",
-  "captain-america-brave-new-world": "/images/backdrops/captain-america-brave-new-world.jpg",
-  "cap-brave-new-world": "/images/backdrops/captain-america-brave-new-world.jpg",
+  "captain-america-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
+  "cap-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
   "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
   "thunderbolts": "/images/backdrops/thunderbolts.jpg",
 
   // Phase 6 & Multiverse
-  "the-fantastic-four-first-steps": "/images/backdrops/the-fantastic-four-first-steps.jpg",
-  "fantastic-four": "/images/backdrops/the-fantastic-four-first-steps.jpg",
+  "the-fantastic-four-first-steps": "/images/backdrops/fantastic-four.jpg",
+  "fantastic-four": "/images/backdrops/fantastic-four.jpg",
   "blade": "/images/backdrops/blade.jpg",
   "spiderman-brand-new-day": "/images/backdrops/spiderman-brand-new-day.jpg",
   "avengers-doomsday": "/images/backdrops/avengers-doomsday.jpg",
-  "avengers-secret-wars": "/images/backdrops/avengers-secret-wars.jpg",
+  "avengers-secret-wars": "/images/backdrops/battleworld.jpg",
   "battleworld": "/images/backdrops/battleworld.jpg",
   "x-men": "/images/backdrops/x-men.jpg",
   "x-men-2000": "/images/backdrops/x-men-2000.jpg",
@@ -207,15 +207,15 @@ export default function DeepMovieDetail({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
       </div>
 
-      {/* Top Navbar Blur & Gradient Vignette */}
+      {/* Top Navbar Blur (Transparent Subtle Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/95 via-[#000000]/70 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* 2. MINIMALIST TOP HEADER (Matching /characters & PageShell standard) */}
+      {/* 2. MINIMALIST TOP HEADER (Matching Global Standard) */}
       <header
-        className={`fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
@@ -227,13 +227,13 @@ export default function DeepMovieDetail({
             title="Close Dossier"
             aria-label="Close Dossier"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={18} />
           </button>
         </div>
 
         {/* Center: Exact Centered MARVEL (Never wraps) */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-          <span className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
+          <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
             MARVEL
           </span>
         </div>

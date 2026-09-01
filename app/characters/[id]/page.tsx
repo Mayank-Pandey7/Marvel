@@ -45,32 +45,32 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-      {}
+      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-12 md:px-16 py-3 sm:py-4 flex items-center justify-between pointer-events-none bg-transparent">
-        {}
+      {/* Synchronized Global Header Navbar */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
+        {/* Left Side: Menu Trigger */}
         <button
           onClick={() => setNavMenuOpen(true)}
           className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
           title="Open Universe Menu"
           aria-label="Open Universe Menu"
         >
-          <Menu size={16} strokeWidth={1.5} />
+          <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        {}
-        <div className="text-xs sm:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
+        {/* Center: Brand Header */}
+        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             MARVEL
           </Link>
         </div>
 
-        {}
+        {/* Right Side: Return Link */}
         <Link
           href="/characters"
           className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"

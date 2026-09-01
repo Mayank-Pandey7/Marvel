@@ -8,8 +8,8 @@ import SlideNavMenu from "./dark/SlideNavMenu";
 
 export default function PageShell({
   children,
-  backHref = "/familytree",
-  backLabel = "FAMILY TREE",
+  backHref = "/timeline",
+  backLabel = "TIMELINE",
   showCloseButton = false,
   hideSearch = false,
 }: {
@@ -36,16 +36,16 @@ export default function PageShell({
   return (
     <div className="min-h-screen bg-[#000000] text-stone-100 flex flex-col font-sans relative selection:bg-white selection:text-black">
 
-      {}
+      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/90 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {}
-      <header className="fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none">
+      {/* Synchronized Global Header Navbar */}
+      <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none">
 
-        {}
+        {/* Left Side: Drawer Menu Trigger */}
         <div className="flex items-center pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
@@ -53,7 +53,7 @@ export default function PageShell({
             title="Open Menu Drawer"
             aria-label="Open Menu Drawer"
           >
-            <Menu size={16} />
+            <Menu size={18} />
           </button>
         </div>
 
@@ -61,14 +61,14 @@ export default function PageShell({
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
           <Link
             href="/timeline"
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer pl-[0.45em] sm:pl-[0.55em]"
+            className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer pl-[0.45em] sm:pl-[0.55em]"
             title="Return to Timeline"
           >
             MARVEL
           </Link>
         </div>
 
-        {}
+        {/* Right Side: Back Link & Search */}
         <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto">
           {showCloseButton ? (
             <Link
@@ -83,21 +83,21 @@ export default function PageShell({
             <>
               <Link
                 href={backHref}
-                className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer"
               >
-                <ArrowLeft size={11} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft size={12} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
                 <span className="hidden sm:inline">{backLabel}</span>
               </Link>
 
               {!hideSearch && (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors group cursor-pointer p-1"
+                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
                   title="Search MCU (Ctrl+K)"
                 >
-                  <Search size={13} className="text-stone-500 group-hover:text-white transition-colors" />
+                  <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />
                   <span className="hidden sm:inline">SEARCH</span>
-                  <kbd className="hidden md:inline-block text-[9px] font-mono text-stone-500 ml-0.5">
+                  <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-500 ml-0.5">
                     /
                   </kbd>
                 </button>

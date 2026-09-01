@@ -75,15 +75,15 @@ export default function EarthDossierPage({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
       </div>
 
-      {/* Top Navbar Blur & Gradient Vignette */}
+      {/* Top Navbar Blur (Transparent Subtle Blur - No Black Bar) */}
       <div
-        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-[#000000]/95 via-[#000000]/70 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-xs sm:backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* 2. MINIMALIST TOP HEADER (Matching /characters & PageShell standard) */}
+      {/* 2. MINIMALIST TOP HEADER (Matching Global Standard) */}
       <header
-        className={`fixed top-0 left-0 right-0 w-full px-3 sm:px-8 py-2.5 sm:py-4 flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
@@ -95,13 +95,13 @@ export default function EarthDossierPage({
             title="Close Reality Dossier"
             aria-label="Close Reality Dossier"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={18} />
           </button>
         </div>
 
         {/* Center: Exact Centered MARVEL (Never wraps) */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-          <span className="text-[11px] sm:text-xs md:text-sm font-mono font-medium tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
+          <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
             MARVEL
           </span>
         </div>

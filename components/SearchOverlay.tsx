@@ -4,12 +4,19 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, ChevronRight, User, Gem, Zap, Film, Search } from "lucide-react";
 import { MCU } from "@/data/mcu";
+import { UNIFIED_MCU_TREE } from "@/data/movies";
 import { CHARACTERS } from "@/data/characters";
 import { ARTIFACTS } from "@/data/artifacts";
 import { NEXUS_EVENTS } from "@/data/timelineTree";
 import { useTimelineState } from "@/context/TimelineStateContext";
 
-export default function SearchOverlay({ onClose }: { onClose: () => void }) {
+export default function SearchOverlay({
+  isOpen,
+  onClose,
+}: {
+  isOpen?: boolean;
+  onClose: () => void;
+}) {
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -20,10 +27,18 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
   }, []);
 
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKey, true);
+    return () => window.removeEventListener("keydown", handleKey, true);
   }, [onClose]);
+
+  if (isOpen !== undefined && !isOpen) return null;
 
   const searchResults = useMemo(() => {
     if (!q.trim()) return [];
@@ -67,27 +82,28 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       subtitle: `Culprit: ${n.culprit} · ${n.year}`,
       action: () => {
         onClose();
-        router.push("/movies");
+        router.push("/timeline");
       }
     }));
 
-    const matchedProjects = MCU.filter(
+    const matchedProjects = UNIFIED_MCU_TREE.filter(
       (m) =>
         m.title.toLowerCase().includes(s) ||
         String(m.year).includes(s) ||
-        m.description.toLowerCase().includes(s)
+        (m.heroAlias && m.heroAlias.toLowerCase().includes(s)) ||
+        (m.synopsis && m.synopsis.toLowerCase().includes(s))
     ).map((m) => ({
       id: `movie:${m.id}`,
       type: "movie" as const,
       title: m.title,
-      subtitle: `Phase ${m.phase} · ${m.year}`,
+      subtitle: `Phase ${m.phase} · ${m.year} · ${m.runtime} MIN`,
       action: () => {
         onClose();
-        router.push(`/movie/${m.id}`);
+        router.push(`/timeline/${m.id}`);
       }
     }));
 
-    return [...matchedCharacters, ...matchedArtifacts, ...matchedNexus, ...matchedProjects].slice(0, 16);
+    return [...matchedProjects, ...matchedCharacters, ...matchedArtifacts, ...matchedNexus].slice(0, 18);
   }, [q, onClose, router]);
 
   return (

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DarkIntroSelector from "@/components/dark/DarkIntroSelector";
 
-export default function HomePage() {
+export default function IntroEnPage() {
   const router = useRouter();
 
   useEffect(() => {
@@ -23,3 +23,4 @@ export default function HomePage() {
 
   return <DarkIntroSelector onContinue={handleContinueFromIntro} />;
 }
+

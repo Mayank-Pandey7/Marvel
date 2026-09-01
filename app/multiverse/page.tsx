@@ -208,12 +208,12 @@ function MultiverseContent() {
           />
         </div>
 
-        {}
-        <header className="fixed top-0 left-0 right-0 z-40 px-6 sm:px-10 py-6 flex items-center justify-between bg-transparent">
-          {}
+        {/* Synchronized Global Header Navbar */}
+        <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between bg-transparent pointer-events-none">
+          {/* Left Side: Drawer Menu Trigger */}
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1 group"
+            className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 group pointer-events-auto"
             title="Open Universe Menu"
             aria-label="Open Universe Menu"
           >
@@ -223,17 +223,17 @@ function MultiverseContent() {
             </div>
           </button>
 
-          {}
-          <div className="text-xs sm:text-sm font-mono font-medium tracking-[0.55em] uppercase text-white pl-[0.55em]">
+          {/* Center: Brand Header */}
+          <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
             <Link href="/" className="hover:opacity-80 transition-opacity">
               MARVEL
             </Link>
           </div>
 
-          {}
+          {/* Right Side: Close Button */}
           <button
             onClick={() => setActiveUniverseId(null)}
-            className="text-stone-300 hover:text-white p-1 transition-colors cursor-pointer"
+            className="text-stone-300 hover:text-white p-1.5 transition-colors cursor-pointer pointer-events-auto rounded-full hover:bg-white/10"
             title="Close Reality Dossier (Esc)"
           >
             <X size={18} strokeWidth={1.5} />
@@ -258,20 +258,13 @@ function MultiverseContent() {
               }`}
             >
 
-              {}
+              {/* Designation Header */}
               <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-[0.3em] uppercase text-stone-400">
                 <span
                   className="w-2 h-2 rounded-full inline-block shrink-0"
                   style={{ backgroundColor: currentUniverse.color }}
                 />
                 <span>{currentUniverse.designation}</span>
-                <span>·</span>
-                <span
-                  className="font-bold px-2 py-0.5 rounded bg-black/60 border border-white/10"
-                  style={{ color: currentUniverse.color }}
-                >
-                  {currentUniverse.threatLevel.replace("_", " ")}
-                </span>
               </div>
 
               {}
@@ -394,7 +387,7 @@ function MultiverseContent() {
   }
 
   return (
-    <PageShell backHref="/familytree" backLabel="FAMILY TREE">
+    <PageShell backHref="/timeline" backLabel="TIMELINE">
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 
@@ -479,21 +472,8 @@ function MultiverseContent() {
                         className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
 
-                      {}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
-
-                      {}
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                        <span
-                          className="text-[10px] font-mono tracking-widest uppercase bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 truncate max-w-full flex items-center gap-1.5"
-                        >
-                          <span
-                            className="w-2 h-2 rounded-full shrink-0 inline-block"
-                            style={{ backgroundColor: universe.color }}
-                          />
-                          <span className="text-stone-300">{universe.threatLevel.replace("_", " ")}</span>
-                        </span>
-                      </div>
+                      {/* Subtle Vignette Gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     {}
