@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 
@@ -384,7 +384,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "BRAVE NEW WORLD",
   },
   "daredevil-born-again": {
-    poster: "https://image.tmdb.org/t/p/w500/xDUoAsU8lQHOOoRkFiBuarmACDN.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/qj0N5af5CHGY0MdZehgEzf6WBV3.jpg",
     color: "#eb3b5a",
     fallbackText: "DAREDEVIL",
   },

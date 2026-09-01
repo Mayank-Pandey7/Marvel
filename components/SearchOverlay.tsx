@@ -38,8 +38,6 @@ export default function SearchOverlay({
     return () => window.removeEventListener("keydown", handleKey, true);
   }, [onClose]);
 
-  if (isOpen !== undefined && !isOpen) return null;
-
   const searchResults = useMemo(() => {
     if (!q.trim()) return [];
     const s = q.toLowerCase().trim();
@@ -91,7 +89,7 @@ export default function SearchOverlay({
         m.title.toLowerCase().includes(s) ||
         String(m.year).includes(s) ||
         (m.heroAlias && m.heroAlias.toLowerCase().includes(s)) ||
-        (m.synopsis && m.synopsis.toLowerCase().includes(s))
+        (m.description && m.description.toLowerCase().includes(s))
     ).map((m) => ({
       id: `movie:${m.id}`,
       type: "movie" as const,
@@ -105,6 +103,8 @@ export default function SearchOverlay({
 
     return [...matchedProjects, ...matchedCharacters, ...matchedArtifacts, ...matchedNexus].slice(0, 18);
   }, [q, onClose, router]);
+
+  if (isOpen !== undefined && !isOpen) return null;
 
   return (
     <div

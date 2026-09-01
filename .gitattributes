@@ -1,0 +1,4 @@
+# GitHub Linguist overrides
+*.html linguist-detectable=false
+public/landing-pages/* linguist-vendored
+src/shaders/**/*.html linguist-vendored
