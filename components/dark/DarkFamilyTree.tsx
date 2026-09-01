@@ -835,18 +835,18 @@ export default function DarkFamilyTree({
         </div>
 
         {/* Center: Brand Logo & DOOMSDAY Trigger */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3.5">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 sm:gap-3.5 md:gap-4 whitespace-nowrap">
           <Link
             href="/timeline"
-            className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer"
+            className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer -mr-0.5 sm:-mr-1.5"
             title="Switch to Timeline"
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-sm select-none">|</span>
+          <span className="text-stone-600 font-mono text-[11px] sm:text-base md:text-lg select-none">|</span>
           <button
             onClick={triggerDoomsdayTransition}
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-emerald-400/90 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_15px_rgba(52,211,153,0.45)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Initialize Road to Doomsday Incursion"
           >
             DOOMSDAY

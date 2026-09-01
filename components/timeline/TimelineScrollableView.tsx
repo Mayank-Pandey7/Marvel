@@ -289,18 +289,18 @@ export default function TimelineScrollableView() {
         </div>
 
         {/* Center: Brand Logo & DOOMSDAY Trigger */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-2 sm:gap-3.5">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center gap-1.5 sm:gap-3.5 md:gap-4 whitespace-nowrap">
           <Link
             href="/timeline"
-            className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer"
+            className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer -mr-0.5 sm:-mr-1.5"
             title="Sacred Timeline"
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-sm select-none">|</span>
+          <span className="text-stone-600 font-mono text-[11px] sm:text-base md:text-lg select-none">|</span>
           <Link
             href="/doomsday"
-            className="text-[11px] sm:text-xs md:text-sm font-mono font-bold tracking-[0.3em] xs:tracking-[0.4em] sm:tracking-[0.5em] uppercase text-emerald-400/80 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-all select-none cursor-pointer bg-transparent border-none"
+            className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-emerald-400/90 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_15px_rgba(52,211,153,0.45)] transition-all select-none cursor-pointer bg-transparent border-none"
             title="Explore Road to Doomsday"
           >
             DOOMSDAY
@@ -357,12 +357,12 @@ export default function TimelineScrollableView() {
         </div>
       </header>
 
-      {/* Fixed View Layout Mode Switcher with Smooth Sliding Indicator (Top-Right) */}
-      <div className="fixed top-14 sm:top-20 right-4 sm:right-8 z-40 pointer-events-none">
-        <div className="relative flex items-center bg-black/80 backdrop-blur-md border border-white/15 rounded-full p-1 text-[9px] sm:text-[10px] font-mono tracking-wider uppercase shadow-xl pointer-events-auto">
+      {/* Fixed View Layout Mode Switcher with Smooth Sliding Indicator */}
+      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none">
+        <div className="relative flex items-center bg-black/85 backdrop-blur-md border border-white/15 rounded-full p-[2px] sm:p-1 text-[7.5px] sm:text-[10px] font-mono tracking-tight sm:tracking-wider uppercase shadow-xl pointer-events-auto whitespace-nowrap shrink-0 scale-[0.78] sm:scale-100 origin-top-right">
           <button
             onClick={() => setLayoutMode("path")}
-            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
               layoutMode === "path"
                 ? "bg-white text-black font-bold shadow-md scale-100"
                 : "text-stone-400 hover:text-white"
@@ -373,7 +373,7 @@ export default function TimelineScrollableView() {
           </button>
           <button
             onClick={() => setLayoutMode("wheel")}
-            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
               layoutMode === "wheel"
                 ? "bg-white text-black font-bold shadow-md scale-100"
                 : "text-stone-400 hover:text-white"
@@ -384,7 +384,7 @@ export default function TimelineScrollableView() {
           </button>
           <button
             onClick={() => setLayoutMode("grid")}
-            className={`relative z-10 px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+            className={`relative z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap transition-all duration-300 cursor-pointer ${
               layoutMode === "grid"
                 ? "bg-white text-black font-bold shadow-md scale-100"
                 : "text-stone-400 hover:text-white"
@@ -400,8 +400,8 @@ export default function TimelineScrollableView() {
       <div
         className={`relative z-10 mx-auto flex flex-col gap-4 transition-all duration-500 ease-out ${
           layoutMode === "wheel"
-            ? "w-full max-w-none px-0 pt-16 sm:pt-20 min-h-[calc(100vh-80px)] justify-center"
-            : "max-w-5xl px-3 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-20"
+            ? "w-full max-w-none px-0 pt-24 sm:pt-20 min-h-[calc(100vh-80px)] justify-center"
+            : "max-w-5xl px-3 sm:px-6 md:px-8 pt-28 sm:pt-24 pb-20"
         }`}
       >
 
@@ -443,19 +443,19 @@ export default function TimelineScrollableView() {
                 <section
                   key={`phase-section-${phase.id}`}
                   id={`phase-section-${phase.id}`}
-                  className="flex flex-col gap-6 scroll-mt-28"
+                  className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
                 >
                   {/* Phase Era Header Banner */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
                         PHASE {phase.roman}
                       </span>
                       <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
                         {phase.title}
                       </span>
                     </div>
-                    <span className="text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
+                    <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
                       {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
                     </span>
                   </div>
