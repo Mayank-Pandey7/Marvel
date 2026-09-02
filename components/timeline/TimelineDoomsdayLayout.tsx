@@ -30,8 +30,10 @@ const MOBILE_OFFSETS = [-8, 12, -5, 10, -10, 7, -9, 13, -6, 8];
 
 export default function TimelineDoomsdayLayout({
   movies,
+  viewMode = "path",
 }: {
   movies: MovieNode[];
+  viewMode?: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -336,7 +338,7 @@ export default function TimelineDoomsdayLayout({
                 className="absolute flex items-center justify-center z-20 -translate-x-1/2"
               >
                 <Link
-                  href={`/timeline/${movie.id}`}
+                  href={`/timeline/${movie.id}${viewMode ? `?view=${viewMode}` : ""}`}
                   className="group/node relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border bg-black border-stone-700 text-stone-300 group-hover/row:border-white group-hover/row:text-white group-hover/row:scale-125 group-hover/row:rotate-12 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold transition-all duration-300 cursor-pointer select-none"
                   title={`View ${movie.title} (${movie.year})`}
                 >
@@ -373,7 +375,7 @@ export default function TimelineDoomsdayLayout({
                 }`}
               >
                 <Link
-                  href={`/timeline/${movie.id}`}
+                  href={`/timeline/${movie.id}${viewMode ? `?view=${viewMode}` : ""}`}
                   className="group/card block relative p-1.5 xs:p-2 sm:p-2.5 transition-all duration-400 cursor-pointer group-hover/card:opacity-100 opacity-90 w-full min-w-0 bg-transparent"
                 >
                   {/* Dynamic Hand-Drawn Sketched Connector Line (Desktop) - Joins Directly to Node */}

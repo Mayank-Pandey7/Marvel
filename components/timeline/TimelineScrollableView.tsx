@@ -105,7 +105,43 @@ export default function TimelineScrollableView() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
-  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>('path');
+  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlView = urlParams.get("view");
+      if (urlView === "path" || urlView === "wheel" || urlView === "grid") {
+        return urlView;
+      }
+      try {
+        const savedView = localStorage.getItem("mcu_timeline_view_mode");
+        if (savedView === "path" || savedView === "wheel" || savedView === "grid") {
+          return savedView;
+        }
+      } catch {}
+    }
+    return "path";
+  });
+
+  // Synchronize layoutMode when searchParams change or on load
+  useEffect(() => {
+    const viewParam = searchParams.get("view") as LayoutModeKey | null;
+    if (viewParam && (viewParam === "path" || viewParam === "wheel" || viewParam === "grid")) {
+      setLayoutMode(viewParam);
+      try {
+        localStorage.setItem("mcu_timeline_view_mode", viewParam);
+      } catch {}
+    }
+  }, [searchParams]);
+
+  const handleSelectViewMode = (key: LayoutModeKey) => {
+    setLayoutMode(key);
+    try {
+      localStorage.setItem("mcu_timeline_view_mode", key);
+      const url = new URL(window.location.href);
+      url.searchParams.set("view", key);
+      window.history.replaceState({}, "", url.toString());
+    } catch {}
+  };
 
   // Synchronize Phase and Selected Movie from URL Query Params or State Context
   useEffect(() => {
@@ -487,7 +523,7 @@ export default function TimelineScrollableView() {
           {(Object.keys(VIEW_ICONS) as LayoutModeKey[]).map((key) => (
             <button
               key={key}
-              onClick={() => setLayoutMode(key)}
+              onClick={() => handleSelectViewMode(key)}
               className={`rounded-full border-none px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                 layoutMode === key
                   ? "bg-white text-black font-bold shadow-md"
@@ -573,7 +609,7 @@ export default function TimelineScrollableView() {
                       return (
                         <Link
                           key={movie.id}
-                          href={`/timeline/${movie.id}`}
+                          href={`/timeline/${movie.id}?view=${layoutMode}`}
                           className="group relative flex flex-col gap-2.5 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                         >
                           {/* Poster Container */}
@@ -618,7 +654,7 @@ export default function TimelineScrollableView() {
             key="view-path"
             className="animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           >
-            <TimelineDoomsdayLayout movies={filteredMovies} />
+            <TimelineDoomsdayLayout movies={filteredMovies} viewMode={layoutMode} />
           </div>
         )}
       </div>

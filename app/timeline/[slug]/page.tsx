@@ -272,12 +272,22 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function TimelineMoviePage({ params }: { params: { slug: string } }) {
+export default function TimelineMoviePage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { view?: string };
+}) {
   const movie = resolveMovieNode(params.slug);
 
   if (!movie) {
     notFound();
   }
 
-  return <TimelineMovieDetail movie={movie} />;
+  const backHref = searchParams?.view
+    ? `/timeline?view=${searchParams.view}`
+    : "/timeline";
+
+  return <TimelineMovieDetail movie={movie} backHref={backHref} />;
 }

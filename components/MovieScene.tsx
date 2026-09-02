@@ -156,7 +156,7 @@ export function MovieScene({ movies }: MovieSceneProps) {
         saturation={1.00}
         brightness={1.00}
         onSelectCharacter={(movieId: string) => {
-          router.push(`/timeline/${movieId}`);
+          router.push(`/timeline/${movieId}?view=wheel`);
         }}
       />
     </div>
