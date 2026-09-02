@@ -269,8 +269,9 @@ export default function DeepMovieDetail({
               loading="eager"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (!target.src.endsWith("/images/posters/the-avengers.jpg")) {
-                  target.src = "/images/posters/the-avengers.jpg";
+                const fallback = MCU_POSTER_MAP[movie.id]?.poster || `/images/posters/${movie.id}.jpg`;
+                if (target.src !== fallback && !target.src.endsWith(fallback)) {
+                  target.src = fallback;
                 }
               }}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"

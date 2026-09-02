@@ -389,19 +389,19 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "DAREDEVIL",
   },
   "thunderbolts": {
-    poster: "https://image.tmdb.org/t/p/w780/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg",
+    poster: "/images/posters/thunderbolts.jpg",
     color: "#ffd32a",
     fallbackText: "THUNDERBOLTS*",
   },
 
   // Phase 6: Convergence
   "fantastic-four": {
-    poster: "https://image.tmdb.org/t/p/w780/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+    poster: "/images/posters/the-fantastic-four-first-steps.jpg",
     color: "#4bcffa",
     fallbackText: "FANTASTIC FOUR",
   },
   "the-fantastic-four-first-steps": {
-    poster: "https://image.tmdb.org/t/p/w780/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+    poster: "/images/posters/the-fantastic-four-first-steps.jpg",
     color: "#4bcffa",
     fallbackText: "FANTASTIC FOUR",
   },
