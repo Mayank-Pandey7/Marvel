@@ -12,7 +12,8 @@ const FACTIONS = [
   { id: "all", label: "ALL" },
   { id: "avengers", label: "AVENGERS" },
   { id: "guardians", label: "GUARDIANS" },
-  { id: "multiverse", label: "MULTIVERSE & MUTANTS" },
+  { id: "xmen", label: "MUTANTS & X-MEN" },
+  { id: "multiverse", label: "MULTIVERSE & FANTASTIC FOUR" },
   { id: "street", label: "STREET LEVEL" },
   { id: "thunderbolts", label: "THUNDERBOLTS*" },
   { id: "villains", label: "VILLAINS & THREATS" },
@@ -42,7 +43,6 @@ function CharactersContent() {
     const q = searchQuery.trim().toLowerCase();
 
     return CHARACTERS.filter((c) => {
-
       if (q) {
         const nameLower = c.name.toLowerCase();
         const aliasesLower = c.aliases.map((a) => a.toLowerCase());
@@ -72,83 +72,241 @@ function CharactersContent() {
         const fac = c.faction.toLowerCase();
         const role = c.role.toLowerCase();
         const uni = c.universe.toLowerCase();
+        const id = c.id.toLowerCase();
 
-        if (selectedFaction === "avengers" && !fac.includes("avenger")) return false;
-        if (selectedFaction === "guardians" && !fac.includes("guardian")) return false;
-        if (
-          selectedFaction === "multiverse" &&
-          !fac.includes("x-men") &&
-          !fac.includes("spider-hero") &&
-          !fac.includes("fantastic four") &&
-          !fac.includes("illuminati") &&
-          !fac.includes("brotherhood") &&
-          !fac.includes("void") &&
-          !role.includes("mutant") &&
-          !role.includes("elastic") &&
-          !role.includes("force field") &&
-          !uni.includes("838") &&
-          !uni.includes("10005") &&
-          !uni.includes("96283") &&
-          !uni.includes("120703") &&
-          !uni.includes("alternate")
-        )
-          return false;
-        if (
-          selectedFaction === "street" &&
-          !fac.includes("defender") &&
-          !fac.includes("fisk") &&
-          !fac.includes("independent") &&
-          !c.id.includes("daredevil") &&
-          !c.id.includes("punisher") &&
-          !c.id.includes("kingpin")
-        )
-          return false;
-        if (selectedFaction === "thunderbolts" && !fac.includes("thunderbolts")) return false;
+        if (selectedFaction === "avengers") {
+          const isAvenger =
+            fac.includes("avenger") ||
+            fac.includes("stark industries") ||
+            fac.includes("s.h.i.e.l.d.") ||
+            id === "iron-man" ||
+            id === "captain-america" ||
+            id === "thor" ||
+            id === "hulk" ||
+            id === "black-widow" ||
+            id === "hawkeye" ||
+            id === "wanda" ||
+            id === "doctor-strange" ||
+            id === "spider-man" ||
+            id === "war-machine" ||
+            id === "falcon" ||
+            id === "ant-man" ||
+            id === "wasp" ||
+            id === "shang-chi" ||
+            id === "captain-marvel" ||
+            id === "vision" ||
+            id === "black-panther" ||
+            id === "shuri" ||
+            id === "monica-rambeau" ||
+            id === "she-hulk";
+          if (!isAvenger) return false;
+        }
+
+        if (selectedFaction === "guardians") {
+          const isGuardian =
+            fac.includes("guardian") ||
+            id === "star-lord" ||
+            id === "gamora" ||
+            id === "rocket-raccoon" ||
+            id === "groot" ||
+            id === "drax" ||
+            id === "mantis" ||
+            id === "nebula" ||
+            id === "adam-warlock" ||
+            id === "yondu" ||
+            id === "cosmo" ||
+            id === "kraglin";
+          if (!isGuardian) return false;
+        }
+
+        if (selectedFaction === "xmen") {
+          const isMutantOrXMen =
+            fac.includes("x-men") ||
+            fac.includes("x-force") ||
+            fac.includes("brotherhood") ||
+            fac.includes("xavier") ||
+            fac.includes("mutant") ||
+            role.includes("mutant") ||
+            id === "deadpool" ||
+            id === "wolverine" ||
+            id === "professor-x" ||
+            id === "magneto" ||
+            id === "gambit" ||
+            id === "x-23" ||
+            id === "beast" ||
+            id === "cyclops" ||
+            id === "storm" ||
+            id === "jean-grey" ||
+            id === "rogue" ||
+            id === "colossus" ||
+            id === "mystique" ||
+            id === "nightcrawler" ||
+            id === "quicksilver" ||
+            id === "cassandra-nova" ||
+            id === "blade" ||
+            id === "elektra";
+          if (!isMutantOrXMen) return false;
+        }
+
+        if (selectedFaction === "multiverse") {
+          const isMultiverseOrF4 =
+            fac.includes("fantastic four") ||
+            fac.includes("illuminati") ||
+            fac.includes("spider-hero") ||
+            fac.includes("void") ||
+            role.includes("multivers") ||
+            role.includes("variant") ||
+            uni.includes("838") ||
+            uni.includes("10005") ||
+            uni.includes("96283") ||
+            uni.includes("120703") ||
+            uni.includes("alternate") ||
+            uni.includes("earth-") && uni !== "earth-616" ||
+            id.includes("spider-man-maguire") ||
+            id.includes("spider-man-garfield") ||
+            id.includes("reed-richards") ||
+            id.includes("sue-storm") ||
+            id.includes("johnny-storm") ||
+            id.includes("ben-grimm") ||
+            id.includes("captain-carter") ||
+            id.includes("deadpool") ||
+            id.includes("wolverine") ||
+            id.includes("america-chavez");
+          if (!isMultiverseOrF4) return false;
+        }
+
+        if (selectedFaction === "street") {
+          const isStreet =
+            fac.includes("defender") ||
+            fac.includes("fisk") ||
+            fac.includes("independent") ||
+            fac.includes("nelson") ||
+            id === "daredevil" ||
+            id === "punisher" ||
+            id === "kingpin" ||
+            id === "bullseye" ||
+            id === "jessica-jones" ||
+            id === "luke-cage" ||
+            id === "iron-fist" ||
+            id === "echo" ||
+            id === "moon-knight" ||
+            id === "kate-bishop" ||
+            id === "ms-marvel" ||
+            id === "maya-lopez";
+          if (!isStreet) return false;
+        }
+
+        if (selectedFaction === "thunderbolts") {
+          const isThunderbolt =
+            fac.includes("thunderbolts") ||
+            id === "yelena-belova" ||
+            id === "bucky-barnes" ||
+            id === "red-guardian" ||
+            id === "us-agent" ||
+            id === "john-walker" ||
+            id === "ghost" ||
+            id === "taskmaster" ||
+            id === "sentry" ||
+            id === "val-allegra" ||
+            id === "val";
+          if (!isThunderbolt) return false;
+        }
+
         if (selectedFaction === "villains") {
           const isVillain =
             role.includes("villain") ||
             role.includes("titan") ||
             role.includes("conqueror") ||
             role.includes("warlord") ||
-            role.includes("sorcer") ||
             role.includes("mastermind") ||
+            role.includes("tyrant") ||
+            role.includes("assassin") ||
             role.includes("zealot") ||
             role.includes("geneticist") ||
+            role.includes("threat") ||
             fac.includes("hydra") ||
             fac.includes("threat") ||
             fac.includes("cabal") ||
             fac.includes("hand") ||
-            c.id.includes("thanos") ||
-            c.id.includes("loki") ||
-            c.id.includes("kang") ||
-            c.id.includes("ultron") ||
-            c.id.includes("hela") ||
-            c.id.includes("killmonger") ||
-            c.id.includes("gor") ||
-            c.id.includes("mysterio") ||
-            c.id.includes("vulture") ||
-            c.id.includes("green-goblin") ||
-            c.id.includes("doc-ock") ||
-            c.id.includes("dormammu") ||
-            c.id.includes("wenwu") ||
-            c.id.includes("kingpin") ||
-            c.id.includes("high-evolutionary") ||
-            c.id.includes("cassandra-nova");
+            fac.includes("black order") ||
+            fac.includes("council of kangs") ||
+            fac.includes("latveria") ||
+            fac.includes("ultron sentries") ||
+            fac.includes("oscorp") ||
+            fac.includes("octavius") ||
+            id === "thanos" ||
+            id === "kang" ||
+            id === "doctor-doom" ||
+            id === "ultron" ||
+            id === "green-goblin" ||
+            id === "doc-ock" ||
+            id === "hela" ||
+            id === "killmonger" ||
+            id === "namor" ||
+            id === "gor" ||
+            id === "gorr" ||
+            id === "mysterio" ||
+            id === "vulture" ||
+            id === "dormammu" ||
+            id === "wenwu" ||
+            id === "kingpin" ||
+            id === "bullseye" ||
+            id === "high-evolutionary" ||
+            id === "cassandra-nova" ||
+            id === "red-skull" ||
+            id === "zemo" ||
+            id === "galactus" ||
+            id === "modok" ||
+            id === "dar-benn" ||
+            id === "titania" ||
+            id === "gravik" ||
+            id === "abomination" ||
+            id === "magneto" ||
+            id === "mystique" ||
+            id === "loki";
           if (!isVillain) return false;
         }
-        if (
-          selectedFaction === "cosmic" &&
-          !fac.includes("cosmic") &&
-          !fac.includes("tva") &&
-          !fac.includes("asgard") &&
-          !fac.includes("nova") &&
-          !fac.includes("eternals") &&
-          !fac.includes("space") &&
-          !role.includes("god") &&
-          !role.includes("cosmic") &&
-          !role.includes("watcher")
-        )
-          return false;
+
+        if (selectedFaction === "cosmic") {
+          const isCosmic =
+            fac.includes("cosmic") ||
+            fac.includes("tva") ||
+            fac.includes("asgard") ||
+            fac.includes("nova") ||
+            fac.includes("eternals") ||
+            fac.includes("space") ||
+            fac.includes("celestial") ||
+            fac.includes("yggdrasil") ||
+            role.includes("god") ||
+            role.includes("cosmic") ||
+            role.includes("watcher") ||
+            role.includes("eternal") ||
+            role.includes("celestial") ||
+            id === "thor" ||
+            id === "loki" ||
+            id === "galactus" ||
+            id === "mobius" ||
+            id === "hunter-b15" ||
+            id === "ouroboros" ||
+            id === "oub" ||
+            id === "watcher" ||
+            id === "captain-marvel" ||
+            id === "silver-surfer" ||
+            id === "adam-warlock" ||
+            id === "ikaris" ||
+            id === "sersi" ||
+            id === "thena" ||
+            id === "gilgamesh" ||
+            id === "makkari" ||
+            id === "druig" ||
+            id === "phastos" ||
+            id === "kingo" ||
+            id === "sprite" ||
+            id === "arisham" ||
+            id === "grandmaster" ||
+            id === "collector";
+          if (!isCosmic) return false;
+        }
       }
 
       return true;
