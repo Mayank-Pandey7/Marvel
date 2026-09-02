@@ -4,8 +4,8 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/ui/Navbar";
-import { Hero } from "@/components/sections/Hero";
-import { CinematicReveal } from "@/components/sections/CinematicReveal";
+import { IronManHero } from "./IronManHero";
+import { IronManCinematicReveal } from "./IronManCinematicReveal";
 import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
 import { getCharacterBackdrop } from "@/data/characterBackdrops";
@@ -29,8 +29,8 @@ export function TonyStarkExperience() {
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-black">
       <Navbar />
       <main>
-        <Hero />
-        <CinematicReveal />
+        <IronManHero />
+        <IronManCinematicReveal />
 
         {/* MCU Cinematic Filmography */}
         {movieEntries.length > 0 && (
