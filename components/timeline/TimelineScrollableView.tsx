@@ -34,16 +34,18 @@ const TIMELINE_PHASES = [
   { id: 4, roman: "IV", label: "PHASE IV", title: "THE MULTIVERSE SAGA — NEW VOICES", years: "2021 — 2022", desc: "Multiversal ruptures, cosmic gods, and the rise of a new generation." },
   { id: 5, roman: "V", label: "PHASE V", title: "THE MULTIVERSE SAGA — FRACTURES", years: "2023 — 2025", desc: "Quantum realm incursions, temporal fraying, and anti-hero alliances." },
   { id: 6, roman: "VI", label: "PHASE VI", title: "THE MULTIVERSE SAGA — CONVERGENCE", years: "2025 — 2027", desc: "Battleworld approaches. Doom ascends as the multiverse collides." },
+  { id: 7, roman: "∞", label: "MULTIVERSE", title: "LEGACY MULTIVERSE — EXPANDED CANON", years: "2000 — 2017", desc: "The legendary origins of Spider-Man, the X-Men, and Wolverine across parallel realities." },
 ];
 
 const PHASE_FILTERS = [
-  { id: "all", label: "ALL PHASES (44)" },
+  { id: "all", label: "ALL TITLES (52)" },
   { id: 1, label: "PHASE I" },
   { id: 2, label: "PHASE II" },
   { id: 3, label: "PHASE III" },
   { id: 4, label: "PHASE IV" },
   { id: 5, label: "PHASE V" },
   { id: 6, label: "PHASE VI" },
+  { id: 7, label: "MULTIVERSE" },
 ];
 
 const VIEW_ICONS = {
@@ -150,7 +152,7 @@ export default function TimelineScrollableView() {
 
     if (phaseParam) {
       const p = parseInt(phaseParam, 10);
-      if (p >= 1 && p <= 6) {
+      if (p >= 1 && p <= 7) {
         setActivePhaseFilter(p);
         setCurrentPhase(p);
       }
