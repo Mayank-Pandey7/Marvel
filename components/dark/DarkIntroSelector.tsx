@@ -262,10 +262,10 @@ export default function DarkIntroSelector({
 
         {/* State A: Idle Initial State — Organic Hand-Drawn Prompt */}
         {activePhase === null ? (
-          <div className="relative flex flex-col items-center justify-center my-auto sm:my-4 text-center px-4 animate-in fade-in duration-1000 min-h-[44px]">
+          <div className="relative flex flex-col items-center justify-end w-full mt-auto mb-0.5 text-center px-4 animate-in fade-in duration-1000 min-h-[44px]">
             <button
               onClick={() => handleSelectPhase(1)}
-              className="group relative animate-float-prompt text-[11px] xs:text-xs sm:text-sm md:text-base font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-3 px-6 xs:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
+              className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 xs:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
             >
               {/* Sketch-type hand-drawn circle / ellipse */}
               <svg

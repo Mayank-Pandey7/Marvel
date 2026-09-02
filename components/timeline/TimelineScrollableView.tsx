@@ -480,32 +480,8 @@ export default function TimelineScrollableView() {
         </div>
       )}
 
-      {/* View Layout Mode Switcher with IconSwap */}
-      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex items-center gap-1.5 origin-top-right scale-[0.82] sm:scale-100">
-        {/* Active Mode IconSwap Indicator */}
-        <button
-          onClick={() => {
-            setLayoutMode((prev) => (prev === "path" ? "wheel" : prev === "wheel" ? "grid" : "path"));
-          }}
-          className="relative flex items-center justify-center w-8 h-8 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white shadow-xl pointer-events-auto cursor-pointer hover:border-white/50 active:scale-95 transition-all overflow-hidden will-change-transform"
-          aria-label={layoutMode}
-          title={`Switch view (Current: ${VIEW_LABELS[layoutMode]})`}
-        >
-          <IconSwap>
-            <IconSwapItem key={layoutMode} className="flex items-center justify-center">
-              {React.createElement(VIEW_ICONS[layoutMode], {
-                size: 15,
-                className:
-                  layoutMode === "path"
-                    ? "text-emerald-400"
-                    : layoutMode === "wheel"
-                    ? "text-amber-400"
-                    : "text-cyan-400",
-              })}
-            </IconSwapItem>
-          </IconSwap>
-        </button>
-
+      {/* View Layout Mode Switcher */}
+      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex items-center origin-top-right scale-[0.82] sm:scale-100">
         {/* View Mode Selection Buttons */}
         <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl pointer-events-auto whitespace-nowrap">
           {(Object.keys(VIEW_ICONS) as LayoutModeKey[]).map((key) => (
