@@ -91,6 +91,9 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "nebula": "/images/characters/nebula.jpg",
   "yondu": "/images/characters/yondu-udonta.jpg",
   "yondu-udonta": "/images/characters/yondu-udonta.jpg",
+  "adam-warlock": "/images/characters/adam-warlock.jpg",
+  "cosmo": "/images/characters/cosmo.jpg",
+  "kraglin": "/images/characters/kraglin.jpg",
   "ego": "/images/characters/ego.jpg",
   "meredith-quill": "/images/characters/meredith-quill.jpg",
 

@@ -1254,6 +1254,351 @@ export const CHARACTERS: Character[] = [
   },
 
   {
+    id: "gamora",
+    name: "Gamora",
+    aliases: ["Deadliest Woman in the Galaxy", "Daughter of Thanos", "Ravager Leader"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy / Ravagers",
+    role: "Master assassin turned cosmic savior and Ravager commander.",
+    overview: "Adopted by Thanos after the slaughter of the Zen-Whoberis, Gamora turned against her tyrannical adoptive father, founded the Guardians of the Galaxy with Peter Quill, and sacrificed her life on Vormir before her 2014 variant arrived in the present Sacred Timeline.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#22c55e",
+    statusByPhase: {
+      2: { status: "alive", note: "Held the Power Stone with the Guardians to defeat Ronan on Xandar." },
+      3: { status: "deceased", note: "Sacrificed by Thanos on Vormir for the Soul Stone in 2018." },
+      4: { status: "variant", note: "2014 variant joined Stakar Ogord's Ravager clan." },
+      5: { status: "alive", note: "Assisted the Guardians in rescuing Rocket before returning to the Ravagers." }
+    },
+    eras: [
+      {
+        eraId: "gamora-vormir",
+        phase: 3,
+        title: "The Fall on Vormir (2018)",
+        year: "2018",
+        universe: "Earth-616",
+        description: "Discovered the location of the Soul Stone and was thrown from the cliff of Vormir by Thanos.",
+        keyMoments: ["Confessed love to Peter Quill on Knowhere", "Realized Thanos's tears were for her on Vormir", "Sacrificed for the Soul Stone"]
+      },
+      {
+        eraId: "gamora-ravagers",
+        phase: 5,
+        title: "The Ravager Free Spirit (2026)",
+        year: "2026",
+        universe: "Earth-616 (2014 Variant)",
+        description: "Reunited with Peter Quill and the Guardians to breach the Orgocorp biolab and save Rocket.",
+        keyMoments: ["Bypassed Orgocorp biological security shields", "Fought alongside Quill in the Arête corridor brawl", "Found her true family with the Ravagers"]
+      }
+    ],
+    artifactsPossessed: ["soul-stone", "godslayer-blade"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "groot",
+    name: "Groot",
+    aliases: ["Flora Colossus", "Tree", "King Groot"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy",
+    role: "Gentle yet unstoppable Flora colossus warrior and heart of the team.",
+    overview: "A hyper-regenerative tree-like alien from Planet X, Groot sacrificed his adult body to protect his family during the Battle of Xandar. Reborn as a sapling, he matured through adolescence into an enormous multi-limbed alpha powerhouse.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#84cc16",
+    statusByPhase: {
+      2: { status: "deceased", note: "Original Groot died creating a protective dome for the Guardians on Xandar." },
+      3: { status: "dusted", note: "Severed arm to forge Stormbreaker's handle; dusted in Wakanda." },
+      4: { status: "alive", note: "Cosmic journeys with Thor and the Guardians." },
+      5: { status: "alive", note: "Active senior defender in Rocket's new Guardians lineup." }
+    },
+    eras: [
+      {
+        eraId: "groot-stormbreaker",
+        phase: 3,
+        title: "Forging Stormbreaker (2018)",
+        year: "2018",
+        universe: "Earth-616",
+        description: "Traveled to Nidavellir with Thor and Rocket, sacrificing his own arm to bind the blazing Uru metal head of Stormbreaker.",
+        keyMoments: ["Lifted glowing molten axe blade", "Severed wooden arm to create Stormbreaker's handle", "Impaled multiple Outriders in the Battle of Wakanda"]
+      },
+      {
+        eraId: "groot-we-are-groot",
+        phase: 5,
+        title: "I Love You Guys (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Displayed winged flight and concealed an entire armory inside his torso to eradicate the High Evolutionary's cyber-soldiers.",
+        keyMoments: ["Flew using massive wooden root wings", "Severed head flew with Rocket's blasters", "Spoke universally understood words: 'I love you guys'"]
+      }
+    ],
+    artifactsPossessed: ["stormbreaker", "power-stone"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "drax",
+    name: "Drax the Destroyer",
+    aliases: ["Drax", "The Destroyer", "Father of Knowhere"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy",
+    role: "Fierce Kylosian brawler driven by honor, literal interpretation, and paternal love.",
+    overview: "After Ronan and Thanos murdered his wife Hovat and daughter Kamaria, Drax swore vengeance. Through the Guardians, he rediscovered family and finally stepped into his true calling: caring for the rescued children of Knowhere.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#06b6d4",
+    statusByPhase: {
+      2: { status: "alive", note: "Helped kill Ronan the Accuser on Xandar." },
+      3: { status: "dusted", note: "Fought Thanos on Titan; dusted." },
+      4: { status: "alive", note: "Celebrated Christmas on Earth; bought Kevin Bacon." },
+      5: { status: "alive", note: "Retired from combat to raise the liberated Star-Children on Knowhere." }
+    },
+    eras: [
+      {
+        eraId: "drax-titan",
+        phase: 3,
+        title: "The Battle on Titan (2018)",
+        year: "2018",
+        universe: "Earth-616",
+        description: "Joined Iron Man, Doctor Strange, Spider-Man, and the Guardians in a tactical strike against Thanos on Titan.",
+        keyMoments: ["Slid under Thanos's legs slicing his kneecaps", "Held down Thanos's leg during the Mantis mind-lock", "Dissolved into dust with Quill and Mantis"]
+      },
+      {
+        eraId: "drax-knowhere-dad",
+        phase: 5,
+        title: "The Born Father (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Recognized that his greatest strength was not destroying, but loving and protecting children as the patriarch of Knowhere.",
+        keyMoments: ["Communicated with the Star-Children in their native tongue", "Pounded cybernetic Hellspawn with brute strength", "Danced with the citizens of Knowhere to Florence + The Machine"]
+      }
+    ],
+    artifactsPossessed: ["dual-daggers", "power-stone"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "nebula",
+    name: "Nebula",
+    aliases: ["Cybernetic Assassin", "Leader of Knowhere", "Daughter of Thanos"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy / Avengers",
+    role: "Cybernetically enhanced tactician, Avenger, and architect of Knowhere's society.",
+    overview: "Torn apart and rebuilt with machine parts by Thanos every time she lost a duel to Gamora, Nebula overcame hatred, bonded with Tony Stark in deep space, helped the Avengers undo the Snap, and rebuilt Knowhere into a thriving cosmic sanctuary.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#3b82f6",
+    statusByPhase: {
+      2: { status: "alive", note: "Severed own cybernetic hand to escape the Dark Aster on Xandar." },
+      3: { status: "alive", note: "Avenger who orchestrated the Time Heist to 2014 Morag." },
+      4: { status: "alive", note: "Gifted Bucky Barnes's vibranium arm to Rocket for Christmas." },
+      5: { status: "alive", note: "Serving as the supreme administrative leader and governor of Knowhere." }
+    },
+    eras: [
+      {
+        eraId: "nebula-time-heist",
+        phase: 3,
+        title: "The Time Heist & Saving Reality (2023)",
+        year: "2023",
+        universe: "Earth-616",
+        description: "Traveled to 2014 Morag with War Machine, killed her past self, and guided the cosmic fleet in the Battle of Earth.",
+        keyMoments: ["Played paper football with Tony Stark aboard the Benatar", "Extracted the Power Stone from the temple vault", "Shot her 2014 variant dead to protect the timeline"]
+      },
+      {
+        eraId: "nebula-knowhere-ruler",
+        phase: 5,
+        title: "The Governor of Knowhere (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Wielded an upgraded multi-weapon cybernetic arm and directed the reconstruction of Knowhere into a utopian haven.",
+        keyMoments: ["Transformed arm into plasma cannon and energy shield", "Flew Knowhere through space to rescue the Arête refugees", "Assumed governance of Knowhere with Drax"]
+      }
+    ],
+    artifactsPossessed: ["nano-gauntlet", "power-stone"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "mantis",
+    name: "Mantis",
+    aliases: ["The Empath", "Quill's Sister", "Celestial Offspring"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy / Independent Nomad",
+    role: "Empathic powerhouse capable of pacifying Celestials, Titans, and Abilisks.",
+    overview: "Raised alone by Ego the Living Planet to put him to sleep, Mantis broke free with the Guardians. Later revealed to be Peter Quill's half-sister, she subdued Thanos on Titan, pacified three giant Abilisks, and embarked on an independent voyage of self-discovery.",
+    firstAppearance: "Guardians of the Galaxy Vol. 2 (2017)",
+    color: "#10b981",
+    statusByPhase: {
+      2: { status: "alive", note: "Put Ego the Living Planet to sleep during the core detonation." },
+      3: { status: "dusted", note: "Subdued Thanos's mind on Titan; dusted." },
+      4: { status: "alive", note: "Revealed to Peter Quill that Ego was their shared father." },
+      5: { status: "alive", note: "Tamed three giant Abilisks; departed on her own space voyage." }
+    },
+    eras: [
+      {
+        eraId: "mantis-titan-subdue",
+        phase: 3,
+        title: "The Titan Mind-Lock (2018)",
+        year: "2018",
+        universe: "Earth-616",
+        description: "Dropped onto Thanos's shoulders and placed the Mad Titan into an empathic trance, nearly allowing the Avengers to peel off the Infinity Gauntlet.",
+        keyMoments: ["Leaped onto Thanos's neck from Strange's portal", "Overcame the immense will of the Infinity Gauntlet wielder", "Detected Thanos's profound grief for Gamora"]
+      },
+      {
+        eraId: "mantis-abilisk-tamer",
+        phase: 5,
+        title: "The Abilisk Whisperer (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Used her empathic mastery to befriend three interdimensional Abilisks and departed Knowhere to discover her own identity.",
+        keyMoments: ["Befriended the giant multi-tentacled Abilisks through empathy", "Defeated waves of Orgocorp guards with martial arts", "Departed into the stars with her three Abilisk companions"]
+      }
+    ],
+    artifactsPossessed: ["empathic-antennae"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy-vol-2", "avengers-infinity-war", "avengers-endgame", "thor-love-and-thunder", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "yondu",
+    name: "Yondu Udonta",
+    aliases: ["Yondu", "Captain Udonta", "Mary Poppins"],
+    universe: "Earth-616",
+    faction: "Ravagers / Guardians of the Galaxy",
+    role: "Yaka arrow whistling centaurian outlaw and true father to Peter Quill.",
+    overview: "Leader of the Ravager clan that abducted Peter Quill in 1988, Yondu chose not to deliver the boy to Ego to spare his life. He sacrificed his life in the vacuum of deep space to save Peter, earning the legendary Ravager Color Funeral.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#0284c7",
+    statusByPhase: {
+      2: { status: "deceased", note: "Sacrificed life in deep space above Ego's planet to give Quill the space suit." }
+    },
+    eras: [
+      {
+        eraId: "yondu-yaka-slaughter",
+        phase: 2,
+        title: "The Whistling Yaka Arrow (2014–2017)",
+        year: "2014–2017",
+        universe: "Earth-616",
+        description: "Annihilated mutineering Ravagers and Ronan's fleet with his cybernetic prototype fin and sonic whistling arrow.",
+        keyMoments: ["Single-handedly took down a platoon of Sakaaran soldiers on Xandar", "The prison hallway massacre set to 'Come a Little Bit Closer'", "'He may have been your father, boy, but he wasn't your daddy'"]
+      },
+      {
+        eraId: "yondu-funeral",
+        phase: 2,
+        title: "The Ravager Funeral (2017)",
+        year: "2017",
+        universe: "Earth-616",
+        description: "Honored across the cosmos as all original Ravager captains assembled in space to fire the colors of redemption.",
+        keyMoments: ["Gave Peter the last functional spacesuit", "Disintegrated in Quill's arms above Ego's dying world", "Ravager fireworks illuminated the cosmos"]
+      }
+    ],
+    artifactsPossessed: ["yaka-arrow", "prototype-fin"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2"]
+  },
+
+  {
+    id: "adam-warlock",
+    name: "Adam Warlock",
+    aliases: ["Warlock", "Golden Sovereign God", "The Sovereign Perfection"],
+    universe: "Earth-616",
+    faction: "Sovereign / Guardians of the Galaxy",
+    role: "Genetically perfected Sovereign cosmic powerhouse wielding golden quantum energy.",
+    overview: "Birthed early from his Sovereign cocoon by High Priestess Ayesha to eliminate the Guardians, Adam was a powerful child in a godlike body. After saving Quill from freezing in space, he joined Rocket Raccoon's new Guardians of the Galaxy.",
+    firstAppearance: "Guardians of the Galaxy Vol. 3 (2023)",
+    color: "#eab308",
+    statusByPhase: {
+      5: { status: "alive", note: "Joined Rocket's new Guardians of the Galaxy squad with Blurp." },
+      6: { status: "alive", note: "Patrolling the cosmos." }
+    },
+    eras: [
+      {
+        eraId: "warlock-knowhere-assault",
+        phase: 5,
+        title: "The Golden Assault on Knowhere (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Flew through the atmosphere of Knowhere at hypersonic speeds, breaching security and dealing mortal damage to Rocket.",
+        keyMoments: ["Decimated the defense perimeter of Knowhere", "Survived direct point-blank stabbing by Nebula", "Adopted the pet F\'saki Blurp as his loyal companion"]
+      },
+      {
+        eraId: "warlock-guardian-redemption",
+        phase: 5,
+        title: "The New Guardian of the Galaxy (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Flew into the void of space to rescue Peter Quill from hypothermia and embraced the Guardians code of defending the helpless.",
+        keyMoments: ["Saved Star-Lord before his head expanded in the vacuum", "Listened to Redbone on the new Zune with Rocket", "Leaped into battle on Krylor with the new Guardians"]
+      }
+    ],
+    artifactsPossessed: ["quantum-cosmic-energy"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "cosmo",
+    name: "Cosmo the Spacedog",
+    aliases: ["Cosmo", "Good Dog", "Chief of Security"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy / Knowhere Security",
+    role: "Telekinetic Soviet cosmonaut canine and Knowhere head of security.",
+    overview: "Launched into space by the USSR in the 1960s, Cosmo drifted into the cosmic unknown where she developed immense telekinetic and telepathic powers. She serves as the fierce, loyal chief of security on Knowhere.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#a855f7",
+    statusByPhase: {
+      2: { status: "alive", note: "Licked the Collector's face after the Power Stone explosion on Knowhere." },
+      4: { status: "alive", note: "Helped rebuild Knowhere with telekinesis." },
+      5: { status: "alive", note: "Held the Arête laboratory ship to Knowhere using telekinesis; officially called a 'Good Dog'." }
+    },
+    eras: [
+      {
+        eraId: "cosmo-knowhere-bridge",
+        phase: 5,
+        title: "Holding the Space Bridge (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Anchored the collapsing Arête starship directly to Knowhere across a void of thousands of meters using pure psychic force.",
+        keyMoments: ["Telekinetically crushed attacking Orgocorp soldiers with heavy rubble", "Held hundreds of thousands of tons of starship hull across open space", "Celebrated Kraglin acknowledging her as a 'Good Dog'"]
+      }
+    ],
+    artifactsPossessed: ["telekinetic-collar"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
+    id: "kraglin",
+    name: "Kraglin Obfonteri",
+    aliases: ["Kraglin", "First Mate", "Master of the Yaka Arrow"],
+    universe: "Earth-616",
+    faction: "Guardians of the Galaxy / Ravagers",
+    role: "Loyal Ravager first mate who inherited Yondu's lethal Yaka arrow.",
+    overview: "Yondu Udonta's loyal first mate who inherited Yondu's Yaka Arrow and cybernetic fin. After years of dedicated practice, Kraglin mastered the whistling weapon and fought valiantly alongside the Guardians to protect Knowhere.",
+    firstAppearance: "Guardians of the Galaxy (2014)",
+    color: "#ec4899",
+    statusByPhase: {
+      2: { status: "alive", note: "Inherited Yondu's Yaka arrow and fin after the Ravager funeral." },
+      3: { status: "alive", note: "Joined the Battle of Earth with the Ravager fleet." },
+      4: { status: "alive", note: "Helped celebrate Christmas on Knowhere." },
+      5: { status: "alive", note: "Mastered the Yaka arrow and defended Knowhere from the High Evolutionary's Hellspawn." }
+    },
+    eras: [
+      {
+        eraId: "kraglin-yaka-mastery",
+        phase: 5,
+        title: "The Ghost of Yondu (2026)",
+        year: "2026",
+        universe: "Earth-616",
+        description: "Channelled the memory and guidance of Yondu to whistle and unleash the lethal red streak of the Yaka arrow on Knowhere.",
+        keyMoments: ["Saw a vision of Yondu smiling with pride", "Slaughtered dozens of Hellspawn cyber-monsters with one whistle", "Officially welcomed Cosmo to the Guardians with 'Good dog'"]
+      }
+    ],
+    artifactsPossessed: ["yaka-arrow", "cybernetic-fin"],
+    linkedNexusEvents: [],
+    entries: ["guardians-of-the-galaxy", "guardians-of-the-galaxy-vol-2", "avengers-endgame", "thor-love-and-thunder", "guardians-of-the-galaxy-vol-3"]
+  },
+
+  {
     id: "yelena-belova",
     name: "Yelena Belova",
     aliases: ["White Widow", "Little Sister", "Thunderbolts Field Leader"],
@@ -2428,54 +2773,7 @@ export const CHARACTERS: Character[] = [
     ]
   },
 
-  {
-    "id": "adam-warlock",
-    "name": "Adam Warlock",
-    "aliases": [
-      "Adam",
-      "Him",
-      "Golden Sovereign"
-    ],
-    "universe": "Earth-616",
-    "faction": "Sovereign / Guardians of the Galaxy",
-    "role": "Genetically engineered cosmic powerhouse.",
-    "overview": "Created by High Priestess Ayesha of the Sovereign to destroy the Guardians, Adam developed an independent moral compass and joined Rocket Raccoon's new Guardians of the Galaxy.",
-    "firstAppearance": "Guardians of the Galaxy Vol. 3 (2023)",
-    "color": "#eab308",
-    "imageSearch": "Adam Warlock (Marvel Cinematic Universe)",
-    "statusByPhase": {
-      "5": {
-        "status": "alive",
-        "note": "Rescued Star-Lord and joined Rocket Raccoon's new Guardians roster."
-      },
-      "6": {
-        "status": "alive",
-        "note": "Active cosmic protector of the galaxy."
-      }
-    },
-    "eras": [
-      {
-        "eraId": "warlock-awakening",
-        "phase": 5,
-        "title": "Awakening of the Sovereign (2026)",
-        "year": "2026",
-        "universe": "Earth-616",
-        "description": "Emerged from his cocoon; saved Star-Lord from freezing in deep vacuum of space.",
-        "keyMoments": [
-          "Assaulted Knowhere to capture Rocket",
-          "Rescued Peter Quill in deep space",
-          "Joined the new Guardians lineup"
-        ]
-      }
-    ],
-    "artifactsPossessed": [
-      "quantum-cosmic-energy"
-    ],
-    "linkedNexusEvents": [],
-    "entries": [
-      "guardians-of-the-galaxy-vol-3"
-    ]
-  },
+
 
   {
     "id": "us-agent",
