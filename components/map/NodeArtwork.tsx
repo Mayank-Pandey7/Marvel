@@ -476,32 +476,32 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "DOFP",
   },
   "logan": {
-    poster: "https://image.tmdb.org/t/p/w780/fnbjcRDXdopn6aQ7S6f1iZ9zQ7J.jpg",
+    poster: "/images/posters/logan.jpg",
     color: "#fa8231",
     fallbackText: "LOGAN",
   },
   "spider-man-2002": {
-    poster: "https://image.tmdb.org/t/p/w780/gh4c2ubiUzjhNyILW9EdsmZr7tG.jpg",
+    poster: "/images/posters/spider-man-2002.jpg",
     color: "#ff3838",
     fallbackText: "SPIDER-MAN",
   },
   "spider-man-2": {
-    poster: "https://image.tmdb.org/t/p/w780/olxpyq9kJAZ2NU1iLXYZggxu12f.jpg",
+    poster: "/images/posters/spider-man-2.jpg",
     color: "#ff3838",
     fallbackText: "SPIDER-MAN 2",
   },
   "spider-man-3": {
-    poster: "https://image.tmdb.org/t/p/w780/2jLxvdwhsbdBwzL8JtYl7aBwR6k.jpg",
+    poster: "/images/posters/spider-man-3.jpg",
     color: "#ff3838",
     fallbackText: "SPIDER-MAN 3",
   },
   "the-amazing-spider-man": {
-    poster: "https://image.tmdb.org/t/p/w780/jIfkxtUhuvEGYaZqM4sI5wTzWj.jpg",
+    poster: "/images/posters/the-amazing-spider-man.jpg",
     color: "#3867d6",
     fallbackText: "TASM",
   },
   "the-amazing-spider-man-2": {
-    poster: "https://image.tmdb.org/t/p/w780/c3eL6p3kUf3pG1iPZkL0v6yQoRk.jpg",
+    poster: "/images/posters/the-amazing-spider-man-2.jpg",
     color: "#3867d6",
     fallbackText: "TASM 2",
   },
