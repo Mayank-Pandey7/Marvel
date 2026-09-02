@@ -14,6 +14,7 @@ import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
 import { getCharacterAvatar, getCharacterBackdrop } from "@/data/characterBackdrops";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
+import { TonyStarkExperience } from "@/components/ironman/TonyStarkExperience";
 
 export default function CharacterDetailPage({ params }: { params: { id: string } }) {
   const character = getCharacter(params.id);
@@ -39,6 +40,11 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   const currentIndex = CHARACTERS.findIndex((c) => c.id === character.id);
   const prevCharacter = currentIndex > 0 ? CHARACTERS[currentIndex - 1] : CHARACTERS[CHARACTERS.length - 1];
   const nextCharacter = currentIndex < CHARACTERS.length - 1 ? CHARACTERS[currentIndex + 1] : CHARACTERS[0];
+
+  // If Iron Man / Tony Stark, render the exact copied Iron Man showcase experience
+  if (character.id === "iron-man" || character.id === "tony-stark") {
+    return <TonyStarkExperience />;
+  }
 
   const characterFacePortrait = getCharacterAvatar(character.id);
 

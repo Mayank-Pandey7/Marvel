@@ -584,15 +584,6 @@ export default function TimelineScrollableView() {
                               loading="lazy"
                               className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
                             />
-                            {/* Badges */}
-                            <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
-                              <span className="text-[8.5px] font-mono font-bold tracking-widest uppercase bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15 text-white">
-                                #{String(displayNumber).padStart(2, "0")}
-                              </span>
-                              <span className="text-[8px] font-mono font-bold tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/15 text-stone-300">
-                                P{movie.phase}
-                              </span>
-                            </div>
                             {/* Release Year */}
                             <div className="absolute bottom-2.5 right-2.5">
                               <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">

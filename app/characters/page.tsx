@@ -3,11 +3,10 @@
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Search, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { CHARACTERS, type Character } from "@/data/characters";
-import { getCharacterBackdrop } from "@/data/characterBackdrops";
-import { Scene } from "@/components/Scene";
+import StampCharacterCard from "@/components/character/StampCharacterCard";
 
 const FACTIONS = [
   { id: "all", label: "ALL" },
@@ -27,7 +26,6 @@ function CharactersContent() {
 
   const [searchQuery, setSearchQuery] = useState(paramQuery || "");
   const [selectedFaction, setSelectedFaction] = useState(paramFaction || "all");
-  const [showSpinWheel, setShowSpinWheel] = useState(true);
 
   useEffect(() => {
     if (paramFaction) {
@@ -117,48 +115,43 @@ function CharactersContent() {
             role.includes("zealot") ||
             role.includes("geneticist") ||
             fac.includes("hydra") ||
-            fac.includes("shadow realm") ||
-            fac.includes("orgocorp") ||
-            fac.includes("ten rings") ||
-            fac.includes("salem") ||
-            fac.includes("fisk") ||
-            fac.includes("kree") ||
-            fac.includes("void") ||
-            fac.includes("sentries") ||
-            fac.includes("black order") ||
-            [
-              "thanos", "kang-the-conqueror", "doctor-doom", "ultron", "green-goblin",
-              "doc-ock", "hela", "killmonger", "namor", "red-skull", "gorr", "mysterio",
-              "vulture", "wenwu", "agatha-harkness", "high-evolutionary", "kingpin",
-              "red-hulk", "zemo", "ronan", "cassandra-nova", "dormammu", "abomination",
-              "ego", "the-leader", "baron-mordo", "electro", "sandman", "lizard",
-              "modok", "ebony-maw", "surtur", "bullseye", "taskmaster", "juggernaut", "pyro", "sabretooth", "black-bolt", "the-collector", "grandmaster", "proxima-midnight", "corvus-glaive", "crossbones", "arnim-zola", "justin-hammer", "malekith", "kaecilius", "he-who-remains"
-            ].includes(c.id);
+            fac.includes("threat") ||
+            fac.includes("cabal") ||
+            fac.includes("hand") ||
+            c.id.includes("thanos") ||
+            c.id.includes("loki") ||
+            c.id.includes("kang") ||
+            c.id.includes("ultron") ||
+            c.id.includes("hela") ||
+            c.id.includes("killmonger") ||
+            c.id.includes("gor") ||
+            c.id.includes("mysterio") ||
+            c.id.includes("vulture") ||
+            c.id.includes("green-goblin") ||
+            c.id.includes("doc-ock") ||
+            c.id.includes("dormammu") ||
+            c.id.includes("wenwu") ||
+            c.id.includes("kingpin") ||
+            c.id.includes("high-evolutionary") ||
+            c.id.includes("cassandra-nova");
           if (!isVillain) return false;
         }
         if (
           selectedFaction === "cosmic" &&
+          !fac.includes("cosmic") &&
           !fac.includes("tva") &&
-          !fac.includes("yggdrasil") &&
-          !fac.includes("watcher") &&
-          !fac.includes("masters") &&
           !fac.includes("asgard") &&
-          !c.id.includes("loki") &&
-          !c.id.includes("watcher") &&
-          !c.id.includes("america-chavez")
+          !fac.includes("nova") &&
+          !fac.includes("eternals") &&
+          !fac.includes("space") &&
+          !role.includes("god") &&
+          !role.includes("cosmic") &&
+          !role.includes("watcher")
         )
           return false;
       }
 
       return true;
-    }).sort((a, b) => {
-      if (!q) return 0;
-
-      const aNameStart = a.name.toLowerCase().startsWith(q) || a.aliases.some((al) => al.toLowerCase().startsWith(q));
-      const bNameStart = b.name.toLowerCase().startsWith(q) || b.aliases.some((al) => al.toLowerCase().startsWith(q));
-      if (aNameStart && !bNameStart) return -1;
-      if (!aNameStart && bNameStart) return 1;
-      return 0;
     });
   }, [searchQuery, selectedFaction]);
 
@@ -170,26 +163,15 @@ function CharactersContent() {
           {/* 1. TOP SEARCH & CONTROLS */}
           <div className="flex flex-col gap-5 pb-2">
 
-            {/* Top Bar: View Spin Wheel Toggle (Left) + Search Input (Right) */}
+            {/* Top Bar: Title & Search Input */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
-              
-              {/* 3D Wheel Toggle (Left, Clean Glass UI with Eye Icon) */}
-              <button
-                onClick={() => setShowSpinWheel(!showSpinWheel)}
-                title={showSpinWheel ? "Hide 3D Wheel" : "View 3D Wheel"}
-                className={`flex items-center justify-center gap-2 bg-white/[0.04] border ${
-                  showSpinWheel ? "border-white/30 text-white bg-white/[0.08]" : "border-white/10 text-stone-400"
-                } hover:border-white/40 hover:bg-white/[0.10] px-4 py-2 sm:py-2.5 rounded-full transition-all text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase cursor-pointer shrink-0`}
-              >
-                {showSpinWheel ? (
-                  <Eye size={14} className="text-stone-200" />
-                ) : (
-                  <EyeOff size={14} className="text-stone-500" />
-                )}
-                <span>3D WHEEL</span>
-              </button>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                  ARCHIVES · {filteredCharacters.length} HEROES & VILLAINS
+                </span>
+              </div>
 
-              {/* Fixed-length Search Input Bar (Right) */}
+              {/* Fixed-length Search Input Bar */}
               <div className="relative w-full sm:w-80 md:w-96 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 sm:py-2.5 rounded-full focus-within:border-white/30 transition-all">
                 <Search size={14} className="text-stone-400 shrink-0 mr-3" />
                 <input
@@ -232,83 +214,35 @@ function CharactersContent() {
 
           </div>
 
-          {/* 2. MAIN VIEW: EITHER 3D PERSPECTIVE WHEEL OR CHARACTER GRID CARDS */}
-          {showSpinWheel ? (
-            <div className="relative w-full overflow-hidden bg-black border-0 shadow-none transition-all duration-500">
-              <Scene characters={filteredCharacters} />
+          {/* 2. CHARACTER TICKET CARDS GRID */}
+          {filteredCharacters.length === 0 ? (
+            <div className="text-center py-28">
+              <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
+                NO RECORDS FOUND
+              </h3>
+              <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
+                No record matches the active query parameters.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedFaction("all");
+                }}
+                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
+              >
+                RESET FILTERS
+              </button>
             </div>
           ) : (
-            <>
-              {filteredCharacters.length === 0 ? (
-                <div className="text-center py-28">
-                  <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
-                    NO RECORDS FOUND
-                  </h3>
-                  <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
-                    No record matches the active query parameters.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedFaction("all");
-                    }}
-                    className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
-                  >
-                    RESET FILTERS
-                  </button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                  {filteredCharacters.map((character) => {
-                    const primaryAlias = character.aliases[0] || character.role.split(",")[0] || "OPERATIVE";
-                    const backdropUrl = getCharacterBackdrop(character.id);
-
-                    return (
-                      <Link
-                        key={character.id}
-                        href={`/characters/${character.id}`}
-                        className="group relative flex flex-col gap-2 sm:gap-3 transition-all duration-300 ease-out cursor-pointer"
-                      >
-
-                        {}
-                        <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/5 shadow-2xl">
-                          <img
-                            src={backdropUrl}
-                            alt={character.name}
-                            className="w-full h-full object-cover object-[center_15%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
-                          />
-
-                          {}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent pointer-events-none" />
-                        </div>
-
-                        {}
-                        <div className="flex flex-col gap-0.5 sm:gap-1">
-
-                          {}
-                          <h2 className="text-xs sm:text-base font-mono font-bold tracking-wider uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-1">
-                            {character.name}
-                          </h2>
-
-                          {}
-                          <div className="text-[9px] sm:text-[10px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
-                            {primaryAlias !== character.name ? `${primaryAlias} · ` : ""}{character.faction.split("/")[0].trim()}
-                          </div>
-
-                          {}
-                          <div className="pt-0.5 sm:pt-1 flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase text-stone-500 group-hover:text-white transition-colors">
-                            <span>EXPLORE</span>
-                            <ArrowRight size={10} className="transform group-hover:translate-x-1 transition-transform duration-300" />
-                          </div>
-
-                        </div>
-
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 justify-items-center">
+              {filteredCharacters.map((character, index) => (
+                <StampCharacterCard
+                  key={character.id}
+                  character={character}
+                  index={index}
+                />
+              ))}
+            </div>
           )}
 
         </div>

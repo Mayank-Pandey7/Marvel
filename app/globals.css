@@ -17,7 +17,7 @@ html, body {
   scroll-behavior: smooth;
   background-color: #000000;
   color: #f5f5f4;
-  overflow-x: hidden;
+  overflow-x: clip;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -67,6 +67,59 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   --text-muted: #a8a29e;
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-surface: rgba(0, 0, 0, 0.85);
+  --accent: #d4a22f;
+  --accent-soft: rgba(212, 162, 47, 0.14);
+  --card-bg: rgba(24, 24, 27, 0.55);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --hud-line: rgba(255, 255, 255, 0.1);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.border-accent {
+  border-color: var(--accent);
+}
+
+.card-surface {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.scroll-animation {
+  height: 400vh;
+}
+
+@media (max-width: 1024px) {
+  .scroll-animation {
+    height: 350vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-animation {
+    height: 300vh;
+  }
+}
+
+.hud-tick {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0 calc(100% - 1px),
+    var(--hud-line) calc(100% - 1px) 100%
+  );
+  background-size: 16px 100%;
 }
 
 @layer utilities {
@@ -134,6 +187,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 .animate-node-glow {
   animation: nodeGlow 3s ease-in-out infinite;
+}
+
+.ticket-stamp-perforation {
+  --hole-r: 4.5px;
+  --hole-spacing: 15px;
+  --mask-top: radial-gradient(circle var(--hole-r) at 50% 0, transparent 99%, #000 100%) 50% 0 / var(--hole-spacing) 100% repeat-x;
+  --mask-bottom: radial-gradient(circle var(--hole-r) at 50% 100%, transparent 99%, #000 100%) 50% 100% / var(--hole-spacing) 100% repeat-x;
+  --mask-left: radial-gradient(circle var(--hole-r) at 0 50%, transparent 99%, #000 100%) 0 50% / 100% var(--hole-spacing) repeat-y;
+  --mask-right: radial-gradient(circle var(--hole-r) at 100% 50%, transparent 99%, #000 100%) 100% 50% / 100% var(--hole-spacing) repeat-y;
+
+  -webkit-mask: var(--mask-top), var(--mask-bottom), var(--mask-left), var(--mask-right);
+  -webkit-mask-composite: source-in;
+  mask: var(--mask-top), var(--mask-bottom), var(--mask-left), var(--mask-right);
+  mask-composite: intersect;
 }
 
 
