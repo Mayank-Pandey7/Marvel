@@ -608,7 +608,7 @@ export default function RoadToDoomsday() {
                     className="absolute flex items-center justify-center z-20 -translate-x-1/2"
                   >
                     <Link
-                      href={`/timeline/${item.id}`}
+                      href={`/doomsday/${item.id}`}
                       className="group/node relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border bg-black border-stone-700 text-stone-300 group-hover/row:border-white group-hover/row:text-white group-hover/row:scale-125 group-hover/row:rotate-12 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold transition-all duration-300 cursor-pointer select-none"
                       title={`Open ${item.title} (${item.year})`}
                     >
@@ -645,7 +645,7 @@ export default function RoadToDoomsday() {
                     }`}
                   >
                     <Link
-                      href={`/timeline/${item.id}`}
+                      href={`/doomsday/${item.id}`}
                       className="group/card block relative p-1.5 xs:p-2 sm:p-2.5 transition-all duration-400 cursor-pointer group-hover/card:opacity-100 opacity-90 w-full min-w-0 bg-transparent"
                     >
                       {/* Dynamic Hand-Drawn Sketched Connector Line (Desktop) */}
@@ -718,24 +718,6 @@ export default function RoadToDoomsday() {
 
                         {/* Movie Info Centered Vertically with Title in Middle */}
                         <div className="flex-1 min-w-0 flex flex-col justify-center py-1">
-                          <div
-                            className={`flex items-center gap-1.5 flex-wrap text-[8px] xs:text-[8.5px] font-mono uppercase tracking-wider mb-1 transition-transform duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/card:-translate-y-1 ${
-                              isEven ? "md:justify-end" : "md:justify-start"
-                            }`}
-                          >
-                            <span className="text-stone-300 font-bold transition-colors duration-300 group-hover/card:text-white">
-                              CHAPTER #{String(item.order).padStart(2, "0")}
-                            </span>
-                            <span className="text-stone-600">•</span>
-                            <span className="text-stone-300 font-semibold group-hover/card:text-white">
-                              {item.year}
-                            </span>
-                            <span className="text-stone-600">•</span>
-                            <span className="text-emerald-400/90 font-mono">
-                              {item.universe}
-                            </span>
-                          </div>
-
                           {/* Complete Movie Title in Middle */}
                           <h3 className={`text-xs xs:text-sm sm:text-base md:text-[16px] lg:text-[17px] font-mono uppercase tracking-[0.08em] sm:tracking-[0.1em] font-bold text-stone-200 group-hover/card:text-white transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] leading-snug break-words my-0.5 ${
                             isEven ? "group-hover/card:-translate-x-2" : "group-hover/card:translate-x-2"

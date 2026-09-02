@@ -465,6 +465,56 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#a55eea",
     fallbackText: "X2",
   },
+  "x-men-first-class": {
+    poster: "https://image.tmdb.org/t/p/w780/vU912pSviA0lQd38iG9FkQ5L4p.jpg",
+    color: "#ffd32a",
+    fallbackText: "FIRST CLASS",
+  },
+  "x-men-days-of-future-past": {
+    poster: "https://image.tmdb.org/t/p/w780/tK1AZl42JtK1Z8x0O1L1R0s4.jpg",
+    color: "#4bcffa",
+    fallbackText: "DOFP",
+  },
+  "logan": {
+    poster: "https://image.tmdb.org/t/p/w780/fnbjcRDXdopn6aQ7S6f1iZ9zQ7J.jpg",
+    color: "#fa8231",
+    fallbackText: "LOGAN",
+  },
+  "spider-man-2002": {
+    poster: "https://image.tmdb.org/t/p/w780/gh4c2ubiUzjhNyILW9EdsmZr7tG.jpg",
+    color: "#ff3838",
+    fallbackText: "SPIDER-MAN",
+  },
+  "spider-man-2": {
+    poster: "https://image.tmdb.org/t/p/w780/olxpyq9kJAZ2NU1iLXYZggxu12f.jpg",
+    color: "#ff3838",
+    fallbackText: "SPIDER-MAN 2",
+  },
+  "spider-man-3": {
+    poster: "https://image.tmdb.org/t/p/w780/2jLxvdwhsbdBwzL8JtYl7aBwR6k.jpg",
+    color: "#ff3838",
+    fallbackText: "SPIDER-MAN 3",
+  },
+  "the-amazing-spider-man": {
+    poster: "https://image.tmdb.org/t/p/w780/jIfkxtUhuvEGYaZqM4sI5wTzWj.jpg",
+    color: "#3867d6",
+    fallbackText: "TASM",
+  },
+  "the-amazing-spider-man-2": {
+    poster: "https://image.tmdb.org/t/p/w780/c3eL6p3kUf3pG1iPZkL0v6yQoRk.jpg",
+    color: "#3867d6",
+    fallbackText: "TASM 2",
+  },
+  "fantastic-four-2005": {
+    poster: "https://image.tmdb.org/t/p/w780/gGl4soq2h74ThUgyVzOHzN2j3ox.jpg",
+    color: "#4bcffa",
+    fallbackText: "FANTASTIC FOUR",
+  },
+  "blade-1998": {
+    poster: "https://image.tmdb.org/t/p/w780/7eU9wJ8U6Y8zU0Q2s3h4a6W4k7.jpg",
+    color: "#eb3b5a",
+    fallbackText: "BLADE",
+  },
 };
 
 export default function NodeArtwork({

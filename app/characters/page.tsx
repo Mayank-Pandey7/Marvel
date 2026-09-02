@@ -224,6 +224,9 @@ function CharactersContent() {
             role.includes("zealot") ||
             role.includes("geneticist") ||
             role.includes("threat") ||
+            role.includes("butcher") ||
+            role.includes("scavenger") ||
+            role.includes("destroyer") ||
             fac.includes("hydra") ||
             fac.includes("threat") ||
             fac.includes("cabal") ||
@@ -234,7 +237,12 @@ function CharactersContent() {
             fac.includes("ultron sentries") ||
             fac.includes("oscorp") ||
             fac.includes("octavius") ||
+            fac.includes("shadow realm") ||
+            fac.includes("talokan") ||
+            fac.includes("fisk") ||
+            fac.includes("brotherhood") ||
             id === "thanos" ||
+            id === "kang-the-conqueror" ||
             id === "kang" ||
             id === "doctor-doom" ||
             id === "ultron" ||
@@ -263,7 +271,28 @@ function CharactersContent() {
             id === "abomination" ||
             id === "magneto" ||
             id === "mystique" ||
-            id === "loki";
+            id === "loki" ||
+            id === "ego" ||
+            id === "ronan" ||
+            id === "malekith" ||
+            id === "ebony-maw" ||
+            id === "corvus-glaive" ||
+            id === "proxima-midnight" ||
+            id === "cull-obsidian" ||
+            id === "crossbones" ||
+            id === "arnim-zola" ||
+            id === "dreykov" ||
+            id === "taskmaster" ||
+            id === "sabretooth" ||
+            id === "juggernaut" ||
+            id === "pyro" ||
+            id === "toad" ||
+            id === "electro" ||
+            id === "sandman" ||
+            id === "lizard" ||
+            id === "agatha-harkness" ||
+            id === "baron-mordo" ||
+            id === "kaecilius";
           if (!isVillain) return false;
         }
 

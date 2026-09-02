@@ -218,7 +218,7 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
     universe: "Earth-616",
     category: "Movie",
     posterUrl: "/images/posters/black-panther-wakanda-forever.jpg",
-    backdropUrl: "/images/backdrops/black-panther-wakanda-forever.jpg",
+    backdropUrl: "/images/backdrops/black-panther.jpg",
     tagline: "The global geopolitical war for Vibranium and the emergence of Talokan.",
     whyItMatters: "Wakanda and Talokan clash as Western world powers scheme to seize Vibranium, destabilizing global peace and pushing nations toward secret alliances.",
     doomConnection: "In Marvel Comics, Doom's crusade begins by seizing Wakandan Vibranium (Doomwar). Latveria's rise exploits the exact geopolitical power vacuum left by T'Challa's passing.",
@@ -256,13 +256,13 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
     universe: "Earth-616",
     category: "Movie",
     posterUrl: "/images/posters/captain-america-brave-new-world.jpg",
-    backdropUrl: "/images/backdrops/captain-america-brave-new-world.jpg",
+    backdropUrl: "/images/backdrops/cap-brave-new-world.jpg",
     tagline: "The discovery of Adamantium from Tiamut's corpse sparks a world war.",
     whyItMatters: "President Thaddeus Ross transforms into Red Hulk as global nations fight for Adamantium mined from the Celestial Tiamut emerging in the Indian Ocean.",
     doomConnection: "Adamantium and Celestial biological energy provide the physical materials Victor von Doom harnesses for his mystical-technological armor and Latverian defense.",
     keyCharacters: ["Sam Wilson (Captain America)", "President Thaddeus Ross (Red Hulk)", "Joaquin Torres (Falcon)", "The Leader", "Isaiah Bradley"],
     incursionThreat: "Doomsday Catalyst",
-    runtime: "2025"
+    runtime: "1h 58m"
   },
   {
     id: "thunderbolts",
@@ -274,14 +274,14 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
     era: "The Incursion Dawn",
     universe: "Earth-616",
     category: "Movie",
-    posterUrl: "/images/posters/thunderbolts.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/m9EtbV24tMmEb551bWsMocspnH8.jpg",
     backdropUrl: "/images/backdrops/thunderbolts.jpg",
     tagline: "Anti-heroes united under Valentina Allegra de Fontaine and the birth of Sentry.",
     whyItMatters: "Valentina unites Yelena, Bucky, Red Guardian, Ghost, Taskmaster, and US Agent to confront the god-like, unstable power of Bob Reynolds (Sentry / The Void).",
     doomConnection: "The Sentry's solar-level reality-bending power demonstrates that mortal science can unlock Beyonder-adjacent force, which Doom will ultimately conquer.",
     keyCharacters: ["Yelena Belova", "Bucky Barnes", "Red Guardian", "Sentry (Bob Reynolds)", "US Agent", "Ghost", "Valentina Allegra de Fontaine"],
     incursionThreat: "Doomsday Catalyst",
-    runtime: "2025"
+    runtime: "2h 10m"
   },
   {
     id: "the-fantastic-four-first-steps",
@@ -293,13 +293,13 @@ export const DOOMSDAY_WATCHLIST: DoomsdayWatchlistItem[] = [
     era: "The Incursion Dawn",
     universe: "Earth-1960s Retro-Future",
     category: "Movie",
-    posterUrl: "/images/posters/the-fantastic-four-first-steps.jpg",
-    backdropUrl: "/images/backdrops/the-fantastic-four-first-steps.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+    backdropUrl: "/images/backdrops/fantastic-four.jpg",
     tagline: "Marvel's First Family defends their world against Galactus before crossing into 616.",
     whyItMatters: "Set in a vibrant retro-futuristic 1960s Earth facing the Devourer of Worlds (Galactus) and Silver Surfer (Shalla-Bal). Their world's destruction forces them across reality.",
     doomConnection: "The direct rivalry between Reed Richards (Pedro Pascal) and Victor von Doom (Robert Downey Jr.) is the central emotional and intellectual conflict of Avengers: Doomsday.",
     keyCharacters: ["Reed Richards (Mister Fantastic)", "Sue Storm (Invisible Woman)", "Johnny Storm (Human Torch)", "Ben Grimm (The Thing)", "Galactus", "Silver Surfer"],
     incursionThreat: "Doomsday Catalyst",
-    runtime: "2025"
+    runtime: "2h 15m"
   }
 ];

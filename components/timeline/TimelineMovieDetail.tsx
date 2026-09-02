@@ -5,7 +5,15 @@ import { useRouter } from "next/navigation";
 import { type MovieNode } from "@/data/movies";
 import DeepMovieDetail from "@/components/map/DeepMovieDetail";
 
-export default function TimelineMovieDetail({ movie }: { movie: MovieNode }) {
+export default function TimelineMovieDetail({
+  movie,
+  backHref = "/timeline",
+  connectedBasePath = "/timeline",
+}: {
+  movie: MovieNode;
+  backHref?: string;
+  connectedBasePath?: string;
+}) {
   const router = useRouter();
 
   return (
@@ -13,10 +21,14 @@ export default function TimelineMovieDetail({ movie }: { movie: MovieNode }) {
       <DeepMovieDetail
         movie={movie}
         onClose={() => {
-          router.push("/timeline");
+          if (window.history.length > 1) {
+            router.back();
+          } else {
+            router.push(backHref);
+          }
         }}
         onNavigateToConnectedMovie={(target) => {
-          router.push(`/timeline/${target.id}`);
+          router.push(`${connectedBasePath}/${target.id}`);
         }}
       />
     </div>

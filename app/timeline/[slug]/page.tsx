@@ -129,24 +129,135 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "secret-wars": "avengers-secret-wars",
   "avengers-6": "avengers-secret-wars",
   "avengers-secret-wars": "avengers-secret-wars",
-  "x-men": "x-men",
+  "x-men": "x-men-2000",
+  "x-men-2000": "x-men-2000",
+  "x2": "x2-2003",
+  "x2-2003": "x2-2003",
+  "x-men-united": "x2-2003",
+  "x-men-the-last-stand": "x-men-the-last-stand",
+  "x-men-first-class": "x-men-first-class",
+  "x-men-days-of-future-past": "x-men-days-of-future-past",
+  "days-of-future-past": "x-men-days-of-future-past",
+  "x-men-apocalypse": "x-men-apocalypse",
+  "x-men-dark-phoenix": "x-men-dark-phoenix",
+  "logan": "logan",
+  "spider-man-2002": "spider-man-2002",
+  "the-amazing-spider-man": "the-amazing-spider-man",
+  "the-amazing-spider-man-2": "the-amazing-spider-man-2",
+  "fantastic-four-2005": "fantastic-four-2005",
+  "blade-1998": "blade-1998",
   "armor-wars": "armor-wars",
   "blade": "blade",
   "shang-chi-2": "shang-chi-2",
 };
 
+function parseRuntime(runtimeStr?: string): number {
+  if (!runtimeStr) return 125;
+  if (runtimeStr.includes("h")) {
+    const hours = parseInt(runtimeStr.match(/(\d+)h/)?.[1] || "0");
+    const mins = parseInt(runtimeStr.match(/(\d+)m/)?.[1] || "0");
+    const total = hours * 60 + mins;
+    if (total > 0 && total <= 300) return total;
+  }
+  const digits = parseInt(runtimeStr.replace(/[^0-9]/g, "") || "125");
+  if (digits > 0 && digits <= 300) return digits;
+  return 125;
+}
+
+function resolveMovieNode(rawSlug: string): MovieNode | null {
+  const norm = rawSlug.toLowerCase().trim();
+  const canonicalId = MOVIE_SLUG_ALIASES[norm] || norm;
+
+  // 1. Check UNIFIED_MCU_TREE
+  const directTreeMatch = UNIFIED_MCU_TREE.find(
+    (m) =>
+      m.id.toLowerCase() === canonicalId ||
+      m.id.toLowerCase() === norm ||
+      m.shortTitle.toLowerCase() === norm
+  );
+  if (directTreeMatch) return directTreeMatch;
+
+  // 2. Check DOOMSDAY_WATCHLIST (covers X-Men 2000, X2, etc.)
+  const doomsdayMatch = DOOMSDAY_WATCHLIST.find(
+    (d) =>
+      d.id.toLowerCase() === canonicalId ||
+      d.id.toLowerCase() === norm ||
+      d.slug.toLowerCase() === canonicalId ||
+      d.slug.toLowerCase() === norm
+  );
+  if (doomsdayMatch) {
+    return {
+      id: doomsdayMatch.id,
+      title: doomsdayMatch.title,
+      shortTitle: doomsdayMatch.title,
+      year: doomsdayMatch.year,
+      releaseDate: `${doomsdayMatch.year}-05-01`,
+      phase: doomsdayMatch.phase || 0,
+      order: doomsdayMatch.order,
+      quote: doomsdayMatch.tagline,
+      speaker: doomsdayMatch.keyCharacters[0] || "Marvel",
+      tagline: doomsdayMatch.tagline,
+      director: "Marvel Studios / 20th Century Fox",
+      runtime: parseRuntime(doomsdayMatch.runtime),
+      leadCharacter: doomsdayMatch.keyCharacters[0] || "Hero",
+      heroAlias: doomsdayMatch.keyCharacters.length > 1 ? doomsdayMatch.keyCharacters[1] : "",
+      keyRelics: [],
+      description: `${doomsdayMatch.whyItMatters} ${doomsdayMatch.doomConnection}`,
+      color: "#f59e0b",
+      posterUrl: doomsdayMatch.posterUrl,
+      backdropUrl: doomsdayMatch.backdropUrl,
+      x: 0,
+      y: 0,
+      offsetY: 0,
+      connections: [],
+    } as MovieNode;
+  }
+
+  // 3. Check MCU archive entries
+  const mcuMatch = MCU.find(
+    (m) =>
+      m.id.toLowerCase() === canonicalId ||
+      m.id.toLowerCase() === norm
+  );
+  if (mcuMatch) {
+    return {
+      id: mcuMatch.id,
+      title: mcuMatch.title,
+      shortTitle: mcuMatch.title,
+      year: mcuMatch.year,
+      releaseDate: `${mcuMatch.year}-05-01`,
+      phase: mcuMatch.phase,
+      order: 0,
+      quote: mcuMatch.description,
+      speaker: mcuMatch.characters[0] || "Marvel",
+      tagline: mcuMatch.description,
+      director: "Marvel Studios",
+      runtime: parseInt(mcuMatch.runtime?.replace(/[^0-9]/g, "") || "120") || 120,
+      leadCharacter: mcuMatch.characters[0] || "Hero",
+      heroAlias: mcuMatch.characters[0] || "Hero",
+      keyRelics: [],
+      description: mcuMatch.description,
+      color: "#eab308",
+      posterUrl: mcuMatch.poster,
+      x: 0,
+      y: 0,
+      offsetY: 0,
+      connections: [],
+    };
+  }
+
+  return null;
+}
+
 export function generateStaticParams() {
   const primarySlugs = UNIFIED_MCU_TREE.map((m) => ({ slug: m.id }));
+  const watchlistSlugs = DOOMSDAY_WATCHLIST.map((m) => ({ slug: m.id }));
   const aliasSlugs = Object.keys(MOVIE_SLUG_ALIASES).map((slug) => ({ slug }));
-  return [...primarySlugs, ...aliasSlugs];
+  return [...primarySlugs, ...watchlistSlugs, ...aliasSlugs];
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const rawSlug = params.slug.toLowerCase().trim();
-  const canonicalId = MOVIE_SLUG_ALIASES[rawSlug] || rawSlug;
-  const movie = UNIFIED_MCU_TREE.find(
-    (m) => m.id.toLowerCase() === canonicalId || m.id.toLowerCase() === rawSlug
-  );
+  const movie = resolveMovieNode(params.slug);
 
   if (!movie) {
     return {
@@ -162,12 +273,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function TimelineMoviePage({ params }: { params: { slug: string } }) {
-  const rawSlug = params.slug.toLowerCase().trim();
-  const canonicalId = MOVIE_SLUG_ALIASES[rawSlug] || rawSlug;
-
-  const movie = UNIFIED_MCU_TREE.find(
-    (m) => m.id.toLowerCase() === canonicalId || m.id.toLowerCase() === rawSlug
-  );
+  const movie = resolveMovieNode(params.slug);
 
   if (!movie) {
     notFound();

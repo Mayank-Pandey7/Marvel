@@ -313,7 +313,7 @@ export default function DeepMovieDetail({
                           {movie.leadCharacter}
                         </span>
                       )}
-                      {movie.heroAlias && (
+                      {movie.heroAlias && movie.heroAlias !== movie.leadCharacter && (
                         <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-300">
                           {movie.heroAlias}
                         </span>

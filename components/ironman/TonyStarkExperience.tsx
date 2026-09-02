@@ -9,6 +9,7 @@ import { IronManCinematicReveal } from "./IronManCinematicReveal";
 import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
 import { getCharacterBackdrop } from "@/data/characterBackdrops";
+import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
 export function TonyStarkExperience() {
   const character = getCharacter("iron-man") || CHARACTERS[0];
@@ -53,8 +54,14 @@ export function TonyStarkExperience() {
                 >
                   <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-stone-950 border border-white/10 shadow-lg group-hover:border-accent group-hover:shadow-[0_0_20px_rgba(212,162,47,0.3)] transition-all duration-300">
                     <img
-                      src={m.poster || `/images/posters/${m.id}.jpg`}
+                      src={m.poster || MCU_POSTER_MAP[m.id]?.poster || `/images/posters/${m.id}.jpg`}
                       alt={m.title}
+                      onError={(e) => {
+                        const fallback = MCU_POSTER_MAP[m.id]?.poster || "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                        if ((e.target as HTMLImageElement).src !== fallback) {
+                          (e.target as HTMLImageElement).src = fallback;
+                        }
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-mono font-bold text-accent border border-accent/30">

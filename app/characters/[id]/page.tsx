@@ -13,6 +13,7 @@ import {
 import { CHARACTERS, getCharacter } from "@/data/characters";
 import { MCU } from "@/data/mcu";
 import { getCharacterAvatar, getCharacterBackdrop } from "@/data/characterBackdrops";
+import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import { TonyStarkExperience } from "@/components/ironman/TonyStarkExperience";
 
@@ -30,11 +31,21 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   }, []);
 
   const movieEntries = useMemo(() => {
-    return MCU.filter(
-      (m) =>
-        character.entries.includes(m.id) ||
-        m.characters.includes(character.id)
-    );
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const charEntriesNorm = (character.entries || []).map(normalize);
+    const charIdNorm = normalize(character.id);
+
+    return MCU.filter((m) => {
+      const mIdNorm = normalize(m.id);
+      const mTitleNorm = normalize(m.title);
+      const directMatch = charEntriesNorm.some(
+        (e) => e === mIdNorm || mIdNorm.includes(e) || e.includes(mIdNorm) || e === mTitleNorm
+      );
+      const characterMatch = (m.characters || []).some(
+        (c) => normalize(c) === charIdNorm || normalize(c).includes(charIdNorm) || charIdNorm.includes(normalize(c))
+      );
+      return directMatch || characterMatch;
+    });
   }, [character]);
 
   const currentIndex = CHARACTERS.findIndex((c) => c.id === character.id);
@@ -245,8 +256,14 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
               >
                 <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-stone-950 border border-white/10 shadow-lg group-hover:border-white/40 transition-all">
                   <img
-                    src={m.poster || `/images/posters/${m.id}.jpg`}
+                    src={m.poster || MCU_POSTER_MAP[m.id]?.poster || `/images/posters/${m.id}.jpg`}
                     alt={m.title}
+                    onError={(e) => {
+                      const fallback = MCU_POSTER_MAP[m.id]?.poster || "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                      if ((e.target as HTMLImageElement).src !== fallback) {
+                        (e.target as HTMLImageElement).src = fallback;
+                      }
+                    }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-black/80 backdrop-blur-md text-[8.5px] font-mono font-bold text-white border border-white/10">

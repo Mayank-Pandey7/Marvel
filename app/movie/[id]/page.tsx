@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { notFound, useRouter } from "next/navigation";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { MCU } from "@/data/mcu";
+import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import DeepMovieDetail from "@/components/map/DeepMovieDetail";
 
 export default function MovieDossierPage({ params }: { params: { id: string } }) {
@@ -42,6 +43,37 @@ export default function MovieDossierPage({ params }: { params: { id: string } })
         keyRelics: ["Infinity Stones"],
         description: mcuEntry.description,
         color: "#ffffff",
+        x: 0,
+        y: 0,
+        offsetY: 0,
+        connections: [],
+      };
+    }
+
+    const doomsdayEntry = DOOMSDAY_WATCHLIST.find(
+      (d) =>
+        d.id.toLowerCase() === movieId.toLowerCase() ||
+        d.slug.toLowerCase() === movieId.toLowerCase()
+    );
+    if (doomsdayEntry) {
+      return {
+        id: doomsdayEntry.id,
+        title: doomsdayEntry.title,
+        shortTitle: doomsdayEntry.title,
+        year: doomsdayEntry.year,
+        releaseDate: `${doomsdayEntry.year}`,
+        phase: doomsdayEntry.phase || 0,
+        order: doomsdayEntry.order,
+        quote: doomsdayEntry.tagline,
+        speaker: doomsdayEntry.keyCharacters[0] || "Marvel",
+        tagline: doomsdayEntry.tagline,
+        director: "Marvel Studios / 20th Century Fox",
+        runtime: parseInt(doomsdayEntry.runtime?.replace(/[^0-9]/g, "") || "115") || 115,
+        leadCharacter: doomsdayEntry.keyCharacters[0] || "Hero",
+        heroAlias: doomsdayEntry.keyCharacters[0] || "Hero",
+        keyRelics: [],
+        description: `${doomsdayEntry.whyItMatters} ${doomsdayEntry.doomConnection}`,
+        color: "#f59e0b",
         x: 0,
         y: 0,
         offsetY: 0,

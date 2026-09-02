@@ -30,6 +30,51 @@ interface RoleConfig {
 
 export function getCharacterRoleConfig(character: Character, index: number): RoleConfig {
   const roleLower = (character.role + " " + character.faction).toLowerCase();
+  const idLower = character.id.toLowerCase();
+
+  const isVillain =
+    roleLower.includes("villain") ||
+    roleLower.includes("titan") ||
+    roleLower.includes("conqueror") ||
+    roleLower.includes("warlord") ||
+    roleLower.includes("tyrant") ||
+    roleLower.includes("threat") ||
+    roleLower.includes("butcher") ||
+    roleLower.includes("hydra") ||
+    roleLower.includes("black order") ||
+    roleLower.includes("latveria") ||
+    idLower === "thanos" ||
+    idLower === "kang-the-conqueror" ||
+    idLower === "doctor-doom" ||
+    idLower === "ultron" ||
+    idLower === "green-goblin" ||
+    idLower === "doc-ock" ||
+    idLower === "hela" ||
+    idLower === "killmonger" ||
+    idLower === "gorr" ||
+    idLower === "mysterio" ||
+    idLower === "vulture" ||
+    idLower === "red-skull" ||
+    idLower === "high-evolutionary" ||
+    idLower === "cassandra-nova" ||
+    idLower === "galactus" ||
+    idLower === "dormammu" ||
+    idLower === "zemo" ||
+    idLower === "abomination" ||
+    idLower === "modok";
+
+  if (isVillain) {
+    return {
+      tag: "VILLAIN",
+      tier: "OMEGA",
+      themeColor: "#f59e0b",
+      borderColor: "#f59e0b",
+      bgColor: "from-amber-100 via-yellow-50 to-orange-100",
+      patternColor: "rgba(245, 158, 11, 0.15)",
+      badgeBg: "bg-amber-100 text-amber-600 border-amber-200",
+      icon: Flame,
+    };
+  }
 
   if (roleLower.includes("magic") || roleLower.includes("sorcerer") || roleLower.includes("witch") || roleLower.includes("mystic")) {
     return {
@@ -80,19 +125,6 @@ export function getCharacterRoleConfig(character: Character, index: number): Rol
       patternColor: "rgba(239, 68, 68, 0.15)",
       badgeBg: "bg-rose-100 text-rose-600 border-rose-200",
       icon: Crown,
-    };
-  }
-
-  if (roleLower.includes("villain") || roleLower.includes("threat") || roleLower.includes("conqueror") || roleLower.includes("titan")) {
-    return {
-      tag: "VILLAIN",
-      tier: "OMEGA",
-      themeColor: "#f59e0b",
-      borderColor: "#f59e0b",
-      bgColor: "from-amber-100 via-yellow-50 to-orange-100",
-      patternColor: "rgba(245, 158, 11, 0.15)",
-      badgeBg: "bg-amber-100 text-amber-600 border-amber-200",
-      icon: Flame,
     };
   }
 
