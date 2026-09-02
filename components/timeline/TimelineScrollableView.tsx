@@ -107,22 +107,7 @@ export default function TimelineScrollableView() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
-  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>(() => {
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlView = urlParams.get("view");
-      if (urlView === "path" || urlView === "wheel" || urlView === "grid") {
-        return urlView;
-      }
-      try {
-        const savedView = localStorage.getItem("mcu_timeline_view_mode");
-        if (savedView === "path" || savedView === "wheel" || savedView === "grid") {
-          return savedView;
-        }
-      } catch {}
-    }
-    return "path";
-  });
+  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>("path");
 
   // Synchronize layoutMode when searchParams change or on load
   useEffect(() => {
@@ -131,6 +116,13 @@ export default function TimelineScrollableView() {
       setLayoutMode(viewParam);
       try {
         localStorage.setItem("mcu_timeline_view_mode", viewParam);
+      } catch {}
+    } else {
+      try {
+        const savedView = localStorage.getItem("mcu_timeline_view_mode") as LayoutModeKey | null;
+        if (savedView && (savedView === "path" || savedView === "wheel" || savedView === "grid")) {
+          setLayoutMode(savedView);
+        }
       } catch {}
     }
   }, [searchParams]);
