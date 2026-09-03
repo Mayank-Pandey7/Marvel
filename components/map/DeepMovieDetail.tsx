@@ -119,8 +119,16 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "the-amazing-spider-man-2": "/images/backdrops/the-amazing-spider-man-2.jpg",
   "fantastic-four-2005": "/images/backdrops/fantastic-four.jpg",
   "logan": "/images/backdrops/logan.jpg",
-  "x-men-days-of-future-past": "/images/backdrops/x-men.jpg",
-  "x-men-first-class": "/images/backdrops/x-men.jpg",
+  "x-men-the-last-stand": "/images/backdrops/x-men-the-last-stand.jpg",
+  "x-men-origins-wolverine": "/images/backdrops/x-men-origins-wolverine.jpg",
+  "x-men-first-class": "/images/backdrops/x-men-first-class.jpg",
+  "the-wolverine": "/images/backdrops/the-wolverine.jpg",
+  "x-men-days-of-future-past": "/images/backdrops/x-men-days-of-future-past.jpg",
+  "deadpool": "/images/backdrops/deadpool.jpg",
+  "x-men-apocalypse": "/images/backdrops/x-men-apocalypse.jpg",
+  "deadpool-2": "/images/backdrops/deadpool-2.jpg",
+  "dark-phoenix": "/images/backdrops/dark-phoenix.jpg",
+  "the-new-mutants": "/images/backdrops/the-new-mutants.jpg",
 };
 
 export default function DeepMovieDetail({

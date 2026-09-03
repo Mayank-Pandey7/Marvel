@@ -466,14 +466,54 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "X2",
   },
   "x-men-first-class": {
-    poster: "https://image.tmdb.org/t/p/w780/vU912pSviA0lQd38iG9FkQ5L4p.jpg",
+    poster: "/images/posters/x-men-first-class.jpg",
     color: "#ffd32a",
     fallbackText: "FIRST CLASS",
   },
+  "x-men-the-last-stand": {
+    poster: "/images/posters/x-men-the-last-stand.jpg",
+    color: "#ff3838",
+    fallbackText: "LAST STAND",
+  },
+  "x-men-origins-wolverine": {
+    poster: "/images/posters/x-men-origins-wolverine.jpg",
+    color: "#fa8231",
+    fallbackText: "ORIGINS",
+  },
+  "the-wolverine": {
+    poster: "/images/posters/the-wolverine.jpg",
+    color: "#fa8231",
+    fallbackText: "THE WOLVERINE",
+  },
   "x-men-days-of-future-past": {
-    poster: "https://image.tmdb.org/t/p/w780/tK1AZl42JtK1Z8x0O1L1R0s4.jpg",
+    poster: "/images/posters/x-men-days-of-future-past.jpg",
     color: "#4bcffa",
     fallbackText: "DOFP",
+  },
+  "deadpool": {
+    poster: "/images/posters/deadpool.jpg",
+    color: "#eb3b5a",
+    fallbackText: "DEADPOOL",
+  },
+  "x-men-apocalypse": {
+    poster: "/images/posters/x-men-apocalypse.jpg",
+    color: "#8854d0",
+    fallbackText: "APOCALYPSE",
+  },
+  "deadpool-2": {
+    poster: "/images/posters/deadpool-2.jpg",
+    color: "#eb3b5a",
+    fallbackText: "DEADPOOL 2",
+  },
+  "dark-phoenix": {
+    poster: "/images/posters/dark-phoenix.jpg",
+    color: "#ff3838",
+    fallbackText: "DARK PHOENIX",
+  },
+  "the-new-mutants": {
+    poster: "/images/posters/the-new-mutants.jpg",
+    color: "#4b6584",
+    fallbackText: "NEW MUTANTS",
   },
   "logan": {
     poster: "/images/posters/logan.jpg",
