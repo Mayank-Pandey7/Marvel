@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
+import { UNIFIED_MCU_TREE, PHASES_CONFIG, type MovieNode } from "@/data/movies";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
 function getMoviePoster(node: MovieNode) {
@@ -17,7 +17,7 @@ function getMoviePoster(node: MovieNode) {
   return "/images/posters/the-avengers.jpg";
 }
 
-// Unequal, organic alternating horizontal offsets (varying amplitudes within clean boundaries)
+// --- OFFSETS CONFIGURATION ---
 const DESKTOP_OFFSETS = [
   -45,  75, -35,  85, -60,  40, -75,  60, -40,  80,
   -65,  50, -55,  85, -40,  70, -70,  45, -55,  75,
@@ -28,6 +28,7 @@ const DESKTOP_OFFSETS = [
 
 const MOBILE_OFFSETS = [-8, 12, -5, 10, -10, 7, -9, 13, -6, 8];
 
+// --- TIMELINE DOOMSDAY LAYOUT ---
 export default function TimelineDoomsdayLayout({
   movies,
   viewMode = "path",
@@ -53,7 +54,7 @@ export default function TimelineDoomsdayLayout({
   const [isMobileScreen, setIsMobileScreen] = useState(false);
   const rafIdRef = useRef<number | null>(null);
 
-  // Calculate Unequal, Organic Hand-Drawn Sketch Paths starting cleanly at 01
+  // --- SKETCH PATHS CALCULATION ---
   useEffect(() => {
     const updateSketchPaths = () => {
       if (!containerRef.current) return;
@@ -82,11 +83,8 @@ export default function TimelineDoomsdayLayout({
 
       if (points.length < 2) return;
 
-      // 1. Primary Hand-Drawn Sketch Stroke with Unequal Wave Amplitudes
       let d1 = `M ${points[0].x} ${points[0].y}`;
-      // 2. Secondary Overlapping Pencil Trace
       let d2 = `M ${points[0].x - 1} ${points[0].y + 1}`;
-      // 3. Tertiary Graphite Whisper Stroke
       let d3 = `M ${points[0].x + 1} ${points[0].y - 1}`;
 
       for (let i = 0; i < points.length - 1; i++) {
@@ -94,26 +92,22 @@ export default function TimelineDoomsdayLayout({
         const p1 = points[i + 1];
         const midY = (p0.y + p1.y) / 2;
 
-        // Organic hand tremor variations
         const jitter1 = Math.sin(i * 3.7 + 0.8) * (isMobile ? 2 : 5);
         const jitter2 = Math.cos(i * 4.1 + 1.5) * (isMobile ? 2 : 4);
         const jitter3 = Math.sin(i * 2.9 + 2.2) * 2.5;
 
-        // Primary sketch control points with unequal tension
         const cp1x = p0.x + jitter1;
         const cp1y = midY - 8 + jitter2;
         const cp2x = p1.x - jitter2;
         const cp2y = midY + 8 + jitter1;
         d1 += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p1.x} ${p1.y}`;
 
-        // Secondary sketch stroke (slightly offset for authentic pencil feel)
         const cp1x_2 = cp1x + Math.sin(i * 5.3) * 3 - 1.5;
         const cp1y_2 = cp1y + Math.cos(i * 4.7) * 3 + 1;
         const cp2x_2 = cp2x - Math.cos(i * 3.9) * 3 + 1;
         const cp2y_2 = cp2y + Math.sin(i * 5.1) * 3 - 1;
         d2 += ` C ${cp1x_2} ${cp1y_2}, ${cp2x_2} ${cp2y_2}, ${p1.x + Math.sin(i * 2.3) * 1.5} ${p1.y + 0.5}`;
 
-        // Tertiary light whisper graphite line
         const cp1x_3 = cp1x - jitter3 * 0.8 + 1.5;
         const cp1y_3 = cp1y + jitter3 * 0.7 - 1.5;
         const cp2x_3 = cp2x + jitter3 * 0.8 - 1.5;
@@ -140,18 +134,16 @@ export default function TimelineDoomsdayLayout({
     };
   }, [movies]);
 
-  // Spring Pop Dynamic Scroll Physics & 3D Spatial Motion
+  // --- SCROLL PHYSICS & PERSPECTIVE ---
   const updateScrollAnimations = useCallback(() => {
     const windowH = window.innerHeight || 800;
     const currentScrollY = window.scrollY || window.pageYOffset || 0;
     const isMobile = window.innerWidth < 768;
 
-    // Track scroll velocity for elastic spring momentum
     const deltaY = currentScrollY - lastScrollYRef.current;
     lastScrollYRef.current = currentScrollY;
     scrollVelocityRef.current = Math.max(-25, Math.min(25, deltaY * 0.4));
 
-    // Continuous Timeline Visibility: All movies remain visible, with center movies subtly elevated
     const focalCenterY = windowH * 0.50;
     const clearPlateau = isMobile ? 140 : 200;
     const fadeDistance = windowH * 0.45;
@@ -168,7 +160,6 @@ export default function TimelineDoomsdayLayout({
         visibility = Math.max(0, 1 - Math.pow(excess / fadeDistance, 1.2));
       }
 
-      // Calculate vertical elevation, horizontal drift & velocity skew
       const isAboveCenter = centerY < focalCenterY;
       const velocityInfluence = (1 - visibility) * (scrollVelocityRef.current * 0.25);
       const translateY = (1 - visibility) * (isAboveCenter ? -14 : 16) + velocityInfluence;
@@ -176,15 +167,11 @@ export default function TimelineDoomsdayLayout({
       const isEven = idx % 2 === 0;
       const horizontalDrift = isMobile ? 0 : (isEven ? -1 : 1) * (1 - visibility) * 12;
       
-      // Subtle 3D perspective tilt + dynamic pop scaling
       const rotateX = isMobile ? 0 : (isAboveCenter ? 1 : -1) * (1 - visibility) * 3;
       const rotateY = isMobile ? 0 : (isEven ? -1 : 1) * (1 - visibility) * 2;
       
-      // Pop Scale & Display Opacity (always visible)
       const popScale = 0.93 + visibility * 0.09;
       const displayOpacity = 0.60 + visibility * 0.40;
-
-      // Cinematic Depth-of-Field Blur (0px in center focal plateau -> up to 4.2px at top/bottom edges)
       const blur = (1 - visibility) * 4.2;
 
       el.style.opacity = `${displayOpacity.toFixed(3)}`;
@@ -193,7 +180,6 @@ export default function TimelineDoomsdayLayout({
       el.style.visibility = "visible";
       el.style.pointerEvents = "auto";
 
-      // Milestone Node continuous visibility & pulse
       const nodeEl = nodeRefs.current[idx];
       if (nodeEl) {
         const nodePopScale = 0.88 + visibility * 0.18;
@@ -217,7 +203,6 @@ export default function TimelineDoomsdayLayout({
     window.addEventListener("resize", onScrollOrResize, { passive: true });
     window.addEventListener("orientationchange", onScrollOrResize, { passive: true });
 
-    // Initial trigger
     onScrollOrResize();
     const initialTimer = setTimeout(onScrollOrResize, 200);
 
@@ -232,11 +217,9 @@ export default function TimelineDoomsdayLayout({
 
   return (
     <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-2 sm:px-4 md:px-8 pt-4 pb-28">
-      {/* SVG Hand-Made Sketch Spine (With Animated Pulse Flow) */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible opacity-35 transition-opacity duration-300">
         {sketchPaths.primaryD ? (
           <>
-            {/* Sketch Layer 1: Tertiary Graphite Whisper Stroke */}
             <path
               d={sketchPaths.whisperD}
               fill="none"
@@ -245,8 +228,6 @@ export default function TimelineDoomsdayLayout({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-
-            {/* Sketch Layer 2: Secondary Overlapping Pencil Trace */}
             <path
               d={sketchPaths.secondaryD}
               fill="none"
@@ -255,8 +236,6 @@ export default function TimelineDoomsdayLayout({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-
-            {/* Sketch Layer 3: Primary Organic Hand-Drawn Contour Stroke */}
             <path
               d={sketchPaths.primaryD}
               fill="none"
@@ -265,8 +244,6 @@ export default function TimelineDoomsdayLayout({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-
-            {/* Sketch Layer 4: Animated Traveling Timeline Energy Beam */}
             <path
               d={sketchPaths.primaryD}
               fill="none"
@@ -290,7 +267,7 @@ export default function TimelineDoomsdayLayout({
         )}
       </svg>
 
-      {/* Unequal Alternating Vertical Timeline Items */}
+      {/* Timeline Items */}
       <div className="flex flex-col gap-8 xs:gap-10 sm:gap-14 relative z-10">
         {movies.map((movie, idx) => {
           const posterUrl = getMoviePoster(movie);
@@ -304,81 +281,115 @@ export default function TimelineDoomsdayLayout({
             ? Math.max(16, 112 + desktopX)
             : Math.max(16, 112 - desktopX);
 
+          const prevMovie = movies[idx - 1];
+          const isNewPhase = idx === 0 || (prevMovie && movie.phase !== prevMovie.phase);
+          const isNewEarth = movie.phase === 7 && (idx === 0 || !prevMovie || prevMovie.phase !== 7 || movie.earthDesignation !== prevMovie.earthDesignation);
+          const phaseInfo = PHASES_CONFIG.find((p) => p.id === movie.phase);
+
           return (
-            <div
-              key={movie.id}
-              id={`movie-node-${movie.id}`}
-              data-movie-id={movie.id}
-              ref={(el) => {
-                cardRefs.current[idx] = el;
-              }}
-              data-index={idx}
-              style={{
-                transition: "opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out",
-                willChange: "transform, opacity, filter",
-              }}
-              className={`group/row relative flex items-center w-full transform-gpu ${
-                isEven
-                  ? "md:flex-row pl-12 xs:pl-14 sm:pl-16 md:pl-0"
-                  : "md:flex-row-reverse pl-12 xs:pl-14 sm:pl-16 md:pl-0"
-              }`}
-            >
-              {/* Milestone Node on the Hand-Sketched Unequal Apex */}
-              <div
-                ref={(el) => {
-                  nodeRefs.current[idx] = el;
-                }}
-                style={{
-                  left: isMobileScreen
-                    ? `${26 + mobileX}px`
-                    : `calc(50% + ${desktopX}px)`,
-                  transition: "opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                  willChange: "transform, opacity",
-                }}
-                className="absolute flex items-center justify-center z-20 -translate-x-1/2"
-              >
-                <Link
-                  href={`/timeline/${movie.id}${viewMode ? `?view=${viewMode}` : ""}`}
-                  className="group/node relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border bg-black border-stone-700 text-stone-300 group-hover/row:border-white group-hover/row:text-white group-hover/row:scale-125 group-hover/row:rotate-12 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold transition-all duration-300 cursor-pointer select-none"
-                  title={`View ${movie.title} (${movie.year})`}
+            <React.Fragment key={movie.id}>
+              {isNewPhase && (
+                <div
+                  id={`phase-section-${movie.phase}`}
+                  className="scroll-mt-36 sm:scroll-mt-28 w-full my-4 sm:my-8 flex items-center justify-center relative z-20 select-none"
                 >
-                  {/* Orbiting Rotating Sketched Ring around Node */}
-                  <svg
-                    className="absolute -inset-2 w-[calc(100%+16px)] h-[calc(100%+16px)] pointer-events-none overflow-visible opacity-50 group-hover/row:opacity-100 group-hover/row:scale-125 transition-all duration-500 animate-[spin_18s_linear_infinite] group-hover/row:animate-[spin_4s_linear_infinite]"
-                    viewBox="0 0 44 44"
-                    fill="none"
-                  >
-                    <path
-                      d="M6 22 C 5 11, 12 5, 22 5 C 32 5, 39 12, 38 22 C 37 32, 31 39, 22 39 C 12 39, 5 32, 6 22 C 7 13, 15 7, 22 7 C 30 7, 37 13, 36 23"
-                      stroke="rgba(255, 255, 255, 0.7)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M8 24 C 7 14, 15 8, 23 8 C 31 8, 37 15, 36 24 C 35 33, 29 37, 21 37 C 14 37, 7 30, 8 22"
-                      stroke="rgba(255, 255, 255, 0.35)"
-                      strokeWidth="0.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/15 shadow-xl">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2 py-0.5 rounded">
+                      PHASE {phaseInfo?.roman || movie.phase}
+                    </span>
+                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                      {phaseInfo?.title || "EXPANDED ERA"}
+                    </span>
+                    <span className="hidden sm:inline text-stone-600 font-mono text-[10px]">|</span>
+                    <span className="hidden sm:inline text-[9.5px] font-mono text-stone-400 tracking-wider">
+                      {phaseInfo?.years}
+                    </span>
+                  </div>
+                </div>
+              )}
 
-                  <span className="relative z-10 transition-transform duration-300 group-hover/row:scale-110">{String(displayNumber).padStart(2, "0")}</span>
-                </Link>
-              </div>
+              {isNewEarth && (
+                <div className="w-full my-3 sm:my-5 flex items-center justify-center relative z-20 select-none">
+                  <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1 rounded-full bg-black/90 backdrop-blur-md border border-white/20 shadow-lg">
+                    <span className="text-[9.5px] sm:text-[10.5px] font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/15 px-2 py-0.5 rounded">
+                      {movie.earthDesignation}
+                    </span>
+                    <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.12em] text-stone-300 uppercase font-medium">
+                      {movie.earthName}
+                    </span>
+                  </div>
+                </div>
+              )}
 
-              {/* Movie Item (Clean Half-Width Layout with Zero Collisions) */}
               <div
-                className={`w-full md:w-[calc(50%-7rem)] lg:w-[calc(50%-7.5rem)] min-w-0 ${
-                  isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"
+                id={`movie-node-${movie.id}`}
+                data-movie-id={movie.id}
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                data-index={idx}
+                style={{
+                  transition: "opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease-out",
+                  willChange: "transform, opacity, filter",
+                }}
+                className={`group/row relative flex items-center w-full transform-gpu ${
+                  isEven
+                    ? "md:flex-row pl-12 xs:pl-14 sm:pl-16 md:pl-0"
+                    : "md:flex-row-reverse pl-12 xs:pl-14 sm:pl-16 md:pl-0"
                 }`}
               >
-                <Link
-                  href={`/timeline/${movie.id}${viewMode ? `?view=${viewMode}` : ""}`}
-                  className="group/card block relative p-1.5 xs:p-2 sm:p-2.5 transition-all duration-400 cursor-pointer group-hover/card:opacity-100 opacity-90 w-full min-w-0 bg-transparent"
+                <div
+                  ref={(el) => {
+                    nodeRefs.current[idx] = el;
+                  }}
+                  style={{
+                    left: isMobileScreen
+                      ? `${26 + mobileX}px`
+                      : `calc(50% + ${desktopX}px)`,
+                    transition: "opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    willChange: "transform, opacity",
+                  }}
+                  className="absolute flex items-center justify-center z-20 -translate-x-1/2"
                 >
-                  {/* Dynamic Hand-Drawn Sketched Connector Line (Desktop) - Joins Directly to Node */}
+                  <Link
+                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase}`}
+                    className="group/node relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border bg-black border-stone-700 text-stone-300 group-hover/row:border-white group-hover/row:text-white group-hover/row:scale-125 group-hover/row:rotate-12 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold transition-all duration-300 cursor-pointer select-none"
+                    title={`View ${movie.title} (${movie.year})`}
+                  >
+                    <svg
+                      className="absolute -inset-2 w-[calc(100%+16px)] h-[calc(100%+16px)] pointer-events-none overflow-visible opacity-50 group-hover/row:opacity-100 group-hover/row:scale-125 transition-all duration-500 animate-[spin_18s_linear_infinite] group-hover/row:animate-[spin_4s_linear_infinite]"
+                      viewBox="0 0 44 44"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 22 C 5 11, 12 5, 22 5 C 32 5, 39 12, 38 22 C 37 32, 31 39, 22 39 C 12 39, 5 32, 6 22 C 7 13, 15 7, 22 7 C 30 7, 37 13, 36 23"
+                        stroke="rgba(255, 255, 255, 0.7)"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M8 24 C 7 14, 15 8, 23 8 C 31 8, 37 15, 36 24 C 35 33, 29 37, 21 37 C 14 37, 7 30, 8 22"
+                        stroke="rgba(255, 255, 255, 0.35)"
+                        strokeWidth="0.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+
+                    <span className="relative z-10 transition-transform duration-300 group-hover/row:scale-110">{String(displayNumber).padStart(2, "0")}</span>
+                  </Link>
+                </div>
+
+                <div
+                  className={`w-full md:w-[calc(50%-7rem)] lg:w-[calc(50%-7.5rem)] min-w-0 ${
+                    isEven ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"
+                  }`}
+                >
+                  <Link
+                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase}`}
+                    className="group/card block relative p-1.5 xs:p-2 sm:p-2.5 transition-all duration-400 cursor-pointer group-hover/card:opacity-100 opacity-90 w-full min-w-0 bg-transparent"
+                  >
                   <svg
                     style={{
                       width: `${connectorWidth}px`,
@@ -388,7 +399,6 @@ export default function TimelineDoomsdayLayout({
                     viewBox="0 0 100 12"
                     preserveAspectRatio="none"
                   >
-                    {/* Secondary graphite contour trace */}
                     <path
                       d="M0 7 C 30 5, 70 8, 100 6.5"
                       vectorEffect="non-scaling-stroke"
@@ -396,7 +406,6 @@ export default function TimelineDoomsdayLayout({
                       strokeWidth="0.9"
                       strokeLinecap="round"
                     />
-                    {/* Primary organic sketched stroke */}
                     <path
                       d="M0 6 C 25 4.5, 65 7.5, 100 6"
                       vectorEffect="non-scaling-stroke"
@@ -406,7 +415,6 @@ export default function TimelineDoomsdayLayout({
                     />
                   </svg>
 
-                  {/* Hand-Drawn Sketched Connector Tick (Mobile) - Joins Directly to Node */}
                   <svg
                     className="block md:hidden absolute left-[-2rem] xs:left-[-2.25rem] top-1/2 -translate-y-1/2 w-8 xs:w-9 h-3 pointer-events-none overflow-visible opacity-60 group-hover/card:opacity-100 group-hover/card:scale-x-125 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
                     viewBox="0 0 32 12"
@@ -431,7 +439,6 @@ export default function TimelineDoomsdayLayout({
                       isEven ? "md:flex-row-reverse" : "md:flex-row"
                     }`}
                   >
-                    {/* Poster with Spring Physics 3D POP Elevation */}
                     <div className={`relative w-14 h-20 xs:w-18 xs:h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-lg overflow-hidden bg-stone-950 shrink-0 border border-stone-800/90 group-hover/card:border-white/80 group-hover/card:scale-110 group-hover/card:-translate-y-2 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_4px_16px_rgba(0,0,0,0.6)] group-hover/card:shadow-[0_20px_40px_rgba(0,0,0,0.95)] ${
                       isEven ? "group-hover/card:rotate-[-1.5deg]" : "group-hover/card:rotate-[1.5deg]"
                     }`}>
@@ -439,16 +446,16 @@ export default function TimelineDoomsdayLayout({
                         src={posterUrl}
                         alt={movie.title}
                         loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover/card:scale-108"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover/card:scale-108 [image-rendering:-webkit-optimize-contrast]"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
-                            "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+                            "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
                         }}
                       />
                       <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
                     </div>
 
-                    {/* Movie Info Centered Vertically with Dynamic Hover Glides */}
                     <div className="flex-1 min-w-0 flex flex-col justify-center py-1">
                       <div
                         className={`flex items-center gap-1.5 flex-wrap text-[8px] xs:text-[8.5px] font-mono uppercase tracking-wider mb-1 transition-transform duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/card:-translate-y-1 ${
@@ -456,7 +463,7 @@ export default function TimelineDoomsdayLayout({
                         }`}
                       >
                         <span className="text-stone-300 font-bold transition-colors duration-300 group-hover/card:text-white">
-                          PHASE {movie.phase}
+                          {movie.phase === 7 ? (movie.earthDesignation || "MULTIVERSE") : `PHASE ${movie.phase}`}
                         </span>
                         <span className="text-stone-600">•</span>
                         <span className="text-stone-300 font-semibold group-hover/card:text-white">
@@ -472,7 +479,6 @@ export default function TimelineDoomsdayLayout({
                         )}
                       </div>
 
-                      {/* Complete Movie Title in Middle */}
                       <h3 className={`text-xs xs:text-sm sm:text-base md:text-[16px] lg:text-[17px] font-mono uppercase tracking-[0.08em] sm:tracking-[0.1em] font-bold text-stone-200 group-hover/card:text-white transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] leading-snug break-words my-0.5 ${
                         isEven ? "group-hover/card:-translate-x-2" : "group-hover/card:translate-x-2"
                       }`}>
@@ -489,8 +495,9 @@ export default function TimelineDoomsdayLayout({
                 </Link>
               </div>
             </div>
-          );
-        })}
+          </React.Fragment>
+        );
+      })}
       </div>
     </div>
   );

@@ -38,6 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://image.tmdb.org" />
+        <link rel="dns-prefetch" href="https://image.tmdb.org" />
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Geist+Pixel&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-[#020204] text-stone-100 antialiased min-h-screen selection:bg-white selection:text-black">

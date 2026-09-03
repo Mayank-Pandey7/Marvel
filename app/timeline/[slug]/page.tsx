@@ -277,7 +277,7 @@ export default function TimelineMoviePage({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams?: { view?: string };
+  searchParams?: { view?: string; phase?: string };
 }) {
   const movie = resolveMovieNode(params.slug);
 
@@ -285,9 +285,9 @@ export default function TimelineMoviePage({
     notFound();
   }
 
-  const backHref = searchParams?.view
-    ? `/timeline?view=${searchParams.view}`
-    : "/timeline";
+  const viewMode = searchParams?.view || "path";
+  const phaseNum = searchParams?.phase || movie.phase || "1";
+  const backHref = `/timeline?view=${viewMode}&phase=${phaseNum}&movie=${movie.id}`;
 
   return <TimelineMovieDetail movie={movie} backHref={backHref} />;
 }

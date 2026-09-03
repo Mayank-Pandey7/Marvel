@@ -204,7 +204,6 @@ export default function DeepMovieDetail({
           : "opacity-0 scale-105 pointer-events-none"
       }`}
     >
-      {/* 1. CINEMATIC AMBIENT BACKDROP IMAGE (CLEAR & VIBRANT) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <img
           src={backdropSrc}
@@ -214,62 +213,45 @@ export default function DeepMovieDetail({
               (e.target as HTMLImageElement).src = posterSrc;
             }
           }}
-          className={`w-full h-full object-cover object-center filter brightness-[0.85] contrast-[1.15] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isExpanded ? "scale-105 opacity-70" : "scale-125 opacity-0"
+          className={`w-full h-full object-cover object-center filter brightness-100 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isExpanded ? "scale-105 opacity-100" : "scale-125 opacity-0"
           }`}
         />
 
-        {/* Cinematic Vignette & Atmospheric Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/75" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.75)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5)_0%,transparent_25%,transparent_70%,rgba(0,0,0,0.9)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
       </div>
 
-      {/* Top Navbar Blur (Transparent Subtle Blur - No Black Bar) */}
-      <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
-        aria-hidden="true"
-      />
-
-      {/* 2. MINIMALIST TOP HEADER (Matching Global Standard) */}
       <header
         className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
-        {/* Left: Close button */}
         <div className="flex items-center pointer-events-auto">
           <button
             onClick={handleClose}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
+            className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-stone-200 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer active:scale-95 group"
             title="Close Dossier"
             aria-label="Close Dossier"
           >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
           </button>
         </div>
 
-        {/* Center: Exact Centered MARVEL (Never wraps) */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-          <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em]">
+          <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             MARVEL
           </span>
         </div>
 
-        {/* Right side spacer for centered balance */}
-        <div className="w-8" />
+        <div className="w-8 sm:w-9" />
       </header>
 
-      {/* 3. MAIN DOSSIER STAGE (EXPANSIVE EDGE-TO-EDGE BOTTOM-ANCHORED CINEMATIC STAGE) */}
       <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-16 xl:gap-20 overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
-        
-        {/* LEFT COLUMN: OFFICIAL POSTER + NARRATIVE DOSSIER (ANCHORED TOWARDS BOTTOM-LEFT) */}
         <div
           className={`flex-1 max-w-4xl flex flex-col sm:flex-row items-start sm:items-end gap-6 sm:gap-8 w-full transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
-          {/* OFFICIAL HIGH-RES THEATRICAL MOVIE POSTER (LEFT-ALIGNED) */}
           <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start">
             <img
               src={posterSrc}
@@ -287,9 +269,7 @@ export default function DeepMovieDetail({
             <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
           </div>
 
-          {/* NARRATIVE INFORMATION (LEFT-ALIGNED) */}
           <div className="flex-1 flex flex-col justify-end min-w-0 pb-1 text-left items-start w-full">
-            {/* Phase & Era Designation */}
             <div className="flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.3em] text-stone-400 uppercase font-semibold">
               <span className="px-2 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
               <span>•</span>
@@ -300,7 +280,6 @@ export default function DeepMovieDetail({
               <span className="text-stone-300">{movie.director}</span>
             </div>
 
-            {/* Large Cinematic Title */}
             <h2
               className={`font-mono font-light text-3xl sm:text-4xl md:text-5xl text-white uppercase leading-tight mt-3 drop-shadow-[0_0_35px_rgba(255,255,255,0.25)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
                 isExpanded
@@ -311,7 +290,6 @@ export default function DeepMovieDetail({
               {movie.title}
             </h2>
 
-            {/* Narrative Synopsis */}
             <div className="mt-4 text-sm text-stone-300 font-sans font-light leading-relaxed">
               <p>{movie.description}</p>
               {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
@@ -343,7 +321,6 @@ export default function DeepMovieDetail({
               )}
             </div>
 
-            {/* Famous Quote Glass Card */}
             {movie.quote && (
               <div className="mt-4 p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md relative max-w-lg shadow-lg">
                 <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
@@ -358,7 +335,6 @@ export default function DeepMovieDetail({
               </div>
             )}
 
-            {/* Key Relics & Artifacts (Clean Borderless & Backgroundless) */}
             {movie.keyRelics && movie.keyRelics.length > 0 && (
               <div className="mt-4">
                 <span className="text-[10px] font-mono tracking-[0.3em] text-stone-400 uppercase block mb-2 font-bold">
@@ -380,13 +356,11 @@ export default function DeepMovieDetail({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: FLOATING VERTICAL TIMELINE NODE & DIRECT CONNECTIONS (ANCHORED TOWARDS BOTTOM-RIGHT) */}
         <div
           className={`w-full lg:w-[400px] xl:w-[440px] flex flex-col items-start lg:items-end justify-end shrink-0 transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
             isExpanded ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-12 blur-sm"
           }`}
         >
-          {/* Vertical Timeline Pin */}
           <div className="flex flex-col items-start lg:items-center mb-5">
             <span className="text-[10.5px] font-mono tracking-[0.35em] uppercase text-stone-400 font-bold mb-1">
               {movie.heroAlias}
@@ -398,7 +372,6 @@ export default function DeepMovieDetail({
             </span>
           </div>
 
-          {/* Direct Connections Narrative Card List (No Glow, No Boundaries) */}
           <div className="w-full bg-transparent p-0">
             <div className="flex items-center justify-between mb-3 pb-1">
               <div className="flex items-center gap-2">
@@ -422,7 +395,6 @@ export default function DeepMovieDetail({
                     onClick={() => onNavigateToConnectedMovie(target)}
                     className="w-full p-2.5 rounded-xl bg-transparent border-0 flex items-start gap-3.5 text-left group cursor-pointer transition-all duration-300 hover:bg-white/[0.04]"
                   >
-                    {/* Small Connection Poster Preview */}
                     <div className="w-10 h-14 rounded-lg overflow-hidden border border-white/10 shrink-0 bg-stone-900">
                       <img
                         src={
