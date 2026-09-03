@@ -83,7 +83,14 @@ export default function TimelineDoomsdayLayout({
         points.push({ x: relativeX, y: relativeY });
       });
 
-      if (points.length < 2) return;
+      if (points.length < 2) {
+        setSketchPaths({
+          primaryD: "",
+          secondaryD: "",
+          whisperD: "",
+        });
+        return;
+      }
 
       let d1 = `M ${points[0].x} ${points[0].y}`;
       let d2 = `M ${points[0].x - 1} ${points[0].y + 1}`;
@@ -219,55 +226,43 @@ export default function TimelineDoomsdayLayout({
 
   return (
     <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-2 sm:px-4 md:px-8 pt-4 pb-28">
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible opacity-35 transition-opacity duration-300">
-        {sketchPaths.primaryD ? (
-          <>
-            <path
-              d={sketchPaths.whisperD}
-              fill="none"
-              stroke="rgba(120, 113, 108, 0.5)"
-              strokeWidth="0.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d={sketchPaths.secondaryD}
-              fill="none"
-              stroke="rgba(168, 162, 158, 0.65)"
-              strokeWidth="1.0"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d={sketchPaths.primaryD}
-              fill="none"
-              stroke="rgba(231, 229, 228, 0.85)"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d={sketchPaths.primaryD}
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.6)"
-              strokeWidth="1.6"
-              strokeDasharray="20 180"
-              className="animate-[dash_10s_linear_infinite]"
-              strokeLinecap="round"
-            />
-          </>
-        ) : (
-          <line
-            x1="50%"
-            y1="0"
-            x2="50%"
-            y2="100%"
-            stroke="rgba(231, 229, 228, 0.7)"
+      {movies.length >= 2 && Boolean(sketchPaths.primaryD) && (
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible opacity-35 transition-opacity duration-300">
+          <path
+            d={sketchPaths.whisperD}
+            fill="none"
+            stroke="rgba(120, 113, 108, 0.5)"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d={sketchPaths.secondaryD}
+            fill="none"
+            stroke="rgba(168, 162, 158, 0.65)"
+            strokeWidth="1.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d={sketchPaths.primaryD}
+            fill="none"
+            stroke="rgba(231, 229, 228, 0.85)"
             strokeWidth="1.3"
             strokeLinecap="round"
+            strokeLinejoin="round"
           />
-        )}
-      </svg>
+          <path
+            d={sketchPaths.primaryD}
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.6)"
+            strokeWidth="1.6"
+            strokeDasharray="20 180"
+            className="animate-[dash_10s_linear_infinite]"
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
 
       {/* Timeline Items */}
       <div className="flex flex-col gap-8 xs:gap-10 sm:gap-14 relative z-10">

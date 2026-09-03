@@ -218,19 +218,11 @@ export default function DarkIntroSelector({
         >
           <source src="/trailers/doctor-doom.3840x2160.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-[#000000]/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/35 to-transparent" />
       </div>
 
       {/* Background Starfield Particles */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
-
-      {/* Top Header Blur Vignette */}
-      <div
-        className={`fixed top-0 inset-x-0 h-28 sm:h-32 pointer-events-none z-20 bg-gradient-to-b from-[#020204]/90 via-[#020204]/60 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-1000 ${
-          introStage === "ready" ? "opacity-100" : "opacity-0"
-        }`}
-        aria-hidden="true"
-      />
 
       {/* 2. Brand Title Header Animation */}
       <div
