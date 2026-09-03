@@ -149,7 +149,7 @@ export default function TimelineScrollableView() {
         }
       } catch {}
     }
-    return "all";
+    return "Earth-616";
   });
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);

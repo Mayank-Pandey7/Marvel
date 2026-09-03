@@ -32,7 +32,7 @@ const MOBILE_OFFSETS = [-8, 12, -5, 10, -10, 7, -9, 13, -6, 8];
 export default function TimelineDoomsdayLayout({
   movies,
   viewMode = "path",
-  earth = "all",
+  earth = "Earth-616",
 }: {
   movies: MovieNode[];
   viewMode?: string;

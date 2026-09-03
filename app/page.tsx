@@ -18,7 +18,8 @@ export default function HomePage() {
   const handleContinueFromIntro = (phase?: number, movieId?: string) => {
     const p = phase === 7 ? "X" : (phase || 1);
     const m = movieId ? `&movie=${movieId}` : "";
-    router.push(`/timeline?phase=${p}${m}`);
+    const e = phase === 7 ? "&earth=all" : "";
+    router.push(`/timeline?phase=${p}${m}${e}`);
   };
 
   return <DarkIntroSelector onContinue={handleContinueFromIntro} />;
