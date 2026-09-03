@@ -64,7 +64,6 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 };
 
 export const EARTH_FILTER_OPTIONS = [
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 68, title: "All Multiverse Timelines" },
   { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 44, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
@@ -72,10 +71,10 @@ export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 1, title: "Marvel Zombies Apocalypse" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 68, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
-  { title: "ALL REALITIES", href: "#all", count: 68 },
   { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 44 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
@@ -83,6 +82,7 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 1 },
+  { title: "ALL REALITIES", href: "#all", count: 68 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
@@ -209,6 +209,10 @@ export default function TimelineScrollableView() {
         url.searchParams.delete("earth");
       } else {
         url.searchParams.set("earth", earthKey);
+      }
+      if (earthKey !== "all" && earthKey !== "Earth-616") {
+        url.searchParams.delete("phase");
+        setActivePhaseFilter("all");
       }
       window.history.replaceState({}, "", url.toString());
     } catch {}
@@ -350,7 +354,8 @@ export default function TimelineScrollableView() {
         list = list.filter((m) => m.earthDesignation === activeEarthFilter);
       }
     }
-    if (activePhaseFilter !== "all") {
+    const isPhaseApplicable = activeEarthFilter === "all" || activeEarthFilter === "Earth-616";
+    if (isPhaseApplicable && activePhaseFilter !== "all") {
       list = list.filter((m) => m.phase === activePhaseFilter);
     }
     if (searchQuery.trim()) {
@@ -525,14 +530,16 @@ export default function TimelineScrollableView() {
         </div>
       </header>
 
-      <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
-        <button
-          onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
-          className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/10"
-        >
-          <span>{activePhaseFilter === "all" ? "ALL PHASES" : activePhaseFilter === 7 ? "PHASE X" : `PHASE ${activePhaseFilter}`}</span>
-        </button>
-      </div>
+      {(activeEarthFilter === "all" || activeEarthFilter === "Earth-616") && (
+        <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
+          <button
+            onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
+            className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/10"
+          >
+            <span>{activePhaseFilter === "all" ? "ALL PHASES" : activePhaseFilter === 7 ? "PHASE X" : `PHASE ${activePhaseFilter}`}</span>
+          </button>
+        </div>
+      )}
 
       {/* Mobile Phase Drawer Modal */}
       {isPhaseDrawerOpen && (
