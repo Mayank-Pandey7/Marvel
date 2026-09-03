@@ -277,7 +277,7 @@ export default function TimelineMoviePage({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams?: { view?: string; phase?: string };
+  searchParams?: { view?: string; phase?: string; earth?: string };
 }) {
   const movie = resolveMovieNode(params.slug);
 
@@ -285,9 +285,11 @@ export default function TimelineMoviePage({
     notFound();
   }
 
-  const viewMode = searchParams?.view || "path";
-  const phaseNum = searchParams?.phase || movie.phase || "1";
-  const backHref = `/timeline?view=${viewMode}&phase=${phaseNum}&movie=${movie.id}`;
+  const viewMode = searchParams?.view || "grid";
+  const rawPhase = searchParams?.phase || (movie.phase === 7 ? "X" : movie.phase) || "1";
+  const phaseNum = rawPhase === "7" ? "X" : rawPhase;
+  const earthParam = searchParams?.earth ? `&earth=${searchParams.earth}` : "";
+  const backHref = `/timeline?view=${viewMode}&phase=${phaseNum}&movie=${movie.id}${earthParam}`;
 
   return <TimelineMovieDetail movie={movie} backHref={backHref} />;
 }

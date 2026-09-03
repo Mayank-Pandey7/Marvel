@@ -19,6 +19,7 @@ import {
   Disc3,
   LayoutGrid,
 } from "lucide-react";
+import { LineNav } from "@/components/line-nav";
 import { IconSwap, IconSwapItem } from "@/components/icon-swap";
 import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
@@ -38,7 +39,7 @@ const TIMELINE_PHASES = [
 ];
 
 const PHASE_FILTERS = [
-  { id: "all", label: "ALL TITLES (62)" },
+  { id: "all", label: "ALL TITLES (64)" },
   { id: 1, label: "PHASE I" },
   { id: 2, label: "PHASE II" },
   { id: 3, label: "PHASE III" },
@@ -61,6 +62,28 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
   wheel: "3D WHEEL",
   grid: "GRID VIEW",
 };
+
+export const EARTH_FILTER_OPTIONS = [
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 68, title: "All Multiverse Timelines" },
+  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 44, title: "The Sacred Timeline (MCU)" },
+  { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
+  { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
+  { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
+  { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
+  { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
+  { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 1, title: "Marvel Zombies Apocalypse" },
+] as const;
+
+export const EARTH_NAV_ITEMS = [
+  { title: "ALL REALITIES", href: "#all", count: 68 },
+  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 44 },
+  { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
+  { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
+  { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
+  { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
+  { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
+  { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 1 },
+];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import { MCU } from "@/data/mcu";
@@ -99,13 +122,56 @@ export default function TimelineScrollableView() {
   const { currentPhase, setCurrentPhase } = useTimelineState();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const [activePhaseFilter, setActivePhaseFilter] = useState<number | "all">("all");
+  const [activePhaseFilter, setActivePhaseFilter] = useState<number | "all">(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const phaseParam = urlParams.get("phase");
+      if (phaseParam === "all") return "all";
+      if (phaseParam) {
+        if (phaseParam.toUpperCase() === "X") return 7;
+        const p = parseInt(phaseParam, 10);
+        if (p >= 1 && p <= 7) return p;
+      }
+    }
+    return "all";
+  });
+  const [activeEarthFilter, setActiveEarthFilter] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const earthParam = urlParams.get("earth");
+      if (earthParam && EARTH_FILTER_OPTIONS.some((o) => o.key === earthParam)) {
+        return earthParam;
+      }
+      try {
+        const savedEarth = localStorage.getItem("mcu_timeline_earth_filter");
+        if (savedEarth && EARTH_FILTER_OPTIONS.some((o) => o.key === savedEarth)) {
+          return savedEarth;
+        }
+      } catch {}
+    }
+    return "all";
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMovie, setSelectedMovie] = useState<MovieNode | null>(null);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
-  const [layoutMode, setLayoutMode] = useState<'path' | 'wheel' | 'grid'>("path");
+  const [layoutMode, setLayoutMode] = useState<LayoutModeKey>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlView = urlParams.get("view") as LayoutModeKey | null;
+      if (urlView && (urlView === "path" || urlView === "wheel" || urlView === "grid")) {
+        return urlView;
+      }
+      try {
+        const savedView = localStorage.getItem("mcu_timeline_view_mode") as LayoutModeKey | null;
+        if (savedView && (savedView === "path" || savedView === "wheel" || savedView === "grid")) {
+          return savedView;
+        }
+      } catch {}
+    }
+    return "grid";
+  });
 
   useEffect(() => {
     const viewParam = searchParams.get("view") as LayoutModeKey | null;
@@ -134,14 +200,35 @@ export default function TimelineScrollableView() {
     } catch {}
   };
 
+  const handleSelectEarth = (earthKey: string) => {
+    setActiveEarthFilter(earthKey);
+    try {
+      localStorage.setItem("mcu_timeline_earth_filter", earthKey);
+      const url = new URL(window.location.href);
+      if (earthKey === "all") {
+        url.searchParams.delete("earth");
+      } else {
+        url.searchParams.set("earth", earthKey);
+      }
+      window.history.replaceState({}, "", url.toString());
+    } catch {}
+  };
+
   // --- STATE SYNCHRONIZATION ---
   useEffect(() => {
+    const earthParam = searchParams.get("earth");
+    if (earthParam && EARTH_FILTER_OPTIONS.some((o) => o.key === earthParam)) {
+      setActiveEarthFilter(earthParam);
+    }
     const phaseParam = searchParams.get("phase");
     const movieParam = searchParams.get("movie");
 
     if (phaseParam) {
       if (phaseParam === "all") {
         setActivePhaseFilter("all");
+      } else if (phaseParam.toUpperCase() === "X") {
+        setActivePhaseFilter(7);
+        setCurrentPhase(7);
       } else {
         const p = parseInt(phaseParam, 10);
         if (p >= 1 && p <= 7) {
@@ -256,6 +343,13 @@ export default function TimelineScrollableView() {
   // Filtered movies
   const filteredMovies = useMemo(() => {
     let list = allMovies;
+    if (activeEarthFilter !== "all") {
+      if (activeEarthFilter === "Earth-616") {
+        list = list.filter((m) => !m.earthDesignation || m.earthDesignation === "Earth-616");
+      } else {
+        list = list.filter((m) => m.earthDesignation === activeEarthFilter);
+      }
+    }
     if (activePhaseFilter !== "all") {
       list = list.filter((m) => m.phase === activePhaseFilter);
     }
@@ -270,7 +364,7 @@ export default function TimelineScrollableView() {
       );
     }
     return list;
-  }, [allMovies, activePhaseFilter, searchQuery]);
+  }, [allMovies, activeEarthFilter, activePhaseFilter, searchQuery]);
 
   // Group filtered movies by phase
   const moviesByPhase = useMemo(() => {
@@ -302,7 +396,7 @@ export default function TimelineScrollableView() {
       setCurrentPhase(phaseId);
       try {
         const url = new URL(window.location.href);
-        url.searchParams.set("phase", String(phaseId));
+        url.searchParams.set("phase", phaseId === 7 ? "X" : String(phaseId));
         url.searchParams.delete("movie");
         window.history.replaceState({}, "", url.toString());
       } catch {}
@@ -366,13 +460,13 @@ export default function TimelineScrollableView() {
         </div>
 
         <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
+          {(activeEarthFilter === "all" || activeEarthFilter === "Earth-616") && (
           <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
             <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-500">
               PHASE:
             </span>
             <div className="flex items-center gap-1 sm:gap-1.5">
-              {[1, 2, 3, 4, 5, 6, 7].map((p) => {
-                const label = p === 7 ? "∞" : String(p);
+              {[1, 2, 3, 4, 5, 6].map((p) => {
                 const isSelected = activePhaseFilter === p;
                 return (
                   <button
@@ -383,12 +477,25 @@ export default function TimelineScrollableView() {
                         ? "text-white font-bold underline underline-offset-4 decoration-white/60"
                         : "text-stone-400 hover:text-white"
                     }`}
-                    title={p === 7 ? "Show Legacy Multiverse" : `Show Phase ${p} Only`}
+                    title={`Show Phase ${p} Only`}
                   >
-                    {label}
+                    {p}
                   </button>
                 );
               })}
+              {activeEarthFilter === "all" && (
+                <button
+                  onClick={() => handleSelectPhase(7)}
+                  className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                    activePhaseFilter === 7
+                      ? "text-white font-bold underline underline-offset-4 decoration-white/60"
+                      : "text-stone-400 hover:text-white"
+                  }`}
+                  title="Show Phase X — Legacy Multiverse"
+                >
+                  X
+                </button>
+              )}
               <button
                 onClick={() => handleSelectPhase("all")}
                 className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1.5 py-0.5 ${
@@ -402,6 +509,7 @@ export default function TimelineScrollableView() {
               </button>
             </div>
           </div>
+          )}
 
           <button
             onClick={() => setSearchOpen(true)}
@@ -422,7 +530,7 @@ export default function TimelineScrollableView() {
           onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
           className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/10"
         >
-          <span>{activePhaseFilter === "all" ? "ALL PHASES" : activePhaseFilter === 7 ? "MULTIVERSE" : `PHASE ${activePhaseFilter}`}</span>
+          <span>{activePhaseFilter === "all" ? "ALL PHASES" : activePhaseFilter === 7 ? "PHASE X" : `PHASE ${activePhaseFilter}`}</span>
         </button>
       </div>
 
@@ -519,7 +627,10 @@ export default function TimelineScrollableView() {
         </div>
       )}
 
-      <div className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex items-center origin-top-right scale-[0.82] sm:scale-100">
+      <div
+        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-start gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
+      >
+        {/* Layout View Switcher (PATH | 3D WHEEL | GRID) */}
         <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl pointer-events-auto whitespace-nowrap">
           {(Object.keys(VIEW_ICONS) as LayoutModeKey[]).map((key) => (
             <button
@@ -535,13 +646,34 @@ export default function TimelineScrollableView() {
             </button>
           ))}
         </div>
+
+        {/* SELECT REALITY pill — same container as PATH VIEW */}
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+            SELECT REALITY
+          </span>
+        </div>
+
+        {/* Earth LineNav — left-aligned under SELECT REALITY pill */}
+        <div className="pointer-events-auto">
+          <LineNav
+            className="w-48 sm:w-56"
+            items={EARTH_NAV_ITEMS}
+            activeHref={`#${activeEarthFilter}`}
+            scrollActiveIntoView={false}
+            onItemClick={(item) => {
+              const key = item.href.replace("#", "");
+              handleSelectEarth(key);
+            }}
+          />
+        </div>
       </div>
 
       <div
         className={`relative z-10 mx-auto flex flex-col gap-4 transition-all duration-500 ease-out ${
           layoutMode === "wheel"
-            ? "w-full max-w-none px-0 pt-24 sm:pt-20 min-h-[calc(100vh-80px)] justify-center"
-            : "max-w-5xl px-3 sm:px-6 md:px-8 pt-28 sm:pt-24 pb-20"
+            ? "w-full max-w-none px-0 pt-28 sm:pt-24 min-h-[calc(100vh-80px)] justify-center"
+            : "max-w-5xl px-3 sm:px-6 md:px-8 pt-32 sm:pt-28 pb-20"
         }`}
       >
         {filteredMovies.length === 0 ? (
@@ -583,6 +715,7 @@ export default function TimelineScrollableView() {
                   id={`phase-section-${phase.id}`}
                   className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
                 >
+                  {phase.id !== 7 && (
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
                     <div className="flex items-center gap-2.5 sm:gap-3">
                       <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
@@ -596,6 +729,7 @@ export default function TimelineScrollableView() {
                       {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
                     </span>
                   </div>
+                  )}
 
                   {phase.id === 7 ? (
                     <div className="flex flex-col gap-8">
@@ -603,6 +737,9 @@ export default function TimelineScrollableView() {
                         { key: "Earth-96283", name: "Sam Raimi Spider-Man Trilogy", badge: "EARTH-96283" },
                         { key: "Earth-120703", name: "The Amazing Spider-Man Duology", badge: "EARTH-120703" },
                         { key: "Earth-10005", name: "Fox Mutant Universe & Wolverine Saga", badge: "EARTH-10005" },
+                        { key: "Earth-121698", name: "Tim Story Fantastic Four Duology", badge: "EARTH-121698" },
+                        { key: "Earth-82111", name: "What If...? Animated Multiverse", badge: "EARTH-82111" },
+                        { key: "Earth-2149", name: "Marvel Zombies Apocalypse", badge: "EARTH-2149" },
                       ].map((earth) => {
                         const earthMovies = movies.filter((m) => m.earthDesignation === earth.key);
                         if (earthMovies.length === 0) return null;
@@ -624,12 +761,19 @@ export default function TimelineScrollableView() {
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                               {earthMovies.map((movie) => {
                                 const posterUrl = getMoviePoster(movie);
+                                const titleClean = movie.title.trim().toLowerCase();
+                                const heroSubtitle =
+                                  movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== titleClean
+                                    ? movie.heroAlias
+                                    : movie.leadCharacter && movie.leadCharacter.trim().toLowerCase() !== titleClean
+                                    ? movie.leadCharacter
+                                    : "";
                                 return (
                                    <Link
                                     key={movie.id}
                                     id={`movie-node-${movie.id}`}
                                     data-movie-id={movie.id}
-                                    href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase}`}
+                                    href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase === 7 ? "X" : movie.phase}&earth=${activeEarthFilter}`}
                                     className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                                   >
                                     <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
@@ -659,10 +803,10 @@ export default function TimelineScrollableView() {
                                       </h3>
                                       <div className="flex items-center justify-between gap-1 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-400">
                                         <span className="truncate text-stone-400">
-                                          {movie.heroAlias || movie.leadCharacter}
+                                          {heroSubtitle}
                                         </span>
                                         {movie.runtime ? (
-                                          <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1">
+                                          <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1 ml-auto">
                                             {movie.runtime} MIN
                                           </span>
                                         ) : null}
@@ -680,12 +824,19 @@ export default function TimelineScrollableView() {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                       {movies.map((movie) => {
                         const posterUrl = getMoviePoster(movie);
+                        const titleClean = movie.title.trim().toLowerCase();
+                        const heroSubtitle =
+                          movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== titleClean
+                            ? movie.heroAlias
+                            : movie.leadCharacter && movie.leadCharacter.trim().toLowerCase() !== titleClean
+                            ? movie.leadCharacter
+                            : "";
                         return (
                           <Link
                             key={movie.id}
                             id={`movie-node-${movie.id}`}
                             data-movie-id={movie.id}
-                            href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase}`}
+                            href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase === 7 ? "X" : movie.phase}&earth=${activeEarthFilter}`}
                             className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                           >
                             <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
@@ -715,10 +866,10 @@ export default function TimelineScrollableView() {
                               </h3>
                               <div className="flex items-center justify-between gap-1 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-400">
                                 <span className="truncate text-stone-400">
-                                  {movie.heroAlias || movie.leadCharacter}
+                                  {heroSubtitle}
                                 </span>
                                 {movie.runtime ? (
-                                  <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1">
+                                  <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1 ml-auto">
                                     {movie.runtime} MIN
                                   </span>
                                 ) : null}
@@ -738,7 +889,7 @@ export default function TimelineScrollableView() {
             key="view-path"
             className="animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           >
-            <TimelineDoomsdayLayout movies={filteredMovies} viewMode={layoutMode} />
+            <TimelineDoomsdayLayout movies={filteredMovies} viewMode={layoutMode} earth={activeEarthFilter} />
           </div>
         )}
       </div>

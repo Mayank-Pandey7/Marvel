@@ -16,7 +16,7 @@ export default function IntroEnPage() {
   }, [router]);
 
   const handleContinueFromIntro = (phase?: number, movieId?: string) => {
-    const p = phase || 1;
+    const p = phase === 7 ? "X" : (phase || 1);
     const m = movieId ? `&movie=${movieId}` : "";
     router.push(`/timeline?phase=${p}${m}`);
   };

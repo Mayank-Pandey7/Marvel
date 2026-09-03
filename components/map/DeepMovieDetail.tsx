@@ -78,8 +78,8 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "she-hulk": "/images/backdrops/she-hulk.jpg",
   "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
   "black-panther-wakanda": "/images/backdrops/black-panther-wakanda-forever.jpg",
-  "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/gotg.jpg",
-  "guardians-holiday": "/images/backdrops/gotg.jpg",
+  "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/guardians-holiday.jpg",
+  "guardians-holiday": "/images/backdrops/guardians-holiday.jpg",
 
   // Phase 5
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
@@ -87,8 +87,8 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
   "guardians-vol3": "/images/backdrops/guardians-vol3.jpg",
   "secret-invasion": "/images/backdrops/secret-invasion.jpg",
-  "loki-season-2": "/images/backdrops/loki.jpg",
-  "loki-s2": "/images/backdrops/loki.jpg",
+  "loki-season-2": "/images/backdrops/loki-s2.jpg",
+  "loki-s2": "/images/backdrops/loki-s2.jpg",
   "the-marvels": "/images/backdrops/the-marvels.jpg",
   "echo": "/images/backdrops/echo.jpg",
   "deadpool-and-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
@@ -117,7 +117,9 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "spider-man-3": "/images/backdrops/spider-man-3.jpg",
   "the-amazing-spider-man": "/images/backdrops/the-amazing-spider-man.jpg",
   "the-amazing-spider-man-2": "/images/backdrops/the-amazing-spider-man-2.jpg",
-  "fantastic-four-2005": "/images/backdrops/fantastic-four.jpg",
+  "fantastic-four-2005": "/images/backdrops/fantastic-four-2005.jpg",
+  "fantastic-four-rise-of-the-silver-surfer": "/images/backdrops/fantastic-four-rise-of-the-silver-surfer.jpg",
+  "f4-rise-of-the-silver-surfer": "/images/backdrops/fantastic-four-rise-of-the-silver-surfer.jpg",
   "logan": "/images/backdrops/logan.jpg",
   "x-men-the-last-stand": "/images/backdrops/x-men-the-last-stand.jpg",
   "x-men-origins-wolverine": "/images/backdrops/x-men-origins-wolverine.jpg",
@@ -129,6 +131,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "deadpool-2": "/images/backdrops/deadpool-2.jpg",
   "dark-phoenix": "/images/backdrops/dark-phoenix.jpg",
   "the-new-mutants": "/images/backdrops/the-new-mutants.jpg",
+  "what-if-s1": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "what-if-s2": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "what-if-s3": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "marvel-zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
 };
 
 export default function DeepMovieDetail({

@@ -35,6 +35,10 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "wandavision": "/images/backdrops/wandavision.jpg",
   "the-falcon-and-the-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
   "loki": "/images/backdrops/loki.jpg",
+  "loki-s1": "/images/backdrops/loki-s1.jpg",
+  "loki-season-1": "/images/backdrops/loki-s1.jpg",
+  "loki-s2": "/images/backdrops/loki-s2.jpg",
+  "loki-season-2": "/images/backdrops/loki-s2.jpg",
   "black-widow": "/images/backdrops/black-widow.jpg",
   "shang-chi": "/images/backdrops/shang-chi.jpg",
   "eternals": "https://image.tmdb.org/t/p/w1280/lFByFSLV5WDJEv3KabbdAF959F2.jpg",
@@ -45,7 +49,7 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "ms-marvel": "/images/backdrops/ms-marvel.jpg",
   "thor-love-and-thunder": "/images/backdrops/thor-love-thunder.jpg",
   "she-hulk-attorney-at-law": "/images/backdrops/she-hulk.jpg",
-  "black-panther-wakanda-forever": "/images/backdrops/black-panther.jpg",
+  "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
   "secret-invasion": "https://image.tmdb.org/t/p/w1280/3rINdUPSy9AklJg74jWHOyUXuZd.jpg",
@@ -62,6 +66,12 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "avengers-doomsday": "/images/backdrops/avengers-doomsday.jpg",
   "avengers-secret-wars": "/images/backdrops/battleworld.jpg",
   "battleworld": "/images/backdrops/battleworld.jpg",
+  "fantastic-four-2005": "/images/backdrops/fantastic-four-2005.jpg",
+  "fantastic-four-rise-of-the-silver-surfer": "/images/backdrops/fantastic-four-rise-of-the-silver-surfer.jpg",
+  "what-if-s1": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "what-if-s2": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "what-if-s3": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
+  "marvel-zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
 };
 
 interface MovieSceneProps {

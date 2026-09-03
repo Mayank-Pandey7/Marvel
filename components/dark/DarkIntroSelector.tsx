@@ -219,7 +219,6 @@ export default function DarkIntroSelector({
           <source src="/trailers/doctor-doom.3840x2160.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-[#000000]/25" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#000000_90%)]" />
       </div>
 
       {/* Background Starfield Particles */}

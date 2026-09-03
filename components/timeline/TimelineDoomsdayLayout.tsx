@@ -32,9 +32,11 @@ const MOBILE_OFFSETS = [-8, 12, -5, 10, -10, 7, -9, 13, -6, 8];
 export default function TimelineDoomsdayLayout({
   movies,
   viewMode = "path",
+  earth = "all",
 }: {
   movies: MovieNode[];
   viewMode?: string;
+  earth?: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -269,10 +271,20 @@ export default function TimelineDoomsdayLayout({
 
       {/* Timeline Items */}
       <div className="flex flex-col gap-8 xs:gap-10 sm:gap-14 relative z-10">
-        {movies.map((movie, idx) => {
+        {/* Build per-Earth position counters */}
+        {(() => {
+          const earthCounters: Record<string, number> = {};
+          const earthPositions: Record<string, number> = {};
+          movies.forEach((m) => {
+            const earth = m.earthDesignation || "Earth-616";
+            earthCounters[earth] = (earthCounters[earth] || 0) + 1;
+            earthPositions[m.id] = earthCounters[earth];
+          });
+
+          return movies.map((movie, idx) => {
           const posterUrl = getMoviePoster(movie);
-          const globalOrderIndex = UNIFIED_MCU_TREE.findIndex((m) => m.id === movie.id);
-          const displayNumber = globalOrderIndex >= 0 ? globalOrderIndex + 1 : idx + 1;
+          const earth = movie.earthDesignation || "Earth-616";
+          const displayNumber = earthPositions[movie.id];
 
           const isEven = idx % 2 === 0;
           const desktopX = DESKTOP_OFFSETS[idx % DESKTOP_OFFSETS.length];
@@ -288,7 +300,7 @@ export default function TimelineDoomsdayLayout({
 
           return (
             <React.Fragment key={movie.id}>
-              {isNewPhase && (
+              {isNewPhase && movie.phase !== 7 && (
                 <div
                   id={`phase-section-${movie.phase}`}
                   className="scroll-mt-36 sm:scroll-mt-28 w-full my-4 sm:my-8 flex items-center justify-center relative z-20 select-none"
@@ -352,7 +364,7 @@ export default function TimelineDoomsdayLayout({
                   className="absolute flex items-center justify-center z-20 -translate-x-1/2"
                 >
                   <Link
-                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase}`}
+                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase === 7 ? "X" : movie.phase}`}
                     className="group/node relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border bg-black border-stone-700 text-stone-300 group-hover/row:border-white group-hover/row:text-white group-hover/row:scale-125 group-hover/row:rotate-12 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold transition-all duration-300 cursor-pointer select-none"
                     title={`View ${movie.title} (${movie.year})`}
                   >
@@ -387,7 +399,7 @@ export default function TimelineDoomsdayLayout({
                   }`}
                 >
                   <Link
-                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase}`}
+                    href={`/timeline/${movie.id}?view=${viewMode || "path"}&phase=${movie.phase === 7 ? "X" : movie.phase}&earth=${earth}`}
                     className="group/card block relative p-1.5 xs:p-2 sm:p-2.5 transition-all duration-400 cursor-pointer group-hover/card:opacity-100 opacity-90 w-full min-w-0 bg-transparent"
                   >
                   <svg
@@ -488,7 +500,12 @@ export default function TimelineDoomsdayLayout({
                       <p className={`text-[9.5px] xs:text-[10.5px] sm:text-[11px] font-mono text-stone-400 mt-1 tracking-wide font-light leading-relaxed group-hover/card:text-stone-200 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] break-words ${
                         isEven ? "group-hover/card:-translate-x-1.5" : "group-hover/card:translate-x-1.5"
                       }`}>
-                        {movie.heroAlias || movie.tagline || movie.leadCharacter}
+                        {movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== movie.title.trim().toLowerCase()
+                          ? movie.heroAlias
+                          : movie.tagline ||
+                            (movie.leadCharacter && movie.leadCharacter.trim().toLowerCase() !== movie.title.trim().toLowerCase()
+                              ? movie.leadCharacter
+                              : "")}
                       </p>
                     </div>
                   </div>
@@ -496,8 +513,9 @@ export default function TimelineDoomsdayLayout({
               </div>
             </div>
           </React.Fragment>
-        );
-      })}
+          );
+        });
+        })()}
       </div>
     </div>
   );

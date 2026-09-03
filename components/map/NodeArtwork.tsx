@@ -406,7 +406,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "FANTASTIC FOUR",
   },
   "blade": {
-    poster: "https://image.tmdb.org/t/p/w780/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/e6ErRnIgKmoBtcKpht3amsMfo52.jpg",
     color: "#eb3b5a",
     fallbackText: "BLADE",
   },
@@ -546,14 +546,39 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "TASM 2",
   },
   "fantastic-four-2005": {
-    poster: "https://image.tmdb.org/t/p/w780/gGl4soq2h74ThUgyVzOHzN2j3ox.jpg",
-    color: "#4bcffa",
+    poster: "https://image.tmdb.org/t/p/w780/9Z68tJxgX9gf4gT0rFZkqUhxRYc.jpg",
+    color: "#0984e3",
     fallbackText: "FANTASTIC FOUR",
+  },
+  "fantastic-four-rise-of-the-silver-surfer": {
+    poster: "https://image.tmdb.org/t/p/w780/pyk3c1a4U6nxRJPljPQbP8elTSU.jpg",
+    color: "#00cec9",
+    fallbackText: "SILVER SURFER",
   },
   "blade-1998": {
     poster: "https://image.tmdb.org/t/p/w780/7eU9wJ8U6Y8zU0Q2s3h4a6W4k7.jpg",
     color: "#eb3b5a",
     fallbackText: "BLADE",
+  },
+  "what-if-s1": {
+    poster: "https://image.tmdb.org/t/p/w780/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg",
+    color: "#4b7bec",
+    fallbackText: "WHAT IF S1",
+  },
+  "what-if-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/3yhoq5LVMgKy9rEriH6ytq9BoJV.jpg",
+    color: "#3867d6",
+    fallbackText: "WHAT IF S2",
+  },
+  "what-if-s3": {
+    poster: "https://image.tmdb.org/t/p/w780/bbGeKXKoualYRYqvFYiv8fPZK0d.jpg",
+    color: "#2d98da",
+    fallbackText: "WHAT IF S3",
+  },
+  "marvel-zombies": {
+    poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
+    color: "#20bf6b",
+    fallbackText: "ZOMBIES",
   },
 };
 
