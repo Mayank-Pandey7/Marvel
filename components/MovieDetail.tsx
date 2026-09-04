@@ -66,7 +66,6 @@ export default function MovieDetail({
         </div>
       </Reveal>
 
-      {}
       {characters.length > 0 && (
         <Reveal delay={140} className="mt-10">
           <h2 className="text-xs font-mono font-bold uppercase tracking-widest text-stone-400 mb-3 flex items-center gap-1.5">
@@ -93,7 +92,6 @@ export default function MovieDetail({
         </Reveal>
       )}
 
-      {}
       <div className="mt-14 flex items-center justify-between border-t border-stone-800 pt-6">
         {prev ? (
           <Link

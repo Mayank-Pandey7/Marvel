@@ -1,6 +1,4 @@
-/**
- * This component is inspired by Devouring Details and Skiper UI.
- */
+
 
 "use client"
 
@@ -23,15 +21,15 @@ export type LineNavItem = {
 
 export type LineNavProps = {
   className?: string
-  /** @fumadocsHref #linenavitem */
+  
   items: LineNavItem[]
-  /** Href of the active item. */
+  
   activeHref?: string
-  /** Scroll the active item into view on mount. */
+  
   scrollActiveIntoView?: boolean
-  /** Alignment of the nav lines and labels ('left' by default, 'right' for right-docked sidebars) */
+  
   align?: "left" | "right"
-  /** Called when an item is clicked. */
+  
   onItemClick?: (
     item: LineNavItem,
     event: React.MouseEvent<HTMLAnchorElement>

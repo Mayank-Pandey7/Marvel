@@ -58,7 +58,7 @@ function resolveDoomsdayMovie(rawSlug: string): MovieNode | null {
   const norm = rawSlug.toLowerCase().trim();
   const canonicalId = DOOMSDAY_SLUG_ALIASES[norm] || norm;
 
-  // 1. Check DOOMSDAY_WATCHLIST first
+  
   const doomsdayMatch = DOOMSDAY_WATCHLIST.find(
     (d) =>
       d.id.toLowerCase() === canonicalId ||

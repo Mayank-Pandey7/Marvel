@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   X,
@@ -19,15 +19,35 @@ import { TonyStarkExperience } from "@/components/ironman/TonyStarkExperience";
 import { CosmicEntityExperience } from "@/components/villains/CosmicEntityExperience";
 import { getTopTierVillain } from "@/data/topTierVillains";
 
-export default function CharacterDetailPage({ params }: { params: { id: string } }) {
-  // Check if character is a Top-Tier Cosmic Entity first
-  const topTierEntity = getTopTierVillain(params.id);
-  if (topTierEntity) {
-    return <CosmicEntityExperience entity={topTierEntity} />;
-  }
-
-  const character = getCharacter(params.id);
+function StandardCharacterDetail({ characterId }: { characterId: string }) {
+  const router = useRouter();
+  const character = getCharacter(characterId);
   if (!character) notFound();
+
+  const handleBack = () => {
+    if (typeof window !== "undefined") {
+      const savedRoute = sessionStorage.getItem("mcu_last_character_route");
+      if (savedRoute) {
+        router.push(savedRoute);
+        return;
+      }
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+    }
+    router.push("/characters");
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleBack();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -60,25 +80,17 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
   const prevCharacter = currentIndex > 0 ? CHARACTERS[currentIndex - 1] : CHARACTERS[CHARACTERS.length - 1];
   const nextCharacter = currentIndex < CHARACTERS.length - 1 ? CHARACTERS[currentIndex + 1] : CHARACTERS[0];
 
-  // If Iron Man / Tony Stark, render the exact copied Iron Man showcase experience
-  if (character.id === "iron-man" || character.id === "tony-stark") {
-    return <TonyStarkExperience />;
-  }
-
   const characterFacePortrait = getCharacterAvatar(character.id);
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
         className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* Synchronized Global Header Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
-        {/* Left Side: Menu Trigger */}
         <button
           onClick={() => setNavMenuOpen(true)}
           className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
@@ -88,27 +100,23 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        {/* Center: Brand Header */}
         <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             MARVEL
           </Link>
         </div>
 
-        {/* Right Side: Return Link */}
-        <Link
-          href="/characters"
+        <button
+          onClick={handleBack}
           className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
           title="Return to Characters Archive (Esc)"
         >
           <X size={18} strokeWidth={1.5} />
-        </Link>
+        </button>
       </header>
 
-      {/* HERO SECTION */}
       <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-28 sm:pt-36 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden">
         
-        {/* Standalone Poster Frame on Right (Fixed in viewport, does not scroll upward with slide) */}
         <div
           className="fixed top-24 sm:top-28 right-6 sm:right-16 md:right-24 lg:right-32 xl:right-40 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/15 bg-stone-950 shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:block transition-all duration-300"
         >
@@ -119,7 +127,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           />
         </div>
 
-        {/* Mobile Background Fallback */}
         <div className="sm:hidden absolute top-0 right-0 w-full h-[50vh] z-0 overflow-hidden pointer-events-none">
           <img
             src={characterFacePortrait}
@@ -129,10 +136,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
         </div>
 
-        {/* Hero Info (Fixed at bottom-left) */}
         <div className="relative z-20 max-w-xl lg:max-w-2xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
 
-          {/* Breadcrumb Tags */}
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] sm:text-[11px] font-mono tracking-wider uppercase text-stone-400">
             <span>{character.universe.split("/")[0].trim()}</span>
             <span className="text-stone-600">/</span>
@@ -141,17 +146,14 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             <span className="text-white font-semibold">{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
           </div>
 
-          {/* Character Name */}
           <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-mono font-bold tracking-[0.08em] xs:tracking-[0.12em] uppercase text-white leading-tight drop-shadow-2xl">
             {character.name}
           </h1>
 
-          {/* Character Overview */}
           <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-xl">
             {character.overview}
           </p>
 
-          {/* Metrics */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-400">
             <div>
               <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
@@ -167,7 +169,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             </div>
           </div>
 
-          {/* Scroll Cue */}
           <div className="pt-4 sm:pt-6 flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 animate-pulse">
             <span>SCROLL FOR MCU TIMELINE CHRONOLOGY</span>
             <ChevronDown size={14} />
@@ -177,10 +178,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-16 flex flex-col gap-8 sm:gap-12">
 
-        {}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl">
           <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
             MCU CHRONOLOGICAL TIMELINE
@@ -190,7 +189,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </span>
         </div>
 
-        {}
         <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-16 max-w-4xl">
           {character.eras.map((era, idx) => {
             const eraBackdrop = getCharacterBackdrop(character.id, era.eraId, era.phase);
@@ -198,10 +196,8 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             return (
               <div key={era.eraId || idx} className="relative flex flex-col gap-4 group">
 
-                {}
                 <span className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-3.5 h-3.5 rounded-full bg-black border-2 border-stone-500 group-hover:border-white transition-colors" />
 
-                {}
                 <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase">
                   <span className="text-stone-300 font-bold">
                     PHASE {era.phase}
@@ -210,12 +206,10 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
                   <span className="text-stone-400">{era.year}</span>
                 </div>
 
-                {}
                 <h3 className="text-2xl sm:text-3xl font-mono font-bold tracking-wider text-white uppercase leading-snug">
                   {era.title}
                 </h3>
 
-                {}
                 <div className="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden bg-stone-950 border border-white/10 shadow-2xl my-2">
                   <img
                     src={eraBackdrop}
@@ -225,12 +219,10 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 </div>
 
-                {}
                 <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-300 leading-relaxed max-w-3xl">
                   {era.description}
                 </p>
 
-                {}
                 {era.keyMoments && era.keyMoments.length > 0 && (
                   <div className="mt-2 space-y-2 max-w-2xl">
                     <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-stone-500 block mb-1">
@@ -252,7 +244,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
 
       </section>
 
-      {}
       {movieEntries.length > 0 && (
         <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8">
 
@@ -303,12 +294,9 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </section>
       )}
 
-      {}
       <footer className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 py-12 sm:py-16 flex flex-col gap-6 items-center">
 
-        {}
         <div className="w-full flex items-center justify-between gap-4">
-          {}
           <Link
             href={`/characters/${prevCharacter.id}`}
             className="group flex items-center gap-2 sm:gap-3 text-stone-400 hover:text-white transition-colors max-w-[45%]"
@@ -322,7 +310,6 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             </div>
           </Link>
 
-          {}
           <Link
             href={`/characters/${nextCharacter.id}`}
             className="group flex items-center justify-end gap-2 sm:gap-3 text-stone-400 hover:text-white transition-colors text-right max-w-[45%]"
@@ -337,19 +324,30 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
           </Link>
         </div>
 
-        {}
-        <Link
-          href="/characters"
+        <button
+          onClick={handleBack}
           className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 hover:text-white transition-colors cursor-pointer py-1"
         >
-          VIEW ALL CHARACTERS
-        </Link>
+          RETURN TO ARCHIVE
+        </button>
 
       </footer>
 
-      {}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
     </div>
   );
+}
+
+export default function CharacterDetailPage({ params }: { params: { id: string } }) {
+  const topTierEntity = getTopTierVillain(params.id);
+  if (topTierEntity) {
+    return <CosmicEntityExperience entity={topTierEntity} />;
+  }
+
+  if (params.id === "iron-man" || params.id === "tony-stark") {
+    return <TonyStarkExperience />;
+  }
+
+  return <StandardCharacterDetail characterId={params.id} />;
 }

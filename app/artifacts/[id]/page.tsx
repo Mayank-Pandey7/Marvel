@@ -37,7 +37,7 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
   const prevArtifact = currentIndex > 0 ? ARTIFACTS[currentIndex - 1] : ARTIFACTS[ARTIFACTS.length - 1];
   const nextArtifact = currentIndex < ARTIFACTS.length - 1 ? ARTIFACTS[currentIndex + 1] : ARTIFACTS[0];
 
-  // Match MCU movie appearances based on artifact history and names
+  
   const movieEntries = useMemo(() => {
     const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
     const artifactIdNorm = normalize(artifact.id);
@@ -71,15 +71,12 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-      {/* Header Backdrop Blur */}
       <div
         className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* Synchronized Global Header Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
-        {/* Left Side: Menu Trigger */}
         <button
           onClick={() => setNavMenuOpen(true)}
           className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
@@ -89,14 +86,12 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
           <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        {/* Center: Brand Header */}
         <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             MARVEL
           </Link>
         </div>
 
-        {/* Right Side: Return Link to /artifacts */}
         <Link
           href="/artifacts"
           className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
@@ -106,10 +101,8 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
         </Link>
       </header>
 
-      {/* 1. HERO SHOWCASE SECTION */}
       <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-[52vh] sm:pt-48 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden bg-[#000000]">
 
-        {/* Full Cinematic Art Window with Gradient Blends */}
         <div
           className="absolute top-0 right-0 left-0 sm:left-auto w-full sm:w-[80%] md:w-[70%] lg:w-[62%] h-[44vh] sm:h-[65vh] lg:h-full z-0 overflow-hidden flex items-start sm:items-center justify-center sm:justify-end pointer-events-none [mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)] sm:[mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)]"
         >
@@ -118,7 +111,6 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
             alt={artifact.name}
             className="w-full h-full object-cover object-top sm:object-[right_top] md:object-[right_top] filter brightness-95 contrast-105"
           />
-          {/* Subtle Ambient Theme Color Aura */}
           <div
             className="absolute inset-0 opacity-20 mix-blend-screen pointer-events-none"
             style={{

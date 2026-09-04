@@ -170,7 +170,7 @@ export const PHASES_CONFIG = [
 ];
 
 export const UNIFIED_MCU_TREE: MovieNode[] = [
-  // Phase 1: The Infinity Saga — Origins
+  
   {
     id: "iron-man",
     title: "Iron Man",
@@ -1473,11 +1473,11 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // =========================================================================
-  // Legacy Multiverse Canon: Categorized by Parallel Earth Continuity
-  // =========================================================================
+  
+  
+  
 
-  // --- EARTH-96283: SAM RAIMI SPIDER-MAN TRILOGY (Peter-Two) ---
+  
   {
     id: "spider-man-2002",
     title: "Spider-Man",
@@ -1559,7 +1559,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // --- EARTH-120703: THE AMAZING SPIDER-MAN DUOLOGY (Peter-Three) ---
+  
   {
     id: "the-amazing-spider-man",
     title: "The Amazing Spider-Man",
@@ -1614,7 +1614,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // --- EARTH-10005: FOX X-MEN & MUTANT TIMELINE ---
+  
   {
     id: "x-men-2000",
     title: "X-Men",
@@ -1960,7 +1960,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // --- EARTH-121698: TIM STORY FANTASTIC FOUR DUOLOGY ---
+  
   {
     id: "fantastic-four-2005",
     title: "Fantastic Four",
@@ -2015,7 +2015,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // --- EARTH-82111: WHAT IF...? ANIMATED MULTIVERSE ---
+  
   {
     id: "what-if-s1",
     title: "What If...? (Season 1)",
@@ -2096,7 +2096,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     ],
   },
 
-  // --- EARTH-2149: MARVEL ZOMBIES APOCALYPSE ---
+  
   {
     id: "marvel-zombies",
     title: "Marvel Zombies",

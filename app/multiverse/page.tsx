@@ -162,7 +162,6 @@ function MultiverseContent() {
     return (
       <div className="relative w-screen h-screen bg-black text-stone-200 font-sans selection:bg-white selection:text-black overflow-hidden select-none">
 
-        {}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {filteredUniverses.map((univ, idx) => {
             const isActive = idx === activeIndex;
@@ -192,11 +191,9 @@ function MultiverseContent() {
             );
           })}
 
-          {}
           <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/55 to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50 z-10 pointer-events-none" />
 
-          {}
           <div
             className="absolute inset-0 pointer-events-none z-15 will-change-[opacity,transform]"
             style={{
@@ -240,13 +237,10 @@ function MultiverseContent() {
           </button>
         </header>
 
-        {}
         <main className="relative z-20 w-full h-full px-6 sm:px-12 md:px-16 flex flex-col justify-between pt-24 pb-12">
 
-          {}
           <div className="h-2" />
 
-          {}
           <div className="w-full max-w-3xl my-auto">
 
             <div
@@ -267,17 +261,14 @@ function MultiverseContent() {
                 <span>{currentUniverse.designation}</span>
               </div>
 
-              {}
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-[0.14em] uppercase text-white leading-tight">
                 {currentUniverse.name}
               </h1>
 
-              {}
               <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-2xl">
                 {currentUniverse.description}
               </p>
 
-              {}
               <div
                 className="mt-2 p-3.5 sm:p-4 bg-black/50 backdrop-blur-md border-l-2 flex flex-col gap-1 max-w-2xl rounded-r-lg"
                 style={{ borderColor: currentUniverse.color }}
@@ -291,7 +282,6 @@ function MultiverseContent() {
                 </p>
               </div>
 
-              {}
               <div className="mt-1 flex flex-wrap items-center gap-3 text-xs font-mono">
                 <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
                   <span className="text-[9px] uppercase tracking-widest text-stone-500">ANCHOR:</span>
@@ -304,7 +294,6 @@ function MultiverseContent() {
                 </div>
               </div>
 
-              {}
               {currentUniverse.keyInhabitants && currentUniverse.keyInhabitants.length > 0 && (
                 <div className="mt-1 flex flex-wrap gap-1.5 max-w-2xl">
                   {currentUniverse.keyInhabitants.map((inh, i) => (
@@ -318,7 +307,6 @@ function MultiverseContent() {
                 </div>
               )}
 
-              {}
               <div className="mt-4 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-stone-500 max-w-2xl">
                 <span>DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
                 <Link
@@ -336,10 +324,8 @@ function MultiverseContent() {
 
         </main>
 
-        {}
         <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-        {}
         <style jsx global>{`
           @keyframes waveUp {
             0% {
@@ -391,10 +377,8 @@ function MultiverseContent() {
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 
-          {}
           <div className="flex flex-col gap-6 pb-2">
 
-            {}
             <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
               <Search size={15} className="text-stone-500 shrink-0 mr-3" />
               <input
@@ -414,7 +398,6 @@ function MultiverseContent() {
               )}
             </div>
 
-            {}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
                 {CATEGORIES.map((c) => (
@@ -435,7 +418,6 @@ function MultiverseContent() {
 
           </div>
 
-          {}
           {filteredUniverses.length === 0 ? (
             <div className="text-center py-28">
               <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
@@ -464,7 +446,6 @@ function MultiverseContent() {
                     className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
                   >
 
-                    {}
                     <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-lg">
                       <img
                         src={universe.backdrop}
@@ -476,20 +457,16 @@ function MultiverseContent() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                     </div>
 
-                    {}
                     <div className="flex flex-col gap-1">
 
-                      {}
                       <h2 className="text-sm sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
                         {universe.name}
                       </h2>
 
-                      {}
                       <div className="text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
                         {universe.designation.split("/")[0].trim()} · {universe.anchorBeing.split("(")[0].trim()}
                       </div>
 
-                      {}
                       <div className="pt-1 flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
                         <span>EXPLORE REALITY</span>
                         <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />

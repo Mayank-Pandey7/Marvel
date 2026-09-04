@@ -83,10 +83,8 @@ function ArtifactsContent() {
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
 
-          {/* 1. TOP SEARCH & CONTROLS */}
           <div className="flex flex-col gap-5 pb-2">
 
-            {/* Top Bar: Title & Search Input */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
               <div className="flex items-center gap-3">
                 <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
@@ -94,7 +92,6 @@ function ArtifactsContent() {
                 </span>
               </div>
 
-              {/* Fixed-length Search Input Bar */}
               <div className="relative w-full sm:w-80 md:w-96 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 sm:py-2.5 rounded-full focus-within:border-white/30 transition-all">
                 <Search size={14} className="text-stone-400 shrink-0 mr-3" />
                 <input
@@ -116,7 +113,6 @@ function ArtifactsContent() {
 
             </div>
 
-            {/* Category Filter Buttons */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
                 {CATEGORIES.map((c) => (

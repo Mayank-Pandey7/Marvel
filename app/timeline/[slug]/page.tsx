@@ -6,7 +6,7 @@ import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import TimelineMovieDetail from "@/components/timeline/TimelineMovieDetail";
 
 const MOVIE_SLUG_ALIASES: Record<string, string> = {
-  // Common short slugs & canonical aliases
+  
   "hulk": "the-incredible-hulk",
   "the-hulk": "the-incredible-hulk",
   "ironman": "iron-man",
@@ -168,7 +168,7 @@ function resolveMovieNode(rawSlug: string): MovieNode | null {
   const norm = rawSlug.toLowerCase().trim();
   const canonicalId = MOVIE_SLUG_ALIASES[norm] || norm;
 
-  // 1. Check UNIFIED_MCU_TREE
+  
   const directTreeMatch = UNIFIED_MCU_TREE.find(
     (m) =>
       m.id.toLowerCase() === canonicalId ||
@@ -177,7 +177,7 @@ function resolveMovieNode(rawSlug: string): MovieNode | null {
   );
   if (directTreeMatch) return directTreeMatch;
 
-  // 2. Check DOOMSDAY_WATCHLIST (covers X-Men 2000, X2, etc.)
+  
   const doomsdayMatch = DOOMSDAY_WATCHLIST.find(
     (d) =>
       d.id.toLowerCase() === canonicalId ||

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   X,
@@ -18,8 +19,34 @@ interface CosmicEntityExperienceProps {
 }
 
 export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) {
+  const router = useRouter();
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const handleBack = () => {
+    if (typeof window !== "undefined") {
+      const savedRoute = sessionStorage.getItem("mcu_last_character_route");
+      if (savedRoute) {
+        router.push(savedRoute);
+        return;
+      }
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+    }
+    router.push("/characters/villains?tab=top-tier");
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleBack();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -36,7 +63,6 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-      {/* Dynamic Cosmic Ambient Radial Glow */}
       <div 
         className="fixed top-0 right-0 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full pointer-events-none z-0 opacity-15 blur-[120px] transition-all duration-1000"
         style={{
@@ -45,13 +71,11 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
         aria-hidden="true"
       />
 
-      {/* Header Backdrop Blur */}
       <div
         className="fixed top-0 inset-x-0 h-20 sm:h-24 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* Global Header Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
         <button
           onClick={() => setNavMenuOpen(true)}
@@ -68,14 +92,14 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
           </Link>
         </div>
 
-        <Link
-          href="/characters/villains/top-tier"
+        <button
+          onClick={handleBack}
           className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto flex items-center gap-1.5 text-xs font-mono"
-          title="Return to Top Tier Ranking"
+          title="Return to Hierarchy / Archives (Esc)"
         >
-          <span className="hidden sm:inline text-[10px] tracking-wider text-stone-400">RANKING</span>
+          <span className="hidden sm:inline text-[10px] tracking-wider text-stone-400">RETURN</span>
           <X size={18} strokeWidth={1.5} />
-        </Link>
+        </button>
       </header>
 
       {/* HERO SECTION */}
@@ -132,7 +156,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
             </h1>
             {entity.alias && entity.alias !== entity.name && (
               <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
-                // {entity.alias}
+                {entity.alias}
               </p>
             )}
           </div>
@@ -230,7 +254,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
               {/* Iconic Quote */}
               {feat.quote && (
                 <div className="border-l-2 border-stone-600 pl-3.5 py-1 text-xs font-mono italic text-stone-400 my-1">
-                  "{feat.quote}"
+                  &ldquo;{feat.quote}&rdquo;
                 </div>
               )}
 
@@ -326,6 +350,12 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
           </Link>
         </div>
 
+        <button
+          onClick={handleBack}
+          className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 hover:text-white transition-colors cursor-pointer py-1"
+        >
+          RETURN TO ARCHIVE
+        </button>
       </footer>
 
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />

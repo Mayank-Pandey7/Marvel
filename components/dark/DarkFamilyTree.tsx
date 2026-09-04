@@ -1028,7 +1028,6 @@ export default function DarkFamilyTree({
         </button>
       </div>
 
-      {}
       {isPhaseDrawerOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex select-none animate-in fade-in duration-200">
           <div
@@ -1037,7 +1036,6 @@ export default function DarkFamilyTree({
           />
           <aside className="relative z-10 w-full max-w-[320px] bg-[#000000] border-r border-stone-900 h-full p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-left duration-300 shadow-[20px_0_50px_rgba(0,0,0,0.9)]">
             <div>
-              {}
               <div className="flex items-center justify-between pb-4 border-b border-stone-900 mb-6">
                 <span className="text-xs font-mono font-bold tracking-[0.35em] uppercase text-white">
                   SACRED FAMILY TREE
@@ -1051,7 +1049,6 @@ export default function DarkFamilyTree({
                 </button>
               </div>
 
-              {}
               <div className="border-b border-stone-900/80 pb-6 mb-6">
                 <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-3.5">
                   REVEAL UP TO PHASE
@@ -1084,7 +1081,6 @@ export default function DarkFamilyTree({
                 </div>
               </div>
 
-              {}
               <div>
                 <div className="font-mono text-[11px] tracking-[0.25em] uppercase text-stone-300 font-bold mb-2">
                   SPOILER FILTER
@@ -1095,7 +1091,6 @@ export default function DarkFamilyTree({
               </div>
             </div>
 
-            {}
             <div className="pt-6 border-t border-stone-900 flex items-center justify-between text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
               <span>{visibleNodes.length} HEROES VISIBLE</span>
               <span>PHASE {spoilerPhase}</span>
@@ -1104,11 +1099,8 @@ export default function DarkFamilyTree({
         </div>
       )}
 
-      {}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-      {}
-      {}
       {/* Canvas Layer */}
       <div
         ref={contentLayerRef}
@@ -1269,7 +1261,6 @@ export default function DarkFamilyTree({
                 containIntrinsicSize: "160px 190px",
               }}
             >
-              {}
               <div
                 className={`relative w-[110px] h-[142px] bg-[#09090d] rounded-sm border transition-colors duration-200 overflow-hidden ${
                   isSelected
@@ -1292,7 +1283,6 @@ export default function DarkFamilyTree({
                 ) : (
 
                   <div className="relative w-full h-full bg-[#0d0d14] flex items-center justify-center">
-                    {}
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-1.5 bg-gradient-to-b from-stone-900 to-black pointer-events-none">
                       <span className="font-mono text-lg font-bold text-stone-400 uppercase tracking-widest">
                         {node.name.split(" ").map(w => w[0]).slice(0, 2).join("")}
@@ -1312,16 +1302,13 @@ export default function DarkFamilyTree({
                       }}
                     />
 
-                    {}
                     <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none z-20" />
 
-                    {}
                     <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/60 group-hover:bg-white shadow-[0_0_4px_rgba(255,255,255,0.6)] transition-colors z-20" />
                   </div>
                 )}
               </div>
 
-              {}
               <div className="mt-2 flex flex-col items-center text-center w-full max-w-[160px] px-1 pointer-events-none z-20">
                 <h3
                   className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 max-w-full px-2 py-0.5 rounded bg-black/85 backdrop-blur-[2px] transition-colors ${
@@ -1369,12 +1356,8 @@ export default function DarkFamilyTree({
         </button>
       </div>
 
-      {}
-      {}
-      {}
       {selectedNode && (
         <>
-          {}
           <div
             onClick={() => setSelectedNode(null)}
             className="md:hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-xs"
@@ -1382,10 +1365,8 @@ export default function DarkFamilyTree({
 
           <aside className="dossier-card fixed bottom-0 md:top-0 right-0 left-0 md:left-auto z-50 w-full md:max-w-[400px] max-h-[86vh] md:max-h-full bg-black/95 border-t md:border-t-0 md:border-l border-white/10 p-5 sm:p-7 shadow-[0_0_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl flex flex-col justify-between overflow-y-auto rounded-t-2xl md:rounded-none animate-in slide-in-from-bottom md:slide-in-from-right duration-300">
             <div>
-              {}
               <div className="md:hidden w-10 h-1 bg-stone-700 rounded-full mx-auto mb-3.5" />
 
-              {}
               <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
                 <div className="flex items-center gap-2 text-[10px] font-mono tracking-[0.25em] uppercase text-stone-400">
                   <span className="text-white font-bold">{selectedNode.clusterLabel}</span>
@@ -1401,7 +1382,6 @@ export default function DarkFamilyTree({
                 </button>
               </div>
 
-              {}
               <div className="mt-5 flex gap-4 items-start">
                 <div className="w-20 sm:w-24 h-28 sm:h-32 rounded-xl border border-white/10 bg-stone-950 overflow-hidden shrink-0 shadow-2xl relative">
                   {selectedNode.isMystery ? (
@@ -1438,7 +1418,6 @@ export default function DarkFamilyTree({
                 </div>
               </div>
 
-              {}
               <div className="mt-5">
                 <h4 className="text-[9.5px] font-mono tracking-[0.3em] uppercase text-stone-500 font-bold mb-1.5">
                   NARRATIVE DOSSIER
@@ -1450,7 +1429,6 @@ export default function DarkFamilyTree({
                 </p>
               </div>
 
-              {}
               <div className="mt-5">
                 <h4 className="text-[9.5px] font-mono tracking-[0.3em] uppercase text-stone-500 font-bold mb-2">
                   DIRECT GENEALOGICAL CONNECTIONS
@@ -1501,7 +1479,6 @@ export default function DarkFamilyTree({
                 </div>
               </div>
 
-              {}
               {fullCharacterData &&
                 fullCharacterData.artifactsPossessed.length > 0 && (
                   <div className="mt-5">
@@ -1523,7 +1500,6 @@ export default function DarkFamilyTree({
                 )}
             </div>
 
-            {}
             {selectedNode.characterId && (
               <div className="pt-4 border-t border-white/10 mt-5">
                 <Link
@@ -1539,7 +1515,6 @@ export default function DarkFamilyTree({
         </>
       )}
 
-      {}
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </div>
   );

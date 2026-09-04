@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 
-// 100% Verified High-Resolution Official TMDB Posters & Badges for All MCU Entries
+
 export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fallbackText: string }> = {
-  // Phase 1: Infinity Saga Origins
+  
   "iron-man": {
     poster: "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
     color: "#e55039",
@@ -51,7 +51,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "THE AVENGERS",
   },
 
-  // Phase 2: Escalation
+  
   "iron-man-3": {
     poster: "https://image.tmdb.org/t/p/w780/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg",
     color: "#e55039",
@@ -98,7 +98,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "ANT-MAN",
   },
 
-  // Phase 3: Reckoning
+  
   "cap-civil-war": {
     poster: "https://image.tmdb.org/t/p/w780/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
     color: "#3867d6",
@@ -190,7 +190,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "FAR FROM HOME",
   },
 
-  // Phase 4: Multiverse Saga Origins
+  
   "wandavision": {
     poster: "https://image.tmdb.org/t/p/w780/ijWWwINc8h71NQ8j1LTJMFSj5wr.jpg",
     color: "#eb3b5a",
@@ -312,7 +312,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "GOTG SPECIAL",
   },
 
-  // Phase 5: Fractures
+  
   "ant-man-quantumania": {
     poster: "https://image.tmdb.org/t/p/w780/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg",
     color: "#ff4757",
@@ -394,7 +394,7 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "THUNDERBOLTS*",
   },
 
-  // Phase 6: Convergence
+  
   "fantastic-four": {
     poster: "/images/posters/the-fantastic-four-first-steps.jpg",
     color: "#4bcffa",
@@ -579,6 +579,26 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     color: "#20bf6b",
     fallbackText: "ZOMBIES",
+  },
+  "venom-2018": {
+    poster: "https://image.tmdb.org/t/p/w780/2uNW4Wbg2DiG5MEdx0vAG6CVPgG.jpg",
+    color: "#475569",
+    fallbackText: "VENOM",
+  },
+  "venom": {
+    poster: "https://image.tmdb.org/t/p/w780/2uNW4Wbg2DiG5MEdx0vAG6CVPgG.jpg",
+    color: "#475569",
+    fallbackText: "VENOM",
+  },
+  "venom-let-there-be-carnage": {
+    poster: "https://image.tmdb.org/t/p/w780/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+    color: "#dc2626",
+    fallbackText: "VENOM 2",
+  },
+  "venom-the-last-dance": {
+    poster: "https://image.tmdb.org/t/p/w780/aosm8Vh9il4GvIQgMg0rgiKc6Te.jpg",
+    color: "#6366f1",
+    fallbackText: "VENOM 3",
   },
 };
 

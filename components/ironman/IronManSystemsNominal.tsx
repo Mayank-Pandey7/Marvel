@@ -21,7 +21,7 @@ export function IronManSystemsNominal() {
       <div className="mx-auto flex max-w-6xl flex-col gap-14 md:grid md:grid-cols-[5fr_4fr] md:gap-16">
         <AnimatedSection className="flex flex-col gap-6">
           <AnimatedItem>
-            <EyebrowBadge>J.A.R.V.I.S. // SYSTEMS NOMINAL</EyebrowBadge>
+            <EyebrowBadge>J.A.R.V.I.S. Final Telemetry</EyebrowBadge>
           </AnimatedItem>
           <AnimatedItem>
             <h2 className="max-w-[16ch] font-sans text-4xl font-bold leading-[0.98] tracking-tighter text-white md:text-6xl">

@@ -27,7 +27,7 @@ import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
 import AmbientAudio from "@/components/dark/AmbientAudio";
 
-// --- CONFIGURATION ---
+
 const TIMELINE_PHASES = [
   { id: 1, roman: "I", label: "PHASE I", title: "THE INFINITY SAGA — ORIGINS", years: "2008 — 2012", desc: "The birth of heroes, the formation of the Avengers, and the defense of New York." },
   { id: 2, roman: "II", label: "PHASE II", title: "THE INFINITY SAGA — ESCALATION", years: "2013 — 2015", desc: "Cosmic expansion, the fall of S.H.I.E.L.D., and the dawn of Ultron." },
@@ -39,7 +39,7 @@ const TIMELINE_PHASES = [
 ];
 
 const PHASE_FILTERS = [
-  { id: "all", label: "ALL TITLES (64)" },
+  { id: "all", label: "ALL TITLES (71)" },
   { id: 1, label: "PHASE I" },
   { id: 2, label: "PHASE II" },
   { id: 3, label: "PHASE III" },
@@ -66,29 +66,31 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 44, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
+  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Sony's Spider-Man Universe (Venom Trilogy)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
   { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 1, title: "Marvel Zombies Apocalypse" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 68, title: "All Multiverse Timelines" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 71, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
   { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 44 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
+  { title: "EARTH-688 • SONY SPIDER-MAN UNIVERSE", href: "#Earth-688", count: 3 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
   { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 1 },
-  { title: "ALL REALITIES", href: "#all", count: 68 },
+  { title: "ALL REALITIES", href: "#all", count: 71 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import { MCU } from "@/data/mcu";
 
-// --- POSTER RESOLUTION ---
+
 export function getMoviePoster(node: { id: string; posterUrl?: string }) {
   const posterEntry =
     MCU_POSTER_MAP[node.id] ||
@@ -109,7 +111,7 @@ export function getMoviePoster(node: { id: string; posterUrl?: string }) {
   if (!poster) return "https://image.tmdb.org/t/p/w780/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg";
 
   if (poster.includes("image.tmdb.org/t/p/")) {
-    return poster.replace(/\/t\/p\/[^/]+\//, "/t/p/w780/");
+    return poster.replace(new RegExp("/t/p/[^/]+"), "/t/p/w780");
   }
 
   return poster;
@@ -124,7 +126,6 @@ export function formatDuration(minutes?: number): string {
   return `${m}m`;
 }
 
-// --- TIMELINE VIEW COMPONENT ---
 export default function TimelineScrollableView() {
   const router = useRouter();
   const searchParams = useSearchParams();

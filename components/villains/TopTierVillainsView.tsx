@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Search, Layers } from "lucide-react";
+import { Search } from "lucide-react";
 import { TOP_TIER_VILLAINS } from "@/data/topTierVillains";
 import StampTopTierCard from "@/components/villains/StampTopTierCard";
 
@@ -14,7 +14,11 @@ const TIER_FILTERS = [
   { id: "high", label: "HIGH & VARIABLE" },
 ];
 
-export default function TopTierVillainsView() {
+export default function TopTierVillainsView({
+  topHeaderSlot,
+}: {
+  topHeaderSlot?: React.ReactNode;
+} = {}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTier, setSelectedTier] = useState("all");
 
@@ -54,25 +58,26 @@ export default function TopTierVillainsView() {
 
   return (
     <div className="flex flex-col gap-8 pb-16">
-      {/* 1. FILTER & SEARCH BAR */}
-      <div className="flex flex-col gap-5 bg-stone-950/60 p-4 sm:p-6 rounded-2xl border border-stone-800/80 backdrop-blur-md">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-stone-300">
-            <Layers size={18} className="text-purple-400" />
-            <span className="text-xs sm:text-sm font-mono tracking-[0.2em] uppercase font-bold text-white">
-              COSMIC ENTITIES &amp; POWER HIERARCHY
-            </span>
+      <div className="flex flex-col gap-5 pb-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full pb-4 border-b border-stone-800/80">
+          <div className="flex items-center gap-3">
+            {topHeaderSlot ? (
+              topHeaderSlot
+            ) : (
+              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                COSMIC ENTITIES &amp; POWER HIERARCHY · {filteredVillains.length}
+              </span>
+            )}
           </div>
 
-          {/* Search Box */}
-          <div className="relative flex items-center min-w-[240px] sm:min-w-[280px]">
-            <Search size={14} className="absolute left-3 text-stone-500 pointer-events-none" />
+          <div className="relative w-full sm:w-80 md:w-96 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 sm:py-2.5 rounded-full focus-within:border-white/30 transition-all">
+            <Search size={14} className="text-stone-400 shrink-0 mr-3" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="SEARCH ENTITY OR DOMAIN..."
-              className="w-full bg-stone-900/90 border border-stone-800 rounded-lg pl-8 pr-3 py-1.5 text-xs font-mono text-stone-200 placeholder:text-stone-600 focus:outline-none focus:border-stone-600 tracking-wider uppercase transition-colors"
+              className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
             />
             {searchQuery && (
               <button
@@ -85,7 +90,6 @@ export default function TopTierVillainsView() {
           </div>
         </div>
 
-        {/* Tier Filter Buttons */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
             {TIER_FILTERS.map((f) => (

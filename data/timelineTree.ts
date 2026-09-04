@@ -121,6 +121,23 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
       "Loki binds thousands of dying branch timelines with living green temporal magic",
       "Loki sits upon the throne as God of Stories, keeping infinite realities alive"
     ]
+  },
+  {
+    id: "earth-688",
+    name: "Earth-688 (Sony's Spider-Man Universe / SSU)",
+    divergencePoint: "Life Foundation Space Probe Crash",
+    phase: 7,
+    year: "2018–2024",
+    status: "active",
+    color: "#64748b",
+    description: "Home universe of Eddie Brock and the Venom symbiote. Traversed multiversally into Earth-616 during Strange's containment rift, leaving a living symbiote offshoot behind.",
+    catalyst: "Life Foundation probe & Doctor Strange's fractured spell",
+    keyEvents: [
+      "Eddie Brock bonds with Venom and defeats Riot & Carlton Drake (2018)",
+      "Carnage unleashes chaos at San Quentin before being consumed (2021)",
+      "Eddie Brock temporarily displaced to Earth-616, leaving a symbiote remnant (2024)",
+      "Venom sacrifices himself against Knull's Xenophages to destroy the Codex (2024)"
+    ]
   }
 ];
 
@@ -203,6 +220,22 @@ export const NEXUS_EVENTS: NexusEvent[] = [
       "Freed all multiverse realities from TVA pruning mandates",
       "Left Loki eternally anchored alone upon the throne keeping existence from collapsing",
       "Allowed the Fantastic Four, X-Men, and alternate universes to exist simultaneously"
+    ]
+  },
+  {
+    id: "nexus-venom-symbiote-seed",
+    title: "The Symbiote Hive-Mind Incursion Remnant",
+    phase: 4,
+    year: "2024",
+    universe: "Earth-688 / Earth-616",
+    culprit: "Eddie Brock & Venom (SSU Variant)",
+    threatLevel: "ALPHA",
+    description: "Transported to Earth-616 when Doctor Strange's spell pulled beings who share multiversal knowledge of Peter Parker. Upon being returned to Earth-688, a sentient black drop of the Venom symbiote broke off on an Earth-616 bar counter.",
+    impact: "Introduced living Klyntar symbiote biomass directly into the Sacred Timeline Earth-616 ecosystem.",
+    consequences: [
+      "Symbiote hive-mind awareness established on Earth-616",
+      "Left a dormant seed primed to bond with Peter Parker or Mac Gargan",
+      "Direct bridge between Sony's Spider-Man Universe and Marvel Studios continuity"
     ]
   }
 ];

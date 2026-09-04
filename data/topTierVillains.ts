@@ -1,7 +1,7 @@
 export interface PowerAttribute {
   label: string;
   value: string;
-  score: number; // 0 to 100
+  score: number; 
 }
 
 export interface FeatItem {

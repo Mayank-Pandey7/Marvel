@@ -17,7 +17,7 @@ function getMoviePoster(node: MovieNode) {
   return "/images/posters/the-avengers.jpg";
 }
 
-// --- OFFSETS CONFIGURATION ---
+
 const DESKTOP_OFFSETS = [
   -45,  75, -35,  85, -60,  40, -75,  60, -40,  80,
   -65,  50, -55,  85, -40,  70, -70,  45, -55,  75,
@@ -28,7 +28,7 @@ const DESKTOP_OFFSETS = [
 
 const MOBILE_OFFSETS = [-8, 12, -5, 10, -10, 7, -9, 13, -6, 8];
 
-// --- TIMELINE DOOMSDAY LAYOUT ---
+
 export default function TimelineDoomsdayLayout({
   movies,
   viewMode = "path",
@@ -56,7 +56,7 @@ export default function TimelineDoomsdayLayout({
   const [isMobileScreen, setIsMobileScreen] = useState(false);
   const rafIdRef = useRef<number | null>(null);
 
-  // --- SKETCH PATHS CALCULATION ---
+  
   useEffect(() => {
     const updateSketchPaths = () => {
       if (!containerRef.current) return;

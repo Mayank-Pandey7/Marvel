@@ -1,11 +1,8 @@
-// components/timeline/snakePathUtils.ts
+
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Hook to generate a snake‑path SVG based on a list of elements.
- * Returns the SVG path string `d` and a ref array to attach to each element.
- */
+
 export function useSnakePath(itemCount: number) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -18,7 +15,7 @@ export function useSnakePath(itemCount: number) {
       const isMobile = window.innerWidth < 768;
 
       const points: { x: number; y: number }[] = [];
-      // start point at top centre (or left offset on mobile)
+      
       points.push({
         x: isMobile ? 16 : containerRect.width / 2,
         y: 0,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/ui/Navbar";
@@ -12,7 +13,23 @@ import { getCharacterBackdrop } from "@/data/characterBackdrops";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
 export function TonyStarkExperience() {
+  const router = useRouter();
   const character = getCharacter("iron-man") || CHARACTERS[0];
+
+  const handleBack = () => {
+    if (typeof window !== "undefined") {
+      const savedRoute = sessionStorage.getItem("mcu_last_character_route");
+      if (savedRoute) {
+        router.push(savedRoute);
+        return;
+      }
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+    }
+    router.push("/characters");
+  };
 
   const movieEntries = useMemo(() => {
     return MCU.filter(
@@ -33,7 +50,6 @@ export function TonyStarkExperience() {
         <IronManHero />
         <IronManCinematicReveal />
 
-        {/* MCU Cinematic Filmography */}
         {movieEntries.length > 0 && (
           <section className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-12 md:px-16 py-16 flex flex-col gap-10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/10">
@@ -112,12 +128,12 @@ export function TonyStarkExperience() {
             </Link>
           </div>
 
-          <Link
-            href="/characters"
+          <button
+            onClick={handleBack}
             className="font-mono text-xs tracking-[0.25em] uppercase text-stone-500 hover:text-accent transition-colors cursor-pointer py-1"
           >
-            VIEW ALL CHARACTERS
-          </Link>
+            RETURN TO ARCHIVE
+          </button>
         </footer>
       </main>
     </div>

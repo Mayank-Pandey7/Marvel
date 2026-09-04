@@ -5,9 +5,9 @@ import { ArrowLeft, Sparkles, Compass } from "lucide-react";
 import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
 import { MCU_POSTER_MAP } from "./NodeArtwork";
 
-// Verified High-Resolution Authentic Ambient Backdrops
+
 export const MCU_BACKDROP_MAP: Record<string, string> = {
-  // Phase 1
+  
   "iron-man": "/images/backdrops/iron-man.jpg",
   "the-incredible-hulk": "/images/backdrops/the-incredible-hulk.jpg",
   "hulk": "/images/backdrops/the-incredible-hulk.jpg",
@@ -19,7 +19,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "the-avengers": "/images/backdrops/the-avengers.jpg",
   "avengers": "/images/backdrops/the-avengers.jpg",
 
-  // Phase 2
+  
   "iron-man-3": "/images/backdrops/iron-man-3.jpg",
   "thor-the-dark-world": "/images/backdrops/thor-dark-world.jpg",
   "thor-dark-world": "/images/backdrops/thor-dark-world.jpg",
@@ -32,7 +32,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "avengers-aou": "/images/backdrops/avengers-age-of-ultron.jpg",
   "ant-man": "/images/backdrops/ant-man.jpg",
 
-  // Phase 3
+  
   "captain-america-civil-war": "/images/backdrops/cap-civil-war.jpg",
   "cap-civil-war": "/images/backdrops/cap-civil-war.jpg",
   "doctor-strange": "/images/backdrops/doctor-strange.jpg",
@@ -52,7 +52,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "spider-man-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
   "spiderman-far-from-home": "/images/backdrops/spider-man-far-from-home.jpg",
 
-  // Phase 4
+  
   "wandavision": "/images/backdrops/wandavision.jpg",
   "the-falcon-and-the-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
   "falcon-winter-soldier": "/images/backdrops/the-falcon-and-the-winter-soldier.jpg",
@@ -81,7 +81,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/guardians-holiday.jpg",
   "guardians-holiday": "/images/backdrops/guardians-holiday.jpg",
 
-  // Phase 5
+  
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
   "ant-man-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
@@ -99,7 +99,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
   "thunderbolts": "/images/backdrops/thunderbolts.jpg",
 
-  // Phase 6 & Multiverse
+  
   "the-fantastic-four-first-steps": "/images/backdrops/fantastic-four.jpg",
   "fantastic-four": "/images/backdrops/fantastic-four.jpg",
   "blade": "/images/backdrops/blade.jpg",
@@ -165,7 +165,7 @@ export default function DeepMovieDetail({
 
   if (!movie) return null;
 
-  // Resolve connected movie objects across all phases
+  
   const connectedMovies = (movie.connections || [])
     .map((conn: any) => {
       const target = UNIFIED_MCU_TREE.find((m: any) => m.id === (typeof conn === "string" ? conn : conn.toId));

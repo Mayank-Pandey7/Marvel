@@ -20,7 +20,7 @@ export default function PhaseSpine({
   const [selectedEarthModal, setSelectedEarthModal] = useState<MCUEarth | null>(null);
   const [selectedEarthId, setSelectedEarthId] = useState<string>("earth-616");
 
-  // Render centered, spacious Earth designation (No clipping)
+  
   const renderEarthLabel = (earthId: string, designation: string) => {
     if (earthId === "battleworld") {
       return (

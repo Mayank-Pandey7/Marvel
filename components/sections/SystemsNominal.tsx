@@ -21,7 +21,7 @@ export function SystemsNominal() {
       <div className="mx-auto flex max-w-[1400px] flex-col gap-16 md:grid md:grid-cols-[5fr_4fr] md:gap-20">
         <AnimatedSection className="flex flex-col gap-8">
           <AnimatedItem>
-            <EyebrowBadge>J.A.R.V.I.S. // SYSTEMS NOMINAL</EyebrowBadge>
+            <EyebrowBadge>J.A.R.V.I.S. Final Telemetry</EyebrowBadge>
           </AnimatedItem>
           <AnimatedItem>
             <h2 className="max-w-[16ch] font-sans text-4xl font-semibold leading-[0.98] tracking-tighter text-foreground md:text-6xl">

@@ -8,9 +8,9 @@ import PageShell from "@/components/PageShell";
 import { CHARACTERS, type Character } from "@/data/characters";
 import StampCharacterCard from "@/components/character/StampCharacterCard";
 
-// Explicit set of MCU Villains, Antagonists & Threats
+
 export const VILLAIN_IDS = new Set([
-  // Core MCU Villains
+  
   "thanos", "ultron", "hela", "killmonger", "mysterio", "vulture",
   "green-goblin", "doc-ock", "namor", "kang-the-conqueror", "kang",
   "high-evolutionary", "wenwu", "ronan", "red-skull", "gorr", "gor",
@@ -20,16 +20,16 @@ export const VILLAIN_IDS = new Set([
   "dreykov", "crossbones", "arnim-zola", "ebony-maw", "corvus-glaive",
   "proxima-midnight", "cull-obsidian",
 
-  // Multiverse / Mutant / Street Threats & Major Antagonists
+  
   "doctor-doom", "galactus", "cassandra-nova", "magneto", "kingpin",
   "agatha-harkness", "red-hulk", "zemo", "mystique", "bullseye",
   "sabretooth", "juggernaut", "pyro", "toad", "electro", "sandman",
   "lizard", "baron-mordo", "infinity-ultron", "zombie-thanos",
   "zombie-scarlet-witch", "kro", "supreme-intelligence", "yon-rogg",
-  "loki" // In villains catalog as primary Avengers/Thor antagonist
+  "loki" 
 ]);
 
-// Explicit set of Heroes (guaranteed never to be misclassified as villains)
+
 export const HERO_IDS = new Set([
   "iron-man", "captain-america", "thor", "hulk", "black-widow", "hawkeye",
   "wanda", "doctor-strange", "spider-man", "spider-man-maguire", "spider-man-garfield",
@@ -106,10 +106,12 @@ export function CharactersContent({
   defaultFaction = "all",
   titleOverride,
   embedded = false,
+  topHeaderSlot,
 }: {
   defaultFaction?: string;
   titleOverride?: string;
   embedded?: boolean;
+  topHeaderSlot?: React.ReactNode;
 }) {
   const searchParams = useSearchParams();
   const paramFaction = searchParams.get("faction");
@@ -126,6 +128,9 @@ export function CharactersContent({
     }
     if (paramQuery !== null) {
       setSearchQuery(paramQuery);
+    }
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("mcu_last_character_route", window.location.pathname + window.location.search);
     }
   }, [paramFaction, paramQuery, defaultFaction]);
 
@@ -144,7 +149,7 @@ export function CharactersContent({
     return CHARACTERS.filter((c) => {
       const isVillain = isVillainCharacter(c);
 
-      // Hard partition when in dedicated Heroes or Villains mode
+      
       if (isHeroesOnlyMode && isVillain) {
         return false;
       }
@@ -394,15 +399,17 @@ export function CharactersContent({
       {/* 1. TOP SEARCH & CONTROLS */}
       <div className="flex flex-col gap-5 pb-2">
 
-        {/* Top Bar: Title & Search Input */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full pb-4 border-b border-stone-800/80">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
-              {pageTitle}
-            </span>
+            {topHeaderSlot ? (
+              topHeaderSlot
+            ) : (
+              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                {pageTitle}
+              </span>
+            )}
           </div>
 
-          {/* Fixed-length Search Input Bar */}
           <div className="relative w-full sm:w-80 md:w-96 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 sm:py-2.5 rounded-full focus-within:border-white/30 transition-all">
             <Search size={14} className="text-stone-400 shrink-0 mr-3" />
             <input
@@ -421,10 +428,8 @@ export function CharactersContent({
               </button>
             )}
           </div>
-
         </div>
 
-        {/* Faction Filter Buttons */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex flex-nowrap overflow-x-auto pb-1.5 px-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
             {availableFactions.map((f) => (

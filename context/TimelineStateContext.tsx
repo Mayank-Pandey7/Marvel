@@ -34,7 +34,7 @@ export function TimelineStateProvider({ children }: { children: React.ReactNode 
       const savedSound = localStorage.getItem(STORAGE_SOUND_KEY);
       if (savedSound === "false") setSoundEnabled(false);
     } catch {
-      // safe fallback
+      
     }
   }, []);
 
@@ -43,7 +43,7 @@ export function TimelineStateProvider({ children }: { children: React.ReactNode 
     try {
       localStorage.setItem(STORAGE_PHASE_KEY, String(phase));
     } catch {
-      // safe fallback
+      
     }
   }, []);
 
@@ -53,7 +53,7 @@ export function TimelineStateProvider({ children }: { children: React.ReactNode 
       try {
         localStorage.setItem(STORAGE_SOUND_KEY, String(next));
       } catch {
-        // safe fallback
+        
       }
       return next;
     });

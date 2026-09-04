@@ -18,7 +18,7 @@ import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 
-// Organic unequal alternating horizontal offsets matching timeline
+
 const DESKTOP_OFFSETS = [
   -45,  75, -35,  85, -60,  40, -75,  60, -40,  80,
   -65,  50, -55,  85, -40
@@ -106,7 +106,7 @@ export default function RoadToDoomsday() {
 
   const filteredItems = DOOMSDAY_WATCHLIST;
 
-  // Calculate Unequal, Organic Hand-Drawn Sketch Paths
+  
   useEffect(() => {
     const updateSketchPaths = () => {
       if (!treeContainerRef.current) return;
@@ -144,7 +144,7 @@ export default function RoadToDoomsday() {
 
       if (points.length < 2) return;
 
-      // 1. Primary Hand-Drawn Sketch Stroke
+      
       let d1 = `M ${points[0].x} ${points[0].y}`;
       // 2. Secondary Overlapping Pencil Trace
       let d2 = `M ${points[0].x - 1} ${points[0].y + 1}`;

@@ -36,16 +36,13 @@ export default function PageShell({
   return (
     <div className="min-h-screen bg-[#000000] text-stone-100 flex flex-col font-sans relative selection:bg-white selection:text-black">
 
-      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
       <div
         className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 
-      {/* Synchronized Global Header Navbar */}
       <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none">
 
-        {/* Left Side: Drawer Menu Trigger */}
         <div className="flex items-center pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
@@ -57,7 +54,6 @@ export default function PageShell({
           </button>
         </div>
 
-        {/* Center: Clickable MARVEL Brand Header */}
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
           <Link
             href="/timeline"
@@ -68,7 +64,6 @@ export default function PageShell({
           </Link>
         </div>
 
-        {/* Right Side: Back Link & Search */}
         <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto">
           {showCloseButton ? (
             <Link
@@ -107,13 +102,10 @@ export default function PageShell({
         </div>
       </header>
 
-      {}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-      {}
       <main className="flex-1 pt-16">{children}</main>
 
-      {}
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </div>
   );

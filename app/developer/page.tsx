@@ -23,12 +23,9 @@ export default function DeveloperPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
-      {/* Slide Navigation Menu */}
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
-      {/* Synchronized Global Header Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
-        {/* Left Side: Menu Trigger */}
         <button
           onClick={() => setNavMenuOpen(true)}
           className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
@@ -38,14 +35,12 @@ export default function DeveloperPage() {
           <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        {/* Center: Brand Header */}
         <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
           <Link href="/" className="hover:opacity-80 transition-opacity">
             MARVEL
           </Link>
         </div>
 
-        {/* Right Side: Return Link */}
         <Link
           href="/timeline"
           className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
@@ -55,7 +50,6 @@ export default function DeveloperPage() {
         </Link>
       </header>
 
-      {/* 1. HERO SECTION */}
       <section className="relative w-full pt-32 sm:pt-40 pb-16 px-4 sm:px-12 md:px-16 max-w-6xl mx-auto flex flex-col gap-6">
         <div className="flex items-center gap-2.5 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-indigo-400 font-bold">
           <Terminal size={14} />
@@ -70,7 +64,6 @@ export default function DeveloperPage() {
           Architect of the MCUverse platform &mdash; an immersive, spatial exploration system mapping the Sacred Timeline, Multiverse Earths, 100+ character genealogies, and 54 cosmic relics.
         </p>
 
-        {/* Action Links */}
         <div className="flex flex-wrap items-center gap-4 pt-4">
           <a
             href="https://github.com/Mayank-Pandey7/Marvel"
@@ -102,7 +95,6 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      {/* 2. CORE ARCHITECTURAL MODULES */}
       <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-12 border-t border-stone-900 flex flex-col gap-8">
         <div className="flex flex-col gap-1">
           <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
@@ -114,7 +106,6 @@ export default function DeveloperPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Card 1 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 w-fit">
               <Compass size={18} />
@@ -127,7 +118,6 @@ export default function DeveloperPage() {
             </p>
           </div>
 
-          {/* Card 2 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 w-fit">
               <Globe size={18} />
@@ -140,7 +130,6 @@ export default function DeveloperPage() {
             </p>
           </div>
 
-          {/* Card 3 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 w-fit">
               <Layers size={18} />
@@ -153,7 +142,6 @@ export default function DeveloperPage() {
             </p>
           </div>
 
-          {/* Card 4 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 w-fit">
               <Shield size={18} />
@@ -166,7 +154,6 @@ export default function DeveloperPage() {
             </p>
           </div>
 
-          {/* Card 5 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 w-fit">
               <Sparkles size={18} />
@@ -179,7 +166,6 @@ export default function DeveloperPage() {
             </p>
           </div>
 
-          {/* Card 6 */}
           <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
             <div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 w-fit">
               <Code2 size={18} />
@@ -194,7 +180,6 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      {/* 3. TECH STACK SPECIFICATIONS */}
       <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-12 border-t border-stone-900 flex flex-col gap-8">
         <div className="flex flex-col gap-1">
           <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
@@ -232,7 +217,6 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      {/* 4. FOOTER */}
       <footer className="relative w-full max-w-6xl mx-auto px-4 sm:px-12 md:px-16 py-12 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-4">
         <Link
           href="/"
