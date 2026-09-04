@@ -81,25 +81,25 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
         <button
           onClick={() => setNavMenuOpen(true)}
-          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
+          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto select-none outline-none focus:outline-none"
           title="Open Universe Menu"
           aria-label="Open Universe Menu"
         >
           <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
-          <Link href="/" className="hover:opacity-80 transition-opacity">
+        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto select-none">
+          <Link href="/" className="hover:opacity-80 transition-opacity select-none">
             MARVEL
           </Link>
         </div>
 
         <button
           onClick={handleBack}
-          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto flex items-center gap-1.5 text-xs font-mono"
+          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto flex items-center gap-1.5 text-xs font-mono select-none outline-none focus:outline-none"
           title="Return to Hierarchy / Archives (Esc)"
         >
-          <span className="hidden sm:inline text-[10px] tracking-wider text-stone-400">RETURN</span>
+          <span className="hidden sm:inline text-[10px] tracking-wider text-stone-400 select-none">RETURN</span>
           <X size={18} strokeWidth={1.5} />
         </button>
       </header>

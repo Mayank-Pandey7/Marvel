@@ -52,22 +52,22 @@ export function Navbar() {
       >
         <button
           onClick={() => setNavMenuOpen(true)}
-          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
+          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto select-none outline-none focus:outline-none"
           title="Open Universe Menu"
           aria-label="Open Universe Menu"
         >
           <Menu size={18} strokeWidth={1.5} />
         </button>
 
-        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
-          <Link href="/" className="hover:opacity-80 transition-opacity">
+        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto select-none">
+          <Link href="/" className="hover:opacity-80 transition-opacity select-none">
             MARVEL
           </Link>
         </div>
 
         <button
           onClick={handleBack}
-          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
+          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto select-none outline-none focus:outline-none"
           title="Return to Characters Archive (Esc)"
         >
           <X size={18} strokeWidth={1.5} />

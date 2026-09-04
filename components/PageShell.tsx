@@ -47,7 +47,7 @@ export default function PageShell({
         <div className="flex items-center pointer-events-auto">
           <button
             onClick={() => setNavMenuOpen(true)}
-            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5"
+            className="text-stone-400 hover:text-white transition-colors cursor-pointer p-1.5 select-none outline-none focus:outline-none"
             title="Open Menu Drawer"
             aria-label="Open Menu Drawer"
           >
@@ -55,7 +55,7 @@ export default function PageShell({
           </button>
         </div>
 
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto select-none">
           <Link
             href="/timeline"
             className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white hover:text-stone-300 transition-colors select-none cursor-pointer pl-[0.45em] sm:pl-[0.55em]"
@@ -65,11 +65,11 @@ export default function PageShell({
           </Link>
         </div>
 
-        <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto">
+        <div className="flex items-center gap-3 sm:gap-6 pointer-events-auto select-none">
           {showCloseButton ? (
             <Link
               href={backHref}
-              className="text-stone-400 hover:text-white p-1.5 transition-colors cursor-pointer rounded-full hover:bg-white/10"
+              className="text-stone-400 hover:text-white p-1.5 transition-colors cursor-pointer rounded-full hover:bg-white/10 select-none outline-none focus:outline-none"
               title="Close and Return to Timeline"
               aria-label="Close and Return to Timeline"
             >
@@ -79,7 +79,7 @@ export default function PageShell({
             <>
               <Link
                 href={backHref}
-                className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer select-none outline-none focus:outline-none"
               >
                 <ArrowLeft size={12} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
                 <span className="hidden sm:inline">{backLabel}</span>
@@ -88,7 +88,7 @@ export default function PageShell({
               {!hideSearch && (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
+                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5 select-none outline-none focus:outline-none"
                   title="Search MCU (Ctrl+K)"
                 >
                   <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />

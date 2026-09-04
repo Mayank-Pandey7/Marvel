@@ -10,6 +10,11 @@
 
 *, *::before, *::after {
   font-family: 'Geist Pixel', monospace, sans-serif !important;
+  caret-color: transparent;
+}
+
+input, textarea, [contenteditable="true"] {
+  caret-color: auto;
 }
 
 html, body {
@@ -20,6 +25,17 @@ html, body {
   overflow-x: clip;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  caret-color: transparent;
+}
+
+button, a, header, nav, [role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus, a:focus {
+  outline: none;
 }
 
 html::-webkit-scrollbar, body::-webkit-scrollbar {
