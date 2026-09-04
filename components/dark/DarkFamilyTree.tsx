@@ -456,14 +456,38 @@ export default function DarkFamilyTree({
     };
     window.addEventListener("resize", handleResize);
 
-    const particles = Array.from({ length: 48 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      radius: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.4 + 0.1,
-    }));
+    const starCount = 180;
+    const particles = Array.from({ length: starCount }, () => {
+      const isLarge = Math.random() > 0.85;
+      const isMedium = Math.random() > 0.5;
+      const radius = isLarge
+        ? Math.random() * 1.2 + 1.5
+        : isMedium
+        ? Math.random() * 0.7 + 0.8
+        : Math.random() * 0.5 + 0.4;
+      const baseAlpha = isLarge
+        ? Math.random() * 0.4 + 0.45
+        : isMedium
+        ? Math.random() * 0.3 + 0.25
+        : Math.random() * 0.25 + 0.15;
+
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: (Math.random() - 0.5) * 0.1,
+        radius,
+        baseAlpha,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinklePhase: Math.random() * Math.PI * 2,
+        color:
+          Math.random() > 0.8
+            ? "210, 230, 255"
+            : Math.random() > 0.9
+            ? "255, 240, 220"
+            : "255, 255, 255",
+      };
+    });
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -476,7 +500,13 @@ export default function DarkFamilyTree({
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        p.twinklePhase += p.twinkleSpeed;
+        const currentAlpha = Math.max(
+          0.08,
+          Math.min(1, p.baseAlpha + Math.sin(p.twinklePhase) * 0.25)
+        );
+
+        ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -860,13 +890,13 @@ export default function DarkFamilyTree({
       className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
       style={{ touchAction: "none" }}
     >
-      {}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
+      {/* Background Starfield Canvas & Dark Vignette (Identical to Sacred Timeline) */}
+      <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {/* Header Backdrop (Balanced Subtle Transparent Blur - No Black Bar) */}
+      {/* Top Header Blur Mask (Synchronized with Sacred Timeline) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-20 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
         aria-hidden="true"
       />
 

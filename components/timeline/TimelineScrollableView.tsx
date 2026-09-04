@@ -151,6 +151,17 @@ export default function TimelineScrollableView() {
       if (earthParam && EARTH_FILTER_OPTIONS.some((o) => o.key === earthParam)) {
         return earthParam;
       }
+      const movieParam = urlParams.get("movie");
+      if (movieParam) {
+        const found = UNIFIED_MCU_TREE.find((m) => m.id === movieParam);
+        if (found?.earthDesignation) return found.earthDesignation;
+        return "Earth-616";
+      }
+      const phaseParam = urlParams.get("phase");
+      if (phaseParam) {
+        if (phaseParam.toUpperCase() === "X" || phaseParam === "7") return "all";
+        return "Earth-616";
+      }
       try {
         const savedEarth = localStorage.getItem("mcu_timeline_earth_filter");
         if (savedEarth && EARTH_FILTER_OPTIONS.some((o) => o.key === savedEarth)) {
@@ -230,11 +241,25 @@ export default function TimelineScrollableView() {
   // --- STATE SYNCHRONIZATION ---
   useEffect(() => {
     const earthParam = searchParams.get("earth");
-    if (earthParam && EARTH_FILTER_OPTIONS.some((o) => o.key === earthParam)) {
-      setActiveEarthFilter(earthParam);
-    }
     const phaseParam = searchParams.get("phase");
     const movieParam = searchParams.get("movie");
+
+    if (earthParam && EARTH_FILTER_OPTIONS.some((o) => o.key === earthParam)) {
+      setActiveEarthFilter(earthParam);
+    } else if (movieParam) {
+      const found = UNIFIED_MCU_TREE.find((m) => m.id === movieParam);
+      if (found?.earthDesignation) {
+        setActiveEarthFilter(found.earthDesignation);
+      } else {
+        setActiveEarthFilter("Earth-616");
+      }
+    } else if (phaseParam) {
+      if (phaseParam.toUpperCase() === "X" || phaseParam === "7") {
+        setActiveEarthFilter("all");
+      } else {
+        setActiveEarthFilter("Earth-616");
+      }
+    }
 
     if (phaseParam) {
       if (phaseParam === "all") {
@@ -248,6 +273,12 @@ export default function TimelineScrollableView() {
           setActivePhaseFilter(p);
           setCurrentPhase(p);
         }
+      }
+    } else if (movieParam) {
+      const found = UNIFIED_MCU_TREE.find((m) => m.id === movieParam);
+      if (found?.phase) {
+        setActivePhaseFilter(found.phase);
+        setCurrentPhase(found.phase);
       }
     }
 
@@ -309,14 +340,38 @@ export default function TimelineScrollableView() {
     };
     window.addEventListener("resize", handleResize);
 
-    const particles = Array.from({ length: 48 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      radius: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.4 + 0.1,
-    }));
+    const starCount = 180;
+    const particles = Array.from({ length: starCount }, () => {
+      const isLarge = Math.random() > 0.85;
+      const isMedium = Math.random() > 0.5;
+      const radius = isLarge
+        ? Math.random() * 1.2 + 1.5
+        : isMedium
+        ? Math.random() * 0.7 + 0.8
+        : Math.random() * 0.5 + 0.4;
+      const baseAlpha = isLarge
+        ? Math.random() * 0.4 + 0.45
+        : isMedium
+        ? Math.random() * 0.3 + 0.25
+        : Math.random() * 0.25 + 0.15;
+
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: (Math.random() - 0.5) * 0.1,
+        radius,
+        baseAlpha,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinklePhase: Math.random() * Math.PI * 2,
+        color:
+          Math.random() > 0.8
+            ? "210, 230, 255"
+            : Math.random() > 0.9
+            ? "255, 240, 220"
+            : "255, 255, 255",
+      };
+    });
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -329,7 +384,13 @@ export default function TimelineScrollableView() {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        p.twinklePhase += p.twinkleSpeed;
+        const currentAlpha = Math.max(
+          0.08,
+          Math.min(1, p.baseAlpha + Math.sin(p.twinklePhase) * 0.25)
+        );
+
+        ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();

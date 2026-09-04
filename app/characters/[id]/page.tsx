@@ -16,8 +16,16 @@ import { getCharacterAvatar, getCharacterBackdrop } from "@/data/characterBackdr
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import { TonyStarkExperience } from "@/components/ironman/TonyStarkExperience";
+import { CosmicEntityExperience } from "@/components/villains/CosmicEntityExperience";
+import { getTopTierVillain } from "@/data/topTierVillains";
 
 export default function CharacterDetailPage({ params }: { params: { id: string } }) {
+  // Check if character is a Top-Tier Cosmic Entity first
+  const topTierEntity = getTopTierVillain(params.id);
+  if (topTierEntity) {
+    return <CosmicEntityExperience entity={topTierEntity} />;
+  }
+
   const character = getCharacter(params.id);
   if (!character) notFound();
 
@@ -97,24 +105,34 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
         </Link>
       </header>
 
-      {}
-      <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-[52vh] sm:pt-48 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden bg-[#000000]">
-
-        {}
+      {/* HERO SECTION */}
+      <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-28 sm:pt-36 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden">
+        
+        {/* Standalone Poster Frame on Right (Fixed in viewport, does not scroll upward with slide) */}
         <div
-          className="absolute top-0 right-0 left-0 sm:left-auto w-full sm:w-[80%] md:w-[70%] lg:w-[62%] h-[44vh] sm:h-[65vh] lg:h-full z-0 overflow-hidden flex items-start sm:items-center justify-center sm:justify-end pointer-events-none [mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)] sm:[mask-image:radial-gradient(ellipse_75%_80%_at_65%_45%,black_15%,transparent_80%)]"
+          className="fixed top-24 sm:top-28 right-6 sm:right-16 md:right-24 lg:right-32 xl:right-40 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/15 bg-stone-950 shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:block transition-all duration-300"
         >
           <img
             src={characterFacePortrait}
             alt={character.name}
-            className="w-full h-full object-cover object-[center_15%] sm:object-right md:object-[center_20%] filter brightness-95 contrast-105"
+            className="w-full h-full object-cover object-center"
           />
         </div>
 
-        {}
-        <div className="relative z-20 max-w-2xl lg:max-w-3xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
+        {/* Mobile Background Fallback */}
+        <div className="sm:hidden absolute top-0 right-0 w-full h-[50vh] z-0 overflow-hidden pointer-events-none">
+          <img
+            src={characterFacePortrait}
+            alt={character.name}
+            className="w-full h-full object-contain object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        </div>
 
-          {}
+        {/* Hero Info (Fixed at bottom-left) */}
+        <div className="relative z-20 max-w-xl lg:max-w-2xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
+
+          {/* Breadcrumb Tags */}
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] sm:text-[11px] font-mono tracking-wider uppercase text-stone-400">
             <span>{character.universe.split("/")[0].trim()}</span>
             <span className="text-stone-600">/</span>
@@ -123,17 +141,17 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             <span className="text-white font-semibold">{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
           </div>
 
-          {}
+          {/* Character Name */}
           <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-mono font-bold tracking-[0.08em] xs:tracking-[0.12em] uppercase text-white leading-tight drop-shadow-2xl">
             {character.name}
           </h1>
 
-          {}
+          {/* Character Overview */}
           <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-xl">
             {character.overview}
           </p>
 
-          {}
+          {/* Metrics */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-400">
             <div>
               <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
@@ -149,7 +167,7 @@ export default function CharacterDetailPage({ params }: { params: { id: string }
             </div>
           </div>
 
-          {}
+          {/* Scroll Cue */}
           <div className="pt-4 sm:pt-6 flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 animate-pulse">
             <span>SCROLL FOR MCU TIMELINE CHRONOLOGY</span>
             <ChevronDown size={14} />

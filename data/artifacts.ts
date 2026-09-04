@@ -544,6 +544,220 @@ export const ARTIFACTS: Artifact[] = [
     ]
   },
   {
+    id: "thunderbolt",
+    name: "Thunderbolt (Lightning of the Gods)",
+    category: "asgardian_weapon",
+    origin: "Omnipotence City / Zeus Panhellenios",
+    power: "Divine lightning channeling, omnidirectional teleportation, piercing immortal godflesh.",
+    description: "The primary weapon of Zeus Panhellenios and supreme relic of Omnipotence City. Stolen by Thor and Valkyrie, used to battle Gorr the God Butcher in the Shadow Realm and channel divine lightning.",
+    phaseIntroduced: 4,
+    iconColor: "#eab308",
+    backdrop: "/images/artifacts/thunderbolt.jpg",
+    history: [
+      {
+        phase: 4,
+        year: "2024",
+        holder: "zeus",
+        holderName: "Zeus",
+        location: "Omnipotence City",
+        event: "Zeus wields the crackling golden Thunderbolt during the divine council."
+      },
+      {
+        phase: 4,
+        year: "2024",
+        holder: "thor",
+        holderName: "Thor Odinson",
+        location: "Omnipotence City",
+        event: "Thor impales Zeus with his own Thunderbolt, claiming it for the rescue mission."
+      },
+      {
+        phase: 4,
+        year: "2024",
+        holder: "valkyrie",
+        holderName: "King Valkyrie",
+        location: "Shadow Realm / Eternity's Altar",
+        event: "Valkyrie and Mighty Thor wield Thunderbolt to battle Gorr and empower the children of New Asgard."
+      }
+    ]
+  },
+  {
+    id: "dragonfang",
+    name: "Dragonfang (Sword of the Valkyrie)",
+    category: "asgardian_weapon",
+    origin: "Asgard / Valkyrior Maidens",
+    power: "Enchanted dragon-tooth forged steel, deflects high-caliber blaster fire, pierces berserker armor.",
+    description: "An ancient sword carved from the tooth of an extra-dimensional dragon and enchanted for the elite Valkyrior shieldmaidens. Carried by Brunnhilde during the ancient massacre of the Valkyries and throughout her reign as King of New Asgard.",
+    phaseIntroduced: 3,
+    iconColor: "#06b6d4",
+    backdrop: "/images/artifacts/dragonfang.jpg",
+    history: [
+      {
+        phase: 3,
+        year: "Ancient Era",
+        holder: "valkyrie",
+        holderName: "Brunnhilde (Valkyrie)",
+        location: "Hel",
+        event: "Wielded during the tragic last stand of the Valkyrior against Hela."
+      },
+      {
+        phase: 3,
+        year: "2017",
+        holder: "valkyrie",
+        holderName: "Scrapper 142 / Valkyrie",
+        location: "Sakaar / Asgard",
+        event: "Retrieved from her Warsong ship to cut down Hela's Berserker hordes on the Rainbow Bridge."
+      },
+      {
+        phase: 3,
+        year: "2019",
+        holder: "valkyrie",
+        holderName: "King Valkyrie",
+        location: "Earth-616",
+        event: "Flies into the Battle of Earth atop a winged Pegasus, skewering Chitauri Leviathans."
+      }
+    ]
+  },
+  {
+    id: "destroyer-armor",
+    name: "The Destroyer Automaton",
+    category: "asgardian_weapon",
+    origin: "Asgard Royal Vault / Enchanted Uru",
+    power: "Disintegration beam projection, impenetrable Uru plating, remote telepathic animation.",
+    description: "An enchanted Asgardian automaton forged from indestructible Uru metal by King Odin to guard the Royal Vault. Sent to Earth by Loki to assassinate the exiled Thor before being obliterated by Mjolnir.",
+    phaseIntroduced: 1,
+    iconColor: "#f59e0b",
+    backdrop: "/images/artifacts/destroyer-armor.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "965 AD",
+        holder: "odin",
+        holderName: "King Odin",
+        location: "Asgard Vault",
+        event: "Stationed as the immortal guardian of the Casket of Ancient Winters and the Eternal Flame."
+      },
+      {
+        phase: 1,
+        year: "2011",
+        holder: "loki",
+        holderName: "Loki (via Gungnir)",
+        location: "Puente Antiguo, New Mexico",
+        event: "Loki animates the Destroyer to eliminate Thor and S.H.I.E.L.D. agents."
+      },
+      {
+        phase: 1,
+        year: "2012",
+        holder: "shield",
+        holderName: "S.H.I.E.L.D. / Phil Coulson",
+        location: "Helicarrier",
+        event: "Coulson tests the Destroyer Armor Prototype Gun: 'So that\'s what it does.'"
+      }
+    ]
+  },
+  {
+    id: "lokis-daggers",
+    name: "Loki's Enchanted Daggers",
+    category: "asgardian_weapon",
+    origin: "Asgard / Sorcery of Frigga",
+    power: "Instant pocket-dimension conjuration, Frost Giant frost-blade imbuement, dual-wielding mastery.",
+    description: "Twin curved Asgardian daggers concealed within illusion pockets and conjured at will. Wielded by Loki through countless battles, including the New York invasion, the skirmish with the Dark Elves, and the final confrontation with Thanos.",
+    phaseIntroduced: 1,
+    iconColor: "#22c55e",
+    backdrop: "/images/artifacts/lokis-daggers.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "2012",
+        holder: "loki",
+        holderName: "Loki",
+        location: "Stark Tower, New York",
+        event: "Loki conceals and draws his dagger in close combat against Thor."
+      },
+      {
+        phase: 3,
+        year: "2017",
+        holder: "loki",
+        holderName: "Loki",
+        location: "Sakaar / Rainbow Bridge",
+        event: "Flips twin daggers to slaughter Hela's Berserkers alongside Valkyrie."
+      },
+      {
+        phase: 3,
+        year: "2018",
+        holder: "loki",
+        holderName: "Loki",
+        location: "Statesman Spaceship",
+        event: "Attempts a fatal sneak strike against Thanos: 'You will never be a god.'"
+      }
+    ]
+  },
+  {
+    id: "sifs-sword",
+    name: "Lady Sif's Double-Bladed Sword",
+    category: "asgardian_weapon",
+    origin: "Asgard / Royal Armory",
+    power: "Collapsible telescopic transformation, dual-blade staff configuration, piercing Frost Giant hide.",
+    description: "An enchanted, telescopic Asgardian blade capable of transforming from a single longsword into a lethal double-bladed staff. Carried by Lady Sif during the Jotunheim raid and across the Nine Realms.",
+    phaseIntroduced: 1,
+    iconColor: "#64748b",
+    backdrop: "/images/artifacts/sifs-sword.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "2011",
+        holder: "lady-sif",
+        holderName: "Lady Sif",
+        location: "Jotunheim",
+        event: "Sif extends her double blade to impale attacking Frost Giants."
+      },
+      {
+        phase: 2,
+        year: "2013",
+        holder: "lady-sif",
+        holderName: "Lady Sif",
+        location: "Vanaheim",
+        event: "Leads Asgardian battalions with her shield and collapsible blade to restore peace."
+      },
+      {
+        phase: 4,
+        year: "2024",
+        holder: "lady-sif",
+        holderName: "Lady Sif",
+        location: "Indigarr / New Asgard",
+        event: "Survives ambush by Gorr the God Butcher and returns to train the next generation of Asgardian warriors."
+      }
+    ]
+  },
+  {
+    id: "hoguns-mace",
+    name: "Hridgandr (Hogun's Spiked Mace)",
+    category: "asgardian_weapon",
+    origin: "Vanaheim / Asgard Armory",
+    power: "Kinetic crushing force, telescoping chain-morningstar transformation, shatterproof steel.",
+    description: "The signature spiked war mace of Hogun the Grim, member of the Warriors Three. Engineered with a collapsible flail mechanism to crush through enemy fortifications and Frost Giant armor.",
+    phaseIntroduced: 1,
+    iconColor: "#71717a",
+    backdrop: "/images/artifacts/hoguns-mace.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "2011",
+        holder: "hogun",
+        holderName: "Hogun the Grim",
+        location: "Jotunheim",
+        event: "Hogun extends the mace to shatter Frost Giant constructs."
+      },
+      {
+        phase: 3,
+        year: "2017",
+        holder: "hogun",
+        holderName: "Hogun",
+        location: "Asgard City Gates",
+        event: "Stands alone leading the Asgardian army in a valiant last stand against Goddess of Death Hela."
+      }
+    ]
+  },
+  {
     id: "time-loom",
     name: "The Temporal Loom",
     category: "cosmic_technology",

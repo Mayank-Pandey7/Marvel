@@ -1,5 +1,16 @@
-
 export const CHARACTER_IMAGE_MAP: Record<string, string> = {
+  "the-one-above-all": "/images/characters/the-one-above-all.jpg",
+  "the-beyonder": "/images/characters/the-beyonder.jpg",
+  "beyonder": "/images/characters/the-beyonder.jpg",
+  "the-one-below-all": "/images/characters/the-one-below-all.jpg",
+  "the-living-tribunal": "/images/characters/the-living-tribunal.jpg",
+  "living-tribunal": "/images/characters/the-living-tribunal.jpg",
+  "molecule-man": "/images/characters/molecule-man.jpg",
+  "mephisto": "/images/characters/mephisto.jpg",
+  "onslaught": "/images/characters/onslaught.jpg",
+  "annihilus": "/images/characters/annihilus.jpg",
+  "gorr-the-god-butcher": "/images/characters/gorr.jpg",
+  "sentry-the-void": "/images/characters/sentry-void.jpg",
 
   "iron-man": "/images/characters/tony-stark.jpg",
   "tony-stark": "/images/characters/tony-stark.jpg",
@@ -135,22 +146,37 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "franklin-richards": "/images/characters/franklin-richards.jpg",
   "galactus": "/images/characters/galactus.jpg",
   "doctor-doom": "/images/characters/doctor-doom.jpg",
+  "victor-von-doom": "/images/characters/doctor-doom.jpg",
+  "doom": "/images/characters/doctor-doom.jpg",
+  "god-emperor-doom": "/images/characters/god-emperor-doom.jpg",
 
   "thanos": "/images/characters/thanos.jpg",
   "alars": "/images/characters/alars.jpg",
   "eros": "/images/characters/eros.jpg",
+  "knull": "/images/characters/knull.jpg",
+  "king-in-black": "/images/characters/king-in-black.jpg",
   "ultron": "/images/characters/ultron.jpg",
   "green-goblin": "/images/characters/green-goblin.jpg",
   "doc-ock": "/images/characters/doc-ock.jpg",
   "doctor-octopus": "/images/characters/doc-ock.jpg",
   "red-skull": "/images/characters/red-skull.jpg",
+  "dormammu": "/images/characters/dormammu.jpg",
+  "dormamu": "/images/characters/dormammu.jpg",
   "gorr": "/images/characters/gorr.jpg",
+  "gor": "/images/characters/gorr.jpg",
   "mysterio": "/images/characters/mysterio.jpg",
   "vulture": "/images/characters/vulture.jpg",
   "high-evolutionary": "/images/characters/high-evolutionary.jpg",
   "red-hulk": "/images/characters/red-hulk.jpg",
   "zemo": "/images/characters/zemo.jpg",
   "ronan": "/images/characters/ronan.jpg",
+  "apocalypse": "/images/characters/apocalypse.jpg",
+  "en-sabah-nur": "/images/characters/apocalypse.jpg",
+  "sentry": "/images/characters/sentry.jpg",
+  "the-sentry": "/images/characters/sentry.jpg",
+  "sentry-void": "/images/characters/sentry-void.jpg",
+  "the-void": "/images/characters/sentry-void.jpg",
+  "robert-reynolds": "/images/characters/sentry.jpg",
 
   "shang-chi": "/images/characters/shang-chi.jpg",
   "wenwu": "/images/characters/xu-wenwu.jpg",
@@ -167,10 +193,22 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "kingpin": "/images/characters/wilson-fisk.jpg",
   "maya-lopez": "/images/characters/maya-lopez.jpg",
   "echo": "/images/characters/maya-lopez.jpg",
-  "moon-knight": "/images/characters/moon-knight.jpg",
+  "moon-knight": "/images/characters/moon-knight.jpg"
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
+  "toaa-genesis": "/images/backdrops/battleworld.jpg",
+  "beyonder-secret-wars": "/images/backdrops/battleworld.jpg",
+  "toba-below-place": "/images/backdrops/the-incredible-hulk.jpg",
+  "living-tribunal-judgment": "/images/backdrops/doctor-strange-multiverse.jpg",
+  "god-emperor-battleworld": "/images/backdrops/battleworld.jpg",
+  "molecule-man-secret-wars": "/images/backdrops/battleworld.jpg",
+  "knull-abyss": "/images/backdrops/eternals.jpg",
+  "mephisto-hellfire": "/images/backdrops/agatha-all-along.jpg",
+  "onslaught-crisis": "/images/backdrops/x-men-days-of-future-past.jpg",
+  "apocalypse-reign": "/images/backdrops/x-men-apocalypse.jpg",
+  "annihilation-wave": "/images/backdrops/guardians-vol3.jpg",
+  "king-in-black-eclipse": "/images/backdrops/avengers-infinity-war.jpg",
 
   "iron-man-origins-phase-1": "/images/backdrops/iron-man.jpg",
   "iron-man-escalation-phase-2": "/images/backdrops/iron-man-3.jpg",
@@ -243,7 +281,7 @@ export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
   "pyro-void": "/images/backdrops/deadpool-and-wolverine.jpg",
   "juggernaut-clash": "/images/backdrops/deadpool-and-wolverine.jpg",
   "lady-dp-corps": "/images/backdrops/deadpool-and-wolverine.jpg",
-  "echo-ancestral": "/images/backdrops/echo.jpg",
+  "echo-ancestral": "/images/backdrops/echo.jpg"
 };
 
 export function getCharacterAvatar(characterId: string): string {

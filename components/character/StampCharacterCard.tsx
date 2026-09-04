@@ -201,7 +201,7 @@ export default function StampCharacterCard({
               src={getCharacterBackdrop(character.id) || avatarUrl}
               alt={character.name}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover object-[center_20%] filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+              className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
             />
 
             {/* Subtle Gradient Overlays for Depth & Watermark Contrast */}

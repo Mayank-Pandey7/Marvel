@@ -13,12 +13,22 @@ export default function HomePage() {
     router.prefetch("/doomsday");
     router.prefetch("/characters");
     router.prefetch("/artifacts");
+    router.prefetch("/developer");
   }, [router]);
 
   const handleContinueFromIntro = (phase?: number, movieId?: string) => {
-    const p = phase === 7 ? "X" : (phase || 1);
+    const isMultiverse = phase === 7;
+    const p = isMultiverse ? "X" : (phase || 1);
     const m = movieId ? `&movie=${movieId}` : "";
-    const e = phase === 7 ? "&earth=all" : "";
+    const targetEarth = isMultiverse ? "all" : "Earth-616";
+    const e = `&earth=${targetEarth}`;
+
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("mcu_timeline_earth_filter", targetEarth);
+      } catch {}
+    }
+
     router.push(`/timeline?phase=${p}${m}${e}`);
   };
 
