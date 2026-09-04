@@ -1633,6 +1633,7 @@ export const DARK_TREE_CONNECTIONS: OrthogonalConnection[] = [
 ];
 
 export const DYNASTY_CLUSTERS = [
+  { id: "all", label: "ALL FAMILIES", count: DARK_TREE_NODES.length },
   { id: "asgard", label: "HOUSE OF ODIN", count: 10, focusX: 380, focusY: 400 },
   { id: "stark", label: "STARK DYNASTY", count: 7, focusX: 980, focusY: 330 },
   { id: "rogers", label: "SUPER SOLDIERS", count: 6, focusX: 1390, focusY: 330 },
@@ -1650,5 +1651,4 @@ export const DYNASTY_CLUSTERS = [
   { id: "defenders", label: "DEFENDERS & STREET", count: 4, focusX: 2130, focusY: 1440 },
   { id: "eternals", label: "ETERNALS OF EARTH", count: 5, focusX: 1820, focusY: 1950 },
   { id: "spiders", label: "SPIDER-VERSE WEB", count: 4, focusX: 2230, focusY: 890 },
-  { id: "all", label: "ALL FAMILIES", count: DARK_TREE_NODES.length },
 ] as const;

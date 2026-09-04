@@ -233,7 +233,14 @@ export default function DarkFamilyTree({
   }, [activeFocusId, hoveredConnId, visibleConnections]);
 
   const focusOnCoordinates = useCallback(
-    (targetX: number, targetY: number, customScale?: number, isSmooth: boolean = true) => {
+    (
+      targetX: number,
+      targetY: number,
+      customScale?: number,
+      isSmooth: boolean = true,
+      screenOffsetCenterX?: number,
+      screenOffsetCenterY?: number
+    ) => {
       if (!containerRef.current) return;
       const width = containerRef.current.clientWidth || window.innerWidth;
       const height = containerRef.current.clientHeight || window.innerHeight;
@@ -244,8 +251,10 @@ export default function DarkFamilyTree({
       const defaultScale = isMobile ? 0.68 : isTablet ? 0.58 : 0.62;
       const targetScale = customScale || defaultScale;
 
-      const newX = width / 2 - targetX * targetScale;
-      const newY = height / 2 - targetY * targetScale;
+      const cx = screenOffsetCenterX !== undefined ? screenOffsetCenterX : width / 2;
+      const cy = screenOffsetCenterY !== undefined ? screenOffsetCenterY : (height + (isMobile ? 20 : 30)) / 2;
+      const newX = cx - targetX * targetScale;
+      const newY = cy - targetY * targetScale;
 
       updateCameraTransform({ x: newX, y: newY, scale: targetScale }, isSmooth);
     },
@@ -256,17 +265,23 @@ export default function DarkFamilyTree({
     (node: DarkTreeNode, e?: React.MouseEvent) => {
       e?.stopPropagation();
       if (selectedNode?.id === node.id) {
-
         setSelectedNode(null);
         setHoveredNodeId(null);
         return;
       }
       setSelectedNode(node);
-      const isMobile = (typeof window !== "undefined" ? window.innerWidth : 1000) < 640;
+      const width = typeof window !== "undefined" ? window.innerWidth : 1000;
+      const isMobile = width < 640;
+      const isTablet = width >= 640 && width < 1024;
+      const rightNavWidth = isMobile ? 0 : isTablet ? 180 : 270;
+      const screenCenterX = (width - rightNavWidth) / 2;
+
       focusOnCoordinates(
         node.x + CARD_W / 2,
         node.y + CARD_H / 2,
-        isMobile ? 0.85 : 0.95
+        isMobile ? 0.85 : 0.95,
+        true,
+        screenCenterX
       );
     },
     [selectedNode, focusOnCoordinates]
@@ -297,11 +312,25 @@ export default function DarkFamilyTree({
         const totalW = maxX - minX + CARD_W;
         const totalH = maxY - minY + CARD_H;
 
-        const scaleX = (width - (isMobile ? 40 : 140)) / (totalW + 120);
-        const scaleY = (height - (isMobile ? 120 : 190)) / (totalH + 120);
+        const rightNavWidth = isMobile ? 0 : isTablet ? 200 : 270;
+        const availableW = width - rightNavWidth - (isMobile ? 24 : 80);
+        const availableH = height - (isMobile ? 120 : 150);
+
+        const scaleX = availableW / (totalW + 60);
+        const scaleY = availableH / (totalH + 60);
         const overviewScale = Math.min(scaleX, scaleY);
 
-        focusOnCoordinates(centerX, centerY, Math.min(Math.max(overviewScale, 0.25), 0.75));
+        const screenCenterX = (width - rightNavWidth) / 2;
+        const screenCenterY = (height + (isMobile ? 30 : 40)) / 2;
+
+        focusOnCoordinates(
+          centerX,
+          centerY,
+          Math.min(Math.max(overviewScale, 0.18), 0.85),
+          true,
+          screenCenterX,
+          screenCenterY
+        );
         return;
       }
 
@@ -324,14 +353,24 @@ export default function DarkFamilyTree({
         const clusterW = maxX - minX + CARD_W;
         const clusterH = maxY - minY + CARD_H + 40;
 
-        const scaleX = (width - (isMobile ? 32 : 120)) / (clusterW + 40);
-        const scaleY = (height - (isMobile ? 140 : 180)) / (clusterH + 40);
+        const rightNavWidth = isMobile ? 0 : isTablet ? 200 : 270;
+        const availableW = width - rightNavWidth - (isMobile ? 24 : 80);
+        const availableH = height - (isMobile ? 140 : 170);
+
+        const scaleX = availableW / (clusterW + 60);
+        const scaleY = availableH / (clusterH + 60);
         const autoScale = Math.min(scaleX, scaleY);
+
+        const screenCenterX = (width - rightNavWidth) / 2;
+        const screenCenterY = (height + (isMobile ? 30 : 40)) / 2;
 
         focusOnCoordinates(
           centerX,
           centerY,
-          Math.min(Math.max(autoScale, isMobile ? 0.52 : 0.60), isMobile ? 0.95 : 1.05)
+          Math.min(Math.max(autoScale, isMobile ? 0.48 : 0.55), isMobile ? 0.95 : 1.05),
+          true,
+          screenCenterX,
+          screenCenterY
         );
       }
     },
@@ -354,6 +393,7 @@ export default function DarkFamilyTree({
       const width = window.innerWidth;
       const height = window.innerHeight;
       const isMobile = width < 640;
+      const isTablet = width >= 640 && width < 1024;
 
       const nodesToFrame = visibleNodes.length > 0 ? visibleNodes : DARK_TREE_NODES;
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -369,11 +409,25 @@ export default function DarkFamilyTree({
       const totalW = maxX - minX + CARD_W;
       const totalH = maxY - minY + CARD_H;
 
-      const scaleX = (width - (isMobile ? 40 : 140)) / (totalW + 120);
-      const scaleY = (height - (isMobile ? 120 : 190)) / (totalH + 120);
+      const rightNavWidth = isMobile ? 0 : isTablet ? 200 : 270;
+      const availableW = width - rightNavWidth - (isMobile ? 24 : 80);
+      const availableH = height - (isMobile ? 120 : 150);
+
+      const scaleX = availableW / (totalW + 60);
+      const scaleY = availableH / (totalH + 60);
       const overviewScale = Math.min(scaleX, scaleY);
 
-      focusOnCoordinates(centerX, centerY, Math.min(Math.max(overviewScale, 0.25), 0.75));
+      const screenCenterX = (width - rightNavWidth) / 2;
+      const screenCenterY = (height + (isMobile ? 30 : 40)) / 2;
+
+      focusOnCoordinates(
+        centerX,
+        centerY,
+        Math.min(Math.max(overviewScale, 0.18), 0.85),
+        false,
+        screenCenterX,
+        screenCenterY
+      );
     };
 
     handleViewportResize();

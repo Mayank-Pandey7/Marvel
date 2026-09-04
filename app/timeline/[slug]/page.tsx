@@ -285,7 +285,7 @@ export default function TimelineMoviePage({
     notFound();
   }
 
-  const viewMode = searchParams?.view || "grid";
+  const viewMode = searchParams?.view || "path";
   const rawPhase = searchParams?.phase || (movie.phase === 7 ? "X" : movie.phase) || "1";
   const phaseNum = rawPhase === "7" ? "X" : rawPhase;
   const earthParam = searchParams?.earth ? `&earth=${searchParams.earth}` : "";

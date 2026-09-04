@@ -115,6 +115,15 @@ export function getMoviePoster(node: { id: string; posterUrl?: string }) {
   return poster;
 }
 
+export function formatDuration(minutes?: number): string {
+  if (!minutes) return "";
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  if (h > 0 && m > 0) return `${h}h ${m}m`;
+  if (h > 0) return `${h}h`;
+  return `${m}m`;
+}
+
 // --- TIMELINE VIEW COMPONENT ---
 export default function TimelineScrollableView() {
   const router = useRouter();
@@ -170,7 +179,7 @@ export default function TimelineScrollableView() {
         }
       } catch {}
     }
-    return "grid";
+    return "path";
   });
 
   useEffect(() => {
@@ -769,15 +778,8 @@ export default function TimelineScrollableView() {
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                               {earthMovies.map((movie) => {
                                 const posterUrl = getMoviePoster(movie);
-                                const titleClean = movie.title.trim().toLowerCase();
-                                const heroSubtitle =
-                                  movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== titleClean
-                                    ? movie.heroAlias
-                                    : movie.leadCharacter && movie.leadCharacter.trim().toLowerCase() !== titleClean
-                                    ? movie.leadCharacter
-                                    : "";
                                 return (
-                                   <Link
+                                  <Link
                                     key={movie.id}
                                     id={`movie-node-${movie.id}`}
                                     data-movie-id={movie.id}
@@ -796,11 +798,6 @@ export default function TimelineScrollableView() {
                                             "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
                                         }}
                                       />
-                                      <div className="absolute bottom-2.5 right-2.5">
-                                        <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
-                                          {movie.year}
-                                        </span>
-                                      </div>
                                     </div>
                                     <div className="flex flex-col gap-0.5 min-w-0">
                                       <h3
@@ -809,14 +806,13 @@ export default function TimelineScrollableView() {
                                       >
                                         {movie.title}
                                       </h3>
-                                      <div className="flex items-center justify-between gap-1 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-400">
-                                        <span className="truncate text-stone-400">
-                                          {heroSubtitle}
-                                        </span>
+                                      <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
+                                        <span>{movie.year}</span>
                                         {movie.runtime ? (
-                                          <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1 ml-auto">
-                                            {movie.runtime} MIN
-                                          </span>
+                                          <>
+                                            <span className="text-stone-700">•</span>
+                                            <span>{formatDuration(movie.runtime)}</span>
+                                          </>
                                         ) : null}
                                       </div>
                                     </div>
@@ -832,13 +828,6 @@ export default function TimelineScrollableView() {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                       {movies.map((movie) => {
                         const posterUrl = getMoviePoster(movie);
-                        const titleClean = movie.title.trim().toLowerCase();
-                        const heroSubtitle =
-                          movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== titleClean
-                            ? movie.heroAlias
-                            : movie.leadCharacter && movie.leadCharacter.trim().toLowerCase() !== titleClean
-                            ? movie.leadCharacter
-                            : "";
                         return (
                           <Link
                             key={movie.id}
@@ -859,11 +848,6 @@ export default function TimelineScrollableView() {
                                     "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
                                 }}
                               />
-                              <div className="absolute bottom-2.5 right-2.5">
-                                <span className="text-[8.5px] font-mono tracking-widest uppercase bg-black/80 backdrop-blur-md px-1.5 py-0.5 rounded text-stone-300 border border-white/10">
-                                  {movie.year}
-                                </span>
-                              </div>
                             </div>
                             <div className="flex flex-col gap-0.5 min-w-0">
                               <h3
@@ -872,14 +856,13 @@ export default function TimelineScrollableView() {
                               >
                                 {movie.title}
                               </h3>
-                              <div className="flex items-center justify-between gap-1 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-400">
-                                <span className="truncate text-stone-400">
-                                  {heroSubtitle}
-                                </span>
+                              <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
+                                <span>{movie.year}</span>
                                 {movie.runtime ? (
-                                  <span className="shrink-0 text-stone-500 whitespace-nowrap pl-1 ml-auto">
-                                    {movie.runtime} MIN
-                                  </span>
+                                  <>
+                                    <span className="text-stone-700">•</span>
+                                    <span>{formatDuration(movie.runtime)}</span>
+                                  </>
                                 ) : null}
                               </div>
                             </div>
