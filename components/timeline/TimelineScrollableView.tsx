@@ -635,7 +635,7 @@ export default function TimelineScrollableView() {
       )}
 
       <div
-        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-start gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
+        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
       >
         {/* Layout View Switcher (PATH | 3D WHEEL | GRID) */}
         <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl pointer-events-auto whitespace-nowrap">
@@ -661,10 +661,11 @@ export default function TimelineScrollableView() {
           </span>
         </div>
 
-        {/* Earth LineNav — left-aligned under SELECT REALITY pill */}
+        {/* Earth LineNav — right-aligned with lines on the right */}
         <div className="pointer-events-auto">
           <LineNav
-            className="w-48 sm:w-56"
+            align="right"
+            className="w-auto"
             items={EARTH_NAV_ITEMS}
             activeHref={`#${activeEarthFilter}`}
             scrollActiveIntoView={false}

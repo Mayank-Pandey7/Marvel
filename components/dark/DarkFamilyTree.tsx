@@ -26,6 +26,7 @@ import {
   ArrowLeft,
   GitBranch,
 } from "lucide-react";
+import { LineNav } from "@/components/line-nav";
 
 const CARD_W = 110;
 const CARD_H = 142;
@@ -159,6 +160,19 @@ export default function DarkFamilyTree({
     return DYNASTY_CLUSTERS.filter(
       (dynasty) => dynasty.id === "all" || activeClusterIds.has(dynasty.id)
     );
+  }, [visibleNodes]);
+
+  const familyNavItems = useMemo(() => {
+    const clusterMap = new Map<string, number>();
+    visibleNodes.forEach((n) => {
+      clusterMap.set(n.cluster, (clusterMap.get(n.cluster) || 0) + 1);
+    });
+
+    return DYNASTY_CLUSTERS.map((dynasty) => ({
+      title: dynasty.label,
+      href: `#${dynasty.id}`,
+      count: dynasty.id === "all" ? visibleNodes.length : clusterMap.get(dynasty.id) || 0,
+    })).filter((item) => item.href === "#all" || (item.count || 0) > 0);
   }, [visibleNodes]);
 
   useEffect(() => {
@@ -894,6 +908,32 @@ export default function DarkFamilyTree({
         </div>
       </header>
 
+      {/* Top-Right SELECT FAMILY Navigation — Docked to Right */}
+      <div
+        className="fixed top-14 sm:top-20 right-5 sm:right-10 md:right-12 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
+      >
+        {/* SELECT FAMILY pill */}
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+            SELECT FAMILY
+          </span>
+        </div>
+
+        {/* Family LineNav — right-aligned */}
+        <div className="pointer-events-auto max-h-[calc(100vh-140px)] overflow-y-auto no-scrollbar pr-1">
+          <LineNav
+            align="right"
+            items={familyNavItems}
+            activeHref={`#${activeCluster}`}
+            scrollActiveIntoView={false}
+            onItemClick={(item) => {
+              const clusterId = item.href.replace("#", "");
+              focusOnCluster(clusterId);
+            }}
+          />
+        </div>
+      </div>
+
       {/* Mobile Phase Pill */}
       <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
         <button
@@ -1122,7 +1162,6 @@ export default function DarkFamilyTree({
 
           const isInSameFamily = activeFamilyCluster ? node.cluster === activeFamilyCluster : true;
           const isOutsideActiveFamily = activeFamilyCluster ? !isInSameFamily : false;
-
           return (
             <div
               key={node.id}
@@ -1130,12 +1169,12 @@ export default function DarkFamilyTree({
               onClick={(e) => focusOnNode(node, e)}
               onMouseEnter={() => setHoveredNodeId(node.id)}
               onMouseLeave={() => setHoveredNodeId((prev) => (prev === node.id ? null : prev))}
-              className={`absolute cursor-pointer flex flex-col items-center group transition-opacity duration-200 ${
+              className={`absolute cursor-pointer flex flex-col items-center group transition-all duration-300 ${
                 isOutsideActiveFamily
-                  ? "opacity-20 pointer-events-auto select-none z-0 hover:opacity-100"
+                  ? "opacity-15 blur-[4px] grayscale brightness-50 pointer-events-auto select-none z-0 hover:opacity-95 hover:blur-none hover:grayscale-0 hover:brightness-100"
                   : isConnected || !activeFocusId
-                  ? "opacity-100 pointer-events-auto z-10"
-                  : "opacity-65 pointer-events-auto z-10"
+                  ? "opacity-100 blur-none pointer-events-auto z-10"
+                  : "opacity-65 blur-none pointer-events-auto z-10"
               }`}
               style={{
                 left: `${node.x - 25}px`,
@@ -1221,34 +1260,8 @@ export default function DarkFamilyTree({
         })}
       </div>
 
-      {}
-      {}
-      {}
-      <footer className="fixed bottom-3 sm:bottom-4 left-0 right-0 z-30 flex items-center justify-center px-2 sm:px-4 pointer-events-none">
-        <div className="no-map-drag pointer-events-auto flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-[95vw] sm:max-w-5xl py-1 sm:py-2 px-2 sm:px-3 bg-black/90 rounded-full backdrop-blur-xl shadow-2xl no-scrollbar">
-          {availableDynastyClusters.map((dynasty) => {
-            const isActive = activeCluster === dynasty.id;
-            return (
-              <button
-                key={dynasty.id}
-                onClick={() => focusOnCluster(dynasty.id)}
-                className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[7px] xs:text-[7.5px] sm:text-[9px] font-mono tracking-wider sm:tracking-widest uppercase whitespace-nowrap transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-white text-black font-bold shadow-md"
-                    : "text-stone-400 hover:text-white hover:bg-stone-900/60"
-                }`}
-              >
-                {dynasty.label}
-              </button>
-            );
-          })}
-        </div>
-      </footer>
-
-      {}
-      {}
-      {}
-      <div className="fixed bottom-14 sm:bottom-16 left-3 sm:left-6 z-30 flex items-center gap-1.5 pointer-events-auto">
+      {/* Bottom Zoom & Reset Controls */}
+      <div className="fixed bottom-4 sm:bottom-6 left-3 sm:left-6 z-30 flex items-center gap-1.5 pointer-events-auto">
         <button
           onClick={zoomIn}
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"

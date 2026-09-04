@@ -29,6 +29,8 @@ export type LineNavProps = {
   activeHref?: string
   /** Scroll the active item into view on mount. */
   scrollActiveIntoView?: boolean
+  /** Alignment of the nav lines and labels ('left' by default, 'right' for right-docked sidebars) */
+  align?: "left" | "right"
   /** Called when an item is clicked. */
   onItemClick?: (
     item: LineNavItem,
@@ -41,6 +43,7 @@ export function LineNav({
   items,
   activeHref,
   scrollActiveIntoView = false,
+  align = "left",
   onItemClick,
 }: LineNavProps) {
   const activeItemRef = useRef<HTMLAnchorElement | null>(null)
@@ -53,7 +56,11 @@ export function LineNav({
 
   return (
     <nav
-      className={cn("flex flex-col gap-2 py-2", className)}
+      className={cn(
+        "flex flex-col gap-2 py-2",
+        align === "right" && "items-end",
+        className
+      )}
       style={
         {
           "--line-nav-width": `${lineVariants.normal.width}px`,
@@ -71,6 +78,7 @@ export function LineNav({
             href={item.href}
             count={item.count}
             active={isActive}
+            align={align}
             isLast={index === items.length - 1}
             onClick={
               onItemClick ? (event) => onItemClick(item, event) : undefined
@@ -88,6 +96,7 @@ const LineNavItem = memo(function LineNavItem({
   href,
   count,
   active = false,
+  align = "left",
   isLast = false,
   onClick,
 }: {
@@ -96,15 +105,21 @@ const LineNavItem = memo(function LineNavItem({
   href: string
   count?: number
   active?: boolean
+  align?: "left" | "right"
   isLast?: boolean
   onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }) {
+  const isRight = align === "right"
+
   return (
     <>
       <motion.a
         ref={ref}
         aria-current={active ? "page" : undefined}
-        className="group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:p-3.5 cursor-pointer select-none"
+        className={cn(
+          "group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:size-full after:-translate-y-1/2 after:p-3.5 cursor-pointer select-none",
+          isRight ? "flex-row-reverse after:right-0" : "after:left-0"
+        )}
         href={href}
         initial={false}
         animate={active ? "active" : "normal"}
@@ -112,6 +127,8 @@ const LineNavItem = memo(function LineNavItem({
         onClick={(e) => {
           if (onClick) {
             e.preventDefault()
+          }
+          if (onClick) {
             onClick(e)
           }
         }}
@@ -121,7 +138,12 @@ const LineNavItem = memo(function LineNavItem({
           variants={lineVariants}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         />
-        <span className="text-[11px] sm:text-xs font-mono tracking-wider whitespace-nowrap text-stone-400 transition-[color,font-weight] ease-out group-hover:text-white group-aria-[current=page]:text-white group-aria-[current=page]:font-bold flex items-center gap-1.5">
+        <span
+          className={cn(
+            "text-[11px] sm:text-xs font-mono tracking-wider whitespace-nowrap text-stone-400 transition-[color,font-weight] ease-out group-hover:text-white group-aria-[current=page]:text-white group-aria-[current=page]:font-bold flex items-center gap-1.5",
+            isRight && "flex-row-reverse"
+          )}
+        >
           <span>{title}</span>
           {typeof count === "number" && (
             <span className="text-[9.5px] font-mono text-stone-500 group-hover:text-stone-300 group-aria-[current=page]:text-stone-300 font-normal">
@@ -133,8 +155,18 @@ const LineNavItem = memo(function LineNavItem({
 
       {!isLast && (
         <>
-          <span className="block h-px w-[var(--line-nav-width)] bg-white/10" />
-          <span className="block h-px w-[var(--line-nav-width)] bg-white/10" />
+          <span
+            className={cn(
+              "block h-px w-[var(--line-nav-width)] bg-white/10",
+              isRight && "self-end"
+            )}
+          />
+          <span
+            className={cn(
+              "block h-px w-[var(--line-nav-width)] bg-white/10",
+              isRight && "self-end"
+            )}
+          />
         </>
       )}
     </>
