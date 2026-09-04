@@ -374,11 +374,7 @@ export default function RoadToDoomsday() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/35 to-transparent" />
       </div>
 
-      <div
-        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-20 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
-        style={{ transform: "translateZ(0)" }}
-        aria-hidden="true"
-      />
+      <div className="navbar-blur-fade !z-20" aria-hidden="true" />
 
       {/* Global Synchronized Header Navbar */}
       <header className="fixed top-0 inset-x-0 z-30 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none transition-opacity duration-1000">

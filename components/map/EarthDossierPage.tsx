@@ -75,11 +75,7 @@ export default function EarthDossierPage({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,2,4,0.85)_0%,transparent_30%,transparent_70%,rgba(2,2,4,0.95)_100%)]" />
       </div>
 
-      <div
-        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
-        style={{ transform: "translateZ(0)" }}
-        aria-hidden="true"
-      />
+      <div className="navbar-blur-fade" aria-hidden="true" />
 
       {/* 2. MINIMALIST TOP HEADER (Matching Global Standard) */}
       <header

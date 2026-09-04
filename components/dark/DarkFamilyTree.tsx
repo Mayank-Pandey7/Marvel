@@ -894,12 +894,7 @@ export default function DarkFamilyTree({
       <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
 
-      {/* Top Header Blur Mask (Synchronized with Sacred Timeline) */}
-      <div
-        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
-        style={{ transform: "translateZ(0)" }}
-        aria-hidden="true"
-      />
+      <div className="navbar-blur-fade" aria-hidden="true" />
 
       {/* 1. SYNCHRONIZED GLOBAL HEADER NAVBAR (EXACT MATCHING HEIGHT) */}
       <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none">

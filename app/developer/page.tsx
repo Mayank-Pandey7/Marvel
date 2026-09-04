@@ -27,6 +27,8 @@ export default function DeveloperPage() {
       <BackgroundStarfield />
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
+      <div className="navbar-blur-fade" aria-hidden="true" />
+
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
         <button
           onClick={() => setNavMenuOpen(true)}
