@@ -19,7 +19,8 @@ export function TonyStarkExperience() {
   const handleBack = () => {
     if (typeof window !== "undefined") {
       const savedRoute = sessionStorage.getItem("mcu_last_character_route");
-      if (savedRoute) {
+      const currentPath = window.location.pathname + window.location.search;
+      if (savedRoute && savedRoute !== currentPath && !savedRoute.startsWith("/characters/iron-man")) {
         router.push(savedRoute);
         return;
       }
@@ -28,7 +29,7 @@ export function TonyStarkExperience() {
         return;
       }
     }
-    router.push("/characters");
+    router.push("/characters/heros");
   };
 
   const movieEntries = useMemo(() => {

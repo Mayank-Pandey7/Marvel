@@ -374,9 +374,9 @@ export default function RoadToDoomsday() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/35 to-transparent" />
       </div>
 
-      {/* Header Backdrop (Identical to Timeline) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-20 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-20 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
+        style={{ transform: "translateZ(0)" }}
         aria-hidden="true"
       />
 

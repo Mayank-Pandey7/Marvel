@@ -27,7 +27,8 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
   const handleBack = () => {
     if (typeof window !== "undefined") {
       const savedRoute = sessionStorage.getItem("mcu_last_character_route");
-      if (savedRoute) {
+      const currentPath = window.location.pathname + window.location.search;
+      if (savedRoute && savedRoute !== currentPath && !savedRoute.startsWith(`/characters/${character.id}`)) {
         router.push(savedRoute);
         return;
       }
@@ -36,7 +37,8 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
         return;
       }
     }
-    router.push("/characters");
+    const isVillain = character.role.toLowerCase().includes("villain") || character.faction.toLowerCase().includes("villain");
+    router.push(isVillain ? "/characters/villains" : "/characters/heros");
   };
 
   useEffect(() => {
@@ -86,7 +88,8 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
+        style={{ transform: "translateZ(0)" }}
         aria-hidden="true"
       />
 

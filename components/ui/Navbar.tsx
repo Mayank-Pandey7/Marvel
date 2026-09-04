@@ -13,7 +13,8 @@ export function Navbar() {
   const handleBack = () => {
     if (typeof window !== "undefined") {
       const savedRoute = sessionStorage.getItem("mcu_last_character_route");
-      if (savedRoute) {
+      const currentPath = window.location.pathname + window.location.search;
+      if (savedRoute && savedRoute !== currentPath && !savedRoute.includes(window.location.pathname)) {
         router.push(savedRoute);
         return;
       }

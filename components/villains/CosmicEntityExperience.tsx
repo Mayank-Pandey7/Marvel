@@ -26,7 +26,8 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
   const handleBack = () => {
     if (typeof window !== "undefined") {
       const savedRoute = sessionStorage.getItem("mcu_last_character_route");
-      if (savedRoute) {
+      const currentPath = window.location.pathname + window.location.search;
+      if (savedRoute && savedRoute !== currentPath && !savedRoute.startsWith(`/characters/${entity.characterId}`)) {
         router.push(savedRoute);
         return;
       }
@@ -64,7 +65,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
       <div 
-        className="fixed top-0 right-0 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full pointer-events-none z-0 opacity-15 blur-[120px] transition-all duration-1000"
+        className="fixed top-0 right-0 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full pointer-events-none z-0 opacity-15 blur-[120px]"
         style={{
           background: `radial-gradient(circle, ${entity.tierColor} 0%, transparent 70%)`
         }}
@@ -72,7 +73,8 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
       />
 
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-24 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
+        style={{ transform: "translateZ(0)" }}
         aria-hidden="true"
       />
 

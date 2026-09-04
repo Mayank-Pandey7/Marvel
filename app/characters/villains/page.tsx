@@ -19,25 +19,25 @@ function VillainsPageContent() {
   }, [activeTab]);
 
   const tabHeader = (
-    <div className="flex items-center gap-3 sm:gap-5">
+    <div className="flex items-center gap-4 sm:gap-6">
       <button
         onClick={() => router.push("/characters/villains")}
-        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-all cursor-pointer ${
+        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer ${
           activeTab === "mcu-villains"
-            ? "text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+            ? "text-white font-bold"
             : "text-stone-500 hover:text-stone-300"
         }`}
       >
         MCU Villains Archives
       </button>
 
-      <span className="text-stone-700 font-mono select-none">|</span>
+      <span className="w-px h-3 bg-stone-800 shrink-0 select-none pointer-events-none" aria-hidden="true" />
 
       <button
         onClick={() => router.push("/characters/villains?tab=top-tier")}
-        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-all cursor-pointer ${
+        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer ${
           activeTab === "top-tier"
-            ? "text-purple-400 font-bold drop-shadow-[0_0_12px_rgba(192,132,252,0.4)]"
+            ? "text-purple-400 font-bold"
             : "text-stone-500 hover:text-stone-300"
         }`}
       >

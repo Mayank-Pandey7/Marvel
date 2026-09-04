@@ -896,7 +896,8 @@ export default function DarkFamilyTree({
 
       {/* Top Header Blur Mask (Synchronized with Sacred Timeline) */}
       <div
-        className="fixed top-0 inset-x-0 h-20 sm:h-26 pointer-events-none z-40 bg-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] transition-opacity duration-700"
+        className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
+        style={{ transform: "translateZ(0)" }}
         aria-hidden="true"
       />
 
