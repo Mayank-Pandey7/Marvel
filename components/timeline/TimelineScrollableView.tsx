@@ -66,7 +66,7 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 44, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
-  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Sony's Spider-Man Universe (Venom Trilogy)" },
+  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom Trilogy (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
   { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
@@ -78,7 +78,7 @@ export const EARTH_FILTER_OPTIONS = [
 export const EARTH_NAV_ITEMS = [
   { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 44 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
-  { title: "EARTH-688 • SONY SPIDER-MAN UNIVERSE", href: "#Earth-688", count: 3 },
+  { title: "EARTH-688 • VENOM", href: "#Earth-688", count: 3 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
   { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },

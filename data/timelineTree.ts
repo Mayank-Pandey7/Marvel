@@ -124,7 +124,7 @@ export const TIMELINE_BRANCHES: TimelineBranch[] = [
   },
   {
     id: "earth-688",
-    name: "Earth-688 (Sony's Spider-Man Universe / SSU)",
+    name: "Earth-688 (Venom Universe / SSU)",
     divergencePoint: "Life Foundation Space Probe Crash",
     phase: 7,
     year: "2018–2024",
