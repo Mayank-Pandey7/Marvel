@@ -341,7 +341,7 @@ export default function TimelineScrollableView() {
     };
     window.addEventListener("resize", handleResize);
 
-    const starCount = 180;
+    const starCount = 300;
     const particles = Array.from({ length: starCount }, () => {
       const isLarge = Math.random() > 0.85;
       const isMedium = Math.random() > 0.5;

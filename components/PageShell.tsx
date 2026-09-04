@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Search, Menu, X } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
 import SlideNavMenu from "./dark/SlideNavMenu";
+import BackgroundStarfield from "./ui/BackgroundStarfield";
 
 export default function PageShell({
   children,
@@ -35,6 +36,7 @@ export default function PageShell({
 
   return (
     <div className="min-h-screen bg-[#000000] text-stone-100 flex flex-col font-sans relative selection:bg-white selection:text-black">
+      <BackgroundStarfield />
 
       <div
         className="fixed top-0 inset-x-0 h-24 pointer-events-none z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent"

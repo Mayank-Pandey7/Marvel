@@ -17,12 +17,14 @@ import {
   Globe
 } from "lucide-react";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
+import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
 export default function DeveloperPage() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
+      <BackgroundStarfield />
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
 
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
