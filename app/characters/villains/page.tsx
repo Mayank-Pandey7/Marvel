@@ -48,20 +48,16 @@ function VillainsPageContent() {
 
   return (
     <PageShell backHref="/timeline" backLabel="TIMELINE">
-      <div className="relative min-h-[calc(100vh-80px)] w-full bg-transparent text-stone-300 font-sans selection:bg-white selection:text-black">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
-          {activeTab === "top-tier" ? (
-            <TopTierVillainsView topHeaderSlot={tabHeader} />
-          ) : (
-            <CharactersContent
-              defaultFaction="villains"
-              titleOverride="ARCHIVES · MCU VILLAINS & THREATS"
-              embedded={true}
-              topHeaderSlot={tabHeader}
-            />
-          )}
-        </div>
-      </div>
+      {activeTab === "top-tier" ? (
+        <TopTierVillainsView topHeaderSlot={tabHeader} />
+      ) : (
+        <CharactersContent
+          defaultFaction="villains"
+          titleOverride="ARCHIVES · MCU VILLAINS & THREATS"
+          embedded={true}
+          topHeaderSlot={tabHeader}
+        />
+      )}
     </PageShell>
   );
 }

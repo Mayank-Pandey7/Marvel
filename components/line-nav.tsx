@@ -2,7 +2,7 @@
 
 "use client"
 
-import { memo, useEffect, useRef } from "react"
+import { memo, useEffect, useRef, forwardRef } from "react"
 import { motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
@@ -88,25 +88,30 @@ export function LineNav({
   )
 }
 
-const LineNavItem = memo(function LineNavItem({
-  ref,
-  title,
-  href,
-  count,
-  active = false,
-  align = "left",
-  isLast = false,
-  onClick,
-}: {
-  ref?: React.Ref<HTMLAnchorElement>
-  title: string
-  href: string
-  count?: number
-  active?: boolean
-  align?: "left" | "right"
-  isLast?: boolean
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>
-}) {
+const LineNavItem = memo(
+  forwardRef<
+    HTMLAnchorElement,
+    {
+      title: string
+      href: string
+      count?: number
+      active?: boolean
+      align?: "left" | "right"
+      isLast?: boolean
+      onClick?: React.MouseEventHandler<HTMLAnchorElement>
+    }
+  >(function LineNavItem(
+    {
+      title,
+      href,
+      count,
+      active = false,
+      align = "left",
+      isLast = false,
+      onClick,
+    },
+    ref
+  ) {
   const isRight = align === "right"
 
   return (
@@ -143,11 +148,6 @@ const LineNavItem = memo(function LineNavItem({
           )}
         >
           <span>{title}</span>
-          {typeof count === "number" && (
-            <span className="text-[9.5px] font-mono text-stone-500 group-hover:text-stone-300 group-aria-[current=page]:text-stone-300 font-normal">
-              ({count})
-            </span>
-          )}
         </span>
       </motion.a>
 
@@ -169,4 +169,4 @@ const LineNavItem = memo(function LineNavItem({
       )}
     </>
   )
-})
+}))

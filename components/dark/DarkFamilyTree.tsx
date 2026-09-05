@@ -456,7 +456,7 @@ export default function DarkFamilyTree({
     };
     window.addEventListener("resize", handleResize);
 
-    const starCount = 300;
+    const starCount = 600;
     const particles = Array.from({ length: starCount }, () => {
       const isLarge = Math.random() > 0.85;
       const isMedium = Math.random() > 0.5;

@@ -482,71 +482,46 @@ export const CHARACTERS: Character[] = [
     },
     eras: [
       {
-            "eraId": "loki-invasion-phase-1",
-            "phase": 1,
-            "title": "The Invasion of Midgard (2011–2012)",
-            "year": "2011–2012",
-            "universe": "Earth-616",
-            "description": "Fell from the broken Bifrost into Thanos's domain; armed with the Mind Stone Scepter, led the Chitauri invasion of New York before being defeated by the Avengers.",
-            "keyMoments": [
-                  "Stole the Tesseract from the underground SHIELD facility",
-                  "Stuttgart opera house kneeling speech",
-                  "Smashed into the floor of Stark Tower by Hulk"
-            ]
+        "eraId": "loki-invasion-phase-1",
+        "phase": 1,
+        "title": "Frost Giant Heritage, Asgardian Betrayal & The Battle of New York (2011–2012)",
+        "year": "2011–2012",
+        "universe": "Earth-616",
+        "description": "Loki's journey begins with the shattering revelation of his Frost Giant bloodline upon touching the Casket of Ancient Winters. Consumed by a desperate need for Odin's validation, he orchestrates Laufey's assassination, assumes the regency of Asgard, and overcharges the Bifrost to annihilate Jotunheim before letting himself fall into the cosmic abyss. Rescued by the Mad Titan, he is armed with the Mind Stone Scepter and entrusted to retrieve the Tesseract from Earth. Loki infiltrates S.H.I.E.L.D., mind-controls Hawkeye and Dr. Selvig, and unleashes the Chitauri invasion upon New York City before being subdued by the newly assembled Avengers and dragged back to Asgard in chains."
       },
       {
-            "eraId": "loki-dark-world-phase-2",
-            "phase": 2,
-            "title": "Asgardian Deception & The Throne (2013)",
-            "year": "2013",
-            "universe": "Earth-616",
-            "description": "Allied with Thor to avenge their mother Frigga, faked his death in Svartalfheim, and secretly placed Odin in a spell to rule Asgard disguised as the All-Father.",
-            "keyMoments": [
-                  "Grief in the Asgardian prison cell after Frigga's death",
-                  "Faked death taking down Kurse",
-                  "Revealed sitting on the throne of Asgard in disguise"
-            ]
+        "eraId": "loki-dark-world-phase-2",
+        "phase": 2,
+        "title": "Grief, Illusionary Sacrifice & Usurping the Throne of Asgard (2013)",
+        "year": "2013",
+        "universe": "Earth-616",
+        "description": "Imprisoned for life in the deep subterranean dungeons of Asgard, Loki masks his profound sorrow when Dark Elves storm the palace and murder his mother, Frigga. When Thor arrives seeking a stealth route out of the realm, Loki agrees to guide him through ancient secret passages to Svartalfheim. In a desperate duel against Malekith's cursed general Kurse, Loki executes an elaborate illusion, sacrificing his physical form to destroy the brute while staging his dying breath in Thor's arms. Surviving through cunning sorcery, he secretly casts a memory-erasing spell over Odin, banishes him to Midgard, and ascends the throne of Asgard disguised as the All-Father."
       },
       {
-            "eraId": "loki-ragnarok-infinity-phase-3",
-            "phase": 3,
-            "title": "Savior of Asgard & Ultimate Sacrifice (2017–2018)",
-            "year": "2017–2018",
-            "universe": "Earth-616",
-            "description": "Arrived with the Statesman to evacuate Asgard from Hela, reclaimed the Tesseract, and was killed trying to assassinate Thanos to protect Thor.",
-            "keyMoments": [
-                  "'Your savior is here!' during the Battle of the Rainbow Bridge",
-                  "Summoned Surtur to initiate Ragnarok",
-                  "'The sun will shine on us again, brother'"
-            ]
+        "eraId": "loki-ragnarok-infinity-phase-3",
+        "phase": 3,
+        "title": "The Grandmaster's Arena, The Fall of Asgard & Final Defiance (2017–2018)",
+        "year": "2017–2018",
+        "universe": "Earth-616",
+        "description": "Loki's tranquil reign over Asgard is abruptly unmasked when Thor returns from Muspelheim and forces him to Earth to find Odin. After witnessing their father pass on into eternity, the brothers are ambushed by Hela and cast out of the Bifrost onto the chaotic junk planet of Sakaar. Loki charms the Grandmaster to secure luxury and power, but ultimately chooses his brother—leading the escaped gladiators aboard the Statesman to evacuate Asgard's citizens during the Battle of the Rainbow Bridge. After releasing Surtur to trigger Ragnarok and quietly pocketing the Tesseract from the vault, Loki faces Thanos in deep space and dies with dagger in hand attempting to assassinate the titan to protect Thor."
       },
       {
-            "eraId": "loki-tva-phase-4",
-            "phase": 4,
-            "title": "The Time Variance Authority & Sylvie (2021)",
-            "year": "2021",
-            "universe": "Earth-616",
-            "description": "2012 Variant arrested by the TVA, learned the truth about the Sacred Timeline, teamed with Sylvie, and confronted He Who Remains at the Citadel.",
-            "keyMoments": [
-                  "Witnessed Infinity Stones used as paperweights at the TVA",
-                  "Enchanted Alioth alongside Sylvie in the Void",
-                  "Pushed through the time door back to the altered TVA"
-            ]
+        "eraId": "loki-tva-phase-4",
+        "phase": 4,
+        "title": "Variant Awakening, Sylvie & The Citadel at the End of Time (2021)",
+        "year": "2021",
+        "universe": "Earth-616 / Sacred Timeline Branch",
+        "description": "During the Avengers' 2012 Time Heist in New York, a variant Loki seizes the dropped Tesseract and vanishes into the Gobi Desert, only to be promptly apprehended by the Time Variance Authority for branching the Sacred Timeline. Confronted with the complete arc of his past and future life, he realizes the futility of his narcissistic villainy and joins Agent Mobius to track a lethal rogue variant named Sylvie. Together, they navigate apocalyptic nexus events on Lamentis-1, uncover that the Time-Keepers are mindless androids, and survive the Void by enchanting the tempest monster Alioth. Reaching the Citadel at the End of Time, Loki duels Sylvie to prevent the multiversal timeline from fracturing before being thrust through a Timedoor into an altered TVA."
       },
       {
-            "eraId": "loki-god-of-stories-phase-5",
-            "phase": 5,
-            "title": "God of Stories & The World Tree (2023)",
-            "year": "2023",
-            "universe": "Earth-616",
-            "description": "Mastered time-slipping, destroyed the mechanical Temporal Loom, and seized infinite dying timeline branches with his bare hands to weave the living Yggdrasil tree.",
-            "keyMoments": [
-                  "Controlled his time-slipping across centuries of TVA history",
-                  "'I know what I want. I know what kind of god I need to be.'",
-                  "Ascended the Throne of Time to hold the Multiverse together for eternity"
-            ]
+        "eraId": "loki-god-of-stories-phase-5",
+        "phase": 5,
+        "title": "Mastering the Centuries & Ascending as the God of Stories (2023)",
+        "year": "2023",
+        "universe": "Multiverse Center / World Tree",
+        "description": "Trapped in a violent temporal paradox, Loki suffers uncontrolled time-slipping across past, present, and future within the TVA. Embracing centuries of rigorous study across countless time loops, he masters quantum physics, temporal mechanics, and dimensional engineering under O.B.'s guidance to repair the Temporal Loom. Upon discovering the Loom is an infallible fail-safe designed solely to prune the multiverse, Loki realizes true salvation requires absolute self-sacrifice. He steps into the lethal cosmic radiation without a protective suit, shatters the mechanical Loom, and physically gathers the infinite dying branches of the Multiverse in his bare hands—infusing them with verdant magic to weave the eternal World Tree Yggdrasil from the Throne of Time."
       }
-],
+    ],
     artifactsPossessed: ["space-stone", "mind-stone", "tva-tempad"],
     linkedNexusEvents: ["nexus-time-heist", "nexus-citadel-death", "nexus-god-of-stories"],
     entries: ["thor","avengers","thor-dark-world","thor-ragnarok","infinity-war","endgame","loki-s1","ant-man-quantumania","loki-s2"]
@@ -615,25 +590,34 @@ export const CHARACTERS: Character[] = [
       {
         eraId: "strange-time-stone",
         phase: 3,
-        title: "Doctor Strange: Master of Time (2016–2018)",
-        year: "2016–2018",
-        universe: "Earth-616",
-        description: "Trapped Dormammu in an infinite time loop, fought Thanos on Titan using the Mirror Dimension and duplication spells.",
-        keyMoments: ["'Dormammu, I've come to bargain'", "Viewed 14,000,605 futures on Titan", "'We're in the endgame now'"]
+        title: "The Mystic Arts, The Infinite Time Loop & The 1 in 14 Million Victory",
+        year: "2016–2019",
+        universe: "Earth-616 / Titan",
+        description: "After a horrific car crash permanently shatters his hands, arrogant neurosurgeon Dr. Stephen Strange seeks restoration in Kamar-Taj, mastering the Mystic Arts under the Ancient One and wielding the Eye of Agamotto. Defeating Kaecilius, he confronts the primordial entity Dormammu in the Dark Dimension, trapping the cosmic conqueror in an infinite time loop until he agrees to abandon Earth. Safeguarding the New York Sanctum Sanctorum, Strange aids Thor and Loki in locating Odin before confronting Thanos's Black Order in Greenwich Village. On Titan, he meditates through 14,000,605 possible futures, surrendering the Time Stone to ensure the solitary victorious timeline before turning to dust in the Snap. Resurrected on Titan during the Blip, he opens interdimensional sling-ring portals to rally the cosmos at the Battle of Earth, holds back the collapsing Hudson basin, and cues Tony Stark to make the ultimate sacrifice.",
+        keyMoments: ["'Dormammu, I've come to bargain'", "Viewed 14,000,605 futures on Titan", "Summoned the portal armies at the Battle of Earth"]
       },
       {
         eraId: "strange-dreamwalking",
         phase: 4,
-        title: "Doctor Strange: Dreamwalker of the Dead",
+        title: "The Fractured Multiverse, The Dreamwalk of the Damned & The Third Eye",
         year: "2024",
-        universe: "Multiverse",
-        description: "Dreamwalked into the rotting corpse of Defender Strange to fight the Scarlet Witch at Mount Wundagore.",
-        keyMoments: ["Cloak of Damned Souls", "Defeated Sinister Strange in music note duel", "Awakened the Third Eye"]
+        universe: "Earth-616 / Earth-838 / Incursion Reality",
+        description: "Attempting to aid Peter Parker after Mysterio exposes Spider-Man's identity, Strange casts the Runes of Kof-Kol to erase global memory, only for Parker's repeated alterations to fracture the multiverse and pull multiversal villains into Earth-616. After restoring cosmic equilibrium through a final, heartbreaking universal mind-wipe of Peter Parker, Strange rescues multiversal jumper America Chavez from Gargantos in New York—uncovering that Wanda Maximoff has succumbed to the corrupting influence of the Darkhold. Hurled across dimensions into Earth-838 and a collapsed incursion universe, Strange slays his corrupt variant Sinister Strange in a musical duel to claim the dark grimoire. Dreamwalking into the rotting corpse of Earth-616 Defender Strange, he harnesses the Cloak of Damned Souls to storm Mount Wundagore, guides Chavez to neutralize Wanda, obliterates every Darkhold in the multiverse, and awakens the Third Eye of Agamotto.",
+        keyMoments: ["Cast the universal memory erasure spell in No Way Home", "Musical note sorcery duel against Sinister Strange", "Commanded the Cloak of Damned Souls in Defender Strange's corpse", "Awakened the Third Eye of Agamotto"]
+      },
+      {
+        eraId: "strange-dark-dimension",
+        phase: 5,
+        title: "The Incursion Crisis & The Dark Dimension Crusade",
+        year: "2025–Present",
+        universe: "Earth-616 / Dark Dimension",
+        description: "Having inadvertently triggered an incursion reality collapse through his forbidden multiversal dreamwalking and reality-bending exploits, Strange is confronted on the streets of New York by Clea, the sorceress niece of Dormammu. Unveiling his awakened Third Eye, Strange unsheathes his mystic mastery without hesitation, slicing open a dimensional tear directly into the heart of the Dark Dimension to journey alongside Clea and stabilize the collapsing reality matrices. As rogue timelines accelerate toward universal convergence, Strange assumes his post as the foremost guardian of the multiverse, actively calculating and preparing the dimensional defenses necessary to stave off catastrophic multiversal annihilation.",
+        keyMoments: ["Joined Clea to confront reality-destroying incursions", "Breached the Dark Dimension with the awakened Third Eye", "Fortifying cosmic defenses ahead of multiversal collision"]
       }
     ],
     artifactsPossessed: ["time-stone", "eye-of-agamotto", "cloak-of-levitation", "darkhold-sinister", "book-of-vishanti"],
     linkedNexusEvents: ["nexus-titan-bargain", "nexus-multiverse-spell", "nexus-third-eye"],
-    entries: ["doctor-strange","thor-ragnarok","infinity-war","endgame","spiderman-no-way-home","doctor-strange-multiverse"]
+    entries: ["doctor-strange", "thor-ragnarok", "infinity-war", "endgame", "spiderman-no-way-home", "doctor-strange-multiverse"]
   },
   {
     id: "spider-man",
@@ -2335,16 +2319,16 @@ export const CHARACTERS: Character[] = [
       {
         eraId: "gorr-necrosword",
         phase: 4,
-        title: "Gorr: The Cosmic Crusade Against the Gods (2025)",
+        title: "The Deicidal Crusade, Shadow Realm & The Altar of Eternity",
         year: "2025",
         universe: "Earth-616 / Shadow Realm / Eternity",
-        description: "Decapitated celestial deities across the cosmos, dragged Asgardian children into the Shadow Realm, and unlocked the gates of Eternity.",
+        description: "After witnessing his daughter Love starve in a barren desert while his patron deity Rapu mocked his desperate prayers, Gorr was summoned by the ancient All-Black Necrosword. Decapitating Rapu to claim the god-killing relic, he initiated a relentless deicidal crusade across galaxies, slaughtering divine pantheons including the behemoth Falligar the Behemoth. To draw out Thor and secure the Bifrost via Stormbreaker, he invaded New Asgard and abducted its children into the monochromatic Shadow Realm. Breaching the cosmic Gates of Eternity with Stormbreaker's power, Gorr stood poised to wish for the extinction of all gods, but moved by Thor's plea and Jane Foster's sacrifice, he surrendered his vengeance—using his singular cosmic wish to resurrect his daughter before passing away peacefully.",
         keyMoments: ["Decapitated Rapu with the All-Black Necrosword", "Drained the color from the Shadow Realm", "Chose Love over the extinction of all gods"]
       }
     ],
     artifactsPossessed: ["necrosword", "stormbreaker"],
     linkedNexusEvents: [],
-    entries: ["thor-love-and-thunder"]
+    entries: ["thor-love-thunder", "thor-love-and-thunder"]
   },
   {
     id: "mysterio",
@@ -5049,10 +5033,10 @@ export const CHARACTERS: Character[] = [
       {
         eraId: "sentry-awakening",
         phase: 5,
-        title: "The Sentry: Awakening of the Golden Titan (2025–2026)",
+        title: "Awakening of the Golden Titan & The Shadow of The Void",
         year: "2025–2026",
         universe: "Earth-616",
-        description: "Bob Reynolds is awakened by CIA / Val networks, unleashing the solar force of The Sentry and wrestling with the horrific shadow of The Void.",
+        description: "Recruited and subjected to experimental laboratory trials overseen by CIA Director Valentina Allegra de Fontaine and black-ops research divisions, mild-mannered Bob Reynolds ingests the Golden Sentry Serum. The serum unleashes an unfathomable nuclear cosmic force equal to the power of one million exploding suns, instantly granting him solar invulnerability, superluminal flight, and subatomic manipulation. However, the sheer magnitude of his divine radiance awakens an equal and opposite cosmic entity: The Void—an eldritch shadow nightmare that manifests around his silhouette, threatening to consume all mortal life and forcing the Thunderbolts to confront the golden titan.",
         keyMoments: [
           "Demonstrated invulnerability against bullets and ballistic explosives in the bunker",
           "Channelled radiant solar aura equivalent to a million exploding suns",

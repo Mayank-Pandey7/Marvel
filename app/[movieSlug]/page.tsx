@@ -132,6 +132,13 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "xmen-2": "x2-2003",
   "x2-2003": "x2-2003",
   "x2-x-men-united": "x2-2003",
+  "venom": "venom-2018",
+  "venom-1": "venom-2018",
+  "venom-2": "venom-let-there-be-carnage",
+  "carnage": "venom-let-there-be-carnage",
+  "venom-3": "venom-the-last-dance",
+  "venom-last-dance": "venom-the-last-dance",
+  "last-dance": "venom-the-last-dance",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {

@@ -50,6 +50,8 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "thor-love-and-thunder": "/images/backdrops/thor-love-thunder.jpg",
   "she-hulk-attorney-at-law": "/images/backdrops/she-hulk.jpg",
   "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
+  "guardians-holiday": "/images/backdrops/guardians-holiday.jpg",
+  "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/guardians-holiday.jpg",
   "ant-man-and-the-wasp-quantumania": "/images/backdrops/ant-man-quantumania.jpg",
   "guardians-of-the-galaxy-vol-3": "/images/backdrops/guardians-vol3.jpg",
   "secret-invasion": "https://image.tmdb.org/t/p/w1280/3rINdUPSy9AklJg74jWHOyUXuZd.jpg",
@@ -72,6 +74,16 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "what-if-s2": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "what-if-s3": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "marvel-zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+  "venom-2018": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
+  "venom": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
+  "venom-1": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
+  "venom-let-there-be-carnage": "https://image.tmdb.org/t/p/original/eENEf62tMXbhyVvdcXlnQz2wcuT.jpg",
+  "venom-2": "https://image.tmdb.org/t/p/original/eENEf62tMXbhyVvdcXlnQz2wcuT.jpg",
+  "venom-the-last-dance": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
+  "venom-last-dance": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
+  "spider-man-2002": "/images/backdrops/spider-man-2002.jpg",
+  "spider-man-2": "/images/backdrops/spider-man-2.jpg",
+  "spider-man-3": "/images/backdrops/spider-man-3.jpg",
 };
 
 interface MovieSceneProps {
@@ -94,12 +106,14 @@ export function MovieScene({ movies }: MovieSceneProps) {
 
   const items: CharacterItem[] | undefined = movies?.map((m) => {
     const poster = getMoviePoster(m);
+    const isEarth616 = (!m.earthDesignation || m.earthDesignation === "Earth-616") && m.phase <= 6;
+    const categoryLabel = isEarth616 ? `PHASE ${m.phase}` : (m.earthDesignation || "MULTIVERSE");
     return {
       id: m.id,
       name: m.title,
-      role: `PHASE ${m.phase} · ${m.year} · ${m.runtime} MIN`,
+      role: `${categoryLabel} · ${m.year} · ${m.runtime} MIN`,
       portrait: poster,
-      universe: m.heroAlias ? m.heroAlias.toUpperCase() : `PHASE ${m.phase}`,
+      universe: m.heroAlias ? m.heroAlias.toUpperCase() : categoryLabel,
     };
   });
 

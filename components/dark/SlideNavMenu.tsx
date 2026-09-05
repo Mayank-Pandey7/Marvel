@@ -78,7 +78,7 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
               <Link
                 href="/timeline"
                 onClick={onClose}
-                className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
+                className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex md:hidden items-center justify-between group ${
                   pathname === "/timeline" || pathname.startsWith("/timeline/")
                     ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
                     : "text-stone-400 hover:text-white"
@@ -90,7 +90,7 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
               <Link
                 href="/familytree"
                 onClick={onClose}
-                className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
+                className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex md:hidden items-center justify-between group ${
                   pathname === "/familytree"
                     ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
                     : "text-stone-400 hover:text-white"

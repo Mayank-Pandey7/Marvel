@@ -153,39 +153,39 @@ export default function StampCharacterCard({
   const IconComponent = config.icon;
 
   return (
-    <div className="w-full max-w-[270px] mx-auto select-none">
+    <div className="w-full select-none">
       <Link
         href={`/characters/${character.id}`}
-        className="group relative block w-full cursor-pointer rounded-none transform-gpu will-change-transform transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2.5 hover:scale-[1.04] active:scale-[0.97]"
+        className="group relative block w-full cursor-pointer rounded-none transform-gpu will-change-transform transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:scale-[1.03] active:scale-[0.97]"
       >
       {/* 1. PERFORATED STAMP TICKET CONTAINER (Crisp 90-Degree Square Corners) */}
-      <div className="relative bg-white shadow-[0_16px_36px_rgba(0,0,0,0.65)] group-hover:shadow-[0_24px_48px_rgba(0,0,0,0.9)] p-2 rounded-none transition-shadow duration-200">
+      <div className="relative bg-white shadow-[0_12px_28px_rgba(0,0,0,0.6)] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.85)] p-2 sm:p-2.5 rounded-none transition-shadow duration-200">
         
         {/* Scalloped Perforation Punch-Out Teeth along Top Edge */}
-        <div className="absolute -top-2.5 inset-x-3 flex justify-between pointer-events-none z-30">
+        <div className="absolute -top-1.5 inset-x-2 flex justify-between pointer-events-none z-30">
           {Array.from({ length: 13 }).map((_, i) => (
-            <span key={`top-${i}`} className="w-4 h-4 rounded-full bg-black block shrink-0" />
+            <span key={`top-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
           ))}
         </div>
 
         {/* Scalloped Perforation Punch-Out Teeth along Bottom Edge */}
-        <div className="absolute -bottom-2.5 inset-x-3 flex justify-between pointer-events-none z-30">
+        <div className="absolute -bottom-1.5 inset-x-2 flex justify-between pointer-events-none z-30">
           {Array.from({ length: 13 }).map((_, i) => (
-            <span key={`bot-${i}`} className="w-4 h-4 rounded-full bg-black block shrink-0" />
+            <span key={`bot-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
           ))}
         </div>
 
         {/* Scalloped Perforation Punch-Out Teeth along Left Edge */}
-        <div className="absolute -left-2.5 inset-y-3 flex flex-col justify-between pointer-events-none z-30">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <span key={`left-${i}`} className="w-4 h-4 rounded-full bg-black block shrink-0" />
+        <div className="absolute -left-1.5 inset-y-2 flex flex-col justify-between pointer-events-none z-30">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <span key={`left-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
           ))}
         </div>
 
         {/* Scalloped Perforation Punch-Out Teeth along Right Edge */}
-        <div className="absolute -right-2.5 inset-y-3 flex flex-col justify-between pointer-events-none z-30">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <span key={`right-${i}`} className="w-4 h-4 rounded-full bg-black block shrink-0" />
+        <div className="absolute -right-1.5 inset-y-2 flex flex-col justify-between pointer-events-none z-30">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <span key={`right-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
           ))}
         </div>
 

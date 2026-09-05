@@ -27,7 +27,7 @@ export function TimelineStateProvider({ children }: { children: React.ReactNode 
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>("character:ironman");
   const [activeTab, setActiveTab] = useState<ActiveTab>("graph");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
     try {

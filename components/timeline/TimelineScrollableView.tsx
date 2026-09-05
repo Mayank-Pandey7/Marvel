@@ -25,21 +25,69 @@ import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
-import AmbientAudio from "@/components/dark/AmbientAudio";
 
 
 const TIMELINE_PHASES = [
-  { id: 1, roman: "I", label: "PHASE I", title: "THE INFINITY SAGA — ORIGINS", years: "2008 — 2012", desc: "The birth of heroes, the formation of the Avengers, and the defense of New York." },
-  { id: 2, roman: "II", label: "PHASE II", title: "THE INFINITY SAGA — ESCALATION", years: "2013 — 2015", desc: "Cosmic expansion, the fall of S.H.I.E.L.D., and the dawn of Ultron." },
-  { id: 3, roman: "III", label: "PHASE III", title: "THE INFINITY SAGA — RECKONING", years: "2016 — 2019", desc: "Civil conflict, the Mad Titan's conquest, and the desperate Time Heist." },
-  { id: 4, roman: "IV", label: "PHASE IV", title: "THE MULTIVERSE SAGA — NEW VOICES", years: "2021 — 2022", desc: "Multiversal ruptures, cosmic gods, and the rise of a new generation." },
-  { id: 5, roman: "V", label: "PHASE V", title: "THE MULTIVERSE SAGA — FRACTURES", years: "2023 — 2025", desc: "Quantum realm incursions, temporal fraying, and anti-hero alliances." },
-  { id: 6, roman: "VI", label: "PHASE VI", title: "THE MULTIVERSE SAGA — CONVERGENCE", years: "2025 — 2027", desc: "Battleworld approaches. Doom ascends as the multiverse collides." },
-  { id: 7, roman: "∞", label: "MULTIVERSE", title: "LEGACY MULTIVERSE — EXPANDED CANON", years: "2000 — 2020", desc: "The legendary origins of Spider-Man, the X-Men, Deadpool, and Wolverine across parallel realities." },
+  {
+    id: 1,
+    roman: "I",
+    label: "PHASE I",
+    title: "THE INFINITY SAGA — ASSEMBLE",
+    years: "2008 — 2012",
+    desc: "The dawn of the Marvel Cinematic Universe. From Tony Stark forging the Mark I armor to escape captivity, to Norse gods colliding on Earth and super-soldier serum resurfacing from World War II, Nick Fury activates the Avengers Initiative to assemble Earth's Mightiest Heroes and thwart Loki's Chitauri invasion of New York."
+  },
+  {
+    id: 2,
+    roman: "II",
+    label: "PHASE II",
+    title: "THE INFINITY SAGA — ESCALATION & SHADOWS",
+    years: "2013 — 2015",
+    desc: "Cosmic expansion and institutional collapse. S.H.I.E.L.D. crumbles when Hydra is unmasked from within, the Guardians of the Galaxy secure the Power Stone in deep space, and Tony Stark's traumatic dread of extraterrestrial annihilation spawns the rogue AI Ultron, ending in the near-extinction disaster of Sokovia."
+  },
+  {
+    id: 3,
+    roman: "III",
+    label: "PHASE III",
+    title: "THE INFINITY SAGA — WAR & RECKONING",
+    years: "2016 — 2019",
+    desc: "The catastrophic climax of the Infinity Saga. The Avengers fracture under the weight of the Sokovia Accords just as Thanos initiates his universal campaign for the six Infinity Stones. After the Mad Titan wipes out half of all life across the cosmos, the surviving heroes execute the temporal Time Heist to undo the Snap and secure their final victory."
+  },
+  {
+    id: 4,
+    roman: "IV",
+    label: "PHASE IV",
+    title: "THE MULTIVERSE SAGA — WORLDS UNBOUND",
+    years: "2021 — 2022",
+    desc: "The aftermath of the Blip tears open dimensional boundaries. Wanda Maximoff awakens the mythological power of the Scarlet Witch, ancient martial arts and primordial Eternals reveal themselves, Doctor Strange traverses fracturing dimensions, and Peter Parker's corrupted spell pulls parallel heroes and villains across the Multiverse."
+  },
+  {
+    id: 5,
+    roman: "V",
+    label: "PHASE V",
+    title: "THE MULTIVERSE SAGA — TIME & FRACTURES",
+    years: "2023 — 2025",
+    desc: "Temporal disintegration and rising incursions. Kang the Conqueror emerges from the depths of the Quantum Realm, black-ops conspiracies ignite across Earth, and Loki transcends time to destroy the Temporal Loom—seizing dying timeline branches in his bare hands to weave the living Multiverse Tree Yggdrasil."
+  },
+  {
+    id: 6,
+    roman: "VI",
+    label: "PHASE VI",
+    title: "THE MULTIVERSE SAGA — DOOM & CONVERGENCE",
+    years: "2025 — 2027",
+    desc: "The final convergence of realities. As colliding universes trigger universal incursion collapses, Marvel's First Family is introduced from an alternate reality, Earth's heroes assemble for their ultimate stand in Avengers: Doomsday, and Doctor Doom commands godhood across Battleworld in Secret Wars."
+  },
+  {
+    id: 7,
+    roman: "∞",
+    label: "MULTIVERSE",
+    title: "LEGACY MULTIVERSE — EXPANDED CANON",
+    years: "2000 — PRESENT",
+    desc: "The parallel realities and foundational sagas that paved modern superhero cinema. Spanning Sam Raimi's Spider-Man trilogy (Earth-96283), the 20th Century Fox Mutant & Wolverine universe (Earth-10005), the Venom-Verse (Earth-688), Andrew Garfield's Amazing Spider-Man duology (Earth-120703), Tim Story's Fantastic Four (Earth-121698), and the animated What If...? multiverse."
+  },
 ];
 
 const PHASE_FILTERS = [
-  { id: "all", label: "ALL TITLES (71)" },
+  { id: "all", label: "ALL TITLES" },
   { id: 1, label: "PHASE I" },
   { id: 2, label: "PHASE II" },
   { id: 3, label: "PHASE III" },
@@ -66,25 +114,25 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 44, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
-  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom Trilogy (Earth-688)" },
+  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom-Verse (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
   { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 1, title: "Marvel Zombies Apocalypse" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 71, title: "All Multiverse Timelines" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 74, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
   { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 44 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
-  { title: "EARTH-688 • VENOM", href: "#Earth-688", count: 3 },
+  { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 3 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
   { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 1 },
-  { title: "ALL REALITIES", href: "#all", count: 71 },
+  { title: "ALL REALITIES", href: "#all", count: 74 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
@@ -341,7 +389,7 @@ export default function TimelineScrollableView() {
     };
     window.addEventListener("resize", handleResize);
 
-    const starCount = 300;
+    const starCount = 600;
     const particles = Array.from({ length: starCount }, () => {
       const isLarge = Math.random() > 0.85;
       const isMedium = Math.random() > 0.5;
@@ -812,6 +860,7 @@ export default function TimelineScrollableView() {
                       {[
                         { key: "Earth-96283", name: "Sam Raimi Spider-Man Trilogy", badge: "EARTH-96283" },
                         { key: "Earth-120703", name: "The Amazing Spider-Man Duology", badge: "EARTH-120703" },
+                        { key: "Earth-688", name: "Venom-Verse (Earth-688)", badge: "EARTH-688" },
                         { key: "Earth-10005", name: "Fox Mutant Universe & Wolverine Saga", badge: "EARTH-10005" },
                         { key: "Earth-121698", name: "Tim Story Fantastic Four Duology", badge: "EARTH-121698" },
                         { key: "Earth-82111", name: "What If...? Animated Multiverse", badge: "EARTH-82111" },
@@ -946,7 +995,6 @@ export default function TimelineScrollableView() {
 
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
-      <AmbientAudio />
     </div>
   );
 }

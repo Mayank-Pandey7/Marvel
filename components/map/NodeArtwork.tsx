@@ -581,12 +581,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "ZOMBIES",
   },
   "venom-2018": {
-    poster: "https://image.tmdb.org/t/p/w780/2uNW4Wbg2DiG5MEdx0vAG6CVPgG.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
     color: "#475569",
     fallbackText: "VENOM",
   },
   "venom": {
-    poster: "https://image.tmdb.org/t/p/w780/2uNW4Wbg2DiG5MEdx0vAG6CVPgG.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+    color: "#475569",
+    fallbackText: "VENOM",
+  },
+  "venom-1": {
+    poster: "https://image.tmdb.org/t/p/w780/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
     color: "#475569",
     fallbackText: "VENOM",
   },
@@ -595,8 +600,23 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#dc2626",
     fallbackText: "VENOM 2",
   },
+  "venom-2": {
+    poster: "https://image.tmdb.org/t/p/w780/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+    color: "#dc2626",
+    fallbackText: "VENOM 2",
+  },
   "venom-the-last-dance": {
-    poster: "https://image.tmdb.org/t/p/w780/aosm8Vh9il4GvIQgMg0rgiKc6Te.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
+    color: "#6366f1",
+    fallbackText: "VENOM 3",
+  },
+  "venom-last-dance": {
+    poster: "https://image.tmdb.org/t/p/w780/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
+    color: "#6366f1",
+    fallbackText: "VENOM 3",
+  },
+  "venom-3": {
+    poster: "https://image.tmdb.org/t/p/w780/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
     color: "#6366f1",
     fallbackText: "VENOM 3",
   },

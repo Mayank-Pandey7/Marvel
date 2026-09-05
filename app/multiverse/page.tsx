@@ -3,18 +3,20 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Search, ArrowRight, X, Globe, Zap, ArrowLeft, ArrowUpRight } from "lucide-react";
+import { Search, ArrowRight, X, Zap } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { UNIVERSES, type UniverseDimension, type UniverseCategory } from "@/data/universes";
+import StampUniverseCard from "@/components/multiverse/StampUniverseCard";
+import { LineNav, type LineNavItem } from "@/components/line-nav";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 
 const CATEGORIES = [
-  { id: "all", label: "ALL REALITIES" },
-  { id: "sacred", label: "SACRED & PRIME" },
-  { id: "alternate", label: "ALTERNATE EARTHS" },
-  { id: "void", label: "VOID & TIMELESS" },
-  { id: "incursion", label: "INCURSION THREATS" },
-  { id: "whatif", label: "WHAT IF & MULTIVERSE" },
+  { id: "all", title: "ALL REALITIES", badge: "MULTIVERSAL ARCHIVE" },
+  { id: "sacred", title: "SACRED & PRIME", badge: "EARTH-616 & PRIME" },
+  { id: "alternate", title: "ALTERNATE EARTHS", badge: "BRANCHED CONTINUITIES" },
+  { id: "void", title: "VOID & TIMELESS", badge: "END OF TIME" },
+  { id: "incursion", title: "INCURSION THREATS", badge: "CATACLYSM COLLISION" },
+  { id: "whatif", title: "WHAT IF & ANIMATED", badge: "DIVERGENT NEXUS" },
 ];
 
 function MultiverseContent() {
@@ -24,7 +26,23 @@ function MultiverseContent() {
   const paramUniverse = searchParams.get("universe");
 
   const [searchQuery, setSearchQuery] = useState(paramQuery || "");
-  const [selectedCategory, setSelectedCategory] = useState<string>(paramCat || "all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get("category");
+      if (catParam && CATEGORIES.some((c) => c.id === catParam)) {
+        return catParam;
+      }
+      try {
+        const savedCat = localStorage.getItem("mcu_multiverse_category_filter");
+        if (savedCat && CATEGORIES.some((c) => c.id === savedCat)) {
+          return savedCat;
+        }
+      } catch {}
+    }
+    return "all";
+  });
+
   const [activeUniverseId, setActiveUniverseId] = useState<string | null>(paramUniverse || null);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [waveDirection, setWaveDirection] = useState<"next" | "prev">("next");
@@ -33,11 +51,37 @@ function MultiverseContent() {
   const isScrollLocked = useRef(false);
 
   useEffect(() => {
-    if (paramCat) setSelectedCategory(paramCat);
-    else setSelectedCategory("all");
+    if (paramCat && CATEGORIES.some((c) => c.id === paramCat)) {
+      setSelectedCategory(paramCat);
+    } else if (paramCat === "all" || !paramCat) {
+      setSelectedCategory("all");
+    }
     if (paramQuery !== null) setSearchQuery(paramQuery);
     if (paramUniverse) setActiveUniverseId(paramUniverse);
   }, [paramCat, paramQuery, paramUniverse]);
+
+  const handleSelectCategory = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    try {
+      localStorage.setItem("mcu_multiverse_category_filter", categoryId);
+      const url = new URL(window.location.href);
+      if (categoryId === "all") {
+        url.searchParams.delete("category");
+      } else {
+        url.searchParams.set("category", categoryId);
+      }
+      window.history.replaceState({}, "", url.toString());
+    } catch {}
+  };
+
+  const universeNavItems: LineNavItem[] = useMemo(() => {
+    return CATEGORIES.map((c) => {
+      return {
+        title: c.title,
+        href: `#${c.id}`,
+      };
+    });
+  }, []);
 
   const filteredUniverses = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -80,6 +124,11 @@ function MultiverseContent() {
     });
   }, [searchQuery, selectedCategory]);
 
+  const activeCategoryMeta = useMemo(() => {
+    const item = CATEGORIES.find((c) => c.id === selectedCategory);
+    return item || CATEGORIES[0];
+  }, [selectedCategory]);
+
   const activeIndex = useMemo(() => {
     if (!activeUniverseId) return 0;
     const idx = filteredUniverses.findIndex((u) => u.id === activeUniverseId);
@@ -94,15 +143,6 @@ function MultiverseContent() {
       setIsRippling(false);
     }, 1000);
   }, []);
-
-  const goToUniverse = useCallback((index: number, direction?: "next" | "prev") => {
-    if (index >= 0 && index < filteredUniverses.length && index !== activeIndex) {
-      const dir = direction || (index > activeIndex ? "next" : "prev");
-      setWaveDirection(dir);
-      setActiveUniverseId(filteredUniverses[index].id);
-      triggerSmoothLiquidWave();
-    }
-  }, [filteredUniverses, activeIndex, triggerSmoothLiquidWave]);
 
   const handleNext = useCallback(() => {
     if (activeIndex < filteredUniverses.length - 1) {
@@ -158,10 +198,10 @@ function MultiverseContent() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [activeUniverseId, handleNext, handlePrev]);
 
+  // Fullscreen Reality Dossier View
   if (activeUniverseId && currentUniverse) {
     return (
       <div className="relative w-screen h-screen bg-black text-stone-200 font-sans selection:bg-white selection:text-black overflow-hidden select-none">
-
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {filteredUniverses.map((univ, idx) => {
             const isActive = idx === activeIndex;
@@ -179,7 +219,8 @@ function MultiverseContent() {
                     ? "scale(1.08) translateY(-24px) rotate(0.4deg)"
                     : "scale(0.96) translateY(24px) rotate(-0.4deg)",
                   filter: isActive ? "blur(0px)" : "blur(8px)",
-                  transition: "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1), transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), filter 1000ms cubic-bezier(0.25, 1, 0.5, 1)",
+                  transition:
+                    "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1), transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), filter 1000ms cubic-bezier(0.25, 1, 0.5, 1)",
                 }}
               >
                 <img
@@ -200,14 +241,14 @@ function MultiverseContent() {
               background: `radial-gradient(ellipse 80% 60% at 50% 50%, ${currentUniverse.color || "#fff"}22 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%)`,
               opacity: isRippling ? 1 : 0,
               transform: isRippling ? "scale(1.15) translateY(0)" : "scale(0.85) translateY(20px)",
-              transition: "opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)",
+              transition:
+                "opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           />
         </div>
 
-        {/* Synchronized Global Header Navbar */}
+        {/* Global Header */}
         <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between bg-transparent pointer-events-none">
-          {/* Left Side: Drawer Menu Trigger */}
           <button
             onClick={() => setNavMenuOpen(true)}
             className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 group pointer-events-auto"
@@ -220,14 +261,12 @@ function MultiverseContent() {
             </div>
           </button>
 
-          {/* Center: Brand Header */}
           <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
             <Link href="/" className="hover:opacity-80 transition-opacity">
               MARVEL
             </Link>
           </div>
 
-          {/* Right Side: Close Button */}
           <button
             onClick={() => setActiveUniverseId(null)}
             className="text-stone-300 hover:text-white p-1.5 transition-colors cursor-pointer pointer-events-auto rounded-full hover:bg-white/10"
@@ -238,20 +277,15 @@ function MultiverseContent() {
         </header>
 
         <main className="relative z-20 w-full h-full px-6 sm:px-12 md:px-16 flex flex-col justify-between pt-24 pb-12">
-
           <div className="h-2" />
 
           <div className="w-full max-w-3xl my-auto">
-
             <div
               key={currentUniverse.id}
               className={`flex flex-col gap-3.5 ${
-                waveDirection === "next"
-                  ? "animate-wave-up"
-                  : "animate-wave-down"
+                waveDirection === "next" ? "animate-wave-up" : "animate-wave-down"
               }`}
             >
-
               {/* Designation Header */}
               <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-[0.3em] uppercase text-stone-400">
                 <span
@@ -285,12 +319,16 @@ function MultiverseContent() {
               <div className="mt-1 flex flex-wrap items-center gap-3 text-xs font-mono">
                 <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
                   <span className="text-[9px] uppercase tracking-widest text-stone-500">ANCHOR:</span>
-                  <span className="text-stone-200 font-bold">{currentUniverse.anchorBeing.split("(")[0].trim()}</span>
+                  <span className="text-stone-200 font-bold">
+                    {currentUniverse.anchorBeing.split("(")[0].trim()}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
                   <span className="text-[9px] uppercase tracking-widest text-stone-500">GOVERNING:</span>
-                  <span className="text-stone-200 font-bold truncate max-w-[240px]">{currentUniverse.governingForce}</span>
+                  <span className="text-stone-200 font-bold truncate max-w-[240px]">
+                    {currentUniverse.governingForce}
+                  </span>
                 </div>
               </div>
 
@@ -308,7 +346,9 @@ function MultiverseContent() {
               )}
 
               <div className="mt-4 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-stone-500 max-w-2xl">
-                <span>DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
+                <span>
+                  DIMENSION {activeIndex + 1} OF {filteredUniverses.length}
+                </span>
                 <Link
                   href="/familytree"
                   className="text-stone-400 hover:text-white flex items-center gap-1 transition-colors"
@@ -317,11 +357,8 @@ function MultiverseContent() {
                   <ArrowRight size={11} />
                 </Link>
               </div>
-
             </div>
-
           </div>
-
         </main>
 
         <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
@@ -367,121 +404,166 @@ function MultiverseContent() {
             animation: waveDown 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           }
         `}</style>
-
       </div>
     );
   }
 
+  // Main Archives Grid View (Synchronized with /artifacts and /characters/heroes)
   return (
     <PageShell backHref="/timeline" backLabel="TIMELINE">
+      {/* Top-Right Floating SELECT REALITIES List matching /artifacts styling */}
+      <div
+        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
+      >
+        {/* SELECT REALITIES pill */}
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+            SELECT REALITIES
+          </span>
+        </div>
+
+        {/* Reality Category LineNav */}
+        <div className="pointer-events-auto">
+          <LineNav
+            align="right"
+            className="w-auto"
+            items={universeNavItems}
+            activeHref={`#${selectedCategory}`}
+            scrollActiveIntoView={false}
+            onItemClick={(item) => {
+              const key = item.href.replace("#", "");
+              handleSelectCategory(key);
+            }}
+          />
+        </div>
+      </div>
+
       <div className="relative min-h-[calc(100vh-80px)] w-full bg-transparent text-stone-300 font-sans selection:bg-white selection:text-black">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col gap-8">
+        <div className="relative z-10 mx-auto flex flex-col gap-10 max-w-5xl px-3 sm:px-6 md:px-8 pt-10 sm:pt-12 pb-24">
+          {/* Search and Overview Bar */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                ARCHIVES · {filteredUniverses.length} REALITIES &amp; DIMENSIONS
+              </span>
+              <span className="text-stone-600 font-mono text-xs">•</span>
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-amber-400/90 uppercase font-semibold">
+                {activeCategoryMeta.title}
+              </span>
+            </div>
 
-          <div className="flex flex-col gap-6 pb-2">
-
-            <div className="relative flex items-center bg-stone-950/60 px-4 py-3 rounded-none focus-within:bg-stone-900/60 transition-colors">
-              <Search size={15} className="text-stone-500 shrink-0 mr-3" />
+            <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 rounded-full focus-within:border-white/30 transition-all">
+              <Search size={14} className="text-stone-400 shrink-0 mr-2.5" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH (REALITY, DESIGNATION, ANCHOR BEING, RESIDENT)..."
-                className="w-full bg-transparent text-xs sm:text-sm font-mono tracking-[0.2em] uppercase text-stone-100 placeholder:text-stone-600 focus:outline-none"
+                placeholder="SEARCH REALITIES..."
+                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="text-stone-500 hover:text-stone-300 text-[10px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                  className="text-stone-400 hover:text-stone-200 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
                 >
                   CLEAR
                 </button>
               )}
             </div>
-
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono tracking-widest uppercase">
-                {CATEGORIES.map((c) => (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelectedCategory(c.id)}
-                    className={`transition-colors cursor-pointer py-1 ${
-                      selectedCategory === c.id
-                        ? "text-white font-bold"
-                        : "text-stone-500 hover:text-stone-300"
-                    }`}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
           </div>
 
+          {/* Empty State or Sections */}
           {filteredUniverses.length === 0 ? (
-            <div className="text-center py-28">
-              <h3 className="text-sm font-mono tracking-[0.3em] uppercase text-stone-300 font-bold">
-                NO REALITIES FOUND
+            <div className="text-center py-28 w-full flex flex-col items-center justify-center animate-in fade-in duration-300">
+              <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-stone-300 font-bold">
+                NO RECORDS FOUND
               </h3>
               <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
-                No multiverse dimension matches the active query parameters.
+                No multiverse dimension matches the active category or search query.
               </p>
               <button
                 onClick={() => {
                   setSearchQuery("");
-                  setSelectedCategory("all");
+                  handleSelectCategory("all");
                 }}
-                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer"
+                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/5 border border-white/10 px-4 py-1.5 rounded-full hover:bg-white/10 transition-colors"
               >
                 RESET FILTERS
               </button>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {filteredUniverses.map((universe) => {
+          ) : selectedCategory === "all" && !searchQuery ? (
+            <div className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              {CATEGORIES.filter((c) => c.id !== "all").map((cat) => {
+                const items = UNIVERSES.filter((u) => u.category === cat.id);
+                if (items.length === 0) return null;
                 return (
-                  <div
-                    key={universe.id}
-                    onClick={() => setActiveUniverseId(universe.id)}
-                    className="group relative flex flex-col gap-3 transition-all duration-300 ease-out cursor-pointer"
+                  <section
+                    key={`category-section-${cat.id}`}
+                    id={`category-section-${cat.id}`}
+                    className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
                   >
-
-                    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-stone-950 rounded-xl border border-white/10 shadow-lg">
-                      <img
-                        src={universe.backdrop}
-                        alt={universe.name}
-                        className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700 ease-out"
-                      />
-
-                      {/* Subtle Vignette Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                          {cat.badge}
+                        </span>
+                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                          {cat.title}
+                        </span>
+                      </div>
+                      <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                        {items.length} {items.length === 1 ? "REALITY" : "REALITIES"}
+                      </span>
                     </div>
 
-                    <div className="flex flex-col gap-1">
-
-                      <h2 className="text-sm sm:text-[15px] font-mono font-bold tracking-[0.12em] uppercase text-white group-hover:text-stone-200 transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
-                        {universe.name}
-                      </h2>
-
-                      <div className="text-[10.5px] font-mono tracking-wider uppercase text-stone-400 line-clamp-1">
-                        {universe.designation.split("/")[0].trim()} · {universe.anchorBeing.split("(")[0].trim()}
-                      </div>
-
-                      <div className="pt-1 flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.2em] uppercase text-stone-400 group-hover:text-white transition-colors">
-                        <span>EXPLORE REALITY</span>
-                        <ArrowRight size={11} className="transform group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
-
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
+                      {items.map((universe, index) => (
+                        <StampUniverseCard
+                          key={universe.id}
+                          universe={universe}
+                          index={index}
+                          onClick={() => setActiveUniverseId(universe.id)}
+                        />
+                      ))}
                     </div>
-
-                  </div>
+                  </section>
                 );
               })}
             </div>
+          ) : (
+            <div className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <section
+                key={`category-section-${selectedCategory}`}
+                className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                      {searchQuery ? "SEARCH RESULTS" : activeCategoryMeta.badge}
+                    </span>
+                    <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                      {searchQuery ? `QUERY: "${searchQuery.toUpperCase()}"` : activeCategoryMeta.title}
+                    </span>
+                  </div>
+                  <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                    {filteredUniverses.length} {filteredUniverses.length === 1 ? "REALITY" : "REALITIES"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
+                  {filteredUniverses.map((universe, index) => (
+                    <StampUniverseCard
+                      key={universe.id}
+                      universe={universe}
+                      index={index}
+                      onClick={() => setActiveUniverseId(universe.id)}
+                    />
+                  ))}
+                </div>
+              </section>
+            </div>
           )}
-
         </div>
-
       </div>
     </PageShell>
   );

@@ -13,6 +13,7 @@ import {
 import { TopTierVillain, TOP_TIER_VILLAINS } from "@/data/topTierVillains";
 import { getCharacterAvatar } from "@/data/characterBackdrops";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
+import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
 interface CosmicEntityExperienceProps {
   entity: TopTierVillain;
@@ -59,10 +60,11 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
   const prevEntity = currentIndex > 0 ? TOP_TIER_VILLAINS[currentIndex - 1] : TOP_TIER_VILLAINS[TOP_TIER_VILLAINS.length - 1];
   const nextEntity = currentIndex < TOP_TIER_VILLAINS.length - 1 ? TOP_TIER_VILLAINS[currentIndex + 1] : TOP_TIER_VILLAINS[0];
 
-  const characterFacePortrait = getCharacterAvatar(entity.characterId) || entity.image;
+  const characterFacePortrait = entity.image || getCharacterAvatar(entity.characterId);
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <BackgroundStarfield />
 
       <div 
         className="fixed top-0 right-0 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full pointer-events-none z-0 opacity-15 blur-[120px]"
@@ -125,7 +127,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
         </div>
 
         {/* Hero Bio Container (Fixed at bottom-left exactly as requested) */}
-        <div className="relative z-20 max-w-xl lg:max-w-2xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
+        <div className="relative z-20 max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
           
           {/* Cosmic Hierarchy Badges */}
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] sm:text-[11px] font-mono tracking-wider uppercase text-stone-400">
@@ -149,7 +151,13 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
 
           {/* Character Name & Sub-Alias */}
           <div className="space-y-1">
-            <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-mono font-bold tracking-[0.08em] xs:tracking-[0.12em] uppercase text-white leading-tight drop-shadow-2xl">
+            <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap ${
+              entity.name.length > 16
+                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.02em] sm:tracking-[0.04em]"
+                : entity.name.length > 12
+                ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
+                : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
+            }`}>
               {entity.name}
             </h1>
             {entity.alias && entity.alias !== entity.name && (
@@ -347,13 +355,6 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
             </div>
           </Link>
         </div>
-
-        <button
-          onClick={handleBack}
-          className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 hover:text-white transition-colors cursor-pointer py-1"
-        >
-          RETURN TO ARCHIVE
-        </button>
       </footer>
 
       <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />

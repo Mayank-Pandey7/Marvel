@@ -94,7 +94,7 @@ export default function SearchOverlay({
       id: `movie:${m.id}`,
       type: "movie" as const,
       title: m.title,
-      subtitle: `Phase ${m.phase} · ${m.year} · ${m.runtime} MIN`,
+      subtitle: `${(!m.earthDesignation || m.earthDesignation === "Earth-616") && m.phase <= 6 ? `Phase ${m.phase}` : (m.earthDesignation || "Multiverse")} · ${m.year} · ${m.runtime} MIN`,
       action: () => {
         onClose();
         router.push(`/timeline/${m.id}`);

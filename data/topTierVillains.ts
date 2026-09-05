@@ -69,23 +69,23 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     },
     whatTheyHaveDone: [
       {
-        title: "Genesis of the Marvel Omniverse",
+        title: "Genesis of the Marvel Omniverse & The First Cosmos",
         eraOrEvent: "Before Time & The First Cosmos",
-        description: "Breathed existence into the cosmic firmament, establishing the Living Tribunal as the tri-faced arbiter of multiversal balance and giving rise to all conceptual abstracts (Eternity, Infinity, Death, and Oblivion).",
+        description: "Before the inception of time, space, matter, or conceptual reality, The One-Above-All breathed the infinite omniversal firmament into existence. Manifesting the First Cosmos, it established the primal architecture of creation and gave rise to the cosmic pantheon of abstract deities including Eternity, Infinity, Death, and Oblivion. To safeguard absolute equilibrium across infinite evolving dimensions, it forged The Living Tribunal as the supreme tri-faced cosmic arbiter, granting it the authority to pass judgment on universal threats while remaining answerable only to the primordial will of the Creator.",
         impact: "Created the entire framework of reality across infinite timelines and spatial dimensions.",
         quote: "I am the One-Above-All. I see through many eyes. I build with many hands."
       },
       {
-        title: "Restoration of Reality with Peter Parker & Thanos",
-        eraOrEvent: "Cosmic Revelations",
-        description: "Appeared in disguised human forms to comfort Peter Parker during his darkest hours and guided cosmic titans like Thanos to understand their finite nature within the grand tapestry of infinity.",
+        title: "Cosmic Guidance, Spiritual Grace & Mortal Restoration",
+        eraOrEvent: "Cosmic Revelations & Divine Manifestations",
+        description: "Transcending raw omnipotent authority, The One-Above-All frequently descends into mortal reality disguised as an unassuming artist, vagrant, or humble creator. Manifesting beside Peter Parker during the hero's most agonizing spiritual crisis over Aunt May's mortality, it offered boundless compassion, teaching that mortal suffering and sacrifice are essential threads within the infinite tapestry. It similarly confronted cosmic warlords like Thanos, exposing the futility of mortal omnipotence and dismantling the titan's nihilistic obsessions with quiet, unshakable transcendence.",
         impact: "Healed spiritual trauma across mortal heroes and reaffirmed the purpose of suffering within cosmic destiny."
       },
       {
-        title: "Appointment of Multiversal Arbiters",
-        eraOrEvent: "Cosmic Tribunal Mandate",
-        description: "Sanctioned the Living Tribunal, Adam Warlock, and Eternity to execute cosmic law and maintain equilibrium throughout infinite dimensional incursions.",
-        impact: "Guaranteed absolute stability across infinite reality cascades."
+        title: "Mandate of the Living Tribunal & Multiversal Equilibrium",
+        eraOrEvent: "Cosmic Tribunal Mandate & Universal Rebirth",
+        description: "Throughout the catastrophic destruction and rebirth of successive multiverses—from the Beyonders' universal incursions to the cataclysm of Secret Wars—The One-Above-All maintained the supreme meta-foundation of reality. It sanctioned Adam Warlock's ascension as the new Living Tribunal, affirmed the eternal laws governing cosmic balance, and ensured that no amount of finite destruction could ever unravel the fundamental spark of universal existence.",
+        impact: "Guaranteed absolute stability and spiritual continuity across infinite reality cascades."
       }
     ],
     whatTheyCanDo: [
@@ -261,23 +261,23 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     },
     whatTheyHaveDone: [
       {
-        title: "Decreed the Infinity Stones Incompatible Together",
-        eraOrEvent: "Infinity Watch Genesis",
-        description: "Ruled that the six Infinity Stones could no longer be used in unison following Thanos's universal decimation, rendering the Gauntlet inert.",
-        impact: "Prevented any single mortal or deity from altering the universal fabric at will.",
+        title: "Decreed the Infinity Gems Incompatible & Forged the Infinity Watch",
+        eraOrEvent: "Infinity Watch Genesis & Cosmic Arbitration",
+        description: "Following Thanos's catastrophic universal snap and Adam Warlock's subsequent ascension to omnipotence via the Infinity Gauntlet, Eternity petitioned The Living Tribunal to strip Warlock of the relics. Presiding over the highest cosmic court with all three faces in unanimous concurrence, the Tribunal rendered the ultimate verdict: the Infinity Gems were fundamentally incompatible with unified wieldership. By snapping his fingers, the Tribunal irrevocably nullified the Gauntlet's combined harmony, commanding Warlock to scatter the stones among trusted guardians—forming the Infinity Watch and permanently safeguarding reality from singular omnipotent tyrants.",
+        impact: "Permanently neutralized single-wielder omnipotence and safeguarded the multiversal power structure.",
         quote: "Let the words of the Living Tribunal be heard: The Infinity Gems shall never again function as one."
       },
       {
-        title: "Judged the Survival of Earth-616 vs Earth-1610",
-        eraOrEvent: "Multiversal Incursions",
-        description: "Presided over the tribunal deciding the fate of colliding realities during the catastrophic multiversal decay.",
-        impact: "Enforced cosmic equity and equilibrium across billions of divergent timelines."
+        title: "Presided Over Multiversal Incursions & Dimensional Collisions",
+        eraOrEvent: "Multiversal Incursions & The Collapse of Reality",
+        description: "When the foundational architecture of the Multiverse began to fracture during the Great Incursion Crisis—causing parallel Earths to violently collide and annihilate their respective cosmoses—The Living Tribunal convened the cosmic pantheon. Maintaining absolute judicial neutrality between Equity, Necessity, and Vengeance, the Tribunal adjudicated reality-wide disputes between prime dimensions including Earth-616 and Earth-1610. Rather than showing sentimental favoritism toward mortal worlds, it strictly enforced the primal laws of equilibrium decreed by The One-Above-All, ensuring that even as infinite universes collapsed, the transcendental core of existence remained intact.",
+        impact: "Enforced cosmic equity and equilibrium across infinite collapsing timeline matrices."
       },
       {
-        title: "Effortlessly Subdued the Protege & Cosmic Usurpers",
-        eraOrEvent: "Guardians of the 31st Century",
-        description: "Absorbed and neutralized the rogue entity Protege who attempted to copy the power of all cosmic entities.",
-        impact: "Preserved the structural hierarchy of the entire Marvel universe."
+        title: "Vanquished the Usurper Protégé & Restored the Cosmic Pantheon",
+        eraOrEvent: "The 31st Century Cosmic Cataclysm",
+        description: "When the omni-mimetic cosmic prodigy known as Protégé replicated the totality of power belonging to Eternity, the Living Tribunal, and every celestial deity—declaring himself the new supreme creator above the multiverse—the fundamental balance stood on the brink of usurpation. The Living Tribunal swiftly materialized in his supreme judge aspect alongside Scathan the Approver. Disapproving of Protégé's blasphemous arrogance, Scathan bound the usurper while the Living Tribunal enveloped and absorbed the entity into his cosmic essence, permanently neutralizing the threat and restoring divine order across the infinite cosmos.",
+        impact: "Preserved the sacred cosmic hierarchy and eradicated an existential threat to creation."
       }
     ],
     whatTheyCanDo: [
@@ -1135,7 +1135,7 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     characterId: "magneto",
     name: "Magneto",
     alias: "Erik Lehnsherr / Max Eisenhardt / Master of Magnetism",
-    image: "/images/characters/magneto.jpg",
+    image: "/images/characters/magneto-toptier.jpg",
     tier: "High",
     tierColor: "#e11d48",
     reason: "One of Marvel's most powerful mutants with planetary-scale electromagnetic control over all magnetic forces.",
@@ -1157,23 +1157,23 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     },
     whatTheyHaveDone: [
       {
-        title: "Unleashed Global Electromagnetic EMP (Fatal Attractions)",
-        eraOrEvent: "X-Men: Fatal Attractions (1993)",
-        description: "Emitted a global electromagnetic pulse from Asteroid M that wiped out electrical power, computing, and communications across the entire planet Earth.",
-        impact: "Forced Professor Xavier to cross his moral line and mind-wipe Magneto, inadvertently creating Onslaught.",
+        title: "Unleashed Global Electromagnetic EMP & Forged Asteroid M",
+        eraOrEvent: "X-Men: Fatal Attractions & Planetary EMP Crisis",
+        description: "From his orbital sanctuary of Asteroid M, Magneto retaliated against humanity's deployment of the Earth-orbiting Magneto Protocols satellite grid by releasing a catastrophic planetary-scale electromagnetic pulse. The wave instantly blacked out the entire global electrical grid, neutralizing power grids, hospital life-support systems, satellites, and military defenses across all seven continents. Establishing Asteroid M as an unassailable sovereign refuge for mutantkind, he demonstrated total planetary dominion over Earth's geomagnetic core, proving that mortal civilization exists purely by his forbearance.",
+        impact: "Crippled global technological infrastructure and triggered the confrontation leading to Onslaught's birth.",
         quote: "I have been known by many names. But to those who oppress my people, I am their judgment."
       },
       {
-        title: "Extracted Wolverine's Adamantium from His Skeleton",
-        eraOrEvent: "Fatal Attractions Climax",
-        description: "Used his magnetic powers to liquify and violently rip the adamantium coating directly out through Logan's skin and pores.",
-        impact: "Nearly killed Wolverine and pushed Logan's healing factor to its absolute breaking limit."
+        title: "Violently Extracted Wolverine's Adamantium Skeleton",
+        eraOrEvent: "The Fatal Attractions Climax & The Sunder of Logan",
+        description: "When the X-Men infiltrated Avalon to neutralize the Master of Magnetism, Wolverine engaged Magneto in savage close-quarters combat, severely wounding him with his claws. Pushed past all restraint, Magneto utilized the full potency of his Omega-level magnetic control to seize every atom of adamantium bonded to Logan's skeletal structure. Liquifying the indestructible metal within Wolverine's living tissue, he violently ripped the adamantium out through Logan's pores and skin, nearly killing the mutant warrior and forcing Professor Xavier to cross his sacred moral boundary by telepathically mind-wiping Magneto.",
+        impact: "Shattered Wolverine's body, depleted his healing factor, and precipitated the psychic genesis of Onslaught."
       },
       {
-        title: "Pushed Back an Interstellar Giant Bullet from Light Years Away",
-        eraOrEvent: "Uncanny X-Men #522",
-        description: "Entered deep meditative focus and used cosmic electromagnetism to pull the colossal Breakworld planet-destroying metal bullet carrying Kitty Pryde back to Earth across light years.",
-        impact: "Proved his magnetic range extends across deep interstellar space."
+        title: "Retrieved the Interstellar Breakworld Bullet Across Light-Years",
+        eraOrEvent: "Interstellar Deep-Space Magnetism & The Salvation of Kitty Pryde",
+        description: "When Kitty Pryde became trapped inside a colossal, planet-destroying metal bullet fired from Breakworld—hurtling through deep interstellar space at near light-speed—the world believed her lost forever. Sitting atop Mount Tamalpais in deep meditative trance, Magneto channeled every ounce of his Omega-level mutant mastery, extending his magnetic consciousness across millions of miles of deep space. Locking onto the alien alloys of the bullet light-years away, he halted its trajectory, hauled it back through the cosmos, and safely phased Kitty onto Earth's soil, cementing his status as an interstellar cosmic powerhouse.",
+        impact: "Demonstrated unprecedented interstellar range by manipulating celestial masses across deep space."
       }
     ],
     whatTheyCanDo: [
@@ -1221,23 +1221,23 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     },
     whatTheyHaveDone: [
       {
-        title: "Disintegrated Molecule Man at His Own Game",
-        eraOrEvent: "Dark Avengers #12",
-        description: "When Owen Reece atomized Sentry into nothingness, Sentry reconstructed himself from molecular dust and took control of Reece's molecules, disintegrating him.",
-        impact: "Proved that Sentry possesses molecular manipulation on par with Marvel's greatest matter benders.",
+        title: "Disintegrated Molecule Man at His Own Subatomic Game",
+        eraOrEvent: "Dark Avengers & The Molecular Dominion Crisis",
+        description: "When the reality-warping master of matter Owen Reece (Molecule Man) confronted the Dark Avengers, he casually dispersed Sentry's physical body into microscopic liquid mist and scattered his atoms across the atmosphere. In a feat that stunned the entire cosmic order, Sentry's consciousness refused death—reconstituting his golden corporeal form out of thin air before seizing control of Reece's own subatomic particles. Dominating the matter-manipulator on an atomic level, Sentry disintegrated Molecule Man into nonexistence, establishing that his molecular command rivals the greatest cosmic entities in existence.",
+        impact: "Proved that Sentry possesses molecular manipulation capable of overriding reality-scale matter benders.",
         quote: "I have the power of one million exploding suns... and I can never escape my shadow."
       },
       {
-        title: "Ripped the God of War Ares in Half",
-        eraOrEvent: "Siege of Asgard (2010)",
-        description: "Under the influence of Norman Osborn and The Void, Sentry grabbed the Olympian god Ares by his chest and tore him in two in front of all heroes.",
-        impact: "Demonstrated terrifying physical superiority over immortal mythological gods."
+        title: "Ripped the Olympian God of War Ares in Half at the Siege of Asgard",
+        eraOrEvent: "The Siege of Asgard & The Dark Reign Cataclysm",
+        description: "During Norman Osborn's full-scale military invasion of New Asgard hovering over Broxton, Oklahoma, the Olympian god of war Ares realized Osborn's corruption and turned his blade against the Iron Patriot. Commanded by Osborn to execute the traitorous god, Sentry intercepted Ares in mid-air with unimaginable kinetic velocity. In full view of the assembled Avengers, Thunderbolts, and Asgardian warriors, Sentry locked his bare hands into Ares's chest and effortlessly tore the immortal deity in half, unleashing a blood-soaked display of terrifying physical supremacy that plunged the battlefield into horror.",
+        impact: "Demonstrated absolute physical superiority over immortal pantheon gods and triggered the full awakening of The Void."
       },
       {
-        title: "Stalemate with World War Hulk",
-        eraOrEvent: "World War Hulk #5",
-        description: "Engaged the enraged World Breaker Hulk in an apocalyptic slugfest where their colliding fists burned with the light of solar flares, exhausting both titans.",
-        impact: "The only hero on Earth capable of halting the World Breaker's rampage."
+        title: "Clashed in Solar Stalemate Against World War Hulk",
+        eraOrEvent: "World War Hulk & The Battle for Manhattan",
+        description: "When the vengeful World Breaker Hulk decimated the Avengers, the Fantastic Four, and Earth's planetary defenses, Tony Stark made a desperate final plea for Robert Reynolds to intervene. Confronting the jade giant in the ruins of Manhattan, Sentry unleashed the unfiltered radiation of one million exploding suns, locking fists with Hulk in an apocalyptic slugfest that scorched the city skyline. The sheer kinetic and thermonuclear output of their colliding blows pulverized surrounding skyscrapers into glass, burning so intensely that both powerhouses eventually depleted their colossal energy reserves and collapsed in mutual exhaustion.",
+        impact: "Remained the sole mortal entity capable of matching the World Breaker's catastrophic kinetic power."
       }
     ],
     whatTheyCanDo: [

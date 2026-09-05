@@ -40,13 +40,38 @@ export const ARTIFACTS: Artifact[] = [
     iconColor: "#38bdf8",
     backdrop: "/images/artifacts/space-stone.jpg",
     history: [
-      { phase: 1, year: "1942", holder: "red-skull", holderName: "Red Skull / Hydra", location: "Tønsberg, Norway", event: "Hydra recovers the Tesseract to power advanced weaponry." },
-      { phase: 1, year: "1945", holder: "captain-america", holderName: "Steve Rogers / S.H.I.E.L.D.", location: "Arctic Waters", event: "Valkyrie crash plunges Tesseract into the ocean; recovered by Howard Stark." },
-      { phase: 1, year: "2012", holder: "loki", holderName: "Loki", location: "New York City", event: "Loki opens the Chitauri wormhole above Stark Tower." },
-      { phase: 1, year: "2012", holder: "thor", holderName: "Thor / Odin", location: "Asgard Vault", event: "Returned to Odin's vault for safekeeping." },
-      { phase: 3, year: "2017", holder: "loki", holderName: "Loki", location: "Statesman Spaceship", event: "Loki steals the Tesseract during Asgard's destruction (Ragnarok)." },
-      { phase: 3, year: "2018", holder: "thanos", holderName: "Thanos", location: "Infinity Gauntlet", event: "Thanos crushes the cube, revealing the Space Stone." },
-      { phase: 4, year: "2012-Branch", holder: "loki", holderName: "Loki (2012 Variant)", location: "TVA Headquarters", event: "Variant Loki escapes with Tesseract, sparking the Loki timeline branch." }
+      {
+        phase: 1,
+        year: "1942–1945",
+        holder: "red-skull",
+        holderName: "Johann Schmidt (Red Skull) & Captain America",
+        location: "Tønsberg, Norway / Arctic Waters",
+        event: "Unearthed in 1942 from a crypt in Tønsberg, Norway by Johann Schmidt, the Tesseract was siphoned by Dr. Arnim Zola to power Hydra's advanced directed-energy weaponry. Installed aboard the Valkyrie super-bomber to vaporize American capitals, the cube was destabilized during Captain America's assault on Schmidt, opening a cosmic wormhole that banished Red Skull across the universe to Vormir. Melting through the aircraft's floorboards, the Tesseract plummeted into the Arctic Ocean, where it was later dredged from the seabed by Howard Stark and secured for S.H.I.E.L.D.'s nascent cosmic energy research."
+      },
+      {
+        phase: 1,
+        year: "1995–2012",
+        holder: "loki",
+        holderName: "Project P.E.G.A.S.U.S., Loki & The Avengers",
+        location: "Joint Dark Energy Facility / New York City",
+        event: "Studied by undercover Kree scientist Mar-Vell to build a light-speed engine for Skrulls, the cube gifted Carol Danvers binary cosmic powers before being secured by S.H.I.E.L.D. under Project P.E.G.A.S.U.S. In 2012, Thanos remotely activated the Tesseract, allowing Loki to emerge through a spatial portal and brainwash Hawkeye and Dr. Selvig. Mounting the cube inside a rooftop portal generator on Stark Tower, Loki tore open the Chitauri wormhole above Manhattan, triggering the Battle of New York until Black Widow disabled the device with the Mind Stone Scepter, allowing Thor to return the cube to Odin's vault."
+      },
+      {
+        phase: 3,
+        year: "2017–2018",
+        holder: "thanos",
+        holderName: "Loki, Thanos & The Infinity Gauntlet",
+        location: "Asgard Vault / Statesman / Sanctuary II",
+        event: "While navigating Odin's vault to resurrect Surtur with the Eternal Flame during Ragnarok, Loki secretly pilfered the Tesseract before Asgard's total annihilation. Aboard the refugee freighter Statesman, Thanos and the Black Order intercepted the Asgardians, slaughtering half the crew and torturing Thor. To spare his brother's life, Loki surrendered the cube. Crushing the crystalline casing in the palm of his bare hand, Thanos extracted the blue Space Stone and embedded it into the Infinity Gauntlet, granting the Mad Titan instantaneous omnipresent teleportation across galaxies."
+      },
+      {
+        phase: 4,
+        year: "2012-Branch",
+        holder: "loki",
+        holderName: "Variant 2012 Loki & The Time Variance Authority",
+        location: "Stark Tower / Gobi Desert / TVA Headquarters",
+        event: "During the Avengers' 2012 Time Heist in New York, the briefcase containing the captured Tesseract was knocked free by 2012 Hulk, landing at the feet of captured variant Loki. Snatching the cube, Loki warped across dimensions into the Gobi Desert, inadvertently creating a rogue timeline branch. Swiftly arrested by the TVA Minute Men and escorted to their timeless headquarters, Loki was stunned to discover that the cosmic omnipotence of the Space Stone and its sister relics was entirely nullified—rendering the Tesseract an inert paperweight outside the flow of time."
+      }
     ]
   },
   {
@@ -471,39 +496,126 @@ export const ARTIFACTS: Artifact[] = [
   },
   {
     id: "gungnir",
-    name: "Gungnir (Spear of Heaven)",
+    name: "Gungnir (The Spear of Odin)",
     category: "asgardian_weapon",
-    origin: "Asgard Royal Treasury / Uru Forges",
-    power: "Channels divine Odinforce, commands the Destroyer automaton, opens the Bifrost Bridge.",
-    description: "The royal symbol of Asgardian sovereignty carried by King Bor, King Odin, and King Thor. Capable of firing lethal blasts of pure cosmic Odinforce and directing the ancient Asgardian vault guardians.",
+    origin: "Asgard Royal Treasury / Nidavellir Uru Forges",
+    power: "Channels divine Odinforce into disintegrating cosmic blasts, commands the Destroyer automaton, and unlocks the Bifrost Bridge.",
+    description: "The supreme royal sceptre and weapon of Allfather Odin Borson, symbol of Asgardian absolute sovereignty. Forged from enchanted Uru by the Dwarves of Nidavellir, Gungnir channels the divine Odinforce with pinpoint lethality, commands the Destroyer vault guardian, and opens the dimensional gateways of Yggdrasil.",
     phaseIntroduced: 1,
     iconColor: "#eab308",
     backdrop: "/images/artifacts/gungnir.jpg",
     history: [
-          {
-                "phase": 1,
-                "year": "965 AD",
-                "holder": "odin",
-                "holderName": "Odin Borson",
-                "location": "Tønsberg, Norway",
-                "event": "Odin leads Asgardian forces to repel the Frost Giants."
-          },
-          {
-                "phase": 1,
-                "year": "2011",
-                "holder": "loki",
-                "holderName": "Loki (Regent of Asgard)",
-                "location": "Asgard Throne Room",
-                "event": "Loki assumes the throne and commands the Destroyer to Earth."
-          },
-          {
-                "phase": 3,
-                "year": "2017",
-                "holder": "thor",
-                "holderName": "Thor Odinson",
-                "location": "Asgard Palace",
-                "event": "Thor dual-wields Gungnir against Hela during the Siege of Asgard."
-          }
+      {
+        phase: 1,
+        year: "965 AD",
+        holder: "odin",
+        holderName: "Odin Borson",
+        location: "Tønsberg, Norway",
+        event: "Allfather Odin leads the Einherjar army against Laufey and the Frost Giants in Tønsberg, wielding Gungnir to unleash catastrophic shockwaves of Odinforce and seize the Casket of Ancient Winters."
+      },
+      {
+        phase: 1,
+        year: "2011",
+        holder: "loki",
+        holderName: "Loki (Regent of Asgard)",
+        location: "Asgard Throne Room",
+        event: "During the Odinsleep, Loki claims Gungnir to assume the throne of Asgard, striking down Laufey and directing the Destroyer to Earth before Thor shatters the Bifrost."
+      },
+      {
+        phase: 3,
+        year: "2017",
+        holder: "thor",
+        holderName: "Thor Odinson",
+        location: "Asgard Palace",
+        event: "Thor dual-wields Gungnir against Hela during the Siege of Asgard, channeling the Allfather's spear before unlocking his own inner thunder."
+      }
+    ]
+  },
+  {
+    id: "destroyer-armor",
+    name: "The Destroyer (Odin's Vault Automaton)",
+    category: "asgardian_weapon",
+    origin: "Forged in Nidavellir by Odin Borson",
+    power: "Near-invulnerable enchanted Uru chassis, facial disintegrator beam capable of atomic vaporisation, absolute loyalty to the sovereign holding Gungnir.",
+    description: "An imposing enchanted humanoid automaton forged from indestructible Uru metal by Allfather Odin to guard the deepest subterranean weapon vaults of Asgard. Animated by the Odinforce and commanded remotely through Gungnir, the Destroyer's visor splits open to project devastating beams of cosmic disintegration that reduce matter to ash.",
+    phaseIntroduced: 1,
+    iconColor: "#f59e0b",
+    backdrop: "/images/artifacts/destroyer-armor.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "2011",
+        holder: "odin",
+        holderName: "Odin Borson & Loki",
+        location: "Odin's Vault / Puente Antiguo, New Mexico",
+        event: "Guarding Odin's Vault, the Destroyer incinerates Frost Giant infiltrators before Loki commands it to Earth to eliminate Thor, tearing through S.H.I.E.L.D. agents until Thor's worthiness is restored, summoning Mjolnir to shatter the construct."
+      },
+      {
+        phase: 1,
+        year: "2012",
+        holder: "phil-coulson",
+        holderName: "Agent Phil Coulson (S.H.I.E.L.D.)",
+        location: "S.H.I.E.L.D. Helicarrier",
+        event: "Phil Coulson and S.H.I.E.L.D. reverse-engineer the Destroyer's salvaged head into the Destroyer Armor Prototype Gun, which Coulson wields to blast Loki through a bulkhead in the Helicarrier."
+      }
+    ]
+  },
+  {
+    id: "casket-ancient-winters",
+    name: "The Casket of Ancient Winters",
+    category: "asgardian_weapon",
+    origin: "Jotunheim / Claimed by Odin in 965 AD",
+    power: "Unleashes the primordial freezing storm of Jotunheim; capable of flash-freezing entire armies, planetary ecosystems, and cosmic conduits.",
+    description: "An ancient elemental relic containing the primordial, infinite freezing fury of Jotunheim. Seized by King Odin in 965 AD after crushing Laufey's Frost Giant invasion in Tønsberg, the Casket was locked inside Odin's Vault until Loki stole it to uncover his Jotun lineage and freeze Heimdall at the Bifrost.",
+    phaseIntroduced: 1,
+    iconColor: "#38bdf8",
+    backdrop: "/images/artifacts/casket-ancient-winters.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "965 AD",
+        holder: "odin",
+        holderName: "Odin Borson & Laufey",
+        location: "Tønsberg, Norway",
+        event: "King Odin defeats Laufey and strips the Casket from the Frost Giants, bringing it to Asgard's Royal Vault to end the Great War and ensure eternal peace across the Nine Realms."
+      },
+      {
+        phase: 1,
+        year: "2011",
+        holder: "loki",
+        holderName: "Loki & Heimdall",
+        location: "Asgard Vault & Himinbjorg",
+        event: "Loki unseals the Casket in Odin's Vault, turning blue upon touching its frost, and later unleashes its sub-zero gale to encase Heimdall and the Bifrost Observatory in unbreakable cosmic ice."
+      }
+    ]
+  },
+  {
+    id: "eternal-flame",
+    name: "The Eternal Flame",
+    category: "asgardian_weapon",
+    origin: "Muspelheim / Claimed by Odin Borson",
+    power: "Inextinguishable primordial cosmic fire; restores the deceased to immortal un-life; restores Surtur to his planet-consuming prime.",
+    description: "An inexhaustible mystical fire stolen from the fire demon Surtur by Allfather Odin to thwart the prophecy of Ragnarok. Hidden inside Odin's Vault for millennia, the Flame was used by Hela to resurrect the ancient Berserker army and giant wolf Fenris, and later merged with Surtur's crown by Loki to obliterate Asgard and slay Hela.",
+    phaseIntroduced: 1,
+    iconColor: "#f97316",
+    backdrop: "/images/artifacts/eternal-flame.jpg",
+    history: [
+      {
+        phase: 1,
+        year: "Ancient Era",
+        holder: "odin",
+        holderName: "Odin Borson",
+        location: "Muspelheim",
+        event: "Allfather Odin travels to the burning realm of Muspelheim, vanquishes Surtur, and steals the source of his infinite power, locking the Eternal Flame within Asgard's vault beneath the palace."
+      },
+      {
+        phase: 3,
+        year: "2017",
+        holder: "hela",
+        holderName: "Hela & Loki",
+        location: "Odin's Vault, Asgard",
+        event: "Hela plunges her hand into the brazier to resurrect her mount Fenris and the buried Berserkers. Later, Loki drops Surtur's crown into the flame, resurrecting the Fire Giant in mountain-sized glory to destroy Asgard."
+      }
     ]
   },
   {

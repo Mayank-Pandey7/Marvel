@@ -149,6 +149,13 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "armor-wars": "armor-wars",
   "blade": "blade",
   "shang-chi-2": "shang-chi-2",
+  "venom": "venom-2018",
+  "venom-1": "venom-2018",
+  "venom-2": "venom-let-there-be-carnage",
+  "carnage": "venom-let-there-be-carnage",
+  "venom-3": "venom-the-last-dance",
+  "venom-last-dance": "venom-the-last-dance",
+  "last-dance": "venom-the-last-dance",
 };
 
 function parseRuntime(runtimeStr?: string): number {
