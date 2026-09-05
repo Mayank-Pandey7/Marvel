@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import {
-  Menu,
-  X,
-  ArrowLeft,
   Github,
   Linkedin,
   Twitter,
@@ -20,12 +17,18 @@ import {
   Compass,
   Terminal,
   Globe,
-  Briefcase,
+  ArrowRight,
   Cpu,
-  CheckCircle2,
 } from "lucide-react";
-import SlideNavMenu from "@/components/dark/SlideNavMenu";
-import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+import PageShell from "@/components/PageShell";
+import { LineNav, type LineNavItem } from "@/components/line-nav";
+
+const NAV_ITEMS: LineNavItem[] = [
+  { title: "ARCHIVE DOSSIER", href: "#overview" },
+  { title: "SOCIAL PROFILES", href: "#socials" },
+  { title: "CORE ARCHITECTURE", href: "#architecture" },
+  { title: "SYSTEM STACK", href: "#techstack" },
+];
 
 const SOCIAL_HANDLES = [
   {
@@ -33,7 +36,6 @@ const SOCIAL_HANDLES = [
     handle: "mynk.is-a.dev",
     href: "https://mynk.is-a.dev",
     icon: Globe,
-    color: "hover:text-emerald-400 hover:border-emerald-500/40",
     badge: "WEBSITE",
   },
   {
@@ -41,7 +43,6 @@ const SOCIAL_HANDLES = [
     handle: "@Mayank-Pandey7",
     href: "https://github.com/Mayank-Pandey7",
     icon: Github,
-    color: "hover:text-white hover:border-white/40",
     badge: "CODE",
   },
   {
@@ -49,7 +50,6 @@ const SOCIAL_HANDLES = [
     handle: "in/mynkdev",
     href: "https://www.linkedin.com/in/mynkdev/",
     icon: Linkedin,
-    color: "hover:text-sky-400 hover:border-sky-500/40",
     badge: "CONNECT",
   },
   {
@@ -57,7 +57,6 @@ const SOCIAL_HANDLES = [
     handle: "@maynkio",
     href: "https://x.com/maynkio",
     icon: Twitter,
-    color: "hover:text-stone-100 hover:border-stone-400/40",
     badge: "UPDATES",
   },
   {
@@ -65,7 +64,6 @@ const SOCIAL_HANDLES = [
     handle: "@nomad.mayank",
     href: "https://www.youtube.com/@nomad.mayank",
     icon: Youtube,
-    color: "hover:text-rose-400 hover:border-rose-500/40",
     badge: "CONTENT",
   },
   {
@@ -73,304 +71,370 @@ const SOCIAL_HANDLES = [
     handle: "@mayank__pandeyy",
     href: "https://www.instagram.com/mayank__pandeyy",
     icon: Instagram,
-    color: "hover:text-pink-400 hover:border-pink-500/40",
     badge: "SOCIAL",
   },
   {
-    name: "Email",
+    name: "Direct Email",
     handle: "mayankpandey0717@gmail.com",
     href: "mailto:mayankpandey0717@gmail.com",
     icon: Mail,
-    color: "hover:text-amber-400 hover:border-amber-500/40",
     badge: "CONTACT",
   },
 ];
 
+const ARCHITECTURE_MODULES = [
+  {
+    id: "timeline-engine",
+    title: "Sacred Timeline Engine",
+    badge: "TEMPORAL CANON",
+    icon: Compass,
+    color: "#10b981",
+    description:
+      "44 canon film and series entries spanning Phases 1 through 6, dynamic path geometry, chronological ordering, and instant phase jump controls.",
+  },
+  {
+    id: "multiverse-map",
+    title: "Multiverse Spatial Map",
+    badge: "PARALLEL REALITIES",
+    icon: Globe,
+    color: "#06b6d4",
+    description:
+      "Parallel Earth designations including Earth-616, Fox Earth-10005, Raimi Earth-96283, Webb Earth-120703, and What If dimension matrices.",
+  },
+  {
+    id: "character-archives",
+    title: "Character Archives",
+    badge: "ROSTERS & THREATS",
+    icon: Layers,
+    color: "#a855f7",
+    description:
+      "Collectible ticket cards with authentic stamp perforations, faction filters (Avengers, Mutants, Villains), and detailed chronological histories.",
+  },
+  {
+    id: "cosmic-relics",
+    title: "Cosmic Relics Vault",
+    badge: "GALACTIC ARSENAL",
+    icon: Shield,
+    color: "#f59e0b",
+    description:
+      "Provenance and wielder tracking for Infinity Stones, Gauntlets, Asgardian divine weapons, the Ten Rings, and the All-Black Necrosword.",
+  },
+  {
+    id: "ironman-experience",
+    title: "Tony Stark Experience",
+    badge: "TRIBUTE SEQUENCER",
+    icon: Sparkles,
+    color: "#ef4444",
+    description:
+      "400vh canvas scroll animation sequence, 3D character carousels, and an immersive tribute to the hero who saved the universe.",
+  },
+  {
+    id: "family-tree",
+    title: "Family Tree & Dynasties",
+    badge: "GENEALOGY GRAPH",
+    icon: Code2,
+    color: "#6366f1",
+    description:
+      "Dynamic node graph visualizing bloodlines, Asgardian royalty, mutant connections, and multiversal alliances.",
+  },
+];
+
+const TECH_STACK = [
+  { label: "FRAMEWORK", value: "Next.js 14", desc: "App Router & SSR" },
+  { label: "LANGUAGE", value: "TypeScript", desc: "Strict Type Safety" },
+  { label: "STYLING", value: "Tailwind CSS", desc: "Cinematic Dark Theme" },
+  { label: "RUNTIME & CLOUD", value: "Vercel & Bun", desc: "Edge Network Delivery" },
+];
 
 export default function DeveloperPage() {
-  const [navMenuOpen, setNavMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("overview");
 
   return (
-    <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden">
-      <BackgroundStarfield />
-      <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
-
-      <div className="navbar-blur-fade" aria-hidden="true" />
-
-      {/* Synchronized Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
-        <button
-          onClick={() => setNavMenuOpen(true)}
-          className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 pointer-events-auto"
-          title="Open Universe Menu"
-          aria-label="Open Universe Menu"
-        >
-          <Menu size={18} strokeWidth={1.5} />
-        </button>
-
-        <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
-          <Link href="/" className="hover:opacity-80 transition-opacity">
-            MARVEL
-          </Link>
-        </div>
-
-        <Link
-          href="/timeline"
-          className="text-stone-300 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer pointer-events-auto"
-          title="Return to Timeline (Esc)"
-        >
-          <X size={18} strokeWidth={1.5} />
-        </Link>
-      </header>
-
-      {/* Hero Header Section */}
-      <section className="relative w-full pt-32 sm:pt-40 pb-12 px-4 sm:px-12 md:px-16 max-w-6xl mx-auto flex flex-col gap-6">
-        <div className="flex items-center gap-2.5 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-emerald-400 font-bold">
-          <Terminal size={14} />
-          <span>FULL STACK WEB DEVELOPER &bull; SYSTEM ARCHITECT</span>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-mono font-black tracking-tight uppercase text-white leading-none">
-            MAYANK <span className="text-stone-500">PANDEY</span>
-          </h1>
-          <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
-            Love to build cool stuff &bull; Products that leave an impact
-          </p>
-        </div>
-
-        <p className="text-sm sm:text-base font-mono text-stone-300 max-w-3xl leading-relaxed">
-          Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
-        </p>
-
-        {/* Primary Action Buttons */}
-        <div className="flex flex-wrap items-center gap-3 pt-2">
-          <a
-            href="https://mynk.is-a.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
-          >
-            <Globe size={14} />
-            <span>mynk.is-a.dev</span>
-            <ExternalLink size={12} className="opacity-60" />
-          </a>
-
-          <a
-            href="https://github.com/Mayank-Pandey7/Marvel"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/20 transition-all cursor-pointer active:scale-95"
-          >
-            <Github size={14} />
-            <span>Marvel Repository</span>
-            <ExternalLink size={12} className="opacity-60" />
-          </a>
-
-          <a
-            href="mailto:mayankpandey0717@gmail.com"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold uppercase tracking-wider hover:bg-emerald-500/25 transition-all cursor-pointer active:scale-95"
-          >
-            <Mail size={14} />
-            <span>Get in Touch</span>
-          </a>
-
-          <Link
-            href="/timeline"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-stone-400 font-mono text-xs tracking-wider uppercase hover:text-white transition-colors cursor-pointer"
-          >
-            <span>Launch Timeline &rarr;</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Social & Contact Grid from mynk.is-a.dev */}
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
-            CONNECT &bull; SOCIAL PROFILES
+    <PageShell backHref="/timeline" backLabel="TIMELINE">
+      {/* Top-Right Floating SELECT DOSSIER List matching /artifacts & /timeline styling */}
+      <div
+        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
+      >
+        {/* SELECT DOSSIER pill */}
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+            SELECT DOSSIER
           </span>
-          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
-            FIND ME ACROSS THE WEB
-          </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-          {SOCIAL_HANDLES.map((social) => {
-            const Icon = social.icon;
-            return (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group p-4 rounded-xl bg-stone-950/80 border border-stone-900 flex items-center justify-between transition-all duration-200 cursor-pointer ${social.color}`}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-stone-300 group-hover:text-white group-hover:border-white/20 transition-colors shrink-0">
-                    <Icon size={16} />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-xs font-mono font-bold uppercase text-white group-hover:text-white transition-colors truncate">
-                      {social.name}
-                    </span>
-                    <span className="text-[10px] font-mono text-stone-400 truncate">
-                      {social.handle}
-                    </span>
-                  </div>
-                </div>
+        {/* LineNav */}
+        <div className="pointer-events-auto">
+          <LineNav
+            align="right"
+            className="w-auto"
+            items={NAV_ITEMS}
+            activeHref={`#${activeSection}`}
+            scrollActiveIntoView={false}
+            onItemClick={(item) => {
+              const key = item.href.replace("#", "");
+              setActiveSection(key);
+              const target = document.getElementById(key);
+              if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          />
+        </div>
+      </div>
 
-                <div className="flex items-center gap-1 shrink-0">
-                  <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-stone-400 uppercase">
-                    {social.badge}
+      <div className="relative min-h-[calc(100vh-80px)] w-full bg-transparent text-stone-300 font-sans selection:bg-white selection:text-black">
+        <div className="relative z-10 mx-auto flex flex-col gap-14 max-w-5xl px-3 sm:px-6 md:px-8 pt-10 sm:pt-12 pb-24">
+          
+          {/* Header Overview Bar */}
+          <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                ARCHIVES · DEVELOPER PROFILE
+              </span>
+              <span className="text-stone-600 font-mono text-xs">•</span>
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-amber-400/90 uppercase font-semibold">
+                MAYANK PANDEY
+              </span>
+            </div>
+
+            <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest">
+              SYSTEM ARCHITECT
+            </span>
+          </div>
+
+          {/* 1. Overview / Bio Card */}
+          <section
+            id="overview"
+            className="scroll-mt-36 sm:scroll-mt-28 flex flex-col gap-6"
+          >
+            <div className="relative rounded-2xl bg-white/[0.03] border border-white/10 p-6 sm:p-8 backdrop-blur-md shadow-2xl flex flex-col gap-6">
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono tracking-[0.25em] uppercase text-emerald-400 font-bold">
+                <Terminal size={14} />
+                <span>FULL STACK WEB DEVELOPER &bull; SYSTEM ARCHITECT</span>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight uppercase text-white leading-none">
+                  MAYANK <span className="text-stone-500">PANDEY</span>
+                </h1>
+                <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+                  Love to build cool stuff &bull; Products that leave an impact
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm md:text-base font-mono text-stone-300 leading-relaxed max-w-3xl">
+                Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="https://mynk.is-a.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
+                >
+                  <Globe size={13} />
+                  <span>mynk.is-a.dev</span>
+                  <ExternalLink size={11} className="opacity-60" />
+                </a>
+
+                <a
+                  href="https://github.com/Mayank-Pandey7/Marvel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-stone-200 font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/15 hover:text-white transition-all cursor-pointer active:scale-95"
+                >
+                  <Github size={13} />
+                  <span>Marvel Repository</span>
+                  <ExternalLink size={11} className="opacity-60" />
+                </a>
+
+                <a
+                  href="mailto:mayankpandey0717@gmail.com"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-stone-300 font-mono text-xs tracking-wider uppercase hover:bg-white/10 hover:text-white transition-all cursor-pointer"
+                >
+                  <Mail size={13} />
+                  <span>Contact</span>
+                </a>
+
+                <Link
+                  href="/timeline"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-transparent text-stone-400 font-mono text-xs tracking-wider uppercase hover:text-white transition-colors cursor-pointer ml-auto"
+                >
+                  <span>Launch Timeline</span>
+                  <ArrowRight size={13} />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* 2. Social Profiles Section */}
+          <section
+            id="socials"
+            className="scroll-mt-36 sm:scroll-mt-28 flex flex-col gap-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                  CONNECT
+                </span>
+                <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                  SOCIAL PROFILES &amp; CHANNELS
+                </span>
+              </div>
+              <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                {SOCIAL_HANDLES.length} PROFILES
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {SOCIAL_HANDLES.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex flex-col justify-between p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/25 hover:bg-white/[0.06] transition-all duration-200 cursor-pointer shadow-lg active:scale-95"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-stone-300 group-hover:text-white group-hover:border-white/20 transition-colors">
+                        <Icon size={16} />
+                      </div>
+                      <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-stone-400 uppercase">
+                        {social.badge}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col mt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs sm:text-[13px] font-mono font-bold uppercase text-white group-hover:text-stone-100 transition-colors">
+                          {social.name}
+                        </span>
+                        <ExternalLink size={11} className="text-stone-500 group-hover:text-white transition-colors" />
+                      </div>
+                      <span className="text-[10px] font-mono text-stone-400 truncate mt-0.5">
+                        {social.handle}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 3. Core Modules Section */}
+          <section
+            id="architecture"
+            className="scroll-mt-36 sm:scroll-mt-28 flex flex-col gap-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                  SYSTEM ARCHITECTURE
+                </span>
+                <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                  MCUVERSE CORE ENGINES
+                </span>
+              </div>
+              <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                {ARCHITECTURE_MODULES.length} ENGINES
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ARCHITECTURE_MODULES.map((mod) => {
+                const Icon = mod.icon;
+                return (
+                  <div
+                    key={mod.id}
+                    className="p-5 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-3 hover:border-white/20 transition-all duration-200 shadow-md"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div
+                        className="p-2 rounded-lg border w-fit"
+                        style={{
+                          backgroundColor: `${mod.color}15`,
+                          borderColor: `${mod.color}30`,
+                          color: mod.color,
+                        }}
+                      >
+                        <Icon size={16} />
+                      </div>
+                      <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-stone-400 uppercase">
+                        {mod.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-white">
+                      {mod.title}
+                    </h3>
+                    <p className="text-[11px] font-mono text-stone-400 leading-relaxed">
+                      {mod.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 4. Tech Stack Section */}
+          <section
+            id="techstack"
+            className="scroll-mt-36 sm:scroll-mt-28 flex flex-col gap-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                  INFRASTRUCTURE
+                </span>
+                <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                  MODERN WEB STACK
+                </span>
+              </div>
+              <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                PRODUCTION READY
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {TECH_STACK.map((tech) => (
+                <div
+                  key={tech.label}
+                  className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1"
+                >
+                  <span className="text-[9px] font-mono text-stone-500 uppercase font-bold tracking-wider">
+                    {tech.label}
                   </span>
-                  <ExternalLink size={11} className="text-stone-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase">
+                    {tech.value}
+                  </span>
+                  <span className="text-[9.5px] font-mono text-stone-400">
+                    {tech.desc}
+                  </span>
                 </div>
-              </a>
-            );
-          })}
+              ))}
+            </div>
+          </section>
+
+          {/* Bottom Footer Note */}
+          <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-stone-500 text-[10px] font-mono uppercase tracking-widest">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+            >
+              <span>&larr; RETURN TO PORTAL</span>
+            </Link>
+
+            <span>
+              DESIGNED &amp; ARCHITECTED BY MAYANK PANDEY (<a href="https://mynk.is-a.dev" target="_blank" rel="noopener noreferrer" className="text-stone-300 hover:text-white underline underline-offset-2">mynk.is-a.dev</a>)
+            </span>
+          </div>
+
         </div>
-      </section>
-
-
-      {/* MCUverse Core Modules Section */}
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
-            SYSTEM ARCHITECTURE
-          </span>
-          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
-            MCUVERSE CORE MODULES
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 w-fit">
-              <Compass size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Sacred Timeline Engine
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              44 canon film and series entries spanning Phases 1 through 6, dynamic path geometry, chronological ordering, and instant phase jump controls.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 w-fit">
-              <Globe size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Multiverse Spatial Map
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              Parallel Earth designations including Earth-616, Fox Earth-10005, Raimi Earth-96283, Webb Earth-120703, and What If dimensions.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 w-fit">
-              <Layers size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Character Archives
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              Collectible ticket cards with authentic stamp perforations, faction filters (Avengers, Mutants, Villains), and detailed chronological histories.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 w-fit">
-              <Shield size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Cosmic Relics Vault
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              Provenance and wielder tracking for Infinity Stones, Gauntlets, Asgardian divine weapons, the Ten Rings, and the All-Black Necrosword.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 w-fit">
-              <Sparkles size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Tony Stark Experience
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              400vh canvas scroll animation sequence, 3D character carousels, and an immersive tribute to the hero who saved the universe.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col gap-3 hover:border-stone-700 transition-colors">
-            <div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 w-fit">
-              <Code2 size={18} />
-            </div>
-            <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              Family Tree &amp; Dynasties
-            </h3>
-            <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              Dynamic node graph visualizing bloodlines, Asgardian royalty, mutant connections, and multiversal alliances.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Modern Web Tech Stack Section */}
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
-            TECHNOLOGY STACK
-          </span>
-          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
-            MODERN WEB INFRASTRUCTURE
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-4 rounded-lg bg-stone-950 border border-stone-900 flex flex-col gap-1">
-            <span className="text-[10px] font-mono text-stone-500 uppercase">FRAMEWORK</span>
-            <span className="text-sm font-mono font-bold text-white">Next.js 14</span>
-            <span className="text-[10px] font-mono text-stone-400">App Router &amp; SSR</span>
-          </div>
-
-          <div className="p-4 rounded-lg bg-stone-950 border border-stone-900 flex flex-col gap-1">
-            <span className="text-[10px] font-mono text-stone-500 uppercase">LANGUAGE</span>
-            <span className="text-sm font-mono font-bold text-white">TypeScript</span>
-            <span className="text-[10px] font-mono text-stone-400">Strict Type Safety</span>
-          </div>
-
-          <div className="p-4 rounded-lg bg-stone-950 border border-stone-900 flex flex-col gap-1">
-            <span className="text-[10px] font-mono text-stone-500 uppercase">STYLING</span>
-            <span className="text-sm font-mono font-bold text-white">Tailwind CSS</span>
-            <span className="text-[10px] font-mono text-stone-400">Dark Cinematic Theme</span>
-          </div>
-
-          <div className="p-4 rounded-lg bg-stone-950 border border-stone-900 flex flex-col gap-1">
-            <span className="text-[10px] font-mono text-stone-500 uppercase">RUNTIME &amp; CLOUD</span>
-            <span className="text-sm font-mono font-bold text-white">Vercel &amp; Bun</span>
-            <span className="text-[10px] font-mono text-stone-400">High-Speed Edge Delivery</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative w-full max-w-6xl mx-auto px-4 sm:px-12 md:px-16 py-12 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-stone-400 hover:text-white text-xs font-mono tracking-widest uppercase transition-colors"
-        >
-          <ArrowLeft size={14} />
-          <span>RETURN TO PORTAL</span>
-        </Link>
-
-        <span className="text-[10px] font-mono text-stone-600 uppercase tracking-widest text-center sm:text-right">
-          MCUVERSE &bull; DESIGNED &amp; ENGINEERED BY MAYANK PANDEY (<a href="https://mynk.is-a.dev" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-white underline underline-offset-2">mynk.is-a.dev</a>)
-        </span>
-      </footer>
-    </div>
+      </div>
+    </PageShell>
   );
 }
