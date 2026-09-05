@@ -86,33 +86,6 @@ const SOCIAL_HANDLES = [
   },
 ];
 
-const EXPERIENCE = [
-  {
-    company: "TrialShopy",
-    role: "Full Stack Developer Intern",
-    period: "Jul 2024 – Present",
-    location: "Noida, India (Remote)",
-    status: "Active",
-    tech: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "AWS", "Bun"],
-    points: [
-      "Developed and maintained the official portfolio platform with Next.js, TypeScript, and Tailwind CSS delivering a responsive, SEO-optimized experience.",
-      "Engineered investor-facing interfaces showcasing AI-powered Virtual Try-On and Hyperlocal Commerce ecosystems.",
-      "Optimized backend API connections, data pipelines, and error handling mechanisms for high throughput.",
-    ],
-  },
-  {
-    company: "TechBuzz Ideas",
-    role: "Frontend Developer Intern",
-    period: "Jul 2023 – Sep 2023",
-    location: "Noida, India (On-Site)",
-    status: "Completed",
-    tech: ["React.js", "Tailwind CSS", "Figma", "Vercel"],
-    points: [
-      "Constructed reusable, responsive React components and intuitive client-facing portals.",
-      "Translated high-fidelity Figma design systems into pixel-perfect web interfaces.",
-    ],
-  },
-];
 
 export default function DeveloperPage() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -259,69 +232,6 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      {/* Experience Section from mynk.is-a.dev */}
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
-            PROFESSIONAL BACKGROUND
-          </span>
-          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
-            EXPERIENCE &amp; INTERNSHIPS
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {EXPERIENCE.map((exp) => (
-            <div
-              key={exp.company}
-              className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col justify-between gap-4 hover:border-stone-700 transition-colors"
-            >
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <Briefcase size={16} className="text-emerald-400 shrink-0" />
-                    <h3 className="text-base font-mono font-bold uppercase text-white">
-                      {exp.company}
-                    </h3>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 uppercase">
-                    {exp.status}
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between text-xs font-mono text-stone-400 gap-1">
-                  <span className="text-stone-300 font-semibold">{exp.role}</span>
-                  <span className="text-stone-500">{exp.period}</span>
-                </div>
-
-                <div className="text-[10.5px] font-mono text-stone-500">
-                  {exp.location}
-                </div>
-
-                <ul className="mt-2 flex flex-col gap-1.5 text-xs font-mono text-stone-400">
-                  {exp.points.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-emerald-400 shrink-0 mt-0.5">&bull;</span>
-                      <span className="leading-relaxed">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="pt-3 border-t border-stone-900 flex flex-wrap gap-1.5">
-                {exp.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[9.5px] font-mono text-stone-300 uppercase"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* MCUverse Core Modules Section */}
       <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
