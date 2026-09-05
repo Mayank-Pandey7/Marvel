@@ -7,6 +7,11 @@ import {
   X,
   ArrowLeft,
   Github,
+  Linkedin,
+  Twitter,
+  Youtube,
+  Instagram,
+  Mail,
   ExternalLink,
   Code2,
   Layers,
@@ -14,10 +19,100 @@ import {
   Shield,
   Compass,
   Terminal,
-  Globe
+  Globe,
+  Briefcase,
+  Cpu,
+  CheckCircle2,
 } from "lucide-react";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+
+const SOCIAL_HANDLES = [
+  {
+    name: "Portfolio",
+    handle: "mynk.is-a.dev",
+    href: "https://mynk.is-a.dev",
+    icon: Globe,
+    color: "hover:text-emerald-400 hover:border-emerald-500/40",
+    badge: "WEBSITE",
+  },
+  {
+    name: "GitHub",
+    handle: "@Mayank-Pandey7",
+    href: "https://github.com/Mayank-Pandey7",
+    icon: Github,
+    color: "hover:text-white hover:border-white/40",
+    badge: "CODE",
+  },
+  {
+    name: "LinkedIn",
+    handle: "in/mynkdev",
+    href: "https://www.linkedin.com/in/mynkdev/",
+    icon: Linkedin,
+    color: "hover:text-sky-400 hover:border-sky-500/40",
+    badge: "CONNECT",
+  },
+  {
+    name: "X (Twitter)",
+    handle: "@maynkio",
+    href: "https://x.com/maynkio",
+    icon: Twitter,
+    color: "hover:text-stone-100 hover:border-stone-400/40",
+    badge: "UPDATES",
+  },
+  {
+    name: "YouTube",
+    handle: "@nomad.mayank",
+    href: "https://www.youtube.com/@nomad.mayank",
+    icon: Youtube,
+    color: "hover:text-rose-400 hover:border-rose-500/40",
+    badge: "CONTENT",
+  },
+  {
+    name: "Instagram",
+    handle: "@mayank__pandeyy",
+    href: "https://www.instagram.com/mayank__pandeyy",
+    icon: Instagram,
+    color: "hover:text-pink-400 hover:border-pink-500/40",
+    badge: "SOCIAL",
+  },
+  {
+    name: "Email",
+    handle: "mayankpandey0717@gmail.com",
+    href: "mailto:mayankpandey0717@gmail.com",
+    icon: Mail,
+    color: "hover:text-amber-400 hover:border-amber-500/40",
+    badge: "CONTACT",
+  },
+];
+
+const EXPERIENCE = [
+  {
+    company: "TrialShopy",
+    role: "Full Stack Developer Intern",
+    period: "Jul 2024 – Present",
+    location: "Noida, India (Remote)",
+    status: "Active",
+    tech: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "AWS", "Bun"],
+    points: [
+      "Developed and maintained the official portfolio platform with Next.js, TypeScript, and Tailwind CSS delivering a responsive, SEO-optimized experience.",
+      "Engineered investor-facing interfaces showcasing AI-powered Virtual Try-On and Hyperlocal Commerce ecosystems.",
+      "Optimized backend API connections, data pipelines, and error handling mechanisms for high throughput.",
+    ],
+  },
+  {
+    company: "TechBuzz Ideas",
+    role: "Frontend Developer Intern",
+    period: "Jul 2023 – Sep 2023",
+    location: "Noida, India (On-Site)",
+    status: "Completed",
+    tech: ["React.js", "Tailwind CSS", "Figma", "Vercel"],
+    points: [
+      "Constructed reusable, responsive React components and intuitive client-facing portals.",
+      "Translated high-fidelity Figma design systems into pixel-perfect web interfaces.",
+    ],
+  },
+];
 
 export default function DeveloperPage() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -29,6 +124,7 @@ export default function DeveloperPage() {
 
       <div className="navbar-blur-fade" aria-hidden="true" />
 
+      {/* Synchronized Header */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
         <button
           onClick={() => setNavMenuOpen(true)}
@@ -54,40 +150,56 @@ export default function DeveloperPage() {
         </Link>
       </header>
 
-      <section className="relative w-full pt-32 sm:pt-40 pb-16 px-4 sm:px-12 md:px-16 max-w-6xl mx-auto flex flex-col gap-6">
-        <div className="flex items-center gap-2.5 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-indigo-400 font-bold">
+      {/* Hero Header Section */}
+      <section className="relative w-full pt-32 sm:pt-40 pb-12 px-4 sm:px-12 md:px-16 max-w-6xl mx-auto flex flex-col gap-6">
+        <div className="flex items-center gap-2.5 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-emerald-400 font-bold">
           <Terminal size={14} />
-          <span>SYSTEM ARCHITECT &bull; FULL-STACK ENGINEER</span>
+          <span>FULL STACK WEB DEVELOPER &bull; SYSTEM ARCHITECT</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-mono font-black tracking-tight uppercase text-white leading-none">
-          MAYANK <span className="text-stone-500">PANDEY</span>
-        </h1>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-mono font-black tracking-tight uppercase text-white leading-none">
+            MAYANK <span className="text-stone-500">PANDEY</span>
+          </h1>
+          <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+            Love to build cool stuff &bull; Products that leave an impact
+          </p>
+        </div>
 
-        <p className="text-sm sm:text-base font-mono text-stone-400 max-w-2xl leading-relaxed">
-          Architect of the MCUverse platform &mdash; an immersive, spatial exploration system mapping the Sacred Timeline, Multiverse Earths, 100+ character genealogies, and 54 cosmic relics.
+        <p className="text-sm sm:text-base font-mono text-stone-300 max-w-3xl leading-relaxed">
+          Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
         </p>
 
-        <div className="flex flex-wrap items-center gap-4 pt-4">
+        {/* Primary Action Buttons */}
+        <div className="flex flex-wrap items-center gap-3 pt-2">
           <a
-            href="https://github.com/Mayank-Pandey7/Marvel"
+            href="https://mynk.is-a.dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
           >
-            <Github size={15} />
-            <span>GitHub Repository</span>
+            <Globe size={14} />
+            <span>mynk.is-a.dev</span>
             <ExternalLink size={12} className="opacity-60" />
           </a>
 
           <a
-            href="https://github.com/Mayank-Pandey7"
+            href="https://github.com/Mayank-Pandey7/Marvel"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 border border-white/15 text-stone-200 font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/10 hover:border-white/30 transition-all cursor-pointer active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/20 transition-all cursor-pointer active:scale-95"
           >
-            <span>@Mayank-Pandey7</span>
+            <Github size={14} />
+            <span>Marvel Repository</span>
             <ExternalLink size={12} className="opacity-60" />
+          </a>
+
+          <a
+            href="mailto:mayankpandey0717@gmail.com"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold uppercase tracking-wider hover:bg-emerald-500/25 transition-all cursor-pointer active:scale-95"
+          >
+            <Mail size={14} />
+            <span>Get in Touch</span>
           </a>
 
           <Link
@@ -99,7 +211,120 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-12 border-t border-stone-900 flex flex-col gap-8">
+      {/* Social & Contact Grid from mynk.is-a.dev */}
+      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
+        <div className="flex flex-col gap-1">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
+            CONNECT &bull; SOCIAL PROFILES
+          </span>
+          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
+            FIND ME ACROSS THE WEB
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
+          {SOCIAL_HANDLES.map((social) => {
+            const Icon = social.icon;
+            return (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group p-4 rounded-xl bg-stone-950/80 border border-stone-900 flex items-center justify-between transition-all duration-200 cursor-pointer ${social.color}`}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-stone-300 group-hover:text-white group-hover:border-white/20 transition-colors shrink-0">
+                    <Icon size={16} />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-mono font-bold uppercase text-white group-hover:text-white transition-colors truncate">
+                      {social.name}
+                    </span>
+                    <span className="text-[10px] font-mono text-stone-400 truncate">
+                      {social.handle}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 shrink-0">
+                  <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-stone-400 uppercase">
+                    {social.badge}
+                  </span>
+                  <ExternalLink size={11} className="text-stone-500 group-hover:text-white transition-colors" />
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Experience Section from mynk.is-a.dev */}
+      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
+        <div className="flex flex-col gap-1">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
+            PROFESSIONAL BACKGROUND
+          </span>
+          <h2 className="text-xl sm:text-2xl font-mono font-bold tracking-wider uppercase text-white">
+            EXPERIENCE &amp; INTERNSHIPS
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {EXPERIENCE.map((exp) => (
+            <div
+              key={exp.company}
+              className="p-6 rounded-xl bg-stone-950/80 border border-stone-900 flex flex-col justify-between gap-4 hover:border-stone-700 transition-colors"
+            >
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Briefcase size={16} className="text-emerald-400 shrink-0" />
+                    <h3 className="text-base font-mono font-bold uppercase text-white">
+                      {exp.company}
+                    </h3>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 uppercase">
+                    {exp.status}
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between text-xs font-mono text-stone-400 gap-1">
+                  <span className="text-stone-300 font-semibold">{exp.role}</span>
+                  <span className="text-stone-500">{exp.period}</span>
+                </div>
+
+                <div className="text-[10.5px] font-mono text-stone-500">
+                  {exp.location}
+                </div>
+
+                <ul className="mt-2 flex flex-col gap-1.5 text-xs font-mono text-stone-400">
+                  {exp.points.map((point, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-emerald-400 shrink-0 mt-0.5">&bull;</span>
+                      <span className="leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-3 border-t border-stone-900 flex flex-wrap gap-1.5">
+                {exp.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[9.5px] font-mono text-stone-300 uppercase"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* MCUverse Core Modules Section */}
+      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
             SYSTEM ARCHITECTURE
@@ -118,7 +343,7 @@ export default function DeveloperPage() {
               Sacred Timeline Engine
             </h3>
             <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              64 canon film and series entries spanning Phases 1 through 6, dynamic path geometry, chronological ordering, and instant phase jump controls.
+              44 canon film and series entries spanning Phases 1 through 6, dynamic path geometry, chronological ordering, and instant phase jump controls.
             </p>
           </div>
 
@@ -130,7 +355,7 @@ export default function DeveloperPage() {
               Multiverse Spatial Map
             </h3>
             <p className="text-xs font-mono text-stone-400 leading-relaxed">
-              Parallel Earth designations including Earth-616, Fox Earth-10005, Raimi Earth-96283, Webb Earth-120703, and What If Earth-82111.
+              Parallel Earth designations including Earth-616, Fox Earth-10005, Raimi Earth-96283, Webb Earth-120703, and What If dimensions.
             </p>
           </div>
 
@@ -139,7 +364,7 @@ export default function DeveloperPage() {
               <Layers size={18} />
             </div>
             <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              100+ Character Archives
+              Character Archives
             </h3>
             <p className="text-xs font-mono text-stone-400 leading-relaxed">
               Collectible ticket cards with authentic stamp perforations, faction filters (Avengers, Mutants, Villains), and detailed chronological histories.
@@ -151,7 +376,7 @@ export default function DeveloperPage() {
               <Shield size={18} />
             </div>
             <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-              54 Cosmic Relics Vault
+              Cosmic Relics Vault
             </h3>
             <p className="text-xs font-mono text-stone-400 leading-relaxed">
               Provenance and wielder tracking for Infinity Stones, Gauntlets, Asgardian divine weapons, the Ten Rings, and the All-Black Necrosword.
@@ -184,7 +409,8 @@ export default function DeveloperPage() {
         </div>
       </section>
 
-      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-12 border-t border-stone-900 flex flex-col gap-8">
+      {/* Modern Web Tech Stack Section */}
+      <section className="relative w-full px-4 sm:px-12 md:px-16 max-w-6xl mx-auto py-10 border-t border-stone-900 flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <span className="text-[10px] font-mono tracking-[0.25em] text-stone-500 uppercase">
             TECHNOLOGY STACK
@@ -214,13 +440,14 @@ export default function DeveloperPage() {
           </div>
 
           <div className="p-4 rounded-lg bg-stone-950 border border-stone-900 flex flex-col gap-1">
-            <span className="text-[10px] font-mono text-stone-500 uppercase">GRAPHICS</span>
-            <span className="text-sm font-mono font-bold text-white">Three.js / WebGL</span>
-            <span className="text-[10px] font-mono text-stone-400">GLSL Canvas Shaders</span>
+            <span className="text-[10px] font-mono text-stone-500 uppercase">RUNTIME &amp; CLOUD</span>
+            <span className="text-sm font-mono font-bold text-white">Vercel &amp; Bun</span>
+            <span className="text-[10px] font-mono text-stone-400">High-Speed Edge Delivery</span>
           </div>
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="relative w-full max-w-6xl mx-auto px-4 sm:px-12 md:px-16 py-12 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between gap-4">
         <Link
           href="/"
@@ -230,8 +457,8 @@ export default function DeveloperPage() {
           <span>RETURN TO PORTAL</span>
         </Link>
 
-        <span className="text-[10px] font-mono text-stone-600 uppercase tracking-widest">
-          MCUVERSE &bull; DESIGNED &amp; ENGINEERED BY MAYANK PANDEY
+        <span className="text-[10px] font-mono text-stone-600 uppercase tracking-widest text-center sm:text-right">
+          MCUVERSE &bull; DESIGNED &amp; ENGINEERED BY MAYANK PANDEY (<a href="https://mynk.is-a.dev" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-white underline underline-offset-2">mynk.is-a.dev</a>)
         </span>
       </footer>
     </div>
