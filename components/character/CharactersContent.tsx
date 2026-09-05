@@ -25,6 +25,12 @@ export const VILLAIN_IDS = new Set([
   "supreme-intelligence", "yon-rogg", "modok", "loki"
 ]);
 
+export const TOP_TIER_COMIC_EXCLUSIONS = new Set([
+  "the-one-above-all", "the-beyonder", "the-one-below-all", "the-living-tribunal",
+  "god-emperor-doom", "molecule-man", "knull", "king-in-black", "mephisto",
+  "onslaught", "apocalypse", "annihilus"
+]);
+
 export function isVillainCharacter(c: Character): boolean {
   return VILLAIN_IDS.has(c.id.toLowerCase());
 }
@@ -41,13 +47,67 @@ export const HERO_FACTIONS = [
 ];
 
 export const VILLAIN_FACTIONS = [
-  { id: "villains", label: "ALL VILLAINS", badge: "UNIVERSAL THREATS", title: "ALL VILLAINS & THREATS" },
-  { id: "cosmic", label: "COSMIC & GODHEADS", badge: "CELESTIAL LEVEL", title: "COSMIC ENTITIES & GODHEADS" },
-  { id: "multiverse", label: "MULTIVERSE & INCURSIONS", badge: "INCURSION CATACLYSM", title: "MULTIVERSE & DIMENSIONAL THREATS" },
-  { id: "xmen", label: "MUTANT THREATS", badge: "BROTHERHOOD & VOID", title: "MUTANT & FOX-VERSE THREATS" },
-  { id: "street", label: "STREET & UNDERWORLD", badge: "UNDERWORLD SYNDICATE", title: "STREET & SYNDICATE THREATS" },
-  { id: "avengers", label: "AVENGERS ADVERSARIES", badge: "MASTERMINDS & WARLORDS", title: "AVENGERS MASTERMINDS & NEMESES" },
+  { id: "villains", label: "ALL MCU VILLAINS", badge: "CINEMATIC CANON", title: "ALL MCU MOVIE VILLAINS" },
+  { id: "phase1", label: "PHASE I VILLAINS", badge: "INFINITY INCEPTION", title: "PHASE I ANTAGONISTS (2008–2012)" },
+  { id: "phase2", label: "PHASE II VILLAINS", badge: "AGE OF EXPANSION", title: "PHASE II ADVERSARIES (2013–2015)" },
+  { id: "phase3", label: "PHASE III VILLAINS", badge: "THE INFINITY WAR", title: "PHASE III MASTERMINDS (2016–2019)" },
+  { id: "phase4", label: "PHASE IV VILLAINS", badge: "MULTIVERSE INCEPTION", title: "PHASE IV CONQUERORS (2021–2022)" },
+  { id: "phase5_6", label: "PHASE V & VI VILLAINS", badge: "MULTIVERSE SAGA", title: "PHASE V & VI CATACLYSMS (2023–2027)" },
 ];
+
+export const MCU_VILLAIN_CHRONO_ORDER = [
+  // Phase 1 (2008-2012)
+  "red-hulk",
+  "loki",
+  "red-skull",
+  "thanos",
+  // Phase 2 (2013-2015)
+  "ronan",
+  "ultron",
+  // Phase 3 (2016-2019)
+  "zemo",
+  "dormammu",
+  "vulture",
+  "hela",
+  "killmonger",
+  "mysterio",
+  // Phase 4 (2021-2022)
+  "agatha-harkness",
+  "wenwu",
+  "green-goblin",
+  "doc-ock",
+  "kingpin",
+  "gorr",
+  "namor",
+  // Phase 5 & 6 (2023-2027)
+  "kang-the-conqueror",
+  "high-evolutionary",
+  "cassandra-nova",
+  "magneto",
+  "sentry",
+  "galactus",
+  "doctor-doom",
+];
+
+export function getVillainPhaseFaction(characterId: string): string {
+  const id = characterId.toLowerCase();
+  if (["red-hulk", "loki", "red-skull", "thanos", "obadiah-stane", "abomination", "whiplash", "justin-hammer"].includes(id)) {
+    return "phase1";
+  }
+  if (["ronan", "ultron", "aldrich-killian", "malekith", "alexander-pierce", "yellowjacket"].includes(id)) {
+    return "phase2";
+  }
+  if (["zemo", "dormammu", "vulture", "hela", "killmonger", "mysterio", "ego", "kaecilius", "ghost", "ebony-maw"].includes(id)) {
+    return "phase3";
+  }
+  if (["agatha-harkness", "wenwu", "green-goblin", "doc-ock", "kingpin", "gorr", "namor", "electro", "sandman", "lizard", "kro"].includes(id)) {
+    return "phase4";
+  }
+  if (["kang-the-conqueror", "high-evolutionary", "cassandra-nova", "magneto", "sentry", "galactus", "doctor-doom", "modok", "dar-benn", "gravik"].includes(id)) {
+    return "phase5_6";
+  }
+  return "phase5_6";
+}
 
 export const ALL_FACTIONS = [
   { id: "all", label: "ALL CHARACTERS", badge: "ALL ROSTERS", title: "ALL HEROES & VILLAINS" },
@@ -210,7 +270,10 @@ export function CharactersContent({
       const isVillain = isVillainCharacter(c);
 
       if (isHeroesOnlyMode && isVillain) return false;
-      if (isVillainsOnlyMode && !isVillain) return false;
+      if (isVillainsOnlyMode) {
+        if (!isVillain) return false;
+        if (TOP_TIER_COMIC_EXCLUSIONS.has(c.id.toLowerCase())) return false;
+      }
 
       if (q) {
         const nameLower = c.name.toLowerCase();
@@ -238,10 +301,22 @@ export function CharactersContent({
       }
 
       if (selectedFaction !== "all" && selectedFaction !== "heroes" && selectedFaction !== "villains") {
+        if (isVillainsOnlyMode) {
+          return getVillainPhaseFaction(c.id) === selectedFaction;
+        }
         return getCharacterPrimaryFaction(c.id, isVillain) === selectedFaction;
       }
 
       return true;
+    }).sort((a, b) => {
+      if (isVillainsOnlyMode) {
+        const indexA = MCU_VILLAIN_CHRONO_ORDER.indexOf(a.id.toLowerCase());
+        const indexB = MCU_VILLAIN_CHRONO_ORDER.indexOf(b.id.toLowerCase());
+        const posA = indexA >= 0 ? indexA : 999;
+        const posB = indexB >= 0 ? indexB : 999;
+        return posA - posB;
+      }
+      return 0;
     });
   }, [searchQuery, selectedFaction, isHeroesOnlyMode, isVillainsOnlyMode]);
 
@@ -349,8 +424,21 @@ export function CharactersContent({
                 const factionCharacters = CHARACTERS.filter((c) => {
                   const isVillain = isVillainCharacter(c);
                   if (isHeroesOnlyMode && isVillain) return false;
-                  if (isVillainsOnlyMode && !isVillain) return false;
+                  if (isVillainsOnlyMode) {
+                    if (!isVillain) return false;
+                    if (TOP_TIER_COMIC_EXCLUSIONS.has(c.id.toLowerCase())) return false;
+                    return getVillainPhaseFaction(c.id) === faction.id;
+                  }
                   return getCharacterPrimaryFaction(c.id, isVillain) === faction.id;
+                }).sort((a, b) => {
+                  if (isVillainsOnlyMode) {
+                    const indexA = MCU_VILLAIN_CHRONO_ORDER.indexOf(a.id.toLowerCase());
+                    const indexB = MCU_VILLAIN_CHRONO_ORDER.indexOf(b.id.toLowerCase());
+                    const posA = indexA >= 0 ? indexA : 999;
+                    const posB = indexB >= 0 ? indexB : 999;
+                    return posA - posB;
+                  }
+                  return 0;
                 });
                 if (factionCharacters.length === 0) return null;
                 return (
