@@ -202,70 +202,67 @@ export default function DeveloperPage() {
             </span>
           </div>
 
-          {/* 1. Overview / Bio Card */}
+          {/* 1. Overview / Bio */}
           <section
             id="overview"
             className="scroll-mt-36 sm:scroll-mt-28 flex flex-col gap-6"
           >
-            <div className="relative rounded-2xl bg-white/[0.03] border border-white/10 p-6 sm:p-8 backdrop-blur-md shadow-2xl flex flex-col gap-6">
-              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono tracking-[0.25em] uppercase text-emerald-400 font-bold">
-                <Terminal size={14} />
-                <span>FULL STACK WEB DEVELOPER &bull; SYSTEM ARCHITECT</span>
-              </div>
+            <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono tracking-[0.25em] uppercase text-emerald-400 font-bold">
+              <Terminal size={14} />
+              <span>FULL STACK WEB DEVELOPER &bull; SYSTEM ARCHITECT</span>
+            </div>
 
-              <div className="flex flex-col gap-2">
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight uppercase text-white leading-none">
-                  MAYANK <span className="text-stone-500">PANDEY</span>
-                </h1>
-                <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
-                  Love to build cool stuff &bull; Products that leave an impact
-                </p>
-              </div>
-
-              <p className="text-xs sm:text-sm md:text-base font-mono text-stone-300 leading-relaxed max-w-3xl">
-                Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
+            <div className="flex flex-col gap-2">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-mono font-black tracking-tight uppercase text-white leading-none">
+                MAYANK <span className="text-stone-500">PANDEY</span>
+              </h1>
+              <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+                Love to build cool stuff &bull; Products that leave an impact
               </p>
+            </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="https://mynk.is-a.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
-                >
-                  <Globe size={13} />
-                  <span>mynk.is-a.dev</span>
-                  <ExternalLink size={11} className="opacity-60" />
-                </a>
+            <p className="text-xs sm:text-sm md:text-base font-mono text-stone-300 leading-relaxed max-w-3xl">
+              Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
+            </p>
 
-                <a
-                  href="https://github.com/Mayank-Pandey7/Marvel"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-stone-200 font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/15 hover:text-white transition-all cursor-pointer active:scale-95"
-                >
-                  <Github size={13} />
-                  <span>Marvel Repository</span>
-                  <ExternalLink size={11} className="opacity-60" />
-                </a>
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
+                href="https://mynk.is-a.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all cursor-pointer shadow-lg active:scale-95"
+              >
+                <Globe size={13} />
+                <span>mynk.is-a.dev</span>
+                <ExternalLink size={11} className="opacity-60" />
+              </a>
 
-                <a
-                  href="mailto:mayankpandey0717@gmail.com"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-stone-300 font-mono text-xs tracking-wider uppercase hover:bg-white/10 hover:text-white transition-all cursor-pointer"
-                >
-                  <Mail size={13} />
-                  <span>Contact</span>
-                </a>
+              <a
+                href="https://github.com/Mayank-Pandey7/Marvel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/15 text-stone-200 font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/15 hover:text-white transition-all cursor-pointer active:scale-95"
+              >
+                <Github size={13} />
+                <span>Marvel Repository</span>
+                <ExternalLink size={11} className="opacity-60" />
+              </a>
 
-                <Link
-                  href="/timeline"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-transparent text-stone-400 font-mono text-xs tracking-wider uppercase hover:text-white transition-colors cursor-pointer ml-auto"
-                >
-                  <span>Launch Timeline</span>
-                  <ArrowRight size={13} />
-                </Link>
-              </div>
+              <a
+                href="mailto:mayankpandey0717@gmail.com"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-stone-300 font-mono text-xs tracking-wider uppercase hover:bg-white/10 hover:text-white transition-all cursor-pointer"
+              >
+                <Mail size={13} />
+                <span>Contact</span>
+              </a>
+
+              <Link
+                href="/timeline"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-transparent text-stone-400 font-mono text-xs tracking-wider uppercase hover:text-white transition-colors cursor-pointer"
+              >
+                <span>Launch Timeline &rarr;</span>
+              </Link>
             </div>
           </section>
 
