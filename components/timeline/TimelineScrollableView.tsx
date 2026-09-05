@@ -797,6 +797,8 @@ export default function TimelineScrollableView() {
         className={`relative z-10 mx-auto flex flex-col gap-4 transition-all duration-500 ease-out ${
           layoutMode === "wheel"
             ? "w-full max-w-none px-0 pt-28 sm:pt-24 min-h-[calc(100vh-80px)] justify-center"
+            : layoutMode === "grid"
+            ? "w-full max-w-[1280px] px-3 sm:px-6 md:px-8 lg:pl-8 lg:pr-40 xl:pl-10 xl:pr-52 pt-32 sm:pt-28 pb-20"
             : "max-w-5xl px-3 sm:px-6 md:px-8 pt-32 sm:pt-28 pb-20"
         }`}
       >
@@ -883,7 +885,7 @@ export default function TimelineScrollableView() {
                               </span>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3.5 sm:gap-5">
                               {earthMovies.map((movie) => {
                                 const posterUrl = getMoviePoster(movie);
                                 return (
@@ -933,7 +935,7 @@ export default function TimelineScrollableView() {
                       })}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3.5 sm:gap-5">
                       {movies.map((movie) => {
                         const posterUrl = getMoviePoster(movie);
                         return (
