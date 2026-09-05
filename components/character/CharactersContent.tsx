@@ -57,53 +57,92 @@ export const VILLAIN_FACTIONS = [
 
 export const MCU_VILLAIN_CHRONO_ORDER = [
   // Phase 1 (2008-2012)
-  "red-hulk",
-  "loki",
+  "obadiah-stane",
+  "abomination",
+  "whiplash",
+  "justin-hammer",
+  "laufey",
   "red-skull",
+  "arnim-zola",
+  "loki",
   "thanos",
+
   // Phase 2 (2013-2015)
+  "aldrich-killian",
+  "malekith",
+  "alexander-pierce",
+  "crossbones",
   "ronan",
   "ultron",
+  "yellowjacket",
+
   // Phase 3 (2016-2019)
   "zemo",
+  "kaecilius",
   "dormammu",
+  "ego",
   "vulture",
   "hela",
+  "surtur",
+  "grandmaster",
   "killmonger",
+  "ebony-maw",
+  "corvus-glaive",
+  "proxima-midnight",
+  "ghost",
+  "yon-rogg",
+  "supreme-intelligence",
   "mysterio",
+
   // Phase 4 (2021-2022)
   "agatha-harkness",
+  "dreykov",
+  "taskmaster",
   "wenwu",
+  "kro",
   "green-goblin",
   "doc-ock",
+  "electro",
+  "sandman",
+  "lizard",
   "kingpin",
   "gorr",
   "namor",
+
   // Phase 5 & 6 (2023-2027)
   "kang-the-conqueror",
+  "modok",
   "high-evolutionary",
+  "gravik",
+  "dar-benn",
   "cassandra-nova",
+  "sabretooth",
+  "pyro",
+  "juggernaut",
   "magneto",
+  "the-leader",
+  "red-hulk",
   "sentry",
+  "bullseye",
   "galactus",
   "doctor-doom",
 ];
 
 export function getVillainPhaseFaction(characterId: string): string {
   const id = characterId.toLowerCase();
-  if (["red-hulk", "loki", "red-skull", "thanos", "obadiah-stane", "abomination", "whiplash", "justin-hammer"].includes(id)) {
+  if (["obadiah-stane", "abomination", "whiplash", "justin-hammer", "laufey", "red-skull", "arnim-zola", "loki", "thanos"].includes(id)) {
     return "phase1";
   }
-  if (["ronan", "ultron", "aldrich-killian", "malekith", "alexander-pierce", "yellowjacket"].includes(id)) {
+  if (["aldrich-killian", "malekith", "alexander-pierce", "crossbones", "ronan", "ultron", "yellowjacket"].includes(id)) {
     return "phase2";
   }
-  if (["zemo", "dormammu", "vulture", "hela", "killmonger", "mysterio", "ego", "kaecilius", "ghost", "ebony-maw"].includes(id)) {
+  if (["zemo", "kaecilius", "dormammu", "ego", "vulture", "hela", "surtur", "grandmaster", "killmonger", "ebony-maw", "corvus-glaive", "proxima-midnight", "ghost", "yon-rogg", "supreme-intelligence", "mysterio"].includes(id)) {
     return "phase3";
   }
-  if (["agatha-harkness", "wenwu", "green-goblin", "doc-ock", "kingpin", "gorr", "namor", "electro", "sandman", "lizard", "kro"].includes(id)) {
+  if (["agatha-harkness", "dreykov", "taskmaster", "wenwu", "kro", "green-goblin", "doc-ock", "electro", "sandman", "lizard", "kingpin", "gorr", "namor"].includes(id)) {
     return "phase4";
   }
-  if (["kang-the-conqueror", "high-evolutionary", "cassandra-nova", "magneto", "sentry", "galactus", "doctor-doom", "modok", "dar-benn", "gravik"].includes(id)) {
+  if (["kang-the-conqueror", "modok", "high-evolutionary", "gravik", "dar-benn", "cassandra-nova", "sabretooth", "pyro", "juggernaut", "magneto", "the-leader", "red-hulk", "sentry", "bullseye", "galactus", "doctor-doom"].includes(id)) {
     return "phase5_6";
   }
   return "phase5_6";

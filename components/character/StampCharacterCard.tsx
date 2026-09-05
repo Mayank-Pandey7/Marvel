@@ -202,6 +202,10 @@ export default function StampCharacterCard({
               alt={character.name}
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src =
+                  "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
+              }}
             />
 
             {/* Subtle Gradient Overlays for Depth & Watermark Contrast */}

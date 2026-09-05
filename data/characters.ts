@@ -5,10 +5,10 @@ export type CharacterEra = {
   year: string;
   universe: string;
   description: string;
-  keyMoments: string[];
+  keyMoments?: string[];
 };
 
-export type CharacterStatus = "alive" | "deceased" | "dusted" | "variant" | "ascended" | "unknown" | "cured";
+export type CharacterStatus = "alive" | "deceased" | "dusted" | "variant" | "ascended" | "unknown" | "cured" | "destroyed";
 
 export type Character = {
   id: string;
@@ -487,7 +487,12 @@ export const CHARACTERS: Character[] = [
         "title": "Frost Giant Heritage, Asgardian Betrayal & The Battle of New York (2011–2012)",
         "year": "2011–2012",
         "universe": "Earth-616",
-        "description": "Loki's journey begins with the shattering revelation of his Frost Giant bloodline upon touching the Casket of Ancient Winters. Consumed by a desperate need for Odin's validation, he orchestrates Laufey's assassination, assumes the regency of Asgard, and overcharges the Bifrost to annihilate Jotunheim before letting himself fall into the cosmic abyss. Rescued by the Mad Titan, he is armed with the Mind Stone Scepter and entrusted to retrieve the Tesseract from Earth. Loki infiltrates S.H.I.E.L.D., mind-controls Hawkeye and Dr. Selvig, and unleashes the Chitauri invasion upon New York City before being subdued by the newly assembled Avengers and dragged back to Asgard in chains."
+        "description": "Loki's journey begins with the shattering revelation of his Frost Giant bloodline upon touching the Casket of Ancient Winters. Consumed by a desperate need for Odin's validation, he orchestrates Laufey's assassination, assumes the regency of Asgard, and overcharges the Bifrost to annihilate Jotunheim before letting himself fall into the cosmic abyss. Rescued by the Mad Titan, he is armed with the Mind Stone Scepter and entrusted to retrieve the Tesseract from Earth. Loki infiltrates S.H.I.E.L.D., mind-controls Hawkeye and Dr. Selvig, and unleashes the Chitauri invasion upon New York City before being subdued by the newly assembled Avengers and dragged back to Asgard in chains.",
+        "keyMoments": [
+          "Learned true heritage via the Casket of Ancient Winters",
+          "Commenced the Chitauri invasion of New York",
+          "Subdued by the Avengers at Stark Tower"
+        ]
       },
       {
         "eraId": "loki-dark-world-phase-2",
@@ -495,7 +500,12 @@ export const CHARACTERS: Character[] = [
         "title": "Grief, Illusionary Sacrifice & Usurping the Throne of Asgard (2013)",
         "year": "2013",
         "universe": "Earth-616",
-        "description": "Imprisoned for life in the deep subterranean dungeons of Asgard, Loki masks his profound sorrow when Dark Elves storm the palace and murder his mother, Frigga. When Thor arrives seeking a stealth route out of the realm, Loki agrees to guide him through ancient secret passages to Svartalfheim. In a desperate duel against Malekith's cursed general Kurse, Loki executes an elaborate illusion, sacrificing his physical form to destroy the brute while staging his dying breath in Thor's arms. Surviving through cunning sorcery, he secretly casts a memory-erasing spell over Odin, banishes him to Midgard, and ascends the throne of Asgard disguised as the All-Father."
+        "description": "Imprisoned for life in the deep subterranean dungeons of Asgard, Loki masks his profound sorrow when Dark Elves storm the palace and murder his mother, Frigga. When Thor arrives seeking a stealth route out of the realm, Loki agrees to guide him through ancient secret passages to Svartalfheim. In a desperate duel against Malekith's cursed general Kurse, Loki executes an elaborate illusion, sacrificing his physical form to destroy the brute while staging his dying breath in Thor's arms. Surviving through cunning sorcery, he secretly casts a memory-erasing spell over Odin, banishes him to Midgard, and ascends the throne of Asgard disguised as the All-Father.",
+        "keyMoments": [
+          "Guided Thor through secret portals to Svartalfheim",
+          "Faked his death slaying Kurse in Thor's arms",
+          "Disguised himself as Odin to rule Asgard"
+        ]
       },
       {
         "eraId": "loki-ragnarok-infinity-phase-3",
@@ -503,7 +513,12 @@ export const CHARACTERS: Character[] = [
         "title": "The Grandmaster's Arena, The Fall of Asgard & Final Defiance (2017–2018)",
         "year": "2017–2018",
         "universe": "Earth-616",
-        "description": "Loki's tranquil reign over Asgard is abruptly unmasked when Thor returns from Muspelheim and forces him to Earth to find Odin. After witnessing their father pass on into eternity, the brothers are ambushed by Hela and cast out of the Bifrost onto the chaotic junk planet of Sakaar. Loki charms the Grandmaster to secure luxury and power, but ultimately chooses his brother—leading the escaped gladiators aboard the Statesman to evacuate Asgard's citizens during the Battle of the Rainbow Bridge. After releasing Surtur to trigger Ragnarok and quietly pocketing the Tesseract from the vault, Loki faces Thanos in deep space and dies with dagger in hand attempting to assassinate the titan to protect Thor."
+        "description": "Loki's tranquil reign over Asgard is abruptly unmasked when Thor returns from Muspelheim and forces him to Earth to find Odin. After witnessing their father pass on into eternity, the brothers are ambushed by Hela and cast out of the Bifrost onto the chaotic junk planet of Sakaar. Loki charms the Grandmaster to secure luxury and power, but ultimately chooses his brother—leading the escaped gladiators aboard the Statesman to evacuate Asgard's citizens during the Battle of the Rainbow Bridge. After releasing Surtur to trigger Ragnarok and quietly pocketing the Tesseract from the vault, Loki faces Thanos in deep space and dies with dagger in hand attempting to assassinate the titan to protect Thor.",
+        "keyMoments": [
+          "Infiltrated the Grandmaster's inner circle on Sakaar",
+          "Resurrected Surtur to initiate Ragnarok and destroy Hela",
+          "Stood defiant against Thanos: 'The sun will shine on us again, brother'"
+        ]
       },
       {
         "eraId": "loki-tva-phase-4",
@@ -511,7 +526,12 @@ export const CHARACTERS: Character[] = [
         "title": "Variant Awakening, Sylvie & The Citadel at the End of Time (2021)",
         "year": "2021",
         "universe": "Earth-616 / Sacred Timeline Branch",
-        "description": "During the Avengers' 2012 Time Heist in New York, a variant Loki seizes the dropped Tesseract and vanishes into the Gobi Desert, only to be promptly apprehended by the Time Variance Authority for branching the Sacred Timeline. Confronted with the complete arc of his past and future life, he realizes the futility of his narcissistic villainy and joins Agent Mobius to track a lethal rogue variant named Sylvie. Together, they navigate apocalyptic nexus events on Lamentis-1, uncover that the Time-Keepers are mindless androids, and survive the Void by enchanting the tempest monster Alioth. Reaching the Citadel at the End of Time, Loki duels Sylvie to prevent the multiversal timeline from fracturing before being thrust through a Timedoor into an altered TVA."
+        "description": "During the Avengers' 2012 Time Heist in New York, a variant Loki seizes the dropped Tesseract and vanishes into the Gobi Desert, only to be promptly apprehended by the Time Variance Authority for branching the Sacred Timeline. Confronted with the complete arc of his past and future life, he realizes the futility of his narcissistic villainy and joins Agent Mobius to track a lethal rogue variant named Sylvie. Together, they navigate apocalyptic nexus events on Lamentis-1, uncover that the Time-Keepers are mindless androids, and survive the Void by enchanting the tempest monster Alioth. Reaching the Citadel at the End of Time, Loki duels Sylvie to prevent the multiversal timeline from fracturing before being thrust through a Timedoor into an altered TVA.",
+        "keyMoments": [
+          "Arrested by the TVA after the 2012 Time Heist escape",
+          "Enchanted Alioth alongside Sylvie and Classic Loki in the Void",
+          "Confronted He Who Remains at the Citadel at the End of Time"
+        ]
       },
       {
         "eraId": "loki-god-of-stories-phase-5",
@@ -519,7 +539,12 @@ export const CHARACTERS: Character[] = [
         "title": "Mastering the Centuries & Ascending as the God of Stories (2023)",
         "year": "2023",
         "universe": "Multiverse Center / World Tree",
-        "description": "Trapped in a violent temporal paradox, Loki suffers uncontrolled time-slipping across past, present, and future within the TVA. Embracing centuries of rigorous study across countless time loops, he masters quantum physics, temporal mechanics, and dimensional engineering under O.B.'s guidance to repair the Temporal Loom. Upon discovering the Loom is an infallible fail-safe designed solely to prune the multiverse, Loki realizes true salvation requires absolute self-sacrifice. He steps into the lethal cosmic radiation without a protective suit, shatters the mechanical Loom, and physically gathers the infinite dying branches of the Multiverse in his bare hands—infusing them with verdant magic to weave the eternal World Tree Yggdrasil from the Throne of Time."
+        "description": "Trapped in a violent temporal paradox, Loki suffers uncontrolled time-slipping across past, present, and future within the TVA. Embracing centuries of rigorous study across countless time loops, he masters quantum physics, temporal mechanics, and dimensional engineering under O.B.'s guidance to repair the Temporal Loom. Upon discovering the Loom is an infallible fail-safe designed solely to prune the multiverse, Loki realizes true salvation requires absolute self-sacrifice. He steps into the lethal cosmic radiation without a protective suit, shatters the mechanical Loom, and physically gathers the infinite dying branches of the Multiverse in his bare hands—infusing them with verdant magic to weave the eternal World Tree Yggdrasil from the Throne of Time.",
+        "keyMoments": [
+          "Mastered time-slipping across centuries of temporal mechanics",
+          "Shattered the Temporal Loom in the cosmic radiation storm",
+          "Ascended to the Throne of Time as the God of Stories weaving Yggdrasil"
+        ]
       }
     ],
     artifactsPossessed: ["space-stone", "mind-stone", "tva-tempad"],
@@ -4613,474 +4638,1123 @@ export const CHARACTERS: Character[] = [
   },
 
   {
-    id: "the-one-above-all",
-    name: "The One-Above-All",
-    aliases: ["Above-All-Others", "Omnipotent Creator", "Architect of the Omniverse"],
-    universe: "Beyond All Realities / Omniverse Prime",
-    faction: "Supreme Omniverse Architect",
-    role: "The ultimate supreme, omnipotent, and omnipresent creator of the entire Marvel Omniverse.",
-    overview: "Existing beyond all dimensions, time, space, and multiversal structures, The One-Above-All is the primordial consciousness and ultimate supreme source of all life, magic, cosmic abstracts, and reality itself.",
-    firstAppearance: "Doctor Strange #13 (1976)",
-    color: "#f59e0b",
-    statusByPhase: {
-      1: { status: "ascended", note: "Supreme transcendent oversight above all cosmic creation." },
-      2: { status: "ascended", note: "All timelines and nexus points emanate from his design." },
-      3: { status: "ascended", note: "Transcends the cosmic balance of the Infinity Stones." },
-      4: { status: "ascended", note: "Oversees the limitless branching of the Multiverse." },
-      5: { status: "ascended", note: "Supreme authority above the World Tree Yggdrasil." },
-      6: { status: "ascended", note: "Unshakable primordial architect through all Secret Wars and Incursions." }
-    },
-    eras: [
-      {
-        eraId: "toaa-genesis",
-        phase: 6,
-        title: "The Primordial Omniverse Genesis",
-        year: "Before Time",
-        universe: "Beyond All Realities",
-        description: "Breathed existence into the cosmic firmament, establishing the Living Tribunal as the multi-faced arbiter of multiversal balance.",
-        keyMoments: [
-          "Created the First Cosmos and the fundamental fabric of existence",
-          "Appointed The Living Tribunal to administer multiversal cosmic law",
-          "Manifested to guide heroes through existential multiversal reckonings"
-        ]
-      }
-    ],
-    artifactsPossessed: ["heart-of-the-universe"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "obadiah-stane",
+  "name": "Obadiah Stane",
+  "aliases": [
+    "Iron Monger",
+    "Stark Industries COO"
+  ],
+  "universe": "Earth-616",
+  "faction": "Ten Rings / Stark Renegades",
+  "role": "Corporate saboteur who built the gargantuan Iron Monger armor.",
+  "overview": "Former executive vice president of Stark Industries who orchestrated Tony Stark's abduction in Afghanistan and reverse-engineered the Mark I armor into the devastating Iron Monger mechanized war suit.",
+  "firstAppearance": "Iron Man (2008)",
+  "color": "#eab308",
+  "statusByPhase": {
+    "1": {
+      "status": "deceased",
+      "note": "Killed when Tony Stark detonated the massive Stark Industries Arc Reactor."
+    }
   },
+  "eras": [
+    {
+      "eraId": "obadiah-iron-monger-phase-1",
+      "phase": 1,
+      "title": "The Iron Monger Conspiracy (2008)",
+      "year": "2008",
+      "universe": "Earth-616",
+      "description": "Hired the Ten Rings terrorist cell to assassinate Tony Stark, secretly salvaged the Mark I wreckage, and stole Stark's chest arc reactor to power the gargantuan Iron Monger armor.",
+      "keyMoments": [
+        "Contracted the Ten Rings in Gulmira to ambush Stark's convoy",
+        "Paralyzed Tony with sonic neuro-device and extracted the Arc Reactor",
+        "Rooftop clash with Iron Man above Stark Industries headquarters"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "iron-monger-suit",
+    "stark-arc-reactor"
+  ],
+  "linkedNexusEvents": [
+    "nexus-iron-man-origins"
+  ],
+  "entries": [
+    "iron-man"
+  ]
+},
+
   {
-    id: "the-beyonder",
-    name: "The Beyonder",
-    aliases: ["The Beyonder", "Lord of the Beyond-Realm", "The Kosmos", "Creator of Battleworld"],
-    universe: "Beyond-Realm / Outside The Multiverse",
-    faction: "Beyond-Realm Entities",
-    role: "Infinite cosmic being with unrestrained, absolute reality-warping power.",
-    overview: "A primordial entity from a realm containing more energy than the entire Marvel Multiverse combined, The Beyonder abducted Earth's greatest champions and conquerors to clash upon his patchwork Battleworld in the original Secret Wars.",
-    firstAppearance: "Marvel Super Heroes Secret Wars #1 (1984)",
-    color: "#ec4899",
-    statusByPhase: {
-      5: { status: "unknown", note: "Cosmic resonance felt as multiversal boundaries weaken." },
-      6: { status: "ascended", note: "Cosmic foundation powering Battleworld and God Emperor Doom." }
-    },
-    eras: [
-      {
-        eraId: "beyonder-secret-wars",
-        phase: 6,
-        title: "Secret Wars & The Beyond-Realm Phenomenon",
-        year: "1984 / Cosmic Era",
-        universe: "Beyond-Realm / Battleworld",
-        description: "Plucked fragments of dozens of alien worlds and assembled Battleworld, compelling heroes and villains to fight for their ultimate desires.",
-        keyMoments: [
-          "'I am from the Beyond! Slay your enemies and all you desire shall be yours!'",
-          "Effortlessly subdued Galactus and planetary cosmic forces",
-          "Energy stolen by Victor von Doom to ascend into God Emperor Doom"
-        ]
-      }
-    ],
-    artifactsPossessed: ["beyond-energy"],
-    linkedNexusEvents: ["nexus-secret-wars-battleworld"],
-    entries: ["avengers-secret-wars"]
+  "id": "whiplash",
+  "name": "Ivan Vanko",
+  "aliases": [
+    "Whiplash",
+    "The Russian Physicist"
+  ],
+  "universe": "Earth-616",
+  "faction": "Hammer Industries / Independent",
+  "role": "Vengeful Russian physicist wielding dual plasma whips.",
+  "overview": "Brilliant Russian physicist and son of Anton Vanko who constructed twin miniaturized arc reactors and plasma-channeling whips to seek vengeance on the Stark family.",
+  "firstAppearance": "Iron Man 2 (2010)",
+  "color": "#ef4444",
+  "statusByPhase": {
+    "1": {
+      "status": "deceased",
+      "note": "Detonated his self-destruct charge during the Stark Expo showdown against Iron Man and War Machine."
+    }
   },
+  "eras": [
+    {
+      "eraId": "whiplash-monaco-phase-1",
+      "phase": 1,
+      "title": "The Monaco Grand Prix & Stark Expo (2010)",
+      "year": "2010",
+      "universe": "Earth-616",
+      "description": "Ambushed Tony Stark at the Circuit de Monaco with dual energy whips and hijacked Hammer's armored military drone legions at the Stark Expo.",
+      "keyMoments": [
+        "Attacked Tony Stark's racecar at the Monaco Historic Grand Prix",
+        "Reprogrammed Hammer Industries drone army during live exhibition",
+        "Final stand in customized heavy cyber-armor suit"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "plasma-whips",
+    "vanko-arc-reactor"
+  ],
+  "linkedNexusEvents": [
+    "nexus-monaco-strike"
+  ],
+  "entries": [
+    "iron-man-2"
+  ]
+},
+
   {
-    id: "the-one-below-all",
-    name: "The One Below All",
-    aliases: ["The Green Door Entity", "The Primordial Darkness", "The Anti-Creation"],
-    universe: "The Below-Place / Sub-Hell",
-    faction: "Primordial Destructive Forces",
-    role: "The dark destructive primordial counterpart to creation, residing beneath the Green Door.",
-    overview: "The horrifying counter-aspect of all existence, residing in the Below-Place beneath the lowest dimension of Hell, channeling limitless gamma mutation and cosmic annihilation through the immortal Green Door.",
-    firstAppearance: "Immortal Hulk #8 (2018)",
-    color: "#10b981",
-    statusByPhase: {
-      5: { status: "unknown", note: "Whispering through gamma mutations and the abyss." },
-      6: { status: "alive", note: "Eternal cosmic antithesis beneath all reality." }
-    },
-    eras: [
-      {
-        eraId: "toba-below-place",
-        phase: 5,
-        title: "The Opening of the Green Door",
-        year: "Eternity",
-        universe: "The Below-Place",
-        description: "Infused all gamma radiation with immortal eldritch energy, opening the Green Door to resurrect and twist gamma mutates into cosmic avatars.",
-        keyMoments: [
-          "Opened the Green Door beneath the deepest substrata of reality",
-          "Corrupted the Immortal Hulk into an apocalyptic World Breaker",
-          "Manifested the apocalyptic future where all sentient life in the cosmos is devoured"
-        ]
-      }
-    ],
-    artifactsPossessed: ["green-door"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "laufey",
+  "name": "Laufey",
+  "aliases": [
+    "King of the Frost Giants",
+    "Ruler of Jotunheim"
+  ],
+  "universe": "Earth-616 / Jotunheim",
+  "faction": "Frost Giants of Jotunheim",
+  "role": "Ancient king of the Frost Giants and biological father of Loki.",
+  "overview": "The ruthless king of the Frost Giants and biological father of Loki, wielding cryokinetic magic and absolute mastery over ancient Jotunheim relics.",
+  "firstAppearance": "Thor (2011)",
+  "color": "#06b6d4",
+  "statusByPhase": {
+    "1": {
+      "status": "deceased",
+      "note": "Betrayed and vaporized by Loki inside the royal chambers of Asgard."
+    }
   },
+  "eras": [
+    {
+      "eraId": "laufey-asgard-invasion-phase-1",
+      "phase": 1,
+      "title": "War of the Nine Realms (2011)",
+      "year": "2011",
+      "universe": "Earth-616",
+      "description": "Infiltrated Asgardian weapon vaults to reclaim the Casket of Ancient Winters before leading an assassination squad against Odin.",
+      "keyMoments": [
+        "Clashed with Thor, Loki, and the Warriors Three on the icy wastes of Jotunheim",
+        "Conspired with Loki to penetrate the Bifrost defenses and bypass Heimdall",
+        "Slain by Loki with Gungnir blast in Odin's sleep chamber"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "casket-of-ancient-winters"
+  ],
+  "linkedNexusEvents": [
+    "nexus-bifrost-shattering"
+  ],
+  "entries": [
+    "thor"
+  ]
+},
+
   {
-    id: "the-living-tribunal",
-    name: "The Living Tribunal",
-    aliases: ["The Cosmic Arbiter", "Judge of the Multiverse", "Three-Faced Cosmic Overseer"],
-    universe: "Multiverse Nexus",
-    faction: "Cosmic Abstract Hierarchy",
-    role: "Three-faced cosmic judge and supreme authority maintaining universal balance across the Multiverse.",
-    overview: "An enormous gold-hued three-faced cosmic entity representing Equity, Necessity, and Vengeance. Answerable solely to The One-Above-All, The Living Tribunal maintains cosmic equilibrium and prevents any single universe or relic from overriding reality.",
-    firstAppearance: "Strange Tales #157 (1967) / Doctor Strange in the Multiverse of Madness (2022)",
-    color: "#6366f1",
-    statusByPhase: {
-      4: { status: "ascended", note: "Physical statue observed across dimensions and the Eternity realm." },
-      5: { status: "ascended", note: "Upholds cosmic law across divergent timelines." },
-      6: { status: "ascended", note: "Supreme cosmic judge across the Incursion crisis." }
-    },
-    eras: [
-      {
-        eraId: "living-tribunal-judgment",
-        phase: 4,
-        title: "The Cosmic Judgment of the Multiverse",
-        year: "Timeless",
-        universe: "Multiverse Nexus",
-        description: "Statues and cosmic presence revealed within the Gates of Eternity and during Doctor Strange's multiversal freefall.",
-        keyMoments: [
-          "Glimpsed during America Chavez and Doctor Strange's dimensional jump",
-          "Colossal visage sanctified at the altar of Eternity",
-          "Nullified the unified Infinity Stones when their power threatened cosmic stability"
-        ]
-      }
-    ],
-    artifactsPossessed: [],
-    linkedNexusEvents: [],
-    entries: ["doctor-strange-multiverse", "thor-love-and-thunder"]
+  "id": "aldrich-killian",
+  "name": "Aldrich Killian",
+  "aliases": [
+    "The True Mandarin",
+    "Founder of A.I.M."
+  ],
+  "universe": "Earth-616",
+  "faction": "Advanced Idea Mechanics (A.I.M.)",
+  "role": "Extremis mastermind and founder of A.I.M.",
+  "overview": "Brilliant founder of A.I.M. who weaponized Maya Hansen's Extremis bio-formula, staging a counterfeit terrorist campaign with the proxy actor Trevor Slattery to monopolize the War on Terror.",
+  "firstAppearance": "Iron Man 3 (2013)",
+  "color": "#f97316",
+  "statusByPhase": {
+    "2": {
+      "status": "deceased",
+      "note": "Obliterated by Extremis-empowered Pepper Potts at the Norco oil tanker drydock."
+    }
   },
+  "eras": [
+    {
+      "eraId": "killian-extremis-phase-2",
+      "phase": 2,
+      "title": "The Extremis War (2013)",
+      "year": "2013",
+      "universe": "Earth-616",
+      "description": "Engineered thermal human bombs, captured President Matthew Ellis on Air Force One, and battled Iron Man's House Party Protocol.",
+      "keyMoments": [
+        "Demolished Tony Stark's Malibu mansion with gunship missile strikes",
+        "Kidnapped President Ellis aboard the Iron Patriot armor",
+        "Molten-core battle against Tony Stark and Pepper Potts on the oil tanker"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "extremis-virus"
+  ],
+  "linkedNexusEvents": [
+    "nexus-malibu-destruction"
+  ],
+  "entries": [
+    "iron-man-3"
+  ]
+},
+
   {
-    id: "god-emperor-doom",
-    name: "God Emperor Doom",
-    aliases: ["Victor von Doom", "Lord Doom", "Creator of Battleworld", "Master of All Reality"],
-    universe: "Battleworld / Multiverse Prime",
-    faction: "Battleworld Monarchy / Multiversal Sovereigns",
-    role: "Doctor Doom augmented with Beyonder omnipotence, ruling over Battleworld.",
-    overview: "When the Multiverse collapsed from multiversal Incursions, Victor von Doom stole the limitless energies of the Beyonders and Molecule Man, stitching the remnants of dying universes into Battleworld and ruling as its undisputed divine God Emperor.",
-    firstAppearance: "Secret Wars #1 (2015) / Avengers: Secret Wars (2027)",
-    color: "#8b5cf6",
-    statusByPhase: {
-      6: { status: "ascended", note: "Supreme ruler of Battleworld and absolute master of reality in Secret Wars." }
-    },
-    eras: [
-      {
-        eraId: "god-emperor-battleworld",
-        phase: 6,
-        title: "The Reign of God Emperor Doom (2027)",
-        year: "2027",
-        universe: "Battleworld",
-        description: "Seized the power of the Beyonders to rescue reality from total annihilation, forging Castle Doom atop Yggdrasil and demanding fealty from all surviving heroes.",
-        keyMoments: [
-          "Ripped the spine from Thanos with a single hand",
-          "Appointed Doctor Strange as his Grand Inquisitor and Sheriff of Agamotto",
-          "Reshaped the cosmos with the boundless power of the Molecule Man"
-        ]
-      }
-    ],
-    artifactsPossessed: ["beyond-energy", "darkhold", "ultimate-nullifier"],
-    linkedNexusEvents: ["nexus-secret-wars-battleworld"],
-    entries: ["avengers-doomsday", "avengers-secret-wars"]
+  "id": "alexander-pierce",
+  "name": "Alexander Pierce",
+  "aliases": [
+    "HYDRA Undercover Leader",
+    "World Security Council Secretary"
+  ],
+  "universe": "Earth-616",
+  "faction": "HYDRA / S.H.I.E.L.D.",
+  "role": "World Security Council Secretary secretly directing HYDRA's deep-state infiltration.",
+  "overview": "High-ranking Secretary of the World Security Council who covertly directed HYDRA's subversion of S.H.I.E.L.D., commanding the Winter Soldier and developing Project Insight.",
+  "firstAppearance": "Captain America: The Winter Soldier (2014)",
+  "color": "#64748b",
+  "statusByPhase": {
+    "2": {
+      "status": "deceased",
+      "note": "Shot by Nick Fury in the Triskelion command bunker while Black Widow leaked all HYDRA archives."
+    }
   },
+  "eras": [
+    {
+      "eraId": "pierce-project-insight-phase-2",
+      "phase": 2,
+      "title": "Project Insight & Fall of S.H.I.E.L.D. (2014)",
+      "year": "2014",
+      "universe": "Earth-616",
+      "description": "Prepared to eliminate 20 million citizens deemed threats to HYDRA's totalitarian order using three next-generation Helicarriers.",
+      "keyMoments": [
+        "Dispatched the Winter Soldier to assassinate Nick Fury in Washington D.C.",
+        "Branded Captain America a fugitive and triggered the Triskelion manhunt",
+        "Held World Security Council hostage before dying with 'Hail HYDRA'"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "zola-algorithm",
+    "insight-helicarriers"
+  ],
+  "linkedNexusEvents": [
+    "nexus-fall-of-shield"
+  ],
+  "entries": [
+    "captain-america-winter-soldier"
+  ]
+},
+
   {
-    id: "molecule-man",
-    name: "Molecule Man",
-    aliases: ["Owen Reece", "Master of Matter", "Multiversal Bomb"],
-    universe: "Earth-616 / Multiverse Nexus",
-    faction: "Fundamental Matter Architects",
-    role: "Human imbued with total, absolute psionic control over all molecules and physical reality.",
-    overview: "Transformed in a laboratory accident that pierced the Beyond-Realm, Owen Reece possesses complete mastery over all molecules and atomic bonds, capable of casually altering matter, repairing sheared realities, or annihilating entire universes.",
-    firstAppearance: "Fantastic Four #20 (1963)",
-    color: "#06b6d4",
-    statusByPhase: {
-      5: { status: "unknown", note: "Living reality anchor embedded across multiversal timelines." },
-      6: { status: "ascended", note: "The linchpin and cosmic battery sustaining Battleworld." }
-    },
-    eras: [
-      {
-        eraId: "molecule-man-secret-wars",
-        phase: 6,
-        title: "Molecule Man: The Multiversal Keystone",
-        year: "Secret Wars",
-        universe: "Battleworld / Earth-616",
-        description: "Served as the foundational power source for God Emperor Doom, eventually passing the cosmic spark to Reed Richards to restore the Multiverse.",
-        keyMoments: [
-          "Sliced through the indestructible armor of Thor's hammer and Captain America's shield",
-          "Fueled the creation of Battleworld from inside Castle Doom",
-          "Rebuilt the infinite Multiverse with Reed and Franklin Richards"
-        ]
-      }
-    ],
-    artifactsPossessed: [],
-    linkedNexusEvents: ["nexus-secret-wars-battleworld"],
-    entries: ["avengers-secret-wars"]
+  "id": "yellowjacket",
+  "name": "Darren Cross",
+  "aliases": [
+    "Yellowjacket",
+    "CEO of Pym Technologies"
+  ],
+  "universe": "Earth-616",
+  "faction": "Pym Technologies / HYDRA Buyers",
+  "role": "Militarized Pym Particle warlord in weaponized combat suit.",
+  "overview": "Former protege of Hank Pym who successfully recreated Pym Particles and engineered the weaponized Yellowjacket suit equipped with pulse laser cannons.",
+  "firstAppearance": "Ant-Man (2015)",
+  "color": "#eab308",
+  "statusByPhase": {
+    "2": {
+      "status": "alive",
+      "note": "Shrunk uncontrollably into the Quantum Realm when Scott Lang disabled his internal regulator."
+    }
   },
+  "eras": [
+    {
+      "eraId": "yellowjacket-pym-tech-phase-2",
+      "phase": 2,
+      "title": "The Yellowjacket Arms Deal (2015)",
+      "year": "2015",
+      "universe": "Earth-616",
+      "description": "Auctioned the miniaturized Yellowjacket technology to Mitchell Carson and HYDRA before battling Ant-Man across Cassie Lang's toy train track.",
+      "keyMoments": [
+        "Demonstrated organic reduction serum on test subjects and executives",
+        "Broke into Hank Pym's residence holding Cassie Lang hostage",
+        "Miniature toy-train battle against Ant-Man"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "yellowjacket-suit",
+    "pym-particles"
+  ],
+  "linkedNexusEvents": [
+    "nexus-quantum-shrink"
+  ],
+  "entries": [
+    "ant-man"
+  ]
+},
+
   {
-    id: "knull",
-    name: "Knull",
-    aliases: ["God of the Symbiotes", "Lord of the Abyss", "The King in Black", "Creator of All-Black"],
-    universe: "The Primordial Void / Earth-616",
-    faction: "Symbiote Hivemind / Abyss Sovereigns",
-    role: "Primordial deity who created the Symbiote hivemind and forged the Necrosword from living darkness.",
-    overview: "Awakened when the Celestials illuminated the void with light, Knull decapitated a Celestial with the first symbiote blade All-Black the Necrosword, commanding millions of Symbiote dragons from his planetary cage Klyntar to conquer and blot out the stars.",
-    firstAppearance: "Venom Vol. 4 #3 (2018) / Venom: The Last Dance (2024)",
-    color: "#64748b",
-    statusByPhase: {
-      5: { status: "alive", note: "Commanding symbiote Xenophages from the cosmic abyss in The Last Dance." },
-      6: { status: "alive", note: "Cosmic shadow stretching toward multiversal incursion points." }
-    },
-    eras: [
-      {
-        eraId: "knull-abyss",
-        phase: 5,
-        title: "Knull: The King in Black & The Awakening (2024)",
-        year: "Primordial – 2024",
-        universe: "The Void / Multiverse",
-        description: "Forged the All-Black Necrosword in the cosmic dark, decapitated Celestials, and dispatched xenophage swarms across reality to unlock the Codex.",
-        keyMoments: [
-          "Forged All-Black the Necrosword in the fires of a severed Celestial head",
-          "Created the Symbiote race and the planetary hive-cage of Klyntar",
-          "Sent Xenophage hordes to hunt Venom and Eddie Brock across dimensions"
-        ]
-      }
-    ],
-    artifactsPossessed: ["necrosword", "symbiote-codex"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "yon-rogg",
+  "name": "Yon-Rogg",
+  "aliases": [
+    "Starforce Commander"
+  ],
+  "universe": "Earth-616",
+  "faction": "Kree Empire / Starforce",
+  "role": "Kree military commander who weaponized Carol Danvers.",
+  "overview": "Leader of the Kree Empire's elite Starforce unit who deceived and brainwashed Carol Danvers into fighting the Skrulls before being bested by Captain Marvel and sent back to Hala.",
+  "firstAppearance": "Captain Marvel (2019)",
+  "color": "#0284c7",
+  "statusByPhase": {
+    "3": {
+      "status": "alive",
+      "note": "Sent back to Hala in a shuttle with a message for the Supreme Intelligence."
+    }
   },
+  "eras": [
+    {
+      "eraId": "yon-rogg-starforce-phase-3",
+      "phase": 3,
+      "title": "Starforce Command & Hala Deception (1995)",
+      "year": "1995",
+      "universe": "Earth-616",
+      "description": "Manipulated Vers's photon powers and tried to eradicate the Skrull refugees.",
+      "keyMoments": [
+        "Trained Carol Danvers in Kree martial combat",
+        "Ambushed the Skrull laboratory in Earth's orbit",
+        "Blown backwards into desert dunes by Carol Danvers' photon blast"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "kree-gravity-pistol"
+  ],
+  "linkedNexusEvents": [],
+  "entries": [
+    "captain-marvel"
+  ]
+},
+
   {
-    id: "dormammu",
-    name: "Dormammu",
-    aliases: ["Lord of the Dark Dimension", "Master of Chaos", "Devourer of Realities", "The Dread One"],
-    universe: "The Dark Dimension",
-    faction: "Dark Dimension Zealots / Extra-Dimensional Conquerors",
-    role: "Immense primordial entity of apocalyptic magical power and ruler of the Dark Dimension.",
-    overview: "A cosmic being of boundless mystical power and insatiable hunger, Dormammu seeks to pull entire universes and planetary realms into his eternal Dark Dimension where time does not exist.",
-    firstAppearance: "Strange Tales #126 (1964) / Doctor Strange (2016)",
-    color: "#f97316",
-    statusByPhase: {
-      3: { status: "alive", note: "Trapped in an infinite time loop by Doctor Strange using the Time Stone until he yielded." },
-      4: { status: "alive", note: "Clea arrives to recruit Doctor Strange to heal a Dark Dimension incursion." },
-      5: { status: "alive", note: "Reigning supreme over the timeless Dark Dimension." },
-      6: { status: "alive", note: "Dark Dimension borders colliding during multiversal incursions." }
+  "id": "supreme-intelligence",
+  "name": "Supreme Intelligence",
+  "aliases": [
+    "Ruler of the Kree Empire"
+  ],
+  "universe": "Earth-616 / Hala",
+  "faction": "Kree Empire",
+  "role": "Artificial intelligence supermind ruling the Kree civilization.",
+  "overview": "The supreme artificial intelligence ruler of the Kree Empire composed of the greatest minds of Kree history, appearing to individuals in the form of the person they most admire.",
+  "firstAppearance": "Captain Marvel (2019)",
+  "color": "#10b981",
+  "statusByPhase": {
+    "3": {
+      "status": "alive",
+      "note": "Confronted by Captain Marvel and rejected."
     },
-    eras: [
-      {
-        eraId: "dormammu-bargain",
-        phase: 3,
-        title: "Dormammu: The Dark Dimension Bargain (2016)",
-        year: "2016",
-        universe: "Dark Dimension / Earth-616",
-        description: "Empowered Kaecilius's zealots to breach Earth's Sanctums before being trapped in an infinite temporal loop by Doctor Strange.",
-        keyMoments: [
-          "Consumed Kaecilius and the zealots into eternal agonizing torment",
-          "Killed Doctor Strange hundreds of times across an endless temporal loop",
-          "'Dormammu, I've come to bargain!' - Forced to withdraw his legion from Earth"
-        ]
-      }
-    ],
-    artifactsPossessed: ["dark-dimension-flame"],
-    linkedNexusEvents: ["nexus-dormammu-bargain"],
-    entries: ["doctor-strange", "doctor-strange-multiverse"]
+    "5": {
+      "status": "destroyed",
+      "note": "Destroyed by Captain Marvel, plunging Hala into civil war."
+    }
   },
+  "eras": [
+    {
+      "eraId": "supreme-intelligence-hala-phase-3",
+      "phase": 3,
+      "title": "Mindscape of the Kree Supreme Mind (1995)",
+      "year": "1995",
+      "universe": "Earth-616",
+      "description": "Attempted to suppress Carol Danvers' binary power within her subconscious mindscape.",
+      "keyMoments": [
+        "Manifested as Dr. Wendy Lawson to control Carol Danvers",
+        "Photon inhibitor chip shattered by Captain Marvel's awakening"
+      ]
+    }
+  ],
+  "artifactsPossessed": [],
+  "linkedNexusEvents": [],
+  "entries": [
+    "captain-marvel",
+    "the-marvels"
+  ]
+},
+
   {
-    id: "mephisto",
-    name: "Mephisto",
-    aliases: ["Lord of the Underworld", "Prince of Lies", "Master of Faustian Pacts", "The Devil"],
-    universe: "Hell Dimension / Multiverse",
-    faction: "Infernal Lords / Netherworld Sovereigns",
-    role: "Demonic hell-lord, master deceiver, and cosmic soul-manipulator.",
-    overview: "Reigning over a burning pocket dimension of Hell, Mephisto preys on the deepest desires and desperate grief of mortals and gods alike, forging deceptive contracts to corrupt souls and twist the timeline.",
-    firstAppearance: "Silver Surfer #3 (1968) / Ironheart (2025)",
-    color: "#dc2626",
-    statusByPhase: {
-      4: { status: "unknown", note: "Whispered in dark magic circles following the Westview Hex." },
-      5: { status: "alive", note: "Manipulating tech-magic contracts and dark artifacts in Ironheart." },
-      6: { status: "alive", note: "Infernal influence rising as multiversal chaos deepens." }
-    },
-    eras: [
-      {
-        eraId: "mephisto-hellfire",
-        phase: 5,
-        title: "Mephisto: Faustian Bargains of the Underworld",
-        year: "2025–2026",
-        universe: "Hell Dimension / Earth-616",
-        description: "Orchestrated occult technology pacts and soul transactions from the shadows of the MCU.",
-        keyMoments: [
-          "Corrupted the mystical Hood (Parker Robbins) with dark infernal relics",
-          "Tortured the Silver Surfer and Ghost Rider with illusions of their greatest regrets",
-          "Rewrote temporal timelines through soul contracts with desperate heroes"
-        ]
-      }
-    ],
-    artifactsPossessed: ["hellfire-amulet"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "dreykov",
+  "name": "General Dreykov",
+  "aliases": [
+    "Head of the Red Room"
+  ],
+  "universe": "Earth-616",
+  "faction": "The Red Room",
+  "role": "Ruthless overseer and mastermind of the Black Widow Program.",
+  "overview": "The tyrannical Soviet general who established the airborne Red Room fortress and chemically subjugated generations of young girls into elite Black Widow sleeper assassins.",
+  "firstAppearance": "Black Widow (2021)",
+  "color": "#b91c1c",
+  "statusByPhase": {
+    "4": {
+      "status": "deceased",
+      "note": "Killed when his evacuation transport exploded following the Red Room's aerial destruction."
+    }
   },
+  "eras": [
+    {
+      "eraId": "dreykov-red-room-phase-4",
+      "phase": 4,
+      "title": "Fall of the Airborne Red Room (2016)",
+      "year": "2016",
+      "universe": "Earth-616",
+      "description": "Controlled the Black Widows through pheromonal lock until Natasha Romanoff severed her olfactory nerve.",
+      "keyMoments": [
+        "Revealed Taskmaster as his scarred daughter Antonia",
+        "Held captive by Natasha Romanoff in his command room",
+        "Transport exploded mid-air as the Red Room fell from the sky"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "widow-chemical-antidote"
+  ],
+  "linkedNexusEvents": [],
+  "entries": [
+    "black-widow"
+  ]
+},
+
   {
-    id: "onslaught",
-    name: "Onslaught",
-    aliases: ["The Psionic Conqueror", "Entity of Xavier and Magneto", "Apex Psionic Entity"],
-    universe: "Earth-616 / Astral Dimension",
-    faction: "Psionic Entities",
-    role: "Nearly omnipotent psychic entity born from the combined dark psyches of Charles Xavier and Magneto.",
-    overview: "Spawned when Professor Charles Xavier wiped Magneto's mind with telepathy, Magneto's darkest anger and Xavier's suppressed grievances fused into Onslaught—a colossal psionic juggernaut capable of altering reality, bending magnetism, and dominating every mind on Earth.",
-    firstAppearance: "X-Men #53 (1996)",
-    color: "#9333ea",
-    statusByPhase: {
-      5: { status: "unknown", note: "Dormant within the astral plane across mutant multiverses." },
-      6: { status: "alive", note: "Psionic cataclysm threatening multiversal mutant battlefields." }
-    },
-    eras: [
-      {
-        eraId: "onslaught-crisis",
-        phase: 5,
-        title: "The Onslaught Psionic Cataclysm",
-        year: "1996 / Multiverse Era",
-        universe: "Earth-616 / Astral Dimension",
-        description: "Absorbed Franklin Richards and Nate Grey, trapping New York in a colossal psionic citadel before forcing the Avengers and Fantastic Four into a heroic sacrifice.",
-        keyMoments: [
-          "Ripped the Juggernaut's Cyttorak gem out and knocked him across North America",
-          "Constructed an impenetrable psionic citadel over Central Park",
-          "Forced Earth's greatest heroes to sacrifice physical bodies to disrupt his energy core"
-        ]
-      }
-    ],
-    artifactsPossessed: [],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "kro",
+  "name": "General Kro",
+  "aliases": [
+    "Leader of the Deviants"
+  ],
+  "universe": "Earth-616",
+  "faction": "Deviants",
+  "role": "Evolved Deviant general who absorbs Eternal powers.",
+  "overview": "A sentient mutated Deviant leader who absorbed the cosmic energy of Ajak and Gilgamesh, gaining speech and consciousness before being defeated by Thena in Babylon.",
+  "firstAppearance": "Eternals (2021)",
+  "color": "#14b8a6",
+  "statusByPhase": {
+    "4": {
+      "status": "deceased",
+      "note": "Sliced to pieces by Thena inside the volcano of the Emergence."
+    }
   },
+  "eras": [
+    {
+      "eraId": "kro-deviant-evolution-phase-4",
+      "phase": 4,
+      "title": "The Deviant Awakening (2023)",
+      "year": "2023",
+      "universe": "Earth-616",
+      "description": "Absorbed Gilgamesh and Ajak to evolve into an intelligent, humanoid predator.",
+      "keyMoments": [
+        "Absorbed Ajak in the frozen tundra of Alaska",
+        "Attacked the Amazon retreat and killed Gilgamesh",
+        "Duel against Thena during the Tiamut Emergence"
+      ]
+    }
+  ],
+  "artifactsPossessed": [],
+  "linkedNexusEvents": [],
+  "entries": [
+    "eternals"
+  ]
+},
+
   {
-    id: "apocalypse",
-    name: "En Sabah Nur",
-    aliases: ["Apocalypse", "The First Mutant", "The Eternal Pharaoh", "The High Lord"],
-    universe: "Earth-10005 / Earth-616",
-    faction: "Four Horsemen / Clan Akkaba",
-    role: "Ancient 5,000-year-old mutant lord enhanced with Celestial techno-organic engineering.",
-    overview: "Born in ancient Egypt as the first mutant, En Sabah Nur spent millennia transferring his consciousness into mutant bodies while accumulating diverse powers, enforcing a ruthless philosophy of 'Survival of the Fittest' with advanced Celestial biotechnology.",
-    firstAppearance: "X-Factor #5 (1986) / X-Men: Apocalypse (2016)",
-    color: "#0284c7",
-    statusByPhase: {
-      5: { status: "unknown", note: "Ancient techno-organic sarcophagi preserved across mutant timelines." },
-      6: { status: "alive", note: "Guiding mutant Darwinian evolution in multiversal battlegrounds." }
-    },
-    eras: [
-      {
-        eraId: "apocalypse-reign",
-        phase: 5,
-        title: "Apocalypse: The Four Horsemen & Cairo Cataclysm (1983)",
-        year: "1983 / Ancient Egypt",
-        universe: "Earth-10005",
-        description: "Awoke in 1983 Cairo, recruited Magneto, Storm, Psylocke, and Archangel as his Four Horsemen, and launched all nuclear missiles into space.",
-        keyMoments: [
-          "Disarmed global nuclear arsenals with a single thought: 'No more systems.'",
-          "Constructed a massive pyramid over the ruins of Cairo",
-          "Overwhelmed by Jean Grey unlocking the raw power of the Phoenix Force"
-        ]
-      }
-    ],
-    artifactsPossessed: ["celestial-armor"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "dar-benn",
+  "name": "Dar-Benn",
+  "aliases": [
+    "Kree Revolutionary Leader",
+    "Accuser"
+  ],
+  "universe": "Earth-616",
+  "faction": "Kree Empire / Revolutionaries",
+  "role": "Kree warrior wielding the Cosmi-Rod and Quantum Band.",
+  "overview": "A desperate Kree revolutionary leader who wielded a Quantum Band and Ronan's Cosmi-Rod to siphon the atmosphere, water, and sun of other worlds to restore the dying planet Hala.",
+  "firstAppearance": "The Marvels (2023)",
+  "color": "#9333ea",
+  "statusByPhase": {
+    "5": {
+      "status": "deceased",
+      "note": "Disintegrated by the uncontrollable surge of dual Quantum Bands, tearing an interdimensional rift."
+    }
   },
+  "eras": [
+    {
+      "eraId": "dar-benn-quantum-phase-5",
+      "phase": 5,
+      "title": "The Siphoning of Worlds (2026)",
+      "year": "2026",
+      "universe": "Earth-616",
+      "description": "Tore jump points across Tarnax and Aladna to restore Hala's resources.",
+      "keyMoments": [
+        "Wielded the ancient Quantum Band found on MB-418",
+        "Siphoned atmosphere and oceans across galactic jump points",
+        "Disintegrated attempting to wield both Quantum Bands simultaneously"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "quantum-band",
+    "cosmi-rod"
+  ],
+  "linkedNexusEvents": [],
+  "entries": [
+    "the-marvels"
+  ]
+},
+
   {
-    id: "annihilus",
-    name: "Annihilus",
-    aliases: ["The Living Death That Walks", "Lord of the Negative Zone", "Master of the Annihilation Wave"],
-    universe: "The Negative Zone",
-    faction: "The Annihilation Wave",
-    role: "Insectoid conqueror of the Negative Zone commanding trillions of apocalyptic swarm drones.",
-    overview: "Obsessed with prolonging his own existence and extinguishing all positive-matter life, Annihilus wields the cosmic power of the Cosmic Control Rod to unleash the Annihilation Wave—a galaxy-devouring swarm capable of laying waste to interstellar empires.",
-    firstAppearance: "Fantastic Four Annual #6 (1968)",
-    color: "#84cc16",
-    statusByPhase: {
-      5: { status: "unknown", note: "Consolidating swarm forces in the antimatter Negative Zone." },
-      6: { status: "alive", note: "Negative Zone swarm breaching multiversal firmaments." }
-    },
-    eras: [
-      {
-        eraId: "annihilation-wave",
-        phase: 6,
-        title: "The Annihilation Wave: Devourer of Star Systems",
-        year: "Cosmic Era",
-        universe: "The Negative Zone / Earth-616",
-        description: "Breached the Crunch separating positive and negative space, destroying the Nova Corps and plunging the cosmos into total war.",
-        keyMoments: [
-          "Decimated Xandar and the entire Nova Corps planetary defense network",
-          "Wielded the Cosmic Control Rod to subjugate cosmic fleets and heralds",
-          "Slain in single combat by Nova (Richard Rider) turning him inside out"
-        ]
-      }
-    ],
-    artifactsPossessed: ["cosmic-control-rod"],
-    linkedNexusEvents: [],
-    entries: []
+  "id": "gravik",
+  "name": "Gravik",
+  "aliases": [
+    "Super-Skrull General"
+  ],
+  "universe": "Earth-616",
+  "faction": "Skrull Resistance",
+  "role": "Rebel Skrull leader augmented with Super-Skrull DNA.",
+  "overview": "Leader of the radical Skrull insurgent faction who infused himself with the DNA of the Avengers, Cull Obsidian, Extremis, and Frost Giants to wage war against humanity.",
+  "firstAppearance": "Secret Invasion (2023)",
+  "color": "#22c55e",
+  "statusByPhase": {
+    "5": {
+      "status": "deceased",
+      "note": "Killed by G'iah in New Skrullos during their Super-Skrull duel."
+    }
   },
+  "eras": [
+    {
+      "eraId": "gravik-super-skrull-phase-5",
+      "phase": 5,
+      "title": "The Skrull Infiltration & Harvest (2026)",
+      "year": "2026",
+      "universe": "Earth-616",
+      "description": "Engineered high-level political assassinations to trigger World War III.",
+      "keyMoments": [
+        "Assassinated Maria Hill in Moscow",
+        "Absorbed the DNA Harvest of the Battle of Earth",
+        "Climactic Super-Skrull battle against G'iah"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "the-harvest-dna"
+  ],
+  "linkedNexusEvents": [],
+  "entries": [
+    "secret-invasion"
+  ]
+},
+
   {
-    id: "sentry",
-    name: "Robert Reynolds",
-    aliases: ["The Sentry", "The Golden Guardian of Good", "The Void", "Power of a Million Exploding Suns"],
-    universe: "Earth-616 / Multiverse",
-    faction: "Thunderbolts / Avengers / Dark Avengers",
-    role: "Golden guardian endowed with the power of a million exploding suns, bound to the cosmic entity The Void.",
-    overview: "Consuming an enhanced golden Super Soldier serum unlocked molecular omnipotence and solar invulnerability in Bob Reynolds. Yet every heroic feat manifests an equal and opposite cosmic horror: The Void, a reality-consuming shadow capable of tearing gods apart.",
-    firstAppearance: "The Sentry #1 (2000) / Thunderbolts* (2025)",
-    color: "#eab308",
-    statusByPhase: {
-      5: { status: "alive", note: "Awakens in Thunderbolts* (2025) as the unstable golden titan." },
-      6: { status: "alive", note: "Cosmic solar powerhouse confronting multiversal annihilation." }
+  "id": "the-one-above-all",
+  "name": "The One-Above-All",
+  "aliases": [
+    "Above-All-Others",
+    "Omnipotent Creator",
+    "Architect of the Omniverse"
+  ],
+  "universe": "Beyond All Realities / Omniverse Prime",
+  "faction": "Supreme Omniverse Architect",
+  "role": "The ultimate supreme, omnipotent, and omnipresent creator of the entire Marvel Omniverse.",
+  "overview": "Existing beyond all dimensions, time, space, and multiversal structures, The One-Above-All is the primordial consciousness and ultimate supreme source of all life, magic, cosmic abstracts, and reality itself.",
+  "firstAppearance": "Doctor Strange #13 (1976)",
+  "color": "#f59e0b",
+  "statusByPhase": {
+    "1": {
+      "status": "ascended",
+      "note": "Supreme transcendent oversight above all cosmic creation."
     },
-    eras: [
-      {
-        eraId: "sentry-awakening",
-        phase: 5,
-        title: "Awakening of the Golden Titan & The Shadow of The Void",
-        year: "2025–2026",
-        universe: "Earth-616",
-        description: "Recruited and subjected to experimental laboratory trials overseen by CIA Director Valentina Allegra de Fontaine and black-ops research divisions, mild-mannered Bob Reynolds ingests the Golden Sentry Serum. The serum unleashes an unfathomable nuclear cosmic force equal to the power of one million exploding suns, instantly granting him solar invulnerability, superluminal flight, and subatomic manipulation. However, the sheer magnitude of his divine radiance awakens an equal and opposite cosmic entity: The Void—an eldritch shadow nightmare that manifests around his silhouette, threatening to consume all mortal life and forcing the Thunderbolts to confront the golden titan.",
-        keyMoments: [
-          "Demonstrated invulnerability against bullets and ballistic explosives in the bunker",
-          "Channelled radiant solar aura equivalent to a million exploding suns",
-          "Confronted the dark tendrils of The Void attempting to consume reality"
-        ]
-      }
-    ],
-    artifactsPossessed: ["golden-sentry-serum"],
-    linkedNexusEvents: [],
-    entries: ["thunderbolts"]
+    "2": {
+      "status": "ascended",
+      "note": "All timelines and nexus points emanate from his design."
+    },
+    "3": {
+      "status": "ascended",
+      "note": "Transcends the cosmic balance of the Infinity Stones."
+    },
+    "4": {
+      "status": "ascended",
+      "note": "Oversees the limitless branching of the Multiverse."
+    },
+    "5": {
+      "status": "ascended",
+      "note": "Supreme authority above the World Tree Yggdrasil."
+    },
+    "6": {
+      "status": "ascended",
+      "note": "Unshakable primordial architect through all Secret Wars and Incursions."
+    }
   },
+  "eras": [
+    {
+      "eraId": "toaa-genesis",
+      "phase": 6,
+      "title": "The Primordial Omniverse Genesis",
+      "year": "Before Time",
+      "universe": "Beyond All Realities",
+      "description": "Breathed existence into the cosmic firmament, establishing the Living Tribunal as the multi-faced arbiter of multiversal balance.",
+      "keyMoments": [
+        "Created the First Cosmos and the fundamental fabric of existence",
+        "Appointed The Living Tribunal to administer multiversal cosmic law",
+        "Manifested to guide heroes through existential multiversal reckonings"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "heart-of-the-universe"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
   {
-    id: "king-in-black",
-    name: "King in Black",
-    aliases: ["Knull Ascended", "Lord of the Abyss", "God of the Symbiote Hive"],
-    universe: "The Abyss / Earth-616",
-    faction: "Symbiote Hivemind / Abyss Sovereigns",
-    role: "Knull at the height of his power, shrouding whole galaxies in living symbiote abyss.",
-    overview: "The ultimate ascended incarnation of Knull, King in Black commands billions of symbiote tendrils, celestial-slaying dragons, and void-energy constructs, capable of blotting out stars and engulfing entire planetary systems in an eternal pitch-black abyss.",
-    firstAppearance: "King in Black #1 (2020) / Venom: The Last Dance (2024)",
-    color: "#334155",
-    statusByPhase: {
-      5: { status: "alive", note: "Cosmic presence reaching across dimensions in Venom: The Last Dance." },
-      6: { status: "alive", note: "Symbiote darkness encroaching on multiversal timelines." }
+  "id": "the-beyonder",
+  "name": "The Beyonder",
+  "aliases": [
+    "The Beyonder",
+    "Lord of the Beyond-Realm",
+    "The Kosmos",
+    "Creator of Battleworld"
+  ],
+  "universe": "Beyond-Realm / Outside The Multiverse",
+  "faction": "Beyond-Realm Entities",
+  "role": "Infinite cosmic being with unrestrained, absolute reality-warping power.",
+  "overview": "A primordial entity from a realm containing more energy than the entire Marvel Multiverse combined, The Beyonder abducted Earth's greatest champions and conquerors to clash upon his patchwork Battleworld in the original Secret Wars.",
+  "firstAppearance": "Marvel Super Heroes Secret Wars #1 (1984)",
+  "color": "#ec4899",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Cosmic resonance felt as multiversal boundaries weaken."
     },
-    eras: [
-      {
-        eraId: "king-in-black-eclipse",
-        phase: 5,
-        title: "King in Black: The Universal Symbiote Eclipse",
-        year: "2024–2025",
-        universe: "Symbiote Void / Earth-616",
-        description: "Blotted out the sun with a planetary symbiote canopy, taking control of Avengers and Celestials under the all-seeing hivemind.",
-        keyMoments: [
-          "Covered the Earth in an impenetrable shell of living darkness",
-          "Subjugated Celestials into symbiote-corrupted war titans",
-          "Clashed with the God of Light / Enigma Force across the cosmic firmament"
-        ]
-      }
-    ],
-    artifactsPossessed: ["necrosword", "symbiote-codex"],
-    linkedNexusEvents: [],
-    entries: []
+    "6": {
+      "status": "ascended",
+      "note": "Cosmic foundation powering Battleworld and God Emperor Doom."
+    }
   },
+  "eras": [
+    {
+      "eraId": "beyonder-secret-wars",
+      "phase": 6,
+      "title": "Secret Wars & The Beyond-Realm Phenomenon",
+      "year": "1984 / Cosmic Era",
+      "universe": "Beyond-Realm / Battleworld",
+      "description": "Plucked fragments of dozens of alien worlds and assembled Battleworld, compelling heroes and villains to fight for their ultimate desires.",
+      "keyMoments": [
+        "'I am from the Beyond! Slay your enemies and all you desire shall be yours!'",
+        "Effortlessly subdued Galactus and planetary cosmic forces",
+        "Energy stolen by Victor von Doom to ascend into God Emperor Doom"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "beyond-energy"
+  ],
+  "linkedNexusEvents": [
+    "nexus-secret-wars-battleworld"
+  ],
+  "entries": [
+    "avengers-secret-wars"
+  ]
+},
+
+  {
+  "id": "the-one-below-all",
+  "name": "The One Below All",
+  "aliases": [
+    "The Green Door Entity",
+    "The Primordial Darkness",
+    "The Anti-Creation"
+  ],
+  "universe": "The Below-Place / Sub-Hell",
+  "faction": "Primordial Destructive Forces",
+  "role": "The dark destructive primordial counterpart to creation, residing beneath the Green Door.",
+  "overview": "The horrifying counter-aspect of all existence, residing in the Below-Place beneath the lowest dimension of Hell, channeling limitless gamma mutation and cosmic annihilation through the immortal Green Door.",
+  "firstAppearance": "Immortal Hulk #8 (2018)",
+  "color": "#10b981",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Whispering through gamma mutations and the abyss."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Eternal cosmic antithesis beneath all reality."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "toba-below-place",
+      "phase": 5,
+      "title": "The Opening of the Green Door",
+      "year": "Eternity",
+      "universe": "The Below-Place",
+      "description": "Infused all gamma radiation with immortal eldritch energy, opening the Green Door to resurrect and twist gamma mutates into cosmic avatars.",
+      "keyMoments": [
+        "Opened the Green Door beneath the deepest substrata of reality",
+        "Corrupted the Immortal Hulk into an apocalyptic World Breaker",
+        "Manifested the apocalyptic future where all sentient life in the cosmos is devoured"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "green-door"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "the-living-tribunal",
+  "name": "The Living Tribunal",
+  "aliases": [
+    "The Cosmic Arbiter",
+    "Judge of the Multiverse",
+    "Three-Faced Cosmic Overseer"
+  ],
+  "universe": "Multiverse Nexus",
+  "faction": "Cosmic Abstract Hierarchy",
+  "role": "Three-faced cosmic judge and supreme authority maintaining universal balance across the Multiverse.",
+  "overview": "An enormous gold-hued three-faced cosmic entity representing Equity, Necessity, and Vengeance. Answerable solely to The One-Above-All, The Living Tribunal maintains cosmic equilibrium and prevents any single universe or relic from overriding reality.",
+  "firstAppearance": "Strange Tales #157 (1967) / Doctor Strange in the Multiverse of Madness (2022)",
+  "color": "#6366f1",
+  "statusByPhase": {
+    "4": {
+      "status": "ascended",
+      "note": "Physical statue observed across dimensions and the Eternity realm."
+    },
+    "5": {
+      "status": "ascended",
+      "note": "Upholds cosmic law across divergent timelines."
+    },
+    "6": {
+      "status": "ascended",
+      "note": "Supreme cosmic judge across the Incursion crisis."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "living-tribunal-judgment",
+      "phase": 4,
+      "title": "The Cosmic Judgment of the Multiverse",
+      "year": "Timeless",
+      "universe": "Multiverse Nexus",
+      "description": "Statues and cosmic presence revealed within the Gates of Eternity and during Doctor Strange's multiversal freefall.",
+      "keyMoments": [
+        "Glimpsed during America Chavez and Doctor Strange's dimensional jump",
+        "Colossal visage sanctified at the altar of Eternity",
+        "Nullified the unified Infinity Stones when their power threatened cosmic stability"
+      ]
+    }
+  ],
+  "artifactsPossessed": [],
+  "linkedNexusEvents": [],
+  "entries": [
+    "doctor-strange-multiverse",
+    "thor-love-and-thunder"
+  ]
+},
+
+  {
+  "id": "god-emperor-doom",
+  "name": "God Emperor Doom",
+  "aliases": [
+    "Victor von Doom",
+    "Lord Doom",
+    "Creator of Battleworld",
+    "Master of All Reality"
+  ],
+  "universe": "Battleworld / Multiverse Prime",
+  "faction": "Battleworld Monarchy / Multiversal Sovereigns",
+  "role": "Doctor Doom augmented with Beyonder omnipotence, ruling over Battleworld.",
+  "overview": "When the Multiverse collapsed from multiversal Incursions, Victor von Doom stole the limitless energies of the Beyonders and Molecule Man, stitching the remnants of dying universes into Battleworld and ruling as its undisputed divine God Emperor.",
+  "firstAppearance": "Secret Wars #1 (2015) / Avengers: Secret Wars (2027)",
+  "color": "#8b5cf6",
+  "statusByPhase": {
+    "6": {
+      "status": "ascended",
+      "note": "Supreme ruler of Battleworld and absolute master of reality in Secret Wars."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "god-emperor-battleworld",
+      "phase": 6,
+      "title": "The Reign of God Emperor Doom (2027)",
+      "year": "2027",
+      "universe": "Battleworld",
+      "description": "Seized the power of the Beyonders to rescue reality from total annihilation, forging Castle Doom atop Yggdrasil and demanding fealty from all surviving heroes.",
+      "keyMoments": [
+        "Ripped the spine from Thanos with a single hand",
+        "Appointed Doctor Strange as his Grand Inquisitor and Sheriff of Agamotto",
+        "Reshaped the cosmos with the boundless power of the Molecule Man"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "beyond-energy",
+    "darkhold",
+    "ultimate-nullifier"
+  ],
+  "linkedNexusEvents": [
+    "nexus-secret-wars-battleworld"
+  ],
+  "entries": [
+    "avengers-doomsday",
+    "avengers-secret-wars"
+  ]
+},
+
+  {
+  "id": "molecule-man",
+  "name": "Molecule Man",
+  "aliases": [
+    "Owen Reece",
+    "Master of Matter",
+    "Multiversal Bomb"
+  ],
+  "universe": "Earth-616 / Multiverse Nexus",
+  "faction": "Fundamental Matter Architects",
+  "role": "Human imbued with total, absolute psionic control over all molecules and physical reality.",
+  "overview": "Transformed in a laboratory accident that pierced the Beyond-Realm, Owen Reece possesses complete mastery over all molecules and atomic bonds, capable of casually altering matter, repairing sheared realities, or annihilating entire universes.",
+  "firstAppearance": "Fantastic Four #20 (1963)",
+  "color": "#06b6d4",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Living reality anchor embedded across multiversal timelines."
+    },
+    "6": {
+      "status": "ascended",
+      "note": "The linchpin and cosmic battery sustaining Battleworld."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "molecule-man-secret-wars",
+      "phase": 6,
+      "title": "Molecule Man: The Multiversal Keystone",
+      "year": "Secret Wars",
+      "universe": "Battleworld / Earth-616",
+      "description": "Served as the foundational power source for God Emperor Doom, eventually passing the cosmic spark to Reed Richards to restore the Multiverse.",
+      "keyMoments": [
+        "Sliced through the indestructible armor of Thor's hammer and Captain America's shield",
+        "Fueled the creation of Battleworld from inside Castle Doom",
+        "Rebuilt the infinite Multiverse with Reed and Franklin Richards"
+      ]
+    }
+  ],
+  "artifactsPossessed": [],
+  "linkedNexusEvents": [
+    "nexus-secret-wars-battleworld"
+  ],
+  "entries": [
+    "avengers-secret-wars"
+  ]
+},
+
+  {
+  "id": "knull",
+  "name": "Knull",
+  "aliases": [
+    "God of the Symbiotes",
+    "Lord of the Abyss",
+    "The King in Black",
+    "Creator of All-Black"
+  ],
+  "universe": "The Primordial Void / Earth-616",
+  "faction": "Symbiote Hivemind / Abyss Sovereigns",
+  "role": "Primordial deity who created the Symbiote hivemind and forged the Necrosword from living darkness.",
+  "overview": "Awakened when the Celestials illuminated the void with light, Knull decapitated a Celestial with the first symbiote blade All-Black the Necrosword, commanding millions of Symbiote dragons from his planetary cage Klyntar to conquer and blot out the stars.",
+  "firstAppearance": "Venom Vol. 4 #3 (2018) / Venom: The Last Dance (2024)",
+  "color": "#64748b",
+  "statusByPhase": {
+    "5": {
+      "status": "alive",
+      "note": "Commanding symbiote Xenophages from the cosmic abyss in The Last Dance."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Cosmic shadow stretching toward multiversal incursion points."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "knull-abyss",
+      "phase": 5,
+      "title": "Knull: The King in Black & The Awakening (2024)",
+      "year": "Primordial – 2024",
+      "universe": "The Void / Multiverse",
+      "description": "Forged the All-Black Necrosword in the cosmic dark, decapitated Celestials, and dispatched xenophage swarms across reality to unlock the Codex.",
+      "keyMoments": [
+        "Forged All-Black the Necrosword in the fires of a severed Celestial head",
+        "Created the Symbiote race and the planetary hive-cage of Klyntar",
+        "Sent Xenophage hordes to hunt Venom and Eddie Brock across dimensions"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "necrosword",
+    "symbiote-codex"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "mephisto",
+  "name": "Mephisto",
+  "aliases": [
+    "Lord of the Underworld",
+    "Prince of Lies",
+    "Master of Faustian Pacts",
+    "The Devil"
+  ],
+  "universe": "Hell Dimension / Multiverse",
+  "faction": "Infernal Lords / Netherworld Sovereigns",
+  "role": "Demonic hell-lord, master deceiver, and cosmic soul-manipulator.",
+  "overview": "Reigning over a burning pocket dimension of Hell, Mephisto preys on the deepest desires and desperate grief of mortals and gods alike, forging deceptive contracts to corrupt souls and twist the timeline.",
+  "firstAppearance": "Silver Surfer #3 (1968) / Ironheart (2025)",
+  "color": "#dc2626",
+  "statusByPhase": {
+    "4": {
+      "status": "unknown",
+      "note": "Whispered in dark magic circles following the Westview Hex."
+    },
+    "5": {
+      "status": "alive",
+      "note": "Manipulating tech-magic contracts and dark artifacts in Ironheart."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Infernal influence rising as multiversal chaos deepens."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "mephisto-hellfire",
+      "phase": 5,
+      "title": "Mephisto: Faustian Bargains of the Underworld",
+      "year": "2025–2026",
+      "universe": "Hell Dimension / Earth-616",
+      "description": "Orchestrated occult technology pacts and soul transactions from the shadows of the MCU.",
+      "keyMoments": [
+        "Corrupted the mystical Hood (Parker Robbins) with dark infernal relics",
+        "Tortured the Silver Surfer and Ghost Rider with illusions of their greatest regrets",
+        "Rewrote temporal timelines through soul contracts with desperate heroes"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "hellfire-amulet"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "onslaught",
+  "name": "Onslaught",
+  "aliases": [
+    "The Psionic Conqueror",
+    "Entity of Xavier and Magneto",
+    "Apex Psionic Entity"
+  ],
+  "universe": "Earth-616 / Astral Dimension",
+  "faction": "Psionic Entities",
+  "role": "Nearly omnipotent psychic entity born from the combined dark psyches of Charles Xavier and Magneto.",
+  "overview": "Spawned when Professor Charles Xavier wiped Magneto's mind with telepathy, Magneto's darkest anger and Xavier's suppressed grievances fused into Onslaught—a colossal psionic juggernaut capable of altering reality, bending magnetism, and dominating every mind on Earth.",
+  "firstAppearance": "X-Men #53 (1996)",
+  "color": "#9333ea",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Dormant within the astral plane across mutant multiverses."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Psionic cataclysm threatening multiversal mutant battlefields."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "onslaught-crisis",
+      "phase": 5,
+      "title": "The Onslaught Psionic Cataclysm",
+      "year": "1996 / Multiverse Era",
+      "universe": "Earth-616 / Astral Dimension",
+      "description": "Absorbed Franklin Richards and Nate Grey, trapping New York in a colossal psionic citadel before forcing the Avengers and Fantastic Four into a heroic sacrifice.",
+      "keyMoments": [
+        "Ripped the Juggernaut's Cyttorak gem out and knocked him across North America",
+        "Constructed an impenetrable psionic citadel over Central Park",
+        "Forced Earth's greatest heroes to sacrifice physical bodies to disrupt his energy core"
+      ]
+    }
+  ],
+  "artifactsPossessed": [],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "apocalypse",
+  "name": "En Sabah Nur",
+  "aliases": [
+    "Apocalypse",
+    "The First Mutant",
+    "The Eternal Pharaoh",
+    "The High Lord"
+  ],
+  "universe": "Earth-10005 / Earth-616",
+  "faction": "Four Horsemen / Clan Akkaba",
+  "role": "Ancient 5,000-year-old mutant lord enhanced with Celestial techno-organic engineering.",
+  "overview": "Born in ancient Egypt as the first mutant, En Sabah Nur spent millennia transferring his consciousness into mutant bodies while accumulating diverse powers, enforcing a ruthless philosophy of 'Survival of the Fittest' with advanced Celestial biotechnology.",
+  "firstAppearance": "X-Factor #5 (1986) / X-Men: Apocalypse (2016)",
+  "color": "#0284c7",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Ancient techno-organic sarcophagi preserved across mutant timelines."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Guiding mutant Darwinian evolution in multiversal battlegrounds."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "apocalypse-reign",
+      "phase": 5,
+      "title": "Apocalypse: The Four Horsemen & Cairo Cataclysm (1983)",
+      "year": "1983 / Ancient Egypt",
+      "universe": "Earth-10005",
+      "description": "Awoke in 1983 Cairo, recruited Magneto, Storm, Psylocke, and Archangel as his Four Horsemen, and launched all nuclear missiles into space.",
+      "keyMoments": [
+        "Disarmed global nuclear arsenals with a single thought: 'No more systems.'",
+        "Constructed a massive pyramid over the ruins of Cairo",
+        "Overwhelmed by Jean Grey unlocking the raw power of the Phoenix Force"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "celestial-armor"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "annihilus",
+  "name": "Annihilus",
+  "aliases": [
+    "The Living Death That Walks",
+    "Lord of the Negative Zone",
+    "Master of the Annihilation Wave"
+  ],
+  "universe": "The Negative Zone",
+  "faction": "The Annihilation Wave",
+  "role": "Insectoid conqueror of the Negative Zone commanding trillions of apocalyptic swarm drones.",
+  "overview": "Obsessed with prolonging his own existence and extinguishing all positive-matter life, Annihilus wields the cosmic power of the Cosmic Control Rod to unleash the Annihilation Wave—a galaxy-devouring swarm capable of laying waste to interstellar empires.",
+  "firstAppearance": "Fantastic Four Annual #6 (1968)",
+  "color": "#84cc16",
+  "statusByPhase": {
+    "5": {
+      "status": "unknown",
+      "note": "Consolidating swarm forces in the antimatter Negative Zone."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Negative Zone swarm breaching multiversal firmaments."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "annihilation-wave",
+      "phase": 6,
+      "title": "The Annihilation Wave: Devourer of Star Systems",
+      "year": "Cosmic Era",
+      "universe": "The Negative Zone / Earth-616",
+      "description": "Breached the Crunch separating positive and negative space, destroying the Nova Corps and plunging the cosmos into total war.",
+      "keyMoments": [
+        "Decimated Xandar and the entire Nova Corps planetary defense network",
+        "Wielded the Cosmic Control Rod to subjugate cosmic fleets and heralds",
+        "Slain in single combat by Nova (Richard Rider) turning him inside out"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "cosmic-control-rod"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+},
+
+  {
+  "id": "king-in-black",
+  "name": "King in Black",
+  "aliases": [
+    "Knull Ascended",
+    "Lord of the Abyss",
+    "God of the Symbiote Hive"
+  ],
+  "universe": "The Abyss / Earth-616",
+  "faction": "Symbiote Hivemind / Abyss Sovereigns",
+  "role": "Knull at the height of his power, shrouding whole galaxies in living symbiote abyss.",
+  "overview": "The ultimate ascended incarnation of Knull, King in Black commands billions of symbiote tendrils, celestial-slaying dragons, and void-energy constructs, capable of blotting out stars and engulfing entire planetary systems in an eternal pitch-black abyss.",
+  "firstAppearance": "King in Black #1 (2020) / Venom: The Last Dance (2024)",
+  "color": "#334155",
+  "statusByPhase": {
+    "5": {
+      "status": "alive",
+      "note": "Cosmic presence reaching across dimensions in Venom: The Last Dance."
+    },
+    "6": {
+      "status": "alive",
+      "note": "Symbiote darkness encroaching on multiversal timelines."
+    }
+  },
+  "eras": [
+    {
+      "eraId": "king-in-black-eclipse",
+      "phase": 5,
+      "title": "King in Black: The Universal Symbiote Eclipse",
+      "year": "2024–2025",
+      "universe": "Symbiote Void / Earth-616",
+      "description": "Blotted out the sun with a planetary symbiote canopy, taking control of Avengers and Celestials under the all-seeing hivemind.",
+      "keyMoments": [
+        "Covered the Earth in an impenetrable shell of living darkness",
+        "Subjugated Celestials into symbiote-corrupted war titans",
+        "Clashed with the God of Light / Enigma Force across the cosmic firmament"
+      ]
+    }
+  ],
+  "artifactsPossessed": [
+    "necrosword",
+    "symbiote-codex"
+  ],
+  "linkedNexusEvents": [],
+  "entries": []
+}
 ];
 
 export function getCharacter(id: string): Character | undefined {
