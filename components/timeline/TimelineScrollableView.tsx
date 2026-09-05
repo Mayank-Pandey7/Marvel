@@ -883,7 +883,7 @@ export default function TimelineScrollableView() {
                               </span>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
                               {earthMovies.map((movie) => {
                                 const posterUrl = getMoviePoster(movie);
                                 return (
@@ -933,7 +933,7 @@ export default function TimelineScrollableView() {
                       })}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
                       {movies.map((movie) => {
                         const posterUrl = getMoviePoster(movie);
                         return (
