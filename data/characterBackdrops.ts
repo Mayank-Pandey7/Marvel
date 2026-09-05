@@ -226,7 +226,10 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "dar-benn": "/images/characters/dar-benn.jpg",
   "gravik": "/images/characters/gravik.jpg",
   "the-leader": "/images/characters/the-leader.jpg",
-  "bullseye": "/images/characters/bullseye.jpg"
+  "bullseye": "/images/characters/bullseye.jpg",
+  "sabretooth": "/images/characters/sabretooth.jpg",
+  "pyro": "/images/characters/pyro.jpg",
+  "juggernaut": "/images/characters/juggernaut.jpg"
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
