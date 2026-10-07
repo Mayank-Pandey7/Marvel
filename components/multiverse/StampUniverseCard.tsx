@@ -78,21 +78,18 @@ export default function StampUniverseCard({
             </div>
 
             {/* 4. TICKET BOTTOM SECTION */}
-            <div className="flex items-end justify-between gap-1.5 px-0.5 pt-1 pb-0.5 border-t border-stone-100">
+            <div className="flex flex-col gap-1 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
               <div className="flex flex-col min-w-0">
                 {/* Universe Name */}
-                <h3 className="text-[11px] sm:text-xs font-black font-sans uppercase text-stone-900 tracking-tight leading-tight truncate group-hover:text-black">
+                <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center group-hover:text-black">
                   {universe.name}
                 </h3>
-                {/* Designation / Anchor Subtitle */}
-                <span className="text-[7.5px] sm:text-[8px] font-mono font-semibold text-stone-500 uppercase tracking-wider mt-0.5 truncate">
-                  {shortDesignation} · {shortAnchor}
-                </span>
               </div>
 
-              {/* Black EXPLORE Button */}
-              <div className="flex items-center gap-0.5 py-0.5 px-2 bg-black text-white text-[7.5px] sm:text-[8px] font-mono font-black tracking-wider uppercase group-hover:bg-stone-800 transition-colors shrink-0 shadow-xs">
-                <span>VIEW &gt;</span>
+              {/* Designation / Anchor Subtitle */}
+              <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-stone-100 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
+                <span className="truncate">{shortDesignation}</span>
+                <span className="shrink-0 text-stone-400 font-mono">{shortAnchor}</span>
               </div>
             </div>
           </div>

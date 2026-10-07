@@ -44,6 +44,7 @@ export const HERO_FACTIONS = [
   { id: "street", label: "STREET LEVEL", badge: "MIDTOWN & HELL'S KITCHEN", title: "DEFENDERS & STREET HEROES" },
   { id: "thunderbolts", label: "THUNDERBOLTS*", badge: "GOVERNMENT OPERATIVES", title: "THUNDERBOLTS* & ANTI-HEROES" },
   { id: "cosmic", label: "COSMIC & TVA", badge: "TEMPORAL & CELESTIAL", title: "COSMIC GUARDIANS & TVA" },
+  { id: "all-time-powerful", label: "ALL-TIME POWERFUL", badge: "MARVEL COMICS HIERARCHY", title: "ALL-TIME POWERFUL CHARACTERS (MARVEL COMICS)" },
 ];
 
 export const VILLAIN_FACTIONS = [
@@ -283,6 +284,15 @@ export function CharactersContent({
   }, [isHeroesOnlyMode, isVillainsOnlyMode]);
 
   const handleSelectFaction = (factionId: string) => {
+    if (factionId === "all-time-powerful" || factionId === "top-tier") {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set("tab", "top-tier");
+        url.searchParams.delete("faction");
+        window.location.href = url.toString();
+        return;
+      } catch {}
+    }
     setSelectedFaction(factionId);
     try {
       const url = new URL(window.location.href);

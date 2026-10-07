@@ -80,23 +80,12 @@ export default function StampTopTierCard({
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             </div>
 
-            {/* 4. TICKET BOTTOM SECTION (Matching stamp character card layout) */}
-            <div className="flex items-end justify-between gap-2 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
-              <div className="flex flex-col min-w-0">
-                {/* Villain Name */}
-                <h3 className="text-xs sm:text-[13.5px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight truncate group-hover:text-black">
-                  {villain.name}
-                </h3>
-                {/* Threat Level */}
-                <span className="text-[9px] sm:text-[9.5px] font-mono font-semibold text-stone-500 uppercase tracking-wider mt-0.5 truncate">
-                  {villain.threatLevel}
-                </span>
-              </div>
-
-              {/* Black EXPLORE Button */}
-              <div className="flex items-center gap-1 py-1 px-2.5 bg-black text-white text-[8.5px] sm:text-[9px] font-mono font-black tracking-wider uppercase group-hover:bg-stone-800 transition-colors shrink-0 shadow-xs">
-                <span>EXPLORE &gt;</span>
-              </div>
+            {/* 4. TICKET BOTTOM SECTION */}
+            <div className="flex flex-col items-center justify-center px-1.5 py-2 border-t border-stone-100">
+              {/* Villain Name - Full Visibility */}
+              <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center justify-center text-center group-hover:text-black">
+                {villain.name}
+              </h3>
             </div>
 
           </div>

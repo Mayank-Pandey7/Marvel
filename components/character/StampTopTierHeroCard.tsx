@@ -2,19 +2,19 @@
 
 import React from "react";
 import Link from "next/link";
-import type { Artifact } from "@/data/artifacts";
+import { TopTierHero } from "@/data/topTierHeroes";
 
-export default function StampArtifactCard({
-  artifact,
-  index,
+export default function StampTopTierHeroCard({
+  hero,
 }: {
-  artifact: Artifact;
-  index: number;
+  hero: TopTierHero;
 }) {
+  const displayRank = String(hero.rank).padStart(2, "0");
+
   return (
     <div className="w-full select-none">
       <Link
-        href={`/artifacts/${artifact.id}`}
+        href={`/characters/${hero.characterId}`}
         className="group relative block w-full cursor-pointer rounded-none transform-gpu will-change-transform transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:scale-[1.03] active:scale-[0.97]"
       >
         {/* 1. PERFORATED STAMP TICKET CONTAINER (Crisp 90-Degree Square Corners) */}
@@ -49,35 +49,43 @@ export default function StampArtifactCard({
           </div>
 
           {/* 2. INNER CARD BODY */}
-          <div className="relative flex flex-col gap-1.5 bg-white rounded-none">
+          <div className="relative flex flex-col gap-2 bg-white rounded-none">
 
             {/* 3. TOP ART WINDOW WITH SHARP SQUARE EDGES */}
-            <div className="relative w-full aspect-[3/4] rounded-none overflow-hidden bg-stone-950 flex items-center justify-center">
+            <div
+              className="relative w-full aspect-[3/4] rounded-none overflow-hidden bg-stone-900 flex items-center justify-center"
+            >
+              {/* Character Artwork */}
               <img
-                src={artifact.backdrop}
-                alt={artifact.name}
+                src={hero.image}
+                alt={hero.name}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
               />
 
+              {/* Floating Top Rank & Tier Pill */}
+              <div className="absolute top-2 inset-x-2 flex items-center justify-between z-10 pointer-events-none">
+                <span className="px-2 py-0.5 bg-black/85 backdrop-blur-xs text-white text-[9.5px] font-mono font-black tracking-widest uppercase border border-white/20 rounded-xs shadow-sm">
+                  #{displayRank}
+                </span>
+                <span
+                  style={{ borderColor: `${hero.tierColor}60`, color: hero.tierColor }}
+                  className="px-2 py-0.5 bg-black/85 backdrop-blur-xs text-[9px] font-mono font-black tracking-wider uppercase border rounded-xs shadow-sm"
+                >
+                  {hero.tier}
+                </span>
+              </div>
+
               {/* Subtle Gradient Overlays for Depth */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             </div>
 
             {/* 4. TICKET BOTTOM SECTION */}
-            <div className="flex flex-col gap-1 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
-              <div className="flex flex-col min-w-0">
-                {/* Artifact Name */}
-                <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center group-hover:text-black">
-                  {artifact.name}
-                </h3>
-              </div>
-
-              {/* Provenance Subtitle */}
-              <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-stone-100 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
-                <span className="truncate">PHASE {artifact.phaseIntroduced}</span>
-                <span className="shrink-0 text-stone-400 font-mono">{artifact.history.length} WIELDERS</span>
-              </div>
+            <div className="flex flex-col items-center justify-center px-1.5 py-2 border-t border-stone-100">
+              {/* Hero Name - Full Visibility */}
+              <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center justify-center text-center group-hover:text-black">
+                {hero.name}
+              </h3>
             </div>
 
           </div>

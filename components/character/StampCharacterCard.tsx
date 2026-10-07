@@ -212,22 +212,21 @@ export default function StampCharacterCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 pointer-events-none" />
           </div>
 
-          {/* 4. TICKET BOTTOM SECTION (Matching screenshot layout) */}
-          <div className="flex items-end justify-between gap-2 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
+          {/* 4. TICKET BOTTOM SECTION */}
+          <div className="flex flex-col gap-1 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
             <div className="flex flex-col min-w-0">
-              {/* Character Name */}
-              <h3 className="text-xs sm:text-[13.5px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight truncate group-hover:text-black">
+              {/* Character Name - Full Visibility */}
+              <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center group-hover:text-black">
                 {character.name}
               </h3>
-              {/* Films Count */}
-              <span className="text-[9px] sm:text-[9.5px] font-mono font-semibold text-stone-500 uppercase tracking-wider mt-0.5">
-                {character.entries.length} FILMS
-              </span>
             </div>
 
-            {/* Black EXPLORE Button */}
-            <div className="flex items-center gap-1 py-1 px-2.5 bg-black text-white text-[8.5px] sm:text-[9px] font-mono font-black tracking-wider uppercase group-hover:bg-stone-800 transition-colors shrink-0 shadow-xs">
-              <span>EXPLORE &gt;</span>
+            {/* Films Count & Tag */}
+            <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-stone-100 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
+              <span>
+                {character.entries.length} {character.entries.length === 1 ? "FILM" : "FILMS"}
+              </span>
+              <span className="shrink-0 text-stone-400 font-mono">{config.tag}</span>
             </div>
           </div>
 

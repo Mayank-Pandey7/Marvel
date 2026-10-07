@@ -1,6 +1,6 @@
-"use client";
-
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import Link from "next/link";
+import { Sparkles, Flame } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
@@ -251,9 +251,9 @@ export default function DarkIntroSelector({
         introStage === "ready" ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}>
 
-        {/* State A: Idle Initial State — Organic Hand-Drawn Prompt */}
+        {/* State A: Idle Initial State — Organic Hand-Drawn Prompt & Cosmic Hierarchy Link */}
         {activePhase === null ? (
-          <div className="relative flex flex-col items-center justify-end w-full mt-auto mb-0.5 text-center px-4 animate-in fade-in duration-1000 min-h-[44px]">
+          <div className="relative flex flex-col items-center justify-end w-full mt-auto mb-0.5 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] gap-3.5">
             <button
               onClick={() => handleSelectPhase(1)}
               className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 xs:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
@@ -285,6 +285,17 @@ export default function DarkIntroSelector({
 
               <span className="relative z-10 whitespace-nowrap">SELECT PHASE &amp; MOVIE</span>
             </button>
+
+            {/* All-Time Powerful Heroes Option */}
+            <div className="flex items-center justify-center gap-2">
+              <Link
+                href="/characters/heroes?tab=top-tier"
+                className="group relative inline-flex items-center gap-2 text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] font-mono tracking-[0.2em] sm:tracking-[0.28em] text-sky-300 hover:text-white uppercase font-medium hover:scale-105 active:scale-95 transition-all duration-300 py-1.5 px-4 bg-sky-950/35 hover:bg-sky-900/50 border border-sky-500/35 hover:border-sky-400/80 rounded-full backdrop-blur-md shadow-[0_0_20px_rgba(56,189,248,0.18)]"
+              >
+                <Sparkles size={12} className="text-sky-400 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
+                <span className="whitespace-nowrap">ALL-TIME POWERFUL HEROES · MARVEL COMICS</span>
+              </Link>
+            </div>
           </div>
         ) : (
 
@@ -476,10 +487,17 @@ export default function DarkIntroSelector({
 
       </main>
 
-      {/* 5. Subtle Footer Status */}
-      <footer className={`relative z-10 w-full px-4 sm:px-14 py-2 sm:py-3 flex items-center justify-end text-[8.5px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
+      {/* 5. Subtle Footer Status & Quick Links */}
+      <footer className={`relative z-10 w-full px-4 sm:px-14 py-2 sm:py-3 flex items-center justify-between text-[8.5px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
         introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none hidden sm:flex"
       }`}>
+        <Link
+          href="/characters/heroes?tab=top-tier"
+          className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 font-bold transition-colors cursor-pointer select-none"
+        >
+          <Sparkles size={11} className="text-sky-400" />
+          <span>ALL-TIME POWERFUL HEROES</span>
+        </Link>
         <div className="flex items-center gap-2 text-stone-400 select-none">
           <span className="tracking-[0.25em] font-mono text-[8.5px] sm:text-[10px] text-stone-400 font-bold uppercase">
             THE SACRED TIMELINE

@@ -2,20 +2,19 @@
 
 import React, { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { TOP_TIER_VILLAINS } from "@/data/topTierVillains";
-import StampTopTierCard from "@/components/villains/StampTopTierCard";
+import { TOP_TIER_HEROES } from "@/data/topTierHeroes";
+import StampTopTierHeroCard from "@/components/character/StampTopTierHeroCard";
 import { LineNav, type LineNavItem } from "@/components/line-nav";
 
 const TIER_FILTERS = [
-  { id: "all", label: "ALL RANKS", badge: "ALL RANKS (1-20)", title: "TOP-TIER POWER HIERARCHY" },
-  { id: "beyond", label: "BEYOND TIER", badge: "TRANSCENDENT", title: "BEYOND TIER (RANKS 1-3)" },
-  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL & MULTIVERSAL+ (RANKS 4-8)" },
-  { id: "high-cosmic", label: "HIGH COSMIC", badge: "HIGH COSMIC", title: "HIGH COSMIC THREATS (RANKS 9-12)" },
-  { id: "cosmic", label: "COSMIC", badge: "PLANETARY / COSMIC", title: "COSMIC THREATS (RANKS 13-16)" },
-  { id: "high", label: "HIGH & VARIABLE", badge: "VARIABLE", title: "HIGH & VARIABLE (RANKS 17-20)" },
+  { id: "all", label: "ALL RANKS", badge: "ALL RANKS (1-20)", title: "TOP-TIER HERO POWER HIERARCHY" },
+  { id: "beyond", label: "BEYOND TIER", badge: "TRANSCENDENT", title: "BEYOND TIER HEROES (RANKS 1-2)" },
+  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL HEROES (RANKS 3-6)" },
+  { id: "high-cosmic", label: "HIGH COSMIC", badge: "HIGH COSMIC", title: "HIGH COSMIC CHAMPIONS (RANKS 7-14)" },
+  { id: "cosmic", label: "COSMIC", badge: "COSMIC / PLANETARY", title: "COSMIC PROTECTORS (RANKS 15-20)" },
 ];
 
-export default function TopTierVillainsView({
+export default function TopTierHeroesView({
   topHeaderSlot,
 }: {
   topHeaderSlot?: React.ReactNode;
@@ -30,33 +29,32 @@ export default function TopTierVillainsView({
     }));
   }, []);
 
-  const filteredVillains = useMemo(() => {
+  const filteredHeroes = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
 
-    return TOP_TIER_VILLAINS.filter((v) => {
+    return TOP_TIER_HEROES.filter((h) => {
       if (q) {
-        const nameMatch = v.name.toLowerCase().includes(q);
-        const aliasMatch = v.alias?.toLowerCase().includes(q);
-        const reasonMatch = v.reason.toLowerCase().includes(q);
-        const domainMatch = v.domain.toLowerCase().includes(q);
-        const tierMatch = v.tier.toLowerCase().includes(q);
+        const nameMatch = h.name.toLowerCase().includes(q);
+        const aliasMatch = h.alias?.toLowerCase().includes(q);
+        const reasonMatch = h.reason.toLowerCase().includes(q);
+        const domainMatch = h.domain.toLowerCase().includes(q);
+        const tierMatch = h.tier.toLowerCase().includes(q);
+        const classMatch = h.heroicClass.toLowerCase().includes(q);
 
-        if (!nameMatch && !aliasMatch && !reasonMatch && !domainMatch && !tierMatch) {
+        if (!nameMatch && !aliasMatch && !reasonMatch && !domainMatch && !tierMatch && !classMatch) {
           return false;
         }
       }
 
       if (selectedTier !== "all") {
         if (selectedTier === "beyond") {
-          if (v.tier !== "Beyond Tier") return false;
+          if (h.tier !== "Beyond Tier") return false;
         } else if (selectedTier === "multiversal") {
-          if (v.tier !== "Multiversal" && v.tier !== "Multiversal+") return false;
+          if (h.tier !== "Multiversal" && h.tier !== "Multiversal+") return false;
         } else if (selectedTier === "high-cosmic") {
-          if (v.tier !== "High Cosmic") return false;
+          if (h.tier !== "High Cosmic") return false;
         } else if (selectedTier === "cosmic") {
-          if (v.tier !== "Cosmic") return false;
-        } else if (selectedTier === "high") {
-          if (v.tier !== "High" && v.tier !== "Variable / Cosmic") return false;
+          if (h.tier !== "Cosmic" && h.tier !== "High") return false;
         }
       }
 
@@ -107,10 +105,10 @@ export default function TopTierVillainsView({
             ) : (
               <>
                 <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
-                  ALL-TIME POWERFUL CHARACTERS · MARVEL COMICS · {filteredVillains.length}
+                  ALL-TIME POWERFUL HEROES · MARVEL COMICS · {filteredHeroes.length}
                 </span>
                 <span className="text-stone-600 font-mono text-xs">•</span>
-                <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-purple-400 font-semibold uppercase">
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-sky-400 font-semibold uppercase">
                   {activeTierMeta.title}
                 </span>
               </>
@@ -123,7 +121,7 @@ export default function TopTierVillainsView({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="SEARCH ENTITY OR DOMAIN..."
+              placeholder="SEARCH HERO OR DOMAIN..."
               className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
             />
             {searchQuery && (
@@ -138,13 +136,13 @@ export default function TopTierVillainsView({
         </div>
 
         {/* Content Body: Empty State or Grid */}
-        {filteredVillains.length === 0 ? (
+        {filteredHeroes.length === 0 ? (
           <div className="text-center py-28 w-full flex flex-col items-center justify-center animate-in fade-in duration-300">
             <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-stone-300 font-bold">
-              NO RECORDS FOUND
+              NO HERO RECORDS FOUND
             </h3>
             <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
-              No entity matches the active search query or tier filter.
+              No hero matches the active search query or tier filter.
             </p>
             <button
               onClick={() => {
@@ -169,15 +167,15 @@ export default function TopTierVillainsView({
                   </span>
                 </div>
                 <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
-                  {filteredVillains.length} ENTITIES
+                  {filteredHeroes.length} HEROES
                 </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
-                {filteredVillains.map((villain) => (
-                  <StampTopTierCard
-                    key={villain.rank}
-                    villain={villain}
+                {filteredHeroes.map((hero) => (
+                  <StampTopTierHeroCard
+                    key={hero.rank}
+                    hero={hero}
                   />
                 ))}
               </div>
@@ -188,4 +186,3 @@ export default function TopTierVillainsView({
     </div>
   );
 }
-

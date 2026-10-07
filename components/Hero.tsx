@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Reveal from "./Reveal";
 import { MCU } from "@/data/mcu";
 
@@ -21,13 +22,16 @@ export default function Hero() {
         </p>
       </Reveal>
       <Reveal delay={340}>
-        <div className="mt-9 flex flex-col sm:flex-row items-center gap-4">
+        <div className="mt-9 flex flex-col sm:flex-row items-center gap-4 flex-wrap justify-center">
           <a href="#journey" className="px-8 py-3 bg-blood-deep hover:bg-blood text-white text-xs tracking-[0.2em] uppercase font-medium transition-colors">
             Start Your Journey
           </a>
           <a href="#timeline" className="px-8 py-3 border border-white/20 hover:border-white/50 text-white text-xs tracking-[0.2em] uppercase font-medium transition-colors">
             Explore Timeline
           </a>
+          <Link href="/characters/heroes?tab=top-tier" className="px-8 py-3 border border-sky-500/40 hover:border-sky-400 text-sky-300 hover:text-white bg-sky-950/25 text-xs tracking-[0.2em] uppercase font-medium transition-all shadow-[0_0_15px_rgba(56,189,248,0.15)]">
+            All-Time Powerful Heroes (Comics)
+          </Link>
         </div>
       </Reveal>
       <Reveal delay={460}>
