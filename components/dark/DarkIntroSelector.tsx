@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
-import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
 const EDGE_JOINED_BETEL_PATH = "M 100 100 Q 88 80 78 62 C 78 44, 90 28, 100 20 C 110 28, 122 44, 122 62 Q 112 80 100 100 Z";
 
@@ -28,6 +27,15 @@ export default function DarkIntroSelector({
 
   const [introStage, setIntroStage] = useState<"initial" | "centered" | "ascending" | "ready">("initial");
 
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
+
   useEffect(() => {
     const t1 = setTimeout(() => setIntroStage("centered"), 30);
     const t2 = setTimeout(() => setIntroStage("ascending"), 280);
@@ -38,6 +46,72 @@ export default function DarkIntroSelector({
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+    };
+  }, []);
+
+  // Atmospheric ambient canvas particles over video
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    let animId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    const clouds = Array.from({ length: 14 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      radius: Math.random() * 140 + 70,
+      baseOpacity: Math.random() * 0.025 + 0.008,
+      phase: Math.random() * Math.PI * 2,
+    }));
+
+    let time = 0;
+
+    const render = () => {
+      time += 0.008;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < clouds.length; i++) {
+        const c = clouds[i];
+        c.x += c.vx;
+        c.y += c.vy;
+        if (c.x < -140) c.x = width + 140;
+        if (c.x > width + 140) c.x = -140;
+        if (c.y < -140) c.y = height + 140;
+        if (c.y > height + 140) c.y = -140;
+
+        const dynamicOpacity = c.baseOpacity * (1 + 0.2 * Math.sin(time + c.phase));
+        const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.radius);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${dynamicOpacity})`);
+        grad.addColorStop(0.6, `rgba(180, 190, 210, ${dynamicOpacity * 0.3})`);
+        grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animId);
     };
   }, []);
 
@@ -142,6 +216,7 @@ export default function DarkIntroSelector({
         introStage === "ready" ? "opacity-100" : "opacity-0"
       }`}>
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -154,8 +229,8 @@ export default function DarkIntroSelector({
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/35 to-transparent" />
       </div>
 
-      {/* Background Starfield Particles */}
-      <BackgroundStarfield />
+      {/* Atmospheric Canvas Layer */}
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
 
       {/* 2. Brand Title Header Animation */}
       <div
