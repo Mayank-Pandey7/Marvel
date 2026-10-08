@@ -145,16 +145,6 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
             >
               RANK #{hero.rank}
             </span>
-            <span className="text-stone-600">/</span>
-            <span className="text-stone-300 font-semibold">
-              {hero.tier}
-            </span>
-            <span className="text-stone-600">/</span>
-            <span>
-              {hero.domain}
-            </span>
-            <span className="text-stone-600">/</span>
-            <span className="text-cyan-400 font-semibold">{hero.heroicClass}</span>
           </div>
 
           {/* Character Name & Sub-Alias */}

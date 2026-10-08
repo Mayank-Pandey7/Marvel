@@ -137,16 +137,6 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
             >
               RANK #{entity.rank}
             </span>
-            <span className="text-stone-600">/</span>
-            <span className="text-stone-300 font-semibold">
-              {entity.tier}
-            </span>
-            <span className="text-stone-600">/</span>
-            <span>
-              {entity.domain}
-            </span>
-            <span className="text-stone-600">/</span>
-            <span className="text-amber-400 font-semibold">{entity.threatLevel}</span>
           </div>
 
           {/* Character Name & Sub-Alias */}
