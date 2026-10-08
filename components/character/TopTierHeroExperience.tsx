@@ -216,25 +216,14 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
 
         {/* Attributes Breakdown */}
         {hero.potentialPower.attributes && hero.potentialPower.attributes.length > 0 && (
-          <div className="max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-4">
+          <div className="max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3 pt-3">
             {hero.potentialPower.attributes.map((attr, i) => (
               <div
                 key={i}
-                className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col gap-1.5"
+                className="flex items-baseline justify-between gap-4 py-2 border-b border-white/10 text-[10.5px] sm:text-xs font-mono tracking-wider uppercase"
               >
-                <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-wider uppercase">
-                  <span className="text-stone-400 font-semibold">{attr.label}</span>
-                  <span className="text-white font-bold">{attr.value}</span>
-                </div>
-                <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-1000"
-                    style={{
-                      width: `${attr.score}%`,
-                      backgroundColor: hero.tierColor || "#38bdf8",
-                    }}
-                  />
-                </div>
+                <span className="text-stone-400 font-semibold">{attr.label}</span>
+                <span className="text-white font-bold text-right">{attr.value}</span>
               </div>
             ))}
           </div>
