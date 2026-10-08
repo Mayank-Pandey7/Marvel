@@ -86,10 +86,9 @@ export default function StampUniverseCard({
                 </h3>
               </div>
 
-              {/* Designation / Anchor Subtitle */}
-              <div className="flex items-center justify-between gap-1.5 pt-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
-                <span className="truncate">{shortDesignation}</span>
-                <span className="shrink-0 text-stone-400 font-mono">{shortAnchor}</span>
+              {/* Designation Subtitle */}
+              <div className="pt-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-400 uppercase tracking-wider truncate">
+                {shortDesignation || shortAnchor}
               </div>
             </div>
           </div>
