@@ -4,6 +4,10 @@ import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { MCU } from "@/data/mcu";
 import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import MovieSlugDetail from "@/components/map/MovieSlugDetail";
+import { getTopTierHero, HERO_SLUG_ALIASES } from "@/data/topTierHeroes";
+import { getTopTierVillain, VILLAIN_SLUG_ALIASES } from "@/data/topTierVillains";
+import { TopTierHeroExperience } from "@/components/character/TopTierHeroExperience";
+import { CosmicEntityExperience } from "@/components/villains/CosmicEntityExperience";
 
 const MOVIE_SLUG_ALIASES: Record<string, string> = {
 
@@ -220,7 +224,13 @@ export function generateStaticParams() {
   const aliasSlugs = Object.keys(MOVIE_SLUG_ALIASES).map((slug) => ({
     movieSlug: slug,
   }));
-  return [...nodeSlugs, ...aliasSlugs];
+  const heroSlugs = Object.keys(HERO_SLUG_ALIASES).map((slug) => ({
+    movieSlug: slug,
+  }));
+  const villainSlugs = Object.keys(VILLAIN_SLUG_ALIASES).map((slug) => ({
+    movieSlug: slug,
+  }));
+  return [...nodeSlugs, ...aliasSlugs, ...heroSlugs, ...villainSlugs];
 }
 
 export function generateMetadata({
@@ -228,13 +238,60 @@ export function generateMetadata({
 }: {
   params: { movieSlug: string };
 }): Metadata {
-  const movie = resolveMovieNode(params.movieSlug);
-  if (!movie) return { title: "Movie Not Found — MCUVERSE" };
+  const normSlug = params.movieSlug.toLowerCase().trim();
 
-  return {
-    title: `${movie.title} (${movie.year}) — MCUVERSE`,
-    description: movie.description || movie.tagline,
-  };
+  const hero = getTopTierHero(normSlug);
+  if (
+    hero &&
+    (Boolean(HERO_SLUG_ALIASES[normSlug]) ||
+      normSlug.includes("rune") ||
+      normSlug.includes("worldbreaker") ||
+      normSlug.includes("godbuster") ||
+      normSlug.includes("theoneaboveall"))
+  ) {
+    return {
+      title: `${hero.name} — MCUVERSE`,
+      description: hero.description,
+    };
+  }
+
+  const villain = getTopTierVillain(normSlug);
+  if (
+    villain &&
+    (Boolean(VILLAIN_SLUG_ALIASES[normSlug]) ||
+      normSlug.includes("onebelowall") ||
+      normSlug.includes("godemperor") ||
+      normSlug.includes("beyonder"))
+  ) {
+    return {
+      title: `${villain.name} — MCUVERSE`,
+      description: villain.description,
+    };
+  }
+
+  const movie = resolveMovieNode(params.movieSlug);
+  if (movie) {
+    return {
+      title: `${movie.title} (${movie.year}) — MCUVERSE`,
+      description: movie.description || movie.tagline,
+    };
+  }
+
+  if (hero) {
+    return {
+      title: `${hero.name} — MCUVERSE`,
+      description: hero.description,
+    };
+  }
+
+  if (villain) {
+    return {
+      title: `${villain.name} — MCUVERSE`,
+      description: villain.description,
+    };
+  }
+
+  return { title: "Entry Not Found — MCUVERSE" };
 }
 
 export default function MovieSlugPage({
@@ -242,10 +299,63 @@ export default function MovieSlugPage({
 }: {
   params: { movieSlug: string };
 }) {
-  const movie = resolveMovieNode(params.movieSlug);
-  if (!movie) {
-    notFound();
+  const normSlug = params.movieSlug.toLowerCase().trim();
+
+  // 1. Check explicit powerful hero alias
+  const isExplicitHeroSlug =
+    Boolean(HERO_SLUG_ALIASES[normSlug]) ||
+    normSlug.includes("rune") ||
+    normSlug.includes("worldbreaker") ||
+    normSlug.includes("world-breaker") ||
+    normSlug.includes("godbuster") ||
+    normSlug.includes("worthy") ||
+    normSlug.includes("cosmic") ||
+    normSlug.includes("the-one-above-all") ||
+    normSlug.includes("theoneaboveall") ||
+    normSlug.includes("toaa") ||
+    normSlug.includes("franklin");
+
+  if (isExplicitHeroSlug) {
+    const hero = getTopTierHero(normSlug);
+    if (hero) {
+      return <TopTierHeroExperience hero={hero} />;
+    }
   }
 
-  return <MovieSlugDetail movie={movie} />;
+  // 2. Check explicit powerful villain alias
+  const isExplicitVillainSlug =
+    Boolean(VILLAIN_SLUG_ALIASES[normSlug]) ||
+    normSlug.includes("one-below-all") ||
+    normSlug.includes("onebelowall") ||
+    normSlug.includes("toba") ||
+    normSlug.includes("god-emperor") ||
+    normSlug.includes("godemperor") ||
+    normSlug.includes("beyonder") ||
+    normSlug.includes("knull");
+
+  if (isExplicitVillainSlug) {
+    const villain = getTopTierVillain(normSlug);
+    if (villain) {
+      return <CosmicEntityExperience entity={villain} />;
+    }
+  }
+
+  // 3. Resolve movie node (for movies like /thor, /iron-man, /the-avengers)
+  const movie = resolveMovieNode(params.movieSlug);
+  if (movie) {
+    return <MovieSlugDetail movie={movie} />;
+  }
+
+  // 4. Fallback: check if slug matches any top tier hero or villain
+  const fallbackHero = getTopTierHero(normSlug);
+  if (fallbackHero) {
+    return <TopTierHeroExperience hero={fallbackHero} />;
+  }
+
+  const fallbackVillain = getTopTierVillain(normSlug);
+  if (fallbackVillain) {
+    return <CosmicEntityExperience entity={fallbackVillain} />;
+  }
+
+  notFound();
 }

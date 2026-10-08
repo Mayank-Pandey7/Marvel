@@ -213,7 +213,7 @@ export default function StampCharacterCard({
           </div>
 
           {/* 4. TICKET BOTTOM SECTION */}
-          <div className="flex flex-col gap-1 px-1 pt-1.5 pb-0.5 border-t border-stone-100">
+          <div className="flex flex-col gap-1 px-1 pt-1.5 pb-0.5">
             <div className="flex flex-col min-w-0">
               {/* Character Name - Full Visibility */}
               <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center group-hover:text-black">
@@ -222,7 +222,7 @@ export default function StampCharacterCard({
             </div>
 
             {/* Films Count & Tag */}
-            <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-stone-100 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
+            <div className="flex items-center justify-between gap-1.5 pt-0.5 text-[8.5px] sm:text-[9px] font-mono font-bold text-stone-500 uppercase tracking-wider">
               <span>
                 {character.entries.length} {character.entries.length === 1 ? "FILM" : "FILMS"}
               </span>

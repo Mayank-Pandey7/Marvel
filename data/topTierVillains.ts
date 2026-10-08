@@ -24,7 +24,7 @@ export interface TopTierVillain {
   name: string;
   alias?: string;
   image: string;
-  tier: "Beyond Tier" | "Multiversal+" | "Multiversal" | "High Cosmic" | "Cosmic" | "Variable / Cosmic" | "High";
+  tier: "Multiversal+" | "Multiversal" | "High Cosmic" | "Cosmic" | "High";
   tierColor: string;
   reason: string;
   threatLevel: string;
@@ -48,7 +48,7 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     name: "The One-Above-All",
     alias: "The Supreme Architect of the Omniverse",
     image: "/images/characters/the-one-above-all.jpg",
-    tier: "Beyond Tier",
+    tier: "Multiversal+",
     tierColor: "#f59e0b",
     reason: "Supreme being and omnipotent architect of the entire Marvel Omniverse.",
     threatLevel: "OMNIPOTENT SUPREME",
@@ -112,7 +112,7 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     name: "The Beyonder",
     alias: "Lord of the Beyond-Realm / The Kosmos",
     image: "/images/characters/the-beyonder.jpg",
-    tier: "Beyond Tier",
+    tier: "Multiversal+",
     tierColor: "#ec4899",
     reason: "Reality-altering cosmic power from the Beyond-Realm with near-infinite manipulation abilities.",
     threatLevel: "REALITY WARPING",
@@ -176,7 +176,7 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     name: "The One Below All",
     alias: "The Green Door Entity / The Anti-Creation",
     image: "/images/characters/the-one-below-all.jpg",
-    tier: "Beyond Tier",
+    tier: "Multiversal+",
     tierColor: "#10b981",
     reason: "Extremely powerful destructive primordial entity residing beneath the Green Door and all creation.",
     threatLevel: "PRIMORDIAL DESTRUCTION",
@@ -1072,7 +1072,7 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
     name: "Doctor Doom",
     alias: "Victor von Doom / Monarch of Latveria",
     image: "/images/characters/doctor-doom.jpg",
-    tier: "Variable / Cosmic",
+    tier: "High Cosmic",
     tierColor: "#059669",
     reason: "Genius + magic + technology; strategic polymath who occasionally breaches godlike and universal thresholds.",
     threatLevel: "TACTICAL GODHOOD",
@@ -1324,6 +1324,103 @@ export const TOP_TIER_VILLAINS: TopTierVillain[] = [
   }
 ];
 
-export function getTopTierVillain(characterId: string): TopTierVillain | undefined {
-  return TOP_TIER_VILLAINS.find(v => v.characterId === characterId);
+export const VILLAIN_SLUG_ALIASES: Record<string, string> = {
+  // The One Below All
+  "theonebelowall": "the-one-below-all",
+  "the-one-below-all": "the-one-below-all",
+  "toba": "the-one-below-all",
+  "one-below-all": "the-one-below-all",
+  "onebelowall": "the-one-below-all",
+
+  // The Beyonder
+  "thebeyonder": "the-beyonder",
+  "the-beyonder": "the-beyonder",
+  "beyonder": "the-beyonder",
+
+  // God Emperor Doom
+  "godemperordoom": "god-emperor-doom",
+  "god-emperor-doom": "god-emperor-doom",
+  "goddoom": "god-emperor-doom",
+  "god-doom": "god-emperor-doom",
+  "doomsday-doom": "god-emperor-doom",
+
+  // Chaos King / Amatsu-Mikaboshi
+  "chaosking": "chaos-king",
+  "chaos-king": "chaos-king",
+  "amatsumikaboshi": "chaos-king",
+  "amatsu-mikaboshi": "chaos-king",
+
+  // Knull
+  "knull": "knull",
+  "kinginblack": "knull",
+  "king-in-black": "knull",
+  "god-of-symbiotes": "knull",
+
+  // Galactus
+  "galactus": "galactus-lifebringer",
+  "galactus-lifebringer": "galactus-lifebringer",
+  "lifebringer-galactus": "galactus-lifebringer",
+
+  // Abraxas
+  "abraxas": "abraxas",
+
+  // Dormammu
+  "dormammu": "dormammu",
+
+  // Mephisto
+  "mephisto": "mephisto",
+
+  // Thanos
+  "thanos": "thanos",
+  "astral-thanos": "thanos",
+  "astral-regulator-thanos": "thanos",
+  "infinity-thanos": "thanos",
+
+  // Kang / He Who Remains
+  "kang": "kang",
+  "kang-the-conqueror": "kang",
+  "he-who-remains": "kang",
+
+  // Apocalypse
+  "apocalypse": "apocalypse",
+  "en-sabah-nur": "apocalypse",
+
+  // Annihilus
+  "annihilus": "annihilus",
+
+  // Arishem
+  "arishem": "arishem",
+  "celestial-arishem": "arishem",
+};
+
+export function getTopTierVillain(slugOrId: string): TopTierVillain | undefined {
+  const norm = slugOrId.toLowerCase().trim();
+  const clean = norm.replace(/[^a-z0-9-]/g, "");
+  const stripped = norm.replace(/[^a-z0-9]/g, "");
+
+  // 1. Direct match
+  const direct = TOP_TIER_VILLAINS.find(
+    (v) => v.characterId.toLowerCase() === norm || v.characterId.toLowerCase() === clean
+  );
+  if (direct) return direct;
+
+  // 2. Alias lookup
+  const aliasedId = VILLAIN_SLUG_ALIASES[norm] || VILLAIN_SLUG_ALIASES[clean] || VILLAIN_SLUG_ALIASES[stripped];
+  if (aliasedId) {
+    const aliasMatch = TOP_TIER_VILLAINS.find((v) => v.characterId.toLowerCase() === aliasedId.toLowerCase());
+    if (aliasMatch) return aliasMatch;
+  }
+
+  // 3. Name or alias matching
+  return TOP_TIER_VILLAINS.find((v) => {
+    const vCharNorm = v.characterId.replace(/[^a-z0-9]/g, "").toLowerCase();
+    const vNameNorm = v.name.replace(/[^a-z0-9]/g, "").toLowerCase();
+    const vAliasNorm = (v.alias || "").replace(/[^a-z0-9]/g, "").toLowerCase();
+    return (
+      vCharNorm === stripped ||
+      vNameNorm.includes(stripped) ||
+      vAliasNorm.includes(stripped) ||
+      stripped.includes(vCharNorm)
+    );
+  });
 }

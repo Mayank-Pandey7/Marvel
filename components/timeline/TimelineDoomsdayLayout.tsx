@@ -300,15 +300,16 @@ export default function TimelineDoomsdayLayout({
                   id={`phase-section-${movie.phase}`}
                   className="scroll-mt-36 sm:scroll-mt-28 w-full my-4 sm:my-8 flex items-center justify-center relative z-20 select-none"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/15 shadow-xl">
-                    <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2 py-0.5 rounded">
+                  <div className="flex items-center gap-2 sm:gap-2.5 max-w-[94vw] flex-nowrap">
+                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0">
                       PHASE {phaseInfo?.roman || movie.phase}
                     </span>
-                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                    <span className="text-stone-500 font-mono text-[9px] sm:text-[10px]">•</span>
+                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.12em] sm:tracking-[0.16em] text-stone-300 uppercase font-semibold whitespace-nowrap truncate">
                       {phaseInfo?.title || "EXPANDED ERA"}
                     </span>
                     <span className="hidden sm:inline text-stone-600 font-mono text-[10px]">|</span>
-                    <span className="hidden sm:inline text-[9.5px] font-mono text-stone-400 tracking-wider">
+                    <span className="hidden sm:inline text-[9.5px] font-mono text-stone-400 tracking-wider whitespace-nowrap">
                       {phaseInfo?.years}
                     </span>
                   </div>
@@ -317,11 +318,12 @@ export default function TimelineDoomsdayLayout({
 
               {isNewEarth && (
                 <div className="w-full my-3 sm:my-5 flex items-center justify-center relative z-20 select-none">
-                  <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1 rounded-full bg-black/90 backdrop-blur-md border border-white/20 shadow-lg">
-                    <span className="text-[9.5px] sm:text-[10.5px] font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/15 px-2 py-0.5 rounded">
+                  <div className="flex items-center gap-2 sm:gap-2.5 max-w-[94vw] flex-nowrap">
+                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0">
                       {movie.earthDesignation}
                     </span>
-                    <span className="text-[9.5px] sm:text-[11px] font-mono tracking-[0.12em] text-stone-300 uppercase font-medium">
+                    <span className="text-stone-500 font-mono text-[9px] sm:text-[10px]">•</span>
+                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.1em] sm:tracking-[0.15em] text-stone-300 uppercase font-medium whitespace-nowrap truncate">
                       {movie.earthName}
                     </span>
                   </div>

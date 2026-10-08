@@ -8,8 +8,7 @@ import { LineNav, type LineNavItem } from "@/components/line-nav";
 
 const TIER_FILTERS = [
   { id: "all", label: "ALL RANKS", badge: "ALL RANKS (1-20)", title: "TOP-TIER HERO POWER HIERARCHY" },
-  { id: "beyond", label: "BEYOND TIER", badge: "TRANSCENDENT", title: "BEYOND TIER HEROES (RANKS 1-2)" },
-  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL HEROES (RANKS 3-6)" },
+  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL HEROES (RANKS 1-6)" },
   { id: "high-cosmic", label: "HIGH COSMIC", badge: "HIGH COSMIC", title: "HIGH COSMIC CHAMPIONS (RANKS 7-14)" },
   { id: "cosmic", label: "COSMIC", badge: "COSMIC / PLANETARY", title: "COSMIC PROTECTORS (RANKS 15-20)" },
 ];
@@ -47,9 +46,7 @@ export default function TopTierHeroesView({
       }
 
       if (selectedTier !== "all") {
-        if (selectedTier === "beyond") {
-          if (h.tier !== "Beyond Tier") return false;
-        } else if (selectedTier === "multiversal") {
+        if (selectedTier === "multiversal") {
           if (h.tier !== "Multiversal" && h.tier !== "Multiversal+") return false;
         } else if (selectedTier === "high-cosmic") {
           if (h.tier !== "High Cosmic") return false;

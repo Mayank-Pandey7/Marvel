@@ -25,6 +25,7 @@ import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
+import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
 
 const TIMELINE_PHASES = [
@@ -178,7 +179,6 @@ export default function TimelineScrollableView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { currentPhase, setCurrentPhase } = useTimelineState();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [activePhaseFilter, setActivePhaseFilter] = useState<number | "all">(() => {
     if (typeof window !== "undefined") {
@@ -225,6 +225,7 @@ export default function TimelineScrollableView() {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isPhaseDrawerOpen, setIsPhaseDrawerOpen] = useState(false);
+  const [isRealityMenuOpen, setIsRealityMenuOpen] = useState(false);
   const [layoutMode, setLayoutMode] = useState<LayoutModeKey>(() => {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
@@ -371,90 +372,6 @@ export default function TimelineScrollableView() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // --- STARFIELD PARTICLES ---
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
-
-    const starCount = 600;
-    const particles = Array.from({ length: starCount }, () => {
-      const isLarge = Math.random() > 0.85;
-      const isMedium = Math.random() > 0.5;
-      const radius = isLarge
-        ? Math.random() * 1.2 + 1.5
-        : isMedium
-        ? Math.random() * 0.7 + 0.8
-        : Math.random() * 0.5 + 0.4;
-      const baseAlpha = isLarge
-        ? Math.random() * 0.4 + 0.45
-        : isMedium
-        ? Math.random() * 0.3 + 0.25
-        : Math.random() * 0.25 + 0.15;
-
-      return {
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.1,
-        vy: (Math.random() - 0.5) * 0.1,
-        radius,
-        baseAlpha,
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        twinklePhase: Math.random() * Math.PI * 2,
-        color:
-          Math.random() > 0.8
-            ? "210, 230, 255"
-            : Math.random() > 0.9
-            ? "255, 240, 220"
-            : "255, 255, 255",
-      };
-    });
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        p.twinklePhase += p.twinkleSpeed;
-        const currentAlpha = Math.max(
-          0.08,
-          Math.min(1, p.baseAlpha + Math.sin(p.twinklePhase) * 0.25)
-        );
-
-        ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      animId = requestAnimationFrame(render);
-    };
-
-    render();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
   // --- MOVIE DATA LISTS ---
   const allMovies = useMemo(() => {
     return [...UNIFIED_MCU_TREE].sort((a, b) => {
@@ -530,9 +447,8 @@ export default function TimelineScrollableView() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
-      {/* Background Starfield Canvas & Dark Vignette (Identical to Family Tree) */}
-      <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none z-0" />
+      {/* Alien X Celestialsapien Starfield Background */}
+      <BackgroundStarfield />
 
       <div className="navbar-blur-fade" aria-hidden="true" />
 
@@ -750,6 +666,14 @@ export default function TimelineScrollableView() {
         </div>
       )}
 
+      {/* Mobile Reality Menu Backdrop */}
+      {isRealityMenuOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/65 backdrop-blur-sm sm:hidden transition-all duration-300"
+          onClick={() => setIsRealityMenuOpen(false)}
+        />
+      )}
+
       <div
         className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
       >
@@ -770,15 +694,21 @@ export default function TimelineScrollableView() {
           ))}
         </div>
 
-        {/* SELECT REALITY pill — same container as PATH VIEW */}
-        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
-          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
-            SELECT REALITY
-          </span>
+        {/* SELECT REALITY pill — clickable on mobile, static on desktop */}
+        <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setIsRealityMenuOpen((prev) => !prev)}
+            className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400 hover:text-white sm:pointer-events-none flex items-center gap-1 cursor-pointer transition-colors active:scale-95 sm:active:scale-100"
+            title="Toggle Multiverse Realities"
+          >
+            <span>SELECT REALITY</span>
+            <span className="sm:hidden text-stone-500 font-bold text-[8px]">{isRealityMenuOpen ? "▲" : "▼"}</span>
+          </button>
         </div>
 
-        {/* Earth LineNav — right-aligned with lines on the right */}
-        <div className="pointer-events-auto">
+        {/* Earth LineNav — right-aligned with lines on the right; on mobile toggled via SELECT REALITY */}
+        <div className={`pointer-events-auto transition-all duration-300 ${isRealityMenuOpen ? "block" : "hidden sm:block"}`}>
           <LineNav
             align="right"
             className="w-auto"
@@ -788,6 +718,7 @@ export default function TimelineScrollableView() {
             onItemClick={(item) => {
               const key = item.href.replace("#", "");
               handleSelectEarth(key);
+              setIsRealityMenuOpen(false);
             }}
           />
         </div>
@@ -872,15 +803,15 @@ export default function TimelineScrollableView() {
                         if (earthMovies.length === 0) return null;
                         return (
                           <div key={earth.key} className="flex flex-col gap-4">
-                            <div className="flex items-center gap-2.5 pb-2 border-b border-white/5">
-                              <span className="text-[9.5px] sm:text-[10px] font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2 py-0.5 rounded">
+                            <div className="flex items-center gap-2.5 pb-2 border-b border-white/5 flex-nowrap">
+                              <span className="text-[9.5px] sm:text-[10px] font-mono font-bold tracking-[0.14em] sm:tracking-[0.2em] text-white uppercase whitespace-nowrap shrink-0">
                                 {earth.badge}
                               </span>
-                              <span className="text-xs sm:text-[13px] font-mono tracking-[0.12em] text-stone-300 uppercase font-medium">
+                              <span className="text-xs sm:text-[13px] font-mono tracking-[0.12em] text-stone-300 uppercase font-medium whitespace-nowrap truncate">
                                 {earth.name}
                               </span>
                               <span className="text-stone-600 font-mono text-[10px]">•</span>
-                              <span className="text-[9.5px] font-mono text-stone-500 uppercase tracking-widest">
+                              <span className="text-[9.5px] font-mono text-stone-500 uppercase tracking-widest whitespace-nowrap">
                                 {earthMovies.length} {earthMovies.length === 1 ? "MOVIE" : "MOVIES"}
                               </span>
                             </div>

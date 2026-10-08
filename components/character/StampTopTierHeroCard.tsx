@@ -11,10 +11,27 @@ export default function StampTopTierHeroCard({
 }) {
   const displayRank = String(hero.rank).padStart(2, "0");
 
+  const targetHref =
+    hero.characterId === "thor"
+      ? "/runekingthor"
+      : hero.characterId === "hulk"
+      ? "/worldbreakerhulk"
+      : hero.characterId === "spider-man"
+      ? "/cosmicspiderman"
+      : hero.characterId === "iron-man"
+      ? "/godbuster"
+      : hero.characterId === "captain-america"
+      ? "/worthycap"
+      : hero.characterId === "reed-richards"
+      ? "/themaker"
+      : hero.characterId === "frank-castle"
+      ? "/cosmicghostrider"
+      : `/characters/${hero.characterId}`;
+
   return (
     <div className="w-full select-none">
       <Link
-        href={`/characters/${hero.characterId}`}
+        href={targetHref}
         className="group relative block w-full cursor-pointer rounded-none transform-gpu will-change-transform transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:scale-[1.03] active:scale-[0.97]"
       >
         {/* 1. PERFORATED STAMP TICKET CONTAINER (Crisp 90-Degree Square Corners) */}
@@ -63,16 +80,10 @@ export default function StampTopTierHeroCard({
                 className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
               />
 
-              {/* Floating Top Rank & Tier Pill */}
-              <div className="absolute top-2 inset-x-2 flex items-center justify-between z-10 pointer-events-none">
+              {/* Floating Top Rank Pill */}
+              <div className="absolute top-2 left-2 z-10 pointer-events-none">
                 <span className="px-2 py-0.5 bg-black/85 backdrop-blur-xs text-white text-[9.5px] font-mono font-black tracking-widest uppercase border border-white/20 rounded-xs shadow-sm">
                   #{displayRank}
-                </span>
-                <span
-                  style={{ borderColor: `${hero.tierColor}60`, color: hero.tierColor }}
-                  className="px-2 py-0.5 bg-black/85 backdrop-blur-xs text-[9px] font-mono font-black tracking-wider uppercase border rounded-xs shadow-sm"
-                >
-                  {hero.tier}
                 </span>
               </div>
 
@@ -81,7 +92,7 @@ export default function StampTopTierHeroCard({
             </div>
 
             {/* 4. TICKET BOTTOM SECTION */}
-            <div className="flex flex-col items-center justify-center px-1.5 py-2 border-t border-stone-100">
+            <div className="flex flex-col items-center justify-center px-1.5 py-2">
               {/* Hero Name - Full Visibility */}
               <h3 className="text-[11.5px] sm:text-[13px] font-black font-sans uppercase text-stone-900 tracking-tight leading-tight line-clamp-2 min-h-[2.3em] flex items-center justify-center text-center group-hover:text-black">
                 {hero.name}

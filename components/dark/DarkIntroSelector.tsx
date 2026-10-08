@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import Link from "next/link";
-import { Sparkles, Flame } from "lucide-react";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import { PHASES, MCU, MCUEntry } from "@/data/mcu";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
+import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
 const EDGE_JOINED_BETEL_PATH = "M 100 100 Q 88 80 78 62 C 78 44, 90 28, 100 20 C 110 28, 122 44, 122 62 Q 112 80 100 100 Z";
 
@@ -47,7 +46,6 @@ export default function DarkIntroSelector({
 
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const currentPhaseMovies: MCUEntry[] = useMemo(() => {
     if (!activePhase) return [];
@@ -97,71 +95,6 @@ export default function DarkIntroSelector({
   const handleSelectMovie = (idx: number) => {
     setSelectedMovieIndex(idx);
   };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    let animId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize, { passive: true });
-
-    const clouds = Array.from({ length: 12 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      radius: Math.random() * 140 + 70,
-      baseOpacity: Math.random() * 0.025 + 0.008,
-      phase: Math.random() * Math.PI * 2,
-    }));
-
-    let time = 0;
-
-    const render = () => {
-      time += 0.008;
-      ctx.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < clouds.length; i++) {
-        const c = clouds[i];
-        c.x += c.vx;
-        c.y += c.vy;
-        if (c.x < -140) c.x = width + 140;
-        if (c.x > width + 140) c.x = -140;
-        if (c.y < -140) c.y = height + 140;
-        if (c.y > height + 140) c.y = -140;
-
-        const dynamicOpacity = c.baseOpacity * (1 + 0.2 * Math.sin(time + c.phase));
-        const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.radius);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${dynamicOpacity})`);
-        grad.addColorStop(0.6, `rgba(180, 190, 210, ${dynamicOpacity * 0.3})`);
-        grad.addColorStop(1, "rgba(0, 0, 0, 0)");
-
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      animId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
 
   const currentPhaseMeta = activePhase ? PHASES[activePhase - 1] || PHASES[0] : null;
   const activeMovie = activePhase && currentPhaseMovies.length > 0 ? currentPhaseMovies[selectedMovieIndex] || currentPhaseMovies[0] : null;
@@ -222,7 +155,7 @@ export default function DarkIntroSelector({
       </div>
 
       {/* Background Starfield Particles */}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
+      <BackgroundStarfield />
 
       {/* 2. Brand Title Header Animation */}
       <div
@@ -286,16 +219,7 @@ export default function DarkIntroSelector({
               <span className="relative z-10 whitespace-nowrap">SELECT PHASE &amp; MOVIE</span>
             </button>
 
-            {/* All-Time Powerful Heroes Option */}
-            <div className="flex items-center justify-center gap-2">
-              <Link
-                href="/characters/heroes?tab=top-tier"
-                className="group relative inline-flex items-center gap-2 text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] font-mono tracking-[0.2em] sm:tracking-[0.28em] text-sky-300 hover:text-white uppercase font-medium hover:scale-105 active:scale-95 transition-all duration-300 py-1.5 px-4 bg-sky-950/35 hover:bg-sky-900/50 border border-sky-500/35 hover:border-sky-400/80 rounded-full backdrop-blur-md shadow-[0_0_20px_rgba(56,189,248,0.18)]"
-              >
-                <Sparkles size={12} className="text-sky-400 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
-                <span className="whitespace-nowrap">ALL-TIME POWERFUL HEROES · MARVEL COMICS</span>
-              </Link>
-            </div>
+
           </div>
         ) : (
 
@@ -487,17 +411,10 @@ export default function DarkIntroSelector({
 
       </main>
 
-      {/* 5. Subtle Footer Status & Quick Links */}
-      <footer className={`relative z-10 w-full px-4 sm:px-14 py-2 sm:py-3 flex items-center justify-between text-[8.5px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
+      {/* 5. Subtle Footer Status */}
+      <footer className={`relative z-10 w-full px-4 sm:px-14 py-2 sm:py-3 flex items-center justify-end text-[8.5px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 transition-all duration-700 ${
         introStage === "ready" && activePhase !== null ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none hidden sm:flex"
       }`}>
-        <Link
-          href="/characters/heroes?tab=top-tier"
-          className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 font-bold transition-colors cursor-pointer select-none"
-        >
-          <Sparkles size={11} className="text-sky-400" />
-          <span>ALL-TIME POWERFUL HEROES</span>
-        </Link>
         <div className="flex items-center gap-2 text-stone-400 select-none">
           <span className="tracking-[0.25em] font-mono text-[8.5px] sm:text-[10px] text-stone-400 font-bold uppercase">
             THE SACRED TIMELINE

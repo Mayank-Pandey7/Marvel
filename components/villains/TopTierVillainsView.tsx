@@ -8,8 +8,7 @@ import { LineNav, type LineNavItem } from "@/components/line-nav";
 
 const TIER_FILTERS = [
   { id: "all", label: "ALL RANKS", badge: "ALL RANKS (1-20)", title: "TOP-TIER POWER HIERARCHY" },
-  { id: "beyond", label: "BEYOND TIER", badge: "TRANSCENDENT", title: "BEYOND TIER (RANKS 1-3)" },
-  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL & MULTIVERSAL+ (RANKS 4-8)" },
+  { id: "multiversal", label: "MULTIVERSAL+", badge: "MULTIVERSAL", title: "MULTIVERSAL & MULTIVERSAL+ (RANKS 1-8)" },
   { id: "high-cosmic", label: "HIGH COSMIC", badge: "HIGH COSMIC", title: "HIGH COSMIC THREATS (RANKS 9-12)" },
   { id: "cosmic", label: "COSMIC", badge: "PLANETARY / COSMIC", title: "COSMIC THREATS (RANKS 13-16)" },
   { id: "high", label: "HIGH & VARIABLE", badge: "VARIABLE", title: "HIGH & VARIABLE (RANKS 17-20)" },
@@ -47,16 +46,14 @@ export default function TopTierVillainsView({
       }
 
       if (selectedTier !== "all") {
-        if (selectedTier === "beyond") {
-          if (v.tier !== "Beyond Tier") return false;
-        } else if (selectedTier === "multiversal") {
+        if (selectedTier === "multiversal") {
           if (v.tier !== "Multiversal" && v.tier !== "Multiversal+") return false;
         } else if (selectedTier === "high-cosmic") {
           if (v.tier !== "High Cosmic") return false;
         } else if (selectedTier === "cosmic") {
           if (v.tier !== "Cosmic") return false;
         } else if (selectedTier === "high") {
-          if (v.tier !== "High" && v.tier !== "Variable / Cosmic") return false;
+          if (v.tier !== "High") return false;
         }
       }
 

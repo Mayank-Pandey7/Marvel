@@ -17,7 +17,9 @@ import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import { TonyStarkExperience } from "@/components/ironman/TonyStarkExperience";
 import { CosmicEntityExperience } from "@/components/villains/CosmicEntityExperience";
+import { TopTierHeroExperience } from "@/components/character/TopTierHeroExperience";
 import { getTopTierVillain } from "@/data/topTierVillains";
+import { getTopTierHero } from "@/data/topTierHeroes";
 import { isVillainCharacter } from "@/components/character/CharactersContent";
 import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
 
@@ -344,13 +346,45 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
 }
 
 export default function CharacterDetailPage({ params }: { params: { id: string } }) {
-  const topTierEntity = getTopTierVillain(params.id);
-  if (topTierEntity) {
-    return <CosmicEntityExperience entity={topTierEntity} />;
+  const topTierHero = getTopTierHero(params.id);
+  const topTierVillain = getTopTierVillain(params.id);
+  const standardChar = getCharacter(params.id);
+
+  // If explicit top-tier hero alias or not in standard MCU characters
+  const isExplicitTopTierHero =
+    params.id.includes("rune") ||
+    params.id.includes("world-breaker") ||
+    params.id.includes("worldbreaker") ||
+    params.id.includes("godbuster") ||
+    params.id.includes("worthy") ||
+    params.id.includes("cosmic") ||
+    params.id.includes("the-one-above-all") ||
+    params.id.includes("toaa") ||
+    params.id.includes("franklin") ||
+    params.id.includes("adam-warlock") ||
+    params.id.includes("sentry") ||
+    params.id.includes("silver-surfer") ||
+    params.id.includes("black-bolt") ||
+    params.id.includes("watcher");
+
+  if (topTierHero && (isExplicitTopTierHero || !standardChar)) {
+    return <TopTierHeroExperience hero={topTierHero} />;
+  }
+
+  if (topTierVillain && (!standardChar || params.id.includes("god-emperor") || params.id.includes("beyonder") || params.id.includes("one-below-all") || params.id.includes("knull"))) {
+    return <CosmicEntityExperience entity={topTierVillain} />;
   }
 
   if (params.id === "iron-man" || params.id === "tony-stark") {
     return <TonyStarkExperience />;
+  }
+
+  if (topTierHero && !standardChar) {
+    return <TopTierHeroExperience hero={topTierHero} />;
+  }
+
+  if (topTierVillain && !standardChar) {
+    return <CosmicEntityExperience entity={topTierVillain} />;
   }
 
   return <StandardCharacterDetail characterId={params.id} />;

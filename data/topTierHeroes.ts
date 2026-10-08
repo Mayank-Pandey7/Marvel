@@ -24,7 +24,7 @@ export interface TopTierHero {
   name: string;
   alias?: string;
   image: string;
-  tier: "Beyond Tier" | "Multiversal+" | "Multiversal" | "High Cosmic" | "Cosmic" | "Variable / Cosmic" | "High";
+  tier: "Multiversal+" | "Multiversal" | "High Cosmic" | "Cosmic" | "High";
   tierColor: string;
   reason: string;
   heroicClass: string;
@@ -48,7 +48,7 @@ export const TOP_TIER_HEROES: TopTierHero[] = [
     name: "The One-Above-All (Omnipotent Creator)",
     alias: "The Supreme Architect of the Omniverse",
     image: "/images/characters/the-one-above-all.jpg",
-    tier: "Beyond Tier",
+    tier: "Multiversal+",
     tierColor: "#f59e0b",
     reason: "Omnipotent progenitor, source of all love, creation, and life across the entire Marvel Omniverse.",
     heroicClass: "SUPREME OMNIPOTENT CREATOR",
@@ -101,7 +101,7 @@ export const TOP_TIER_HEROES: TopTierHero[] = [
     name: "Franklin Richards (Universal Shaper)",
     alias: "The Universal Shaper / Mutant Beyond Omega",
     image: "/images/characters/franklin-richards.jpg",
-    tier: "Beyond Tier",
+    tier: "Multiversal+",
     tierColor: "#38bdf8",
     reason: "Possesses boundless reality-warping abilities; created pocket universes as a child and made Galactus his herald.",
     heroicClass: "UNIVERSAL SHAPER / OMEGA HERO",
@@ -1096,9 +1096,201 @@ export const TOP_TIER_HEROES: TopTierHero[] = [
   }
 ];
 
-export function getTopTierHero(characterId: string): TopTierHero | undefined {
-  const normId = characterId.toLowerCase().trim();
-  return TOP_TIER_HEROES.find(
-    (h) => h.characterId.toLowerCase() === normId || (h.alias && h.alias.toLowerCase().includes(normId))
+export const HERO_SLUG_ALIASES: Record<string, string> = {
+  // Thor / Rune King Thor
+  "runekingthor": "thor",
+  "rune-king-thor": "thor",
+  "thor-rune-king": "thor",
+  "runethor": "thor",
+  "rune-thor": "thor",
+  "cosmickingthor": "thor",
+  "cosmic-king-thor": "thor",
+  "allfatherthor": "thor",
+  "allfather-thor": "thor",
+  "kingthor": "thor",
+  "king-thor": "thor",
+  "thor-god-of-thunder": "thor",
+
+  // The One-Above-All
+  "theoneaboveall": "the-one-above-all",
+  "the-one-above-all": "the-one-above-all",
+  "toaa": "the-one-above-all",
+  "one-above-all": "the-one-above-all",
+  "oneaboveall": "the-one-above-all",
+
+  // Franklin Richards
+  "franklinrichards": "franklin-richards",
+  "franklin-richards": "franklin-richards",
+  "franklin": "franklin-richards",
+
+  // Adam Warlock / Living Tribunal
+  "adamwarlock": "adam-warlock",
+  "adam-warlock": "adam-warlock",
+  "livingtribunal": "adam-warlock",
+  "living-tribunal": "adam-warlock",
+  "adam-warlock-tribunal": "adam-warlock",
+
+  // Doctor Strange
+  "doctorstrange": "doctor-strange",
+  "doctor-strange": "doctor-strange",
+  "drstrange": "doctor-strange",
+  "dr-strange": "doctor-strange",
+  "black-priests-strange": "doctor-strange",
+  "blackprieststrange": "doctor-strange",
+  "strangesupreme": "doctor-strange",
+  "strange-supreme": "doctor-strange",
+
+  // Silver Surfer
+  "silversurfer": "silver-surfer",
+  "silver-surfer": "silver-surfer",
+  "silversurferblack": "silver-surfer",
+  "silver-surfer-black": "silver-surfer",
+  "norrin-radd": "silver-surfer",
+
+  // Sentry
+  "sentry": "sentry",
+  "thesentry": "sentry",
+  "the-sentry": "sentry",
+  "sentry-void": "sentry",
+  "sentryvoid": "sentry",
+  "merged-sentry": "sentry",
+  "robert-reynolds": "sentry",
+
+  // Hulk / World Breaker Hulk
+  "worldbreakerhulk": "hulk",
+  "world-breaker-hulk": "hulk",
+  "worldbreaker": "hulk",
+  "world-breaker": "hulk",
+  "titanhulk": "hulk",
+  "titan-hulk": "hulk",
+  "green-scar": "hulk",
+  "greenscar": "hulk",
+  "immortalhulk": "hulk",
+  "immortal-hulk": "hulk",
+
+  // Wanda / Scarlet Witch
+  "scarletwitch": "wanda",
+  "scarlet-witch": "wanda",
+  "wanda": "wanda",
+  "wanda-maximoff": "wanda",
+  "wandamaximoff": "wanda",
+  "chaosmagicwanda": "wanda",
+
+  // The Watcher
+  "thewatcher": "the-watcher",
+  "the-watcher": "the-watcher",
+  "watcher": "the-watcher",
+  "uatu": "the-watcher",
+  "uatuthewatcher": "the-watcher",
+  "uatu-the-watcher": "the-watcher",
+
+  // Cosmic Ghost Rider / Frank Castle
+  "cosmicghostrider": "frank-castle",
+  "cosmic-ghost-rider": "frank-castle",
+  "frankcastle": "frank-castle",
+  "frank-castle": "frank-castle",
+  "punisher-cosmic": "frank-castle",
+
+  // Black Bolt
+  "blackbolt": "black-bolt",
+  "black-bolt": "black-bolt",
+  "blackagar": "black-bolt",
+  "blackagar-boltagon": "black-bolt",
+  "midnight-king": "black-bolt",
+
+  // Star-Lord / Peter Quill
+  "starlord": "peter-quill",
+  "star-lord": "peter-quill",
+  "peterquill": "peter-quill",
+  "peter-quill": "peter-quill",
+  "masterofthesun": "peter-quill",
+  "master-of-the-sun": "peter-quill",
+
+  // Professor X / Charles Xavier
+  "charlesxavier": "charles-xavier",
+  "charles-xavier": "charles-xavier",
+  "professorx": "charles-xavier",
+  "professor-x": "charles-xavier",
+  "profx": "charles-xavier",
+  "prof-x": "charles-xavier",
+
+  // Captain Marvel / Carol Danvers
+  "captainmarvel": "captain-marvel",
+  "captain-marvel": "captain-marvel",
+  "binary": "captain-marvel",
+  "caroldanvers": "captain-marvel",
+  "carol-danvers": "captain-marvel",
+
+  // Odin All-Father
+  "odin": "odin",
+  "odinallfather": "odin",
+  "odin-allfather": "odin",
+  "allfatherodin": "odin",
+  "allfather-odin": "odin",
+  "odinborson": "odin",
+  "odin-borson": "odin",
+
+  // Reed Richards / The Maker
+  "reedrichards": "reed-richards",
+  "reed-richards": "reed-richards",
+  "misterfantastic": "reed-richards",
+  "mister-fantastic": "reed-richards",
+  "mrfantastic": "reed-richards",
+  "mr-fantastic": "reed-richards",
+  "themaker": "reed-richards",
+  "the-maker": "reed-richards",
+
+  // Iron Man / Godbuster
+  "godbuster": "iron-man",
+  "godbuster-ironman": "iron-man",
+  "godbuster-iron-man": "iron-man",
+  "godkiller-ironman": "iron-man",
+  "cosmic-ironman": "iron-man",
+  "cosmic-iron-man": "iron-man",
+
+  // Captain America / Worthy Cap
+  "worthycap": "captain-america",
+  "worthy-cap": "captain-america",
+  "worthycaptainamerica": "captain-america",
+  "worthy-captain-america": "captain-america",
+
+  // Spider-Man / Cosmic Spider-Man
+  "cosmicspiderman": "spider-man",
+  "cosmic-spider-man": "spider-man",
+  "captainuniverse": "spider-man",
+  "captainuniversespiderman": "spider-man",
+  "captain-universe-spiderman": "spider-man",
+  "captain-universe-spider-man": "spider-man",
+};
+
+export function getTopTierHero(slugOrId: string): TopTierHero | undefined {
+  const norm = slugOrId.toLowerCase().trim();
+  const clean = norm.replace(/[^a-z0-9-]/g, "");
+  const stripped = norm.replace(/[^a-z0-9]/g, "");
+
+  // 1. Direct characterId match
+  const direct = TOP_TIER_HEROES.find(
+    (h) => h.characterId.toLowerCase() === norm || h.characterId.toLowerCase() === clean
   );
+  if (direct) return direct;
+
+  // 2. Alias lookup
+  const aliasedId = HERO_SLUG_ALIASES[norm] || HERO_SLUG_ALIASES[clean] || HERO_SLUG_ALIASES[stripped];
+  if (aliasedId) {
+    const aliasMatch = TOP_TIER_HEROES.find((h) => h.characterId.toLowerCase() === aliasedId.toLowerCase());
+    if (aliasMatch) return aliasMatch;
+  }
+
+  // 3. Name or alias matching
+  return TOP_TIER_HEROES.find((h) => {
+    const hCharNorm = h.characterId.replace(/[^a-z0-9]/g, "").toLowerCase();
+    const hNameNorm = h.name.replace(/[^a-z0-9]/g, "").toLowerCase();
+    const hAliasNorm = (h.alias || "").replace(/[^a-z0-9]/g, "").toLowerCase();
+    return (
+      hCharNorm === stripped ||
+      hNameNorm.includes(stripped) ||
+      hAliasNorm.includes(stripped) ||
+      stripped.includes(hCharNorm)
+    );
+  });
 }
