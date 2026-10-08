@@ -219,18 +219,52 @@ function resolveMovieNode(slug: string): MovieNode | null {
   return null;
 }
 
+const RESERVED_ROOT_ROUTES = new Set([
+  "artifacts",
+  "characters",
+  "developer",
+  "doomsday",
+  "en",
+  "familytree",
+  "movie",
+  "multiverse",
+  "timeline",
+  "watchlist",
+  "icon.svg",
+  "favicon.ico",
+  "api",
+  "robots.txt",
+  "sitemap.xml",
+]);
+
 export function generateStaticParams() {
-  const nodeSlugs = UNIFIED_MCU_TREE.map((m) => ({ movieSlug: m.id }));
-  const aliasSlugs = Object.keys(MOVIE_SLUG_ALIASES).map((slug) => ({
-    movieSlug: slug,
-  }));
-  const heroSlugs = Object.keys(HERO_SLUG_ALIASES).map((slug) => ({
-    movieSlug: slug,
-  }));
-  const villainSlugs = Object.keys(VILLAIN_SLUG_ALIASES).map((slug) => ({
-    movieSlug: slug,
-  }));
-  return [...nodeSlugs, ...aliasSlugs, ...heroSlugs, ...villainSlugs];
+  const slugSet = new Set<string>();
+
+  UNIFIED_MCU_TREE.forEach((m) => {
+    if (m.id && !RESERVED_ROOT_ROUTES.has(m.id.toLowerCase())) {
+      slugSet.add(m.id.toLowerCase());
+    }
+  });
+
+  Object.keys(MOVIE_SLUG_ALIASES).forEach((slug) => {
+    if (slug && !RESERVED_ROOT_ROUTES.has(slug.toLowerCase())) {
+      slugSet.add(slug.toLowerCase());
+    }
+  });
+
+  Object.keys(HERO_SLUG_ALIASES).forEach((slug) => {
+    if (slug && !RESERVED_ROOT_ROUTES.has(slug.toLowerCase())) {
+      slugSet.add(slug.toLowerCase());
+    }
+  });
+
+  Object.keys(VILLAIN_SLUG_ALIASES).forEach((slug) => {
+    if (slug && !RESERVED_ROOT_ROUTES.has(slug.toLowerCase())) {
+      slugSet.add(slug.toLowerCase());
+    }
+  });
+
+  return Array.from(slugSet).map((movieSlug) => ({ movieSlug }));
 }
 
 export function generateMetadata({

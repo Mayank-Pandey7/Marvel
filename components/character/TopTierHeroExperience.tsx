@@ -300,7 +300,7 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
               {/* Iconic Quote */}
               {feat.quote && (
                 <blockquote className="mt-2 pl-3 border-l-2 border-white/20 italic text-xs font-mono text-stone-400">
-                  "{feat.quote}"
+                  &ldquo;{feat.quote}&rdquo;
                 </blockquote>
               )}
             </div>
