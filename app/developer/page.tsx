@@ -408,9 +408,9 @@ export default function DeveloperPage() {
           </span>
         </div>
 
-        {/* Clean Open Grid (Matching /the-beyonder) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 max-w-4xl">
-          {SOCIAL_HANDLES.map((social, idx) => {
+        {/* Clean Open Grid (Matching minimalist social cards) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl">
+          {SOCIAL_HANDLES.map((social) => {
             const Icon = social.icon;
             return (
               <a
@@ -418,15 +418,8 @@ export default function DeveloperPage() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-2.5 transition-colors cursor-pointer"
+                className="group flex flex-col gap-1.5 transition-colors cursor-pointer py-1"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[9.5px] font-mono uppercase font-bold tracking-widest text-sky-400">
-                    {social.scale}
-                  </span>
-                  <span className="text-[9.5px] font-mono text-stone-600 font-bold">0{idx + 1}</span>
-                </div>
-
                 <div className="flex items-center gap-2">
                   <Icon size={16} className="text-stone-400 group-hover:text-white transition-colors" />
                   <h4 className="text-base sm:text-lg font-mono font-bold text-white uppercase leading-snug group-hover:text-sky-300 transition-colors">
@@ -435,13 +428,9 @@ export default function DeveloperPage() {
                   <ExternalLink size={12} className="text-stone-500 group-hover:text-white transition-colors ml-auto" />
                 </div>
 
-                <span className="text-[11px] font-mono text-stone-400 tracking-wider">
+                <span className="text-[11px] sm:text-xs font-mono text-stone-400 tracking-wider">
                   {social.handle}
                 </span>
-
-                <p className="text-xs sm:text-sm font-mono text-stone-300 leading-relaxed pt-1">
-                  {social.desc}
-                </p>
               </a>
             );
           })}
