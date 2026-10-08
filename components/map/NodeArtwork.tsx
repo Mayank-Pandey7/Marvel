@@ -154,6 +154,16 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#ffd32a",
     fallbackText: "INFINITY WAR",
   },
+  "the-punisher": {
+    poster: "https://image.tmdb.org/t/p/w780/irwQOXjU1mN702gQZAlLq5Z5x6t.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER",
+  },
+  "punisher": {
+    poster: "https://image.tmdb.org/t/p/w780/irwQOXjU1mN702gQZAlLq5Z5x6t.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER",
+  },
   "ant-man-wasp": {
     poster: "https://image.tmdb.org/t/p/w780/cFQEO687n1K6umXbInzocxcnAQz.jpg",
     color: "#fed330",

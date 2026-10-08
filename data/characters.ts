@@ -1157,7 +1157,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: [],
     linkedNexusEvents: [],
-    entries: ["daredevil-born-again"]
+    entries: ["the-punisher", "daredevil-born-again"]
   },
   {
     id: "kingpin",
