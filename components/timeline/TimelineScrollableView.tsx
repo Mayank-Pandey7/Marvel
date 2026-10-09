@@ -100,17 +100,17 @@ const PHASE_FILTERS = [
 ];
 
 const VIEW_ICONS = {
-  path: Route,
-  wheel: Disc3,
   grid: LayoutGrid,
+  wheel: Disc3,
+  path: Route,
 } as const;
 
 type LayoutModeKey = keyof typeof VIEW_ICONS;
 
 const VIEW_LABELS: Record<LayoutModeKey, string> = {
-  path: "PATH VIEW",
-  wheel: "3D WHEEL",
   grid: "GRID VIEW",
+  wheel: "3D WHEEL",
+  path: "PATH VIEW",
 };
 
 export const EARTH_FILTER_OPTIONS = [
@@ -258,7 +258,7 @@ export default function TimelineScrollableView() {
         }
       } catch {}
     }
-    return "path";
+    return "grid";
   });
 
   useEffect(() => {
