@@ -336,30 +336,6 @@ function MultiverseContent() {
                 <span className="text-stone-300">ANCHOR: {currentUniverse.anchorBeing.split("(")[0].trim()}</span>
                 <span className="text-stone-600">•</span>
                 <span className="text-stone-400">GOVERNING: {currentUniverse.governingForce}</span>
-                <span className="text-stone-600">•</span>
-                <span className="text-stone-300">DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
-              </div>
-
-              {/* Floating Earth Quick-Switcher Pills */}
-              <div className="mt-5 flex items-center flex-wrap gap-1.5 max-w-2xl pt-2 border-t border-white/10">
-                <span className="text-[9px] font-mono uppercase tracking-widest text-stone-500 mr-1">SWITCH REALITY:</span>
-                {UNIVERSES.map((u) => {
-                  const isCur = u.id === currentUniverse.id;
-                  const label = u.designation.split("/")[0].trim().replace("Earth-", "E-");
-                  return (
-                    <button
-                      key={u.id}
-                      onClick={() => setActiveUniverseId(u.id)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer ${
-                        isCur
-                          ? "bg-white text-black font-bold shadow-md scale-105"
-                          : "bg-white/5 hover:bg-white/15 text-stone-400 hover:text-white border border-white/10"
-                      }`}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
               </div>
             </div>
           </div>
