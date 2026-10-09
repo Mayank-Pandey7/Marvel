@@ -84,7 +84,7 @@ const TIMELINE_PHASES = [
     label: "MULTIVERSE",
     title: "LEGACY MULTIVERSE — EXPANDED CANON",
     years: "2000 — PRESENT",
-    desc: "The parallel realities and foundational sagas that paved modern superhero cinema. Spanning Sam Raimi's Spider-Man trilogy (Earth-96283), the 20th Century Fox Mutant & Wolverine universe (Earth-10005), the Venom-Verse (Earth-688), Andrew Garfield's Amazing Spider-Man duology (Earth-120703), Tim Story's Fantastic Four (Earth-121698), and the animated What If...? multiverse."
+    desc: "The parallel realities and foundational sagas that paved modern superhero cinema. Spanning Sam Raimi's Spider-Man trilogy (Earth-96283), the 20th Century Fox Mutant & Wolverine universe (Earth-10005), Nicolas Cage's Ghost Rider duology (Earth-121347), the Venom-Verse (Earth-688), Andrew Garfield's Amazing Spider-Man duology (Earth-120703), Tim Story's Fantastic Four (Earth-121698), and the animated What If...? multiverse."
   },
 ];
 
@@ -114,29 +114,31 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 };
 
 export const EARTH_FILTER_OPTIONS = [
-  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 46, title: "The Sacred Timeline (MCU)" },
+  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 47, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
   { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom-Verse (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
   { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
+  { key: "Earth-121347", label: "EARTH-121347", shortLabel: "121347", count: 2, title: "Ghost Rider Universe (Nicolas Cage)" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 4, title: "Marvel Zombies Apocalypse" },
   { key: "Earth-86445", label: "EARTH-86445", shortLabel: "86445", count: 2, title: "Your Friendly Neighborhood Spider-Man" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 81, title: "All Multiverse Timelines" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 84, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
-  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 46 },
+  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 47 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
   { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 3 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
   { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
+  { title: "EARTH-121347 • GHOST RIDER", href: "#Earth-121347", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
   { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 2 },
-  { title: "ALL REALITIES", href: "#all", count: 81 },
+  { title: "ALL REALITIES", href: "#all", count: 84 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
