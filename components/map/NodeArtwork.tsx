@@ -440,6 +440,16 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#ff3838",
     fallbackText: "SPIDER-MAN 4",
   },
+  "visionquest": {
+    poster: "https://cdn.marvel.com/content/2x/visionquest_lob_mas_mob_02.webp",
+    color: "#00cec9",
+    fallbackText: "VISIONQUEST",
+  },
+  "vision-quest": {
+    poster: "https://cdn.marvel.com/content/2x/visionquest_lob_mas_mob_02.webp",
+    color: "#00cec9",
+    fallbackText: "VISIONQUEST",
+  },
   "avengers-doomsday": {
     poster: "https://image.tmdb.org/t/p/w780/jzPwsojjFStf5lR5Nm07w2hH56G.jpg",
     color: "#2ed573",

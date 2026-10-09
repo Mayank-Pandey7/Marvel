@@ -159,6 +159,11 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "zombies-last-guardian": "marvel-zombies-last-guardian",
   "marvel-zombies-the-last-guardian": "marvel-zombies-last-guardian",
   "the-last-guardian": "marvel-zombies-last-guardian",
+
+  "visionquest": "visionquest",
+  "vision-quest": "visionquest",
+  "vision": "visionquest",
+  "white-vision": "visionquest",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {

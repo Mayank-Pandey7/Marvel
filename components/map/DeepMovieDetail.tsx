@@ -107,6 +107,8 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "blade": "/images/backdrops/blade.jpg",
   "spiderman-brand-new-day": "/images/backdrops/spiderman-brand-new-day.jpg",
   "spider-man-brand-new-day": "/images/backdrops/spiderman-brand-new-day.jpg",
+  "visionquest": "https://cdn.marvel.com/content/2x/visionquest_lob_mas_mob_02.webp",
+  "vision-quest": "https://cdn.marvel.com/content/2x/visionquest_lob_mas_mob_02.webp",
   "avengers-doomsday": "/images/backdrops/avengers-doomsday.jpg",
   "avengers-secret-wars": "/images/backdrops/battleworld.jpg",
   "battleworld": "/images/backdrops/battleworld.jpg",

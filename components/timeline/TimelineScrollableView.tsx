@@ -113,7 +113,7 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 };
 
 export const EARTH_FILTER_OPTIONS = [
-  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 45, title: "The Sacred Timeline (MCU)" },
+  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 46, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
   { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom-Verse (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
@@ -121,11 +121,11 @@ export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 4, title: "Marvel Zombies Apocalypse" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 78, title: "All Multiverse Timelines" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 79, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
-  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 45 },
+  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 46 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
   { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 3 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
@@ -133,7 +133,7 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
-  { title: "ALL REALITIES", href: "#all", count: 78 },
+  { title: "ALL REALITIES", href: "#all", count: 79 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
