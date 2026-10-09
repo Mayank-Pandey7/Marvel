@@ -163,10 +163,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "friendly-neighborhood-spider-man": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
   "spider-man-freshman-year": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
   "yfn-spiderman": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
-  "your-friendly-neighborhood-spider-man-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
-  "friendly-neighborhood-spider-man-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
-  "spider-man-freshman-year-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
-  "yfn-spiderman-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+  "your-friendly-neighborhood-spider-man-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
+  "friendly-neighborhood-spider-man-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
+  "spider-man-freshman-year-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
+  "yfn-spiderman-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
 };
 
 export const RELEASED_MOVIE_IDS = new Set([
