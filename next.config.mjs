@@ -10,6 +10,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "image.tmdb.org" },
       { protocol: "https", hostname: "m.media-amazon.com" },
+      { protocol: "https", hostname: "cdn.marvel.com" },
     ],
   },
   webpack: (config) => {

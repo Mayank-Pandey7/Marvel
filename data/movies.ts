@@ -2305,7 +2305,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Virus Strain", "Zombie Thanos Infinity Gauntlet", "Mind Stone Cloak"],
     description: "Spinning out of the events of What If...?, a desperate generation of surviving heroes battle an undead horde of former Avengers infected by an unstoppable quantum virus.",
     color: "#20bf6b",
-    posterUrl: "/images/posters/marvel-zombies.jpg",
+    posterUrl: "https://cdn.marvel.com/content/2x/marvelzombies_lob_crd_03.jpg",
     x: 5200, y: 10200,
     offsetY: 120,
     connections: [
@@ -2333,7 +2333,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Cybernetic Vibranium Arm", "Quantum Serum Vials"],
     description: "Announced at NYCC as a two-part Halloween 2027 event series, an undead Winter Soldier leads a lethal cybernetic horde through the rotting ruins of North America.",
     color: "#e74c3c",
-    posterUrl: "/images/posters/marvel-zombies-winter-soldier.jpg",
+    posterUrl: "https://cdn.marvel.com/content/2x/zombies_s2_tws_logo.jpg",
     x: 5350, y: 10200,
     offsetY: -120,
     connections: [
@@ -2361,7 +2361,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Crescent Darts", "Khonshu Moon Ankh", "Ammit's Necrotic Seal"],
     description: "Announced at NYCC for 2028, this two-part event series brings the quantum virus outbreak to Egypt, forcing Marc Spector and the gods of the Ennead into a blood-soaked struggle for mystical survival.",
     color: "#d1d8e0",
-    posterUrl: "/images/posters/marvel-zombies-fist-of-khonshu.jpg",
+    posterUrl: "https://cdn.marvel.com/content/2x/zombies_s2_tfok_logo.jpg",
     x: 5500, y: 10200,
     offsetY: 120,
     connections: [
@@ -2389,7 +2389,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Antidote Matrix", "Cosmic Core", "Infinity Shard"],
     description: "The epic conclusion of Marvel Animation's Zombie saga announced at NYCC, arriving in 2029 to reveal the identity of the universe's Last Guardian in an all-out war to eradicate the quantum virus once and for all.",
     color: "#9b59b6",
-    posterUrl: "/images/posters/marvel-zombies-last-guardian.jpg",
+    posterUrl: "https://cdn.marvel.com/content/2x/zombies_s2_tlg_logo.jpg",
     x: 5650, y: 10200,
     offsetY: -120,
     connections: [
