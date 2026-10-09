@@ -52,16 +52,26 @@ export default function StampArtifactCard({
           <div className="relative flex flex-col gap-1.5 bg-white rounded-none">
 
             {/* 3. TOP ART WINDOW WITH SHARP SQUARE EDGES */}
-            <div className="relative w-full aspect-[3/4] rounded-none overflow-hidden bg-stone-950 flex items-center justify-center">
+            <div className={`relative w-full aspect-[3/4] rounded-none overflow-hidden bg-stone-950 flex items-center justify-center ${artifact.category === "ironman_armor" ? "p-2" : ""}`}>
               <img
                 src={artifact.backdrop}
                 alt={artifact.name}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+                className={
+                  artifact.category === "ironman_armor"
+                    ? "w-full h-full object-contain object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out drop-shadow-md"
+                    : "absolute inset-0 w-full h-full object-cover object-top filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out"
+                }
               />
 
               {/* Subtle Gradient Overlays for Depth */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 pointer-events-none" />
+              <div
+                className={
+                  artifact.category === "ironman_armor"
+                    ? "absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none"
+                    : "absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 pointer-events-none"
+                }
+              />
             </div>
 
             {/* 4. TICKET BOTTOM SECTION */}

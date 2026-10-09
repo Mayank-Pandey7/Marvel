@@ -139,25 +139,44 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
       <section className="relative w-full min-h-[90vh] sm:min-h-[95vh] flex flex-col justify-end pt-28 sm:pt-36 pb-10 sm:pb-16 px-4 sm:px-12 md:px-16 overflow-hidden">
         
         {/* Standalone Poster Frame on Right (Fixed in viewport, matching Doctor Strange / Character layout) */}
-        <div
-          className="fixed top-24 sm:top-28 right-6 sm:right-16 md:right-24 lg:right-32 xl:right-40 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/15 bg-stone-950 shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:block transition-all duration-300"
-        >
-          <img
-            src={artifactFacePortrait}
-            alt={artifact.name}
-            className="w-full h-full object-cover object-center"
-          />
-        </div>
+        {artifact.category === "ironman_armor" ? (
+          <div className="fixed top-24 sm:top-28 right-6 sm:right-16 md:right-24 lg:right-32 xl:right-40 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/15 bg-stone-950/90 backdrop-blur-md shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:flex items-center justify-center p-3 sm:p-4 transition-all duration-300">
+            <img
+              src={artifactFacePortrait}
+              alt={artifact.name}
+              className="w-full h-full object-contain object-center drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] filter brightness-100"
+            />
+          </div>
+        ) : (
+          <div className="fixed top-24 sm:top-28 right-6 sm:right-16 md:right-24 lg:right-32 xl:right-40 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/15 bg-stone-950 shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:block transition-all duration-300">
+            <img
+              src={artifactFacePortrait}
+              alt={artifact.name}
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        )}
 
         {/* Mobile Background Fallback */}
-        <div className="sm:hidden absolute top-0 right-0 w-full h-[50vh] z-0 overflow-hidden pointer-events-none">
-          <img
-            src={artifactFacePortrait}
-            alt={artifact.name}
-            className="w-full h-full object-contain object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
-        </div>
+        {artifact.category === "ironman_armor" ? (
+          <div className="sm:hidden absolute top-0 right-0 w-full h-[50vh] z-0 overflow-hidden pointer-events-none flex items-center justify-center p-4">
+            <img
+              src={artifactFacePortrait}
+              alt={artifact.name}
+              className="w-full h-full object-contain object-center drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] filter brightness-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+          </div>
+        ) : (
+          <div className="sm:hidden absolute top-0 right-0 w-full h-[50vh] z-0 overflow-hidden pointer-events-none">
+            <img
+              src={artifactFacePortrait}
+              alt={artifact.name}
+              className="w-full h-full object-contain object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+          </div>
+        )}
 
         {/* Hero Bio Container (Fixed at bottom-left exactly as requested) */}
         <div className="relative z-20 max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">

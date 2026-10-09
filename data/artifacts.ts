@@ -330,36 +330,6 @@ export const ARTIFACTS: Artifact[] = [
       { phase: 4, year: "2024", holder: "mighty-thor", holderName: "Jane Foster & Thor", location: "Eternity's Gateway", event: "Mighty Thor shatters the Necrosword into fragments using Mjolnir." }
     ]
   },
-  {
-    id: "casket-ancient-winters",
-    name: "The Casket of Ancient Winters",
-    category: "asgardian_weapon",
-    origin: "Jotunheim / Laufey's Frost Giants",
-    power: "Flash-freezing entire planetary surfaces into eternal ice ages.",
-    description: "The supreme relic of the Frost Giants of Jotunheim. Seized by Odin in 965 AD and kept in the Asgardian Vault until Loki discovered his true Frost Giant parentage.",
-    phaseIntroduced: 1,
-    iconColor: "#0ea5e9",
-    backdrop: "/images/artifacts/casket-ancient-winters.jpg",
-    history: [
-      { phase: 1, year: "965 AD", holder: "odin", holderName: "Odin Borson", location: "Tønsberg / Asgard", event: "Odin secures the Casket to end the Frost Giant war." },
-      { phase: 1, year: "2011", holder: "loki", holderName: "Loki", location: "Asgard Vault", event: "Loki opens the Casket, transforming his skin blue and freezing Heimdall." }
-    ]
-  },
-  {
-    id: "eternal-flame",
-    name: "The Eternal Flame",
-    category: "asgardian_weapon",
-    origin: "Muspelheim / Surtur's Heart",
-    power: "Resurrects dead Asgardian armies; catalyzes the total Ragnarok destruction of Asgard.",
-    description: "An unquenchable mystical fire kept in Odin's vault. Used by Hela to revive Fenris and the Berserker army, and later used by Loki to resurrect Surtur to obliterate Hela.",
-    phaseIntroduced: 3,
-    iconColor: "#f97316",
-    backdrop: "/images/artifacts/eternal-flame.jpg",
-    history: [
-      { phase: 3, year: "2017", holder: "hela", holderName: "Hela (Goddess of Death)", location: "Asgard Vault", event: "Hela plunges the flame into the burial crypt, raising her undead army." },
-      { phase: 3, year: "2017", holder: "loki", holderName: "Loki", location: "Asgard Vault", event: "Loki places Surtur's crown into the flame, fulfilling the prophecy of Ragnarok." }
-    ]
-  },
 
   {
     id: "vibranium-shield",
@@ -726,43 +696,6 @@ export const ARTIFACTS: Artifact[] = [
         holderName: "King Valkyrie",
         location: "Earth-616",
         event: "Flies into the Battle of Earth atop a winged Pegasus, skewering Chitauri Leviathans."
-      }
-    ]
-  },
-  {
-    id: "destroyer-armor",
-    name: "The Destroyer Automaton",
-    category: "asgardian_weapon",
-    origin: "Asgard Royal Vault / Enchanted Uru",
-    power: "Disintegration beam projection, impenetrable Uru plating, remote telepathic animation.",
-    description: "An enchanted Asgardian automaton forged from indestructible Uru metal by King Odin to guard the Royal Vault. Sent to Earth by Loki to assassinate the exiled Thor before being obliterated by Mjolnir.",
-    phaseIntroduced: 1,
-    iconColor: "#f59e0b",
-    backdrop: "/images/artifacts/destroyer-armor.jpg",
-    history: [
-      {
-        phase: 1,
-        year: "965 AD",
-        holder: "odin",
-        holderName: "King Odin",
-        location: "Asgard Vault",
-        event: "Stationed as the immortal guardian of the Casket of Ancient Winters and the Eternal Flame."
-      },
-      {
-        phase: 1,
-        year: "2011",
-        holder: "loki",
-        holderName: "Loki (via Gungnir)",
-        location: "Puente Antiguo, New Mexico",
-        event: "Loki animates the Destroyer to eliminate Thor and S.H.I.E.L.D. agents."
-      },
-      {
-        phase: 1,
-        year: "2012",
-        holder: "shield",
-        holderName: "S.H.I.E.L.D. / Phil Coulson",
-        location: "Helicarrier",
-        event: "Coulson tests the Destroyer Armor Prototype Gun: 'So that\'s what it does.'"
       }
     ]
   },
