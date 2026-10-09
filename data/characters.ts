@@ -1177,7 +1177,8 @@ export const CHARACTERS: Character[] = [
     firstAppearance: "Ghost Rider (2007)",
     color: "#f97316",
     statusByPhase: {
-      7: { status: "alive", note: "Roaming the globe as the Spirit of Vengeance with blue angelic hellfire." }
+      6: { status: "alive", note: "Reborn in the MCU as the Spirit of Vengeance (Ryan Gosling) in the Shawn Levy-directed Marvel Studios film." },
+      7: { status: "alive", note: "Roaming the globe as the Spirit of Vengeance with blue angelic hellfire in Earth-121347." }
     },
     eras: [
       {
@@ -1197,11 +1198,20 @@ export const CHARACTERS: Character[] = [
         universe: "Earth-121347",
         description: "Protected young Danny Ketch in Eastern Europe, cleansing Zarathos into the Angel of Justice with brilliant blue hellfire.",
         keyMoments: ["Ignited giant bucket-wheel excavator with hellfire", "Desert chase against Blackout", "Resurrected as the blue Angel of Justice to destroy the Devil"]
+      },
+      {
+        eraId: "ghost-rider-2028-mcu",
+        phase: 6,
+        title: "Marvel Studios' Ghost Rider (2028)",
+        year: "2028",
+        universe: "Earth-616",
+        description: "Directed by Shawn Levy and starring Ryan Gosling as Johnny Blaze, the Spirit of Vengeance delivers hellfire justice across the post-Secret Wars Sacred Timeline.",
+        keyMoments: ["Johnny Blaze MCU debut", "Hellfire chain combat in modern metropolis", "Supernatural collision in the post-Secret Wars era"]
       }
     ],
     artifactsPossessed: [],
     linkedNexusEvents: [],
-    entries: ["ghost-rider", "ghost-rider-spirit-of-vengeance"]
+    entries: ["ghost-rider", "ghost-rider-spirit-of-vengeance", "ghost-rider-2028"]
   },
   {
     id: "punisher",
@@ -2080,7 +2090,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: ["heart-shaped-herb"],
     linkedNexusEvents: [],
-    entries: ["black-panther", "avengers-infinity-war", "avengers-endgame", "black-panther-wakanda-forever"]
+    entries: ["black-panther", "avengers-infinity-war", "avengers-endgame", "black-panther-wakanda-forever", "black-panther-3"]
   },
   {
     id: "shang-chi",

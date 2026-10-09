@@ -277,6 +277,18 @@
         ["Marcus Thorne", "CGI Artist", "marcus"]
       ].map(([name, role, portrait]) => ({ name, role, portrait }));
 
+      const formatRuntime = (r) => {
+        if (!r) return "";
+        if (typeof r === "string" && (r.includes("H") || r.includes("MIN"))) return r;
+        const num = parseInt(r, 10);
+        if (isNaN(num)) return String(r);
+        const h = Math.floor(num / 60);
+        const m = num % 60;
+        if (h > 0 && m > 0) return `${h}H ${m}MIN`;
+        if (h > 0) return `${h}H`;
+        return `${m}MIN`;
+      };
+
       const stage = document.querySelector("#stage");
       const deck = document.querySelector("#deck");
       const cards = profiles.map((profile, index) => {
@@ -292,7 +304,7 @@
             <span class="role meta-bottom">
               <span class="year">${profile.year || ""}</span>
               ${profile.year && profile.runtime ? `<span class="sep" style="color:rgba(255,255,255,0.25);margin:0 4px;">|</span>` : ""}
-              <span class="runtime">${profile.runtime ? profile.runtime + "MIN" : (profile.role || "")}</span>
+              <span class="runtime">${profile.runtime ? formatRuntime(profile.runtime) : (profile.role || "")}</span>
             </span>`
           : `
             <span class="name">${profile.name}</span>

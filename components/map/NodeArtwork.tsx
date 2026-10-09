@@ -199,6 +199,21 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#f97316",
     fallbackText: "GHOST RIDER",
   },
+  "ghost-rider-2028": {
+    poster: "https://cdn.marvel.com/content/1x/ghostrider_lob_crd_01.webp",
+    color: "#ff4757",
+    fallbackText: "GHOST RIDER",
+  },
+  "ghost-rider-mcu": {
+    poster: "https://cdn.marvel.com/content/1x/ghostrider_lob_crd_01.webp",
+    color: "#ff4757",
+    fallbackText: "GHOST RIDER",
+  },
+  "marvel-studios-ghost-rider": {
+    poster: "https://cdn.marvel.com/content/1x/ghostrider_lob_crd_01.webp",
+    color: "#ff4757",
+    fallbackText: "GHOST RIDER",
+  },
   "ghost-rider-spirit-of-vengeance": {
     poster: "https://image.tmdb.org/t/p/w780/xEoBT6lYfQNpSpTm8gJMTrQytiw.jpg",
     color: "#ea580c",
@@ -370,6 +385,21 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     poster: "https://image.tmdb.org/t/p/w780/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
     color: "#a55eea",
     fallbackText: "WAKANDA FOREVER",
+  },
+  "black-panther-3": {
+    poster: "https://cdn.marvel.com/content/1x/blackpanther3_lob_crd_01.webp",
+    color: "#a55eea",
+    fallbackText: "BLACK PANTHER 3",
+  },
+  "blackpanther-3": {
+    poster: "https://cdn.marvel.com/content/1x/blackpanther3_lob_crd_01.webp",
+    color: "#a55eea",
+    fallbackText: "BLACK PANTHER 3",
+  },
+  "bp3": {
+    poster: "https://cdn.marvel.com/content/1x/blackpanther3_lob_crd_01.webp",
+    color: "#a55eea",
+    fallbackText: "BLACK PANTHER 3",
   },
   "guardians-holiday": {
     poster: "https://image.tmdb.org/t/p/w780/8dqXyslZ2hv49Oiob9UjlGSHSTR.jpg",

@@ -222,6 +222,17 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
 
   "kraven-the-hunter": "kraven-the-hunter",
   "kraven": "kraven-the-hunter",
+
+  "ghost-rider-2028": "ghost-rider-2028",
+  "ghost-rider-mcu": "ghost-rider-2028",
+  "marvel-studios-ghost-rider": "ghost-rider-2028",
+  "ghostrider-2028": "ghost-rider-2028",
+
+  "black-panther-3": "black-panther-3",
+  "blackpanther-3": "black-panther-3",
+  "bp3": "black-panther-3",
+  "black-panther-iii": "black-panther-3",
+  "marvel-studios-black-panther-3": "black-panther-3",
 };
 
 function parseRuntime(runtimeStr?: string): number {

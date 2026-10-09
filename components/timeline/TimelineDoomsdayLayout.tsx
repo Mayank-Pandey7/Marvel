@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UNIFIED_MCU_TREE, PHASES_CONFIG, type MovieNode } from "@/data/movies";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
 import { isUpcomingMovie } from "@/components/map/DeepMovieDetail";
+import { formatDuration } from "@/components/timeline/TimelineScrollableView";
 
 function getMoviePoster(node: MovieNode) {
   const posterEntry =
@@ -453,7 +454,7 @@ export default function TimelineDoomsdayLayout({
                       isEven ? "group-hover/card:rotate-[-1.5deg]" : "group-hover/card:rotate-[1.5deg]"
                     }`}>
                       {isUpcomingMovie(movie) && (
-                        <div className="absolute top-1 left-1 z-20 px-1 py-0.5 rounded bg-amber-400 text-black text-[6px] xs:text-[6.5px] font-mono font-black tracking-tight uppercase shadow-sm">
+                        <div className="absolute top-1 left-1 z-20 px-1 py-0.5 rounded bg-amber-400 text-black text-[5px] xs:text-[5.5px] font-mono font-bold tracking-tight uppercase shadow-xs leading-none">
                           COMING SOON
                         </div>
                       )}
@@ -505,7 +506,7 @@ export default function TimelineDoomsdayLayout({
                           <>
                             <span className="text-stone-600 font-normal">|</span>
                             <span className="text-stone-400 font-medium group-hover/card:text-stone-300">
-                              {movie.runtime}MIN
+                              {formatDuration(movie.runtime)}
                             </span>
                           </>
                         )}

@@ -9,6 +9,7 @@ import { CHARACTERS } from "@/data/characters";
 import { ARTIFACTS } from "@/data/artifacts";
 import { NEXUS_EVENTS } from "@/data/timelineTree";
 import { useTimelineState } from "@/context/TimelineStateContext";
+import { formatDuration } from "@/components/timeline/TimelineScrollableView";
 
 export default function SearchOverlay({
   isOpen,
@@ -94,7 +95,7 @@ export default function SearchOverlay({
       id: `movie:${m.id}`,
       type: "movie" as const,
       title: m.title,
-      subtitle: `${(!m.earthDesignation || m.earthDesignation === "Earth-616") && m.phase <= 6 ? `Phase ${m.phase}` : (m.earthDesignation === "Earth-688" ? "Sony Universe" : (m.earthDesignation || "Multiverse"))} · ${m.year} · ${m.runtime} MIN`,
+      subtitle: `${(!m.earthDesignation || m.earthDesignation === "Earth-616") && m.phase <= 6 ? `Phase ${m.phase}` : (m.earthDesignation === "Earth-688" ? "Sony Universe" : (m.earthDesignation || "Multiverse"))} · ${m.year}${m.runtime ? ` · ${formatDuration(m.runtime)}` : ""}`,
       action: () => {
         onClose();
         router.push(`/timeline/${m.id}`);

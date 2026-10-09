@@ -6,7 +6,7 @@ import { CharacterCarousel, type CharacterItem } from "@designcodeio/threeui";
 import "@designcodeio/threeui/style.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type MovieNode } from "@/data/movies";
-import { getMoviePoster } from "@/components/timeline/TimelineScrollableView";
+import { getMoviePoster, formatDuration } from "@/components/timeline/TimelineScrollableView";
 
 const MOVIE_BACKDROPS: Record<string, string> = {
   "iron-man": "/images/backdrops/iron-man.jpg",
@@ -131,7 +131,7 @@ export function MovieScene({ movies }: MovieSceneProps) {
       tagline: oneLineDesc,
       year: m.year,
       runtime: m.runtime,
-      role: `${m.year} | ${m.runtime}MIN`,
+      role: `${m.year}${m.runtime ? ` | ${formatDuration(m.runtime)}` : ""}`,
       portrait: poster,
       universe: m.heroAlias ? m.heroAlias.toUpperCase() : categoryLabel,
     };

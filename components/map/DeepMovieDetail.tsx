@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
 import { MCU_POSTER_MAP } from "./NodeArtwork";
+import { formatDuration } from "@/components/timeline/TimelineScrollableView";
 
 
 export const MCU_BACKDROP_MAP: Record<string, string> = {
@@ -84,6 +85,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "she-hulk": "/images/backdrops/she-hulk.jpg",
   "black-panther-wakanda-forever": "/images/backdrops/black-panther-wakanda-forever.jpg",
   "black-panther-wakanda": "/images/backdrops/black-panther-wakanda-forever.jpg",
+  "black-panther-3": "https://cdn.marvel.com/content/2x/blackpanther3_lob_mas_mob_01.webp",
+  "blackpanther-3": "https://cdn.marvel.com/content/2x/blackpanther3_lob_mas_mob_01.webp",
+  "bp3": "https://cdn.marvel.com/content/2x/blackpanther3_lob_mas_mob_01.webp",
+  "marvel-studios-black-panther-3": "https://cdn.marvel.com/content/2x/blackpanther3_lob_mas_mob_01.webp",
   "the-guardians-of-the-galaxy-holiday-special": "/images/backdrops/guardians-holiday.jpg",
   "guardians-holiday": "/images/backdrops/guardians-holiday.jpg",
 
@@ -174,6 +179,9 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "ghost-rider": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
   "ghostrider": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
   "ghost-rider-2007": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
+  "ghost-rider-2028": "https://cdn.marvel.com/content/1x/ghostrider_lob_fea_mob_02.webp",
+  "ghost-rider-mcu": "https://cdn.marvel.com/content/1x/ghostrider_lob_fea_mob_02.webp",
+  "marvel-studios-ghost-rider": "https://cdn.marvel.com/content/1x/ghostrider_lob_fea_mob_02.webp",
   "ghost-rider-spirit-of-vengeance": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
   "ghost-rider-2": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
   "ghostrider-2": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
@@ -250,6 +258,12 @@ export const UPCOMING_MOVIE_IDS = new Set([
   "avengers-secret-wars",
   "zodiac",
   "marvel-zodiac",
+  "ghost-rider-2028",
+  "ghost-rider-mcu",
+  "marvel-studios-ghost-rider",
+  "black-panther-3",
+  "blackpanther-3",
+  "bp3",
   "your-friendly-neighborhood-spider-man-s2",
   "friendly-neighborhood-spider-man-s2",
   "spider-man-freshman-year-s2",
@@ -393,7 +407,7 @@ export default function DeepMovieDetail({
         >
           <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start flex items-center justify-center">
             {isUpcomingMovie(movie) && (
-              <div className="absolute top-2.5 left-2.5 z-30 px-2 py-0.5 rounded-md bg-amber-400 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
+              <div className="absolute top-2 left-2 z-30 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[7px] sm:text-[7.5px] font-mono font-bold tracking-tight uppercase shadow-sm leading-none">
                 COMING SOON
               </div>
             )}
@@ -574,7 +588,7 @@ export default function DeepMovieDetail({
               ) : null}
               <span className="text-stone-300">{movie.year}</span>
               <span className="text-stone-600">•</span>
-              <span className="text-stone-400">{movie.runtime} MIN</span>
+              <span className="text-stone-400">{formatDuration(movie.runtime)}</span>
               <span className="text-stone-600">•</span>
               <span className="text-stone-300">{movie.director}</span>
             </div>

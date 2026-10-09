@@ -75,8 +75,8 @@ const TIMELINE_PHASES = [
     roman: "VI",
     label: "PHASE VI",
     title: "THE MULTIVERSE SAGA — DOOM & CONVERGENCE",
-    years: "2025 — 2027",
-    desc: "The final convergence of realities. As colliding universes trigger universal incursion collapses, Marvel's First Family is introduced from an alternate reality, Earth's heroes assemble for their ultimate stand in Avengers: Doomsday, and Doctor Doom commands godhood across Battleworld in Secret Wars."
+    years: "2025 — 2028",
+    desc: "The final convergence of realities and supernatural dawn. As colliding universes trigger universal incursion collapses, Marvel's First Family is introduced from an alternate reality, Earth's heroes assemble for their ultimate stand in Avengers: Doomsday, Doctor Doom commands godhood across Battleworld in Secret Wars, and the Spirit of Vengeance returns in Marvel Studios' Ghost Rider."
   },
   {
     id: 7,
@@ -114,7 +114,7 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 };
 
 export const EARTH_FILTER_OPTIONS = [
-  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 47, title: "The Sacred Timeline (MCU)" },
+  { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 62, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
   { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 6, title: "Venom-Verse / Sony's Spider-Man Universe (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
@@ -128,7 +128,7 @@ export const EARTH_FILTER_OPTIONS = [
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
-  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 47 },
+  { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 62 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
   { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 6 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
@@ -139,6 +139,19 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
   { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 2 },
   { title: "EARTH-1610 • SPIDER-VERSE", href: "#Earth-1610", count: 3 },
+];
+
+export const EARTH_SECTIONS = [
+  { key: "Earth-96283", name: "Sam Raimi Spider-Man Trilogy", badge: "EARTH-96283" },
+  { key: "Earth-120703", name: "The Amazing Spider-Man Duology", badge: "EARTH-120703" },
+  { key: "Earth-688", name: "Venom-Verse / Sony's Spider-Man Universe", badge: "EARTH-688" },
+  { key: "Earth-10005", name: "Fox Mutant Universe & Wolverine Saga", badge: "EARTH-10005" },
+  { key: "Earth-121698", name: "Tim Story Fantastic Four Duology", badge: "EARTH-121698" },
+  { key: "Earth-121347", name: "Ghost Rider Universe (Nicolas Cage)", badge: "EARTH-121347" },
+  { key: "Earth-82111", name: "What If...? Animated Multiverse", badge: "EARTH-82111" },
+  { key: "Earth-2149", name: "Marvel Zombies Apocalypse", badge: "EARTH-2149" },
+  { key: "Earth-86445", name: "Your Friendly Neighborhood Spider-Man", badge: "EARTH-86445" },
+  { key: "Earth-1610", name: "Spider-Verse Animated Reality", badge: "EARTH-1610" },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
@@ -175,9 +188,9 @@ export function formatDuration(minutes?: number): string {
   if (!minutes) return "";
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
-  if (h > 0 && m > 0) return `${h}h ${m}m`;
-  if (h > 0) return `${h}h`;
-  return `${m}m`;
+  if (h > 0 && m > 0) return `${h}H ${m}MIN`;
+  if (h > 0) return `${h}H`;
+  return `${m}MIN`;
 }
 
 export default function TimelineScrollableView() {
@@ -439,10 +452,16 @@ export default function TimelineScrollableView() {
       } catch {}
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
+      if (phaseId === 7 && activeEarthFilter === "Earth-616") {
+        setActiveEarthFilter("all");
+      }
       setCurrentPhase(phaseId);
       try {
         const url = new URL(window.location.href);
         url.searchParams.set("phase", phaseId === 7 ? "X" : String(phaseId));
+        if (phaseId === 7 && activeEarthFilter === "Earth-616") {
+          url.searchParams.delete("earth");
+        }
         url.searchParams.delete("movie");
         window.history.replaceState({}, "", url.toString());
       } catch {}
@@ -795,17 +814,25 @@ export default function TimelineScrollableView() {
 
                   {phase.id === 7 ? (
                     <div className="flex flex-col gap-8">
-                      {[
-                        { key: "Earth-96283", name: "Sam Raimi Spider-Man Trilogy", badge: "EARTH-96283" },
-                        { key: "Earth-120703", name: "The Amazing Spider-Man Duology", badge: "EARTH-120703" },
-                        { key: "Earth-688", name: "Venom-Verse (Earth-688)", badge: "EARTH-688" },
-                        { key: "Earth-10005", name: "Fox Mutant Universe & Wolverine Saga", badge: "EARTH-10005" },
-                        { key: "Earth-121698", name: "Tim Story Fantastic Four Duology", badge: "EARTH-121698" },
-                        { key: "Earth-82111", name: "What If...? Animated Multiverse", badge: "EARTH-82111" },
-                        { key: "Earth-2149", name: "Marvel Zombies Apocalypse", badge: "EARTH-2149" },
-                      ].map((earth) => {
-                        const earthMovies = movies.filter((m) => m.earthDesignation === earth.key);
-                        if (earthMovies.length === 0) return null;
+                      {(() => {
+                        const knownKeys = new Set(EARTH_SECTIONS.map((e) => e.key));
+                        const dynamicSections = [
+                          ...EARTH_SECTIONS,
+                          ...Array.from(
+                            new Set(
+                              movies
+                                .map((m) => m.earthDesignation || "Multiverse")
+                                .filter((k) => !knownKeys.has(k))
+                            )
+                          ).map((k) => ({
+                            key: k,
+                            name: k,
+                            badge: k.toUpperCase(),
+                          })),
+                        ];
+                        return dynamicSections.map((earth) => {
+                          const earthMovies = movies.filter((m) => (m.earthDesignation || "Multiverse") === earth.key);
+                          if (earthMovies.length === 0) return null;
                         return (
                           <div key={earth.key} className="flex flex-col gap-4">
                             <div className="flex items-center gap-2.5 pb-2 border-b border-white/5 flex-nowrap">
@@ -835,7 +862,7 @@ export default function TimelineScrollableView() {
                                   >
                                     <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                                       {upcoming && (
-                                        <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[6.5px] sm:text-[7px] font-mono font-bold tracking-wider uppercase shadow-sm">
+                                        <div className="absolute top-1.5 left-1.5 z-10 px-1 py-0.5 rounded bg-amber-400 text-black text-[5.5px] sm:text-[6px] font-mono font-bold tracking-tight uppercase shadow-xs leading-none">
                                           COMING SOON
                                         </div>
                                       )}
@@ -878,7 +905,8 @@ export default function TimelineScrollableView() {
                             </div>
                           </div>
                         );
-                      })}
+                        });
+                      })()}
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3.5 sm:gap-5">
@@ -895,7 +923,7 @@ export default function TimelineScrollableView() {
                           >
                             <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                               {upcoming && (
-                                <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[6.5px] sm:text-[7px] font-mono font-bold tracking-wider uppercase shadow-sm">
+                                <div className="absolute top-1.5 left-1.5 z-10 px-1 py-0.5 rounded bg-amber-400 text-black text-[5.5px] sm:text-[6px] font-mono font-bold tracking-tight uppercase shadow-xs leading-none">
                                   COMING SOON
                                 </div>
                               )}
