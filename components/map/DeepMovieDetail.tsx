@@ -206,6 +206,8 @@ export default function DeepMovieDetail({
   const isExpanded = stage === "expanded";
   const isClosing = stage === "closing";
 
+  const isMultiverse = movie.releaseDate === "MULTIVERSAL ARCHIVE" || (movie.phase as unknown) === 7;
+
   return (
     <div
       onMouseDown={(e) => e.stopPropagation()}
@@ -229,8 +231,10 @@ export default function DeepMovieDetail({
               (e.target as HTMLImageElement).src = posterSrc;
             }
           }}
-          className={`w-full h-full object-cover object-center filter blur-[3.5px] brightness-90 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isExpanded ? "scale-110 opacity-100" : "scale-125 opacity-0"
+          className={`w-full h-full object-cover object-center filter transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isMultiverse
+              ? `blur-[3.5px] brightness-90 contrast-[1.05] ${isExpanded ? "scale-110 opacity-100" : "scale-125 opacity-0"}`
+              : `brightness-100 contrast-[1.05] ${isExpanded ? "scale-105 opacity-100" : "scale-125 opacity-0"}`
           }`}
         />
 
