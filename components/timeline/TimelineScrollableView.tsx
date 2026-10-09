@@ -523,7 +523,7 @@ export default function TimelineScrollableView() {
         <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
           {(activeEarthFilter === "all" || activeEarthFilter === "Earth-616") && (
           <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-500">
+            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-300 font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               PHASE:
             </span>
             <div className="flex items-center gap-1 sm:gap-1.5">
@@ -533,10 +533,10 @@ export default function TimelineScrollableView() {
                   <button
                     key={p}
                     onClick={() => handleSelectPhase(p)}
-                    className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                    className={`text-[10.5px] sm:text-[12px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
                       isSelected
-                        ? "text-white font-bold underline underline-offset-4 decoration-white/60"
-                        : "text-stone-400 hover:text-white"
+                        ? "text-white font-bold underline underline-offset-4 decoration-white/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]"
+                        : "text-stone-300 hover:text-white font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
                     }`}
                     title={`Show Phase ${p} Only`}
                   >
@@ -547,10 +547,10 @@ export default function TimelineScrollableView() {
               {activeEarthFilter === "all" && (
                 <button
                   onClick={() => handleSelectPhase(7)}
-                  className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
+                  className={`text-[10.5px] sm:text-[12px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1 py-0.5 ${
                     activePhaseFilter === 7
-                      ? "text-white font-bold underline underline-offset-4 decoration-white/60"
-                      : "text-stone-400 hover:text-white"
+                      ? "text-white font-bold underline underline-offset-4 decoration-white/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]"
+                      : "text-stone-300 hover:text-white font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
                   }`}
                   title="Show Phase X — Legacy Multiverse"
                 >
@@ -559,10 +559,10 @@ export default function TimelineScrollableView() {
               )}
               <button
                 onClick={() => handleSelectPhase("all")}
-                className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1.5 py-0.5 ${
+                className={`text-[10.5px] sm:text-[12px] font-mono tracking-[0.15em] transition-colors cursor-pointer px-1.5 py-0.5 ${
                   activePhaseFilter === "all"
-                    ? "text-white font-bold underline underline-offset-4 decoration-white/60"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-white font-bold underline underline-offset-4 decoration-white/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]"
+                    : "text-stone-300 hover:text-white font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
                 }`}
                 title="Show All Phases"
               >
@@ -574,12 +574,12 @@ export default function TimelineScrollableView() {
 
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
+            className="inline-flex items-center gap-1.5 text-stone-300 hover:text-white text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
             title="Search MCU (Ctrl+K or /)"
           >
-            <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={14} className="text-stone-300 group-hover:text-white transition-colors" />
             <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-500 ml-0.5">
+            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-400 ml-0.5">
               /
             </kbd>
           </button>

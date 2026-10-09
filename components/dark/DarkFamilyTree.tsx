@@ -870,7 +870,7 @@ export default function DarkFamilyTree({
         <div className="flex items-center gap-3 sm:gap-5 pointer-events-auto">
           {/* Phase Direct Jump Switcher */}
           <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-500">
+            <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase text-stone-300 font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               PHASE:
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -878,12 +878,10 @@ export default function DarkFamilyTree({
                 <button
                   key={p}
                   onClick={() => handleSelectPhase(p)}
-                  className={`text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] transition-colors cursor-pointer px-1.5 py-0.5 ${
+                  className={`text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] transition-colors cursor-pointer px-1.5 py-0.5 ${
                     spoilerPhase === p
-                      ? "text-white font-bold"
-                      : spoilerPhase > p
-                      ? "text-stone-300 hover:text-white"
-                      : "text-stone-600 hover:text-stone-400"
+                      ? "text-white font-bold underline underline-offset-4 decoration-white/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]"
+                      : "text-stone-300 hover:text-white font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
                   }`}
                   title={`Unlock Phase ${p}`}
                 >
@@ -895,12 +893,12 @@ export default function DarkFamilyTree({
 
           <button
             onClick={() => setSearchOpen(true)}
-            className="inline-flex items-center gap-1.5 text-stone-400 hover:text-white text-[10px] sm:text-[11.5px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5"
+            className="inline-flex items-center gap-1.5 text-stone-300 hover:text-white text-[10.5px] sm:text-[12px] font-mono tracking-[0.18em] sm:tracking-[0.28em] uppercase transition-colors group cursor-pointer p-1.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
             title="Search MCU (Ctrl+K or /)"
           >
-            <Search size={14} className="text-stone-500 group-hover:text-white transition-colors" />
+            <Search size={14} className="text-stone-300 group-hover:text-white transition-colors" />
             <span className="hidden sm:inline">SEARCH</span>
-            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-500 ml-0.5">
+            <kbd className="hidden md:inline-block text-[9.5px] font-mono text-stone-400 ml-0.5">
               /
             </kbd>
           </button>
@@ -912,8 +910,8 @@ export default function DarkFamilyTree({
         className="fixed top-14 sm:top-20 right-5 sm:right-10 md:right-12 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
       >
         {/* SELECT FAMILY pill */}
-        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
-          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-200 font-semibold">
             SELECT FAMILY
           </span>
         </div>
@@ -937,7 +935,7 @@ export default function DarkFamilyTree({
       <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
         <button
           onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
-          className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform"
+          className="px-3 py-1 rounded-full bg-white/[0.08] text-stone-200 text-[9px] font-mono tracking-widest uppercase backdrop-blur-xl shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform"
         >
           <span>{`PHASE ${spoilerPhase}`}</span>
         </button>
