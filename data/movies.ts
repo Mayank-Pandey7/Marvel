@@ -1279,7 +1279,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Bionic Sensory Nose", "Interstellar Ice Cream Coin", "Temple of the Prophecy Coin"],
     description: "Baby Groot finds himself exploring the galaxy and beyond aboard the Guardians' spaceships, meeting quirky new alien creatures and even drawing the curiosity of The Watcher.",
     color: "#059669",
-    posterUrl: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/7b4qBnExIjuANVDKWyVN8gVVOXS.jpg",
     x: 700, y: 7240,
     offsetY: 60,
     connections: [

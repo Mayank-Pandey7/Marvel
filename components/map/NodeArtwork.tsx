@@ -801,17 +801,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "I AM GROOT",
   },
   "i-am-groot-s2": {
-    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/7b4qBnExIjuANVDKWyVN8gVVOXS.jpg",
     color: "#059669",
     fallbackText: "I AM GROOT S2",
   },
   "i-am-groot-season-2": {
-    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/7b4qBnExIjuANVDKWyVN8gVVOXS.jpg",
     color: "#059669",
     fallbackText: "I AM GROOT S2",
   },
   "iamgroot-s2": {
-    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/7b4qBnExIjuANVDKWyVN8gVVOXS.jpg",
     color: "#059669",
     fallbackText: "I AM GROOT S2",
   },
