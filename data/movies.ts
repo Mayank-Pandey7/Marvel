@@ -2278,7 +2278,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Virus Strain", "Zombie Thanos Infinity Gauntlet", "Mind Stone Cloak"],
     description: "Spinning out of the events of What If...?, a desperate generation of surviving heroes battle an undead horde of former Avengers infected by an unstoppable quantum virus.",
     color: "#20bf6b",
-    posterUrl: "https://image.tmdb.org/t/p/w780/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     x: 5200, y: 10200,
     offsetY: 120,
     connections: [
@@ -2306,7 +2306,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Cybernetic Vibranium Arm", "Quantum Serum Vials"],
     description: "Announced at NYCC as a two-part Halloween 2027 event series, an undead Winter Soldier leads a lethal cybernetic horde through the rotting ruins of North America.",
     color: "#e74c3c",
-    posterUrl: "https://image.tmdb.org/t/p/w780/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     x: 5350, y: 10200,
     offsetY: -120,
     connections: [
@@ -2362,7 +2362,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Quantum Antidote Matrix", "Cosmic Core", "Infinity Shard"],
     description: "The epic conclusion of Marvel Animation's Zombie saga announced at NYCC, arriving in 2029 to reveal the identity of the universe's Last Guardian in an all-out war to eradicate the quantum virus once and for all.",
     color: "#9b59b6",
-    posterUrl: "https://image.tmdb.org/t/p/w780/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     x: 5650, y: 10200,
     offsetY: -120,
     connections: [

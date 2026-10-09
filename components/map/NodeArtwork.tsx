@@ -610,7 +610,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#20bf6b",
     fallbackText: "ZOMBIES",
   },
+  "zombies": {
+    poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
+    color: "#20bf6b",
+    fallbackText: "ZOMBIES",
+  },
   "marvel-zombies-winter-soldier": {
+    poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
+    color: "#e74c3c",
+    fallbackText: "ZOMBIES WS",
+  },
+  "marvel-zombies-the-winter-soldier": {
     poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     color: "#e74c3c",
     fallbackText: "ZOMBIES WS",
@@ -620,7 +630,17 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#d1d8e0",
     fallbackText: "ZOMBIES MOON",
   },
+  "marvel-zombies-the-fist-of-khonshu": {
+    poster: "https://image.tmdb.org/t/p/w780/x6FsYvt33846IQnDSFxla9j0RX8.jpg",
+    color: "#d1d8e0",
+    fallbackText: "ZOMBIES MOON",
+  },
   "marvel-zombies-last-guardian": {
+    poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
+    color: "#9b59b6",
+    fallbackText: "LAST GUARDIAN",
+  },
+  "marvel-zombies-the-last-guardian": {
     poster: "https://image.tmdb.org/t/p/w780/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg",
     color: "#9b59b6",
     fallbackText: "LAST GUARDIAN",
