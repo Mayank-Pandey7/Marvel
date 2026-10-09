@@ -156,9 +156,15 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "venom-last-dance": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
 };
 
-export const UPCOMING_MOVIE_IDS = new Set([
+export const RELEASED_MOVIE_IDS = new Set([
   "spiderman-brand-new-day",
   "spider-man-brand-new-day",
+  "spiderman-4",
+  "spider-man-4",
+  "brand-new-day",
+]);
+
+export const UPCOMING_MOVIE_IDS = new Set([
   "visionquest",
   "vision-quest",
   "avengers-doomsday",
@@ -179,9 +185,11 @@ export const UPCOMING_MOVIE_IDS = new Set([
 
 export function isUpcomingMovie(movie?: { id?: string; year?: number; status?: string } | null): boolean {
   if (!movie) return false;
+  if (movie.status === "released") return false;
+  if (movie.id && RELEASED_MOVIE_IDS.has(movie.id.toLowerCase())) return false;
   if (movie.status === "upcoming") return true;
   if (movie.id && UPCOMING_MOVIE_IDS.has(movie.id.toLowerCase())) return true;
-  if (movie.year && movie.year >= 2026) return true;
+  if (movie.year && movie.year > 2026) return true;
   return false;
 }
 
