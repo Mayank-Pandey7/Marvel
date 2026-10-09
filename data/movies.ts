@@ -614,7 +614,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Skull Tactical Vest", "Micro's Surveillance Rig", "Battle Rifle"],
     description: "After exacting revenge on those responsible for the death of his family, Frank Castle uncovers a lethal military conspiracy that runs far deeper than New York's criminal underworld.",
     color: "#e74c3c",
-    posterUrl: "https://image.tmdb.org/t/p/w780/irwQOXjU1mN702gQZAlLq5Z5x6t.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/9tepVli4YijTCHyiATRvoR4c64X.jpg",
     x: 1350, y: 3480,
     offsetY: 60,
     connections: [
