@@ -1525,6 +1525,31 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
       { toId: "avengers-doomsday", relationship: "Climactic battle against God Emperor Doom", type: "avengers_convergence" },
     ],
   },
+  {
+    id: "zodiac",
+    title: "Zodiac",
+    shortTitle: "ZODIAC",
+    year: 2028,
+    releaseDate: "2028",
+    phase: 6,
+    order: 6,
+    quote: "In the shadow of heroes, secret wars are fought in the dark.",
+    speaker: "Brad Winderbaum (NYCC)",
+    tagline: "A Marvel Television Spy Thriller.",
+    director: "Marvel Television",
+    runtime: 300,
+    leadCharacter: "Zodiac Cartel & Intelligence Operatives",
+    heroAlias: "Zodiac",
+    keyRelics: ["Zodiac Key", "Classified Espionage Dossiers", "Anachronaut Protocols"],
+    description: "Debuting on Disney+ in 2028, Zodiac is a brand-new Marvel Television spy thriller delving into clandestine intelligence networks, covert operations, and the shadowy cartel known as the Zodiac.",
+    color: "#e67e22",
+    posterUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
+    x: 1000, y: 9600,
+    offsetY: 120,
+    connections: [
+      { toId: "avengers-secret-wars", relationship: "Clandestine aftermath and intelligence realignment in the post-Secret Wars world", type: "origin_thread" },
+    ],
+  },
 
   
   

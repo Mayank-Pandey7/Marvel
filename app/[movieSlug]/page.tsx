@@ -168,6 +168,10 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "vision-quest": "visionquest",
   "vision": "visionquest",
   "white-vision": "visionquest",
+
+  "zodiac": "zodiac",
+  "marvel-zodiac": "zodiac",
+  "zodiac-series": "zodiac",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {

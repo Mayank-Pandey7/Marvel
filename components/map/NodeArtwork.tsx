@@ -465,6 +465,16 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#ffd32a",
     fallbackText: "BATTLEWORLD",
   },
+  "zodiac": {
+    poster: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
+    color: "#e67e22",
+    fallbackText: "ZODIAC",
+  },
+  "marvel-zodiac": {
+    poster: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
+    color: "#e67e22",
+    fallbackText: "ZODIAC",
+  },
   "x-men": {
     poster: "/images/posters/x-men-2000.jpg",
     color: "#4bcffa",
