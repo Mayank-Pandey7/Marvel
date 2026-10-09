@@ -60,7 +60,7 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "deadpool-and-wolverine": "/images/backdrops/deadpool-and-wolverine.jpg",
   "agatha-all-along": "/images/backdrops/agatha-all-along.jpg",
   "captain-america-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
-  "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
+  "daredevil-born-again": "https://image.tmdb.org/t/p/original/m291MEBjhuRqb0nh9ojnm9gzScq.jpg",
   "thunderbolts": "/images/backdrops/thunderbolts.jpg",
   "the-fantastic-four-first-steps": "/images/backdrops/fantastic-four.jpg",
   "blade": "/images/backdrops/blade.jpg",
@@ -80,6 +80,9 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "what-if-s2": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "what-if-s3": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "marvel-zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+  "marvel-zombies-winter-soldier": "https://cdn.marvel.com/content/2x/zombies_s2_tws_logo.jpg",
+  "marvel-zombies-fist-of-khonshu": "https://cdn.marvel.com/content/2x/zombies_s2_tfok_logo.jpg",
+  "marvel-zombies-last-guardian": "https://cdn.marvel.com/content/2x/zombies_s2_tlg_logo.jpg",
   "venom-2018": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
   "venom": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
   "venom-1": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
@@ -90,6 +93,9 @@ const MOVIE_BACKDROPS: Record<string, string> = {
   "spider-man-2002": "/images/backdrops/spider-man-2002.jpg",
   "spider-man-2": "/images/backdrops/spider-man-2.jpg",
   "spider-man-3": "/images/backdrops/spider-man-3.jpg",
+  "into-the-spider-verse": "https://image.tmdb.org/t/p/original/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+  "across-the-spider-verse": "https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+  "beyond-the-spider-verse": "https://image.tmdb.org/t/p/original/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg",
 };
 
 interface MovieSceneProps {
@@ -113,11 +119,19 @@ export function MovieScene({ movies }: MovieSceneProps) {
   const items: CharacterItem[] | undefined = movies?.map((m) => {
     const poster = getMoviePoster(m);
     const isEarth616 = (!m.earthDesignation || m.earthDesignation === "Earth-616") && m.phase <= 6;
-    const categoryLabel = isEarth616 ? `PHASE ${m.phase}` : (m.earthDesignation || "MULTIVERSE");
+    const categoryLabel = isEarth616
+      ? `PHASE ${m.phase}`
+      : m.earthDesignation === "Earth-688"
+      ? "SONY UNIVERSE"
+      : (m.earthDesignation || "MULTIVERSE");
+    const oneLineDesc = m.tagline || m.quote || m.description || "";
     return {
       id: m.id,
-      name: m.title,
-      role: `${categoryLabel} · ${m.year} · ${m.runtime} MIN`,
+      name: m.shortTitle || m.title.toUpperCase(),
+      tagline: oneLineDesc,
+      year: m.year,
+      runtime: m.runtime,
+      role: `${m.year} | ${m.runtime}MIN`,
       portrait: poster,
       universe: m.heroAlias ? m.heroAlias.toUpperCase() : categoryLabel,
     };

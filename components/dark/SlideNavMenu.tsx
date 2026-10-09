@@ -21,7 +21,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
     router.prefetch("/en");
     router.prefetch("/timeline");
     router.prefetch("/familytree");
-    router.prefetch("/multiverse");
     router.prefetch("/characters");
     router.prefetch("/characters/heros");
     router.prefetch("/characters/villains");
@@ -97,18 +96,6 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 }`}
               >
                 <span>CHARACTER FAMILY TREE</span>
-              </Link>
-
-              <Link
-                href="/multiverse"
-                onClick={onClose}
-                className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
-                  pathname === "/multiverse" || pathname.startsWith("/multiverse/")
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
-                }`}
-              >
-                <span>MULTIVERSE EARTHS</span>
               </Link>
 
               <Link

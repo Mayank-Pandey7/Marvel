@@ -284,17 +284,27 @@
         card.className = "card";
         card.type = "button";
         card.dataset.index = String(index);
-        card.setAttribute("aria-label", `Focus ${profile.name}, ${profile.role}`);
+        const portraitSrc = portraits[profile.portrait] || profile.portrait;
+        const metaContent = profile.tagline
+          ? `
+            <span class="name">${profile.name}</span>
+            <span class="tagline">${profile.tagline}</span>
+            <span class="role meta-bottom">
+              <span class="year">${profile.year || ""}</span>
+              ${profile.year && profile.runtime ? `<span class="sep" style="color:rgba(255,255,255,0.25);margin:0 4px;">|</span>` : ""}
+              <span class="runtime">${profile.runtime ? profile.runtime + "MIN" : (profile.role || "")}</span>
+            </span>`
+          : `
+            <span class="name">${profile.name}</span>
+            <span class="role">${profile.role}</span>`;
+
         card.innerHTML = `
           <span class="portrait">
-            <img src="${portraits[profile.portrait]}" alt="Generated portrait of ${profile.name}">
+            <img src="${portraitSrc}" alt="Portrait of ${profile.name}">
           </span>
           <span class="footer">
             <span class="index">${String(index + 1).padStart(2, "0")}</span>
-            <span class="meta">
-              <span class="name">${profile.name}</span>
-              <span class="role">${profile.role}</span>
-            </span>
+            <span class="meta">${metaContent}</span>
           </span>`;
         deck.append(card);
         return card;

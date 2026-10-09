@@ -46,7 +46,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Darkhold Multiverse Dreamwalk"
     ],
     "incursionVector": "Destabilized by cross-universal travel (America Chavez, Doctor Strange, Clea).",
-    "backdrop": "/images/multiverse/earth-616.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/mDfJG3LC3Dqb67AZ52x3Z0jQ0uB.jpg",
     "color": "#f59e0b"
   },
   {
@@ -71,7 +71,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Book of Vishanti Destruction"
     ],
     "incursionVector": "Incursion imminent due to footprint left by Doctor Strange and the Scarlet Witch.",
-    "backdrop": "/images/multiverse/earth-838.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/wcKFYIiVDvRURrzglV9kGu7fpfY.jpg",
     "color": "#3b82f6"
   },
   {
@@ -99,7 +99,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Cassandra Nova Time-Ripper Incursion"
     ],
     "incursionVector": "Absolute temporal collapse horizon where dying realities are consumed.",
-    "backdrop": "/images/multiverse/the-void.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/yDHYTfA3R0jFYba16jBB1ef8oIt.jpg",
     "color": "#ef4444"
   },
   {
@@ -145,7 +145,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "TVA Time-Ripper Interception"
     ],
     "incursionVector": "Saved from immediate decay by dual-anchor stabilization with Variant Wolverine.",
-    "backdrop": "/images/multiverse/earth-10005.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/9BBTo63ANSmAgvxvE6ndoJ2Biw9.jpg",
     "color": "#eab308"
   },
   {
@@ -169,7 +169,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Antidote Synthesis & Return"
     ],
     "incursionVector": "Stable; memory breaches restored by Strange's final universal containment spell.",
-    "backdrop": "/images/multiverse/earth-96283.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/6al0hgWgYTMAmaMaIgZnElPzbTO.jpg",
     "color": "#dc2626"
   },
   {
@@ -192,7 +192,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Saving MJ at the Shield Scaffold"
     ],
     "incursionVector": "Normalized following villain rehabilitation and dimensional return.",
-    "backdrop": "/images/multiverse/earth-120703.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/kJY5epIIW5iY4uq79i1zPzQ4b0b.jpg",
     "color": "#0ea5e9"
   },
   {
@@ -285,7 +285,7 @@ export const UNIVERSES: UniverseDimension[] = [
       "Doomsday Secret Wars Convergence"
     ],
     "incursionVector": "Terminal endpoint of all incursion collisions across the multiverse.",
-    "backdrop": "/images/multiverse/battleworld.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/jzPwsojjFStf5lR5Nm07w2hH56G.jpg",
     "color": "#15803d"
   },
   {

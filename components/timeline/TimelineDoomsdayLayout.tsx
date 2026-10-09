@@ -476,35 +476,13 @@ export default function TimelineDoomsdayLayout({
                     </div>
 
                     <div className="flex-1 min-w-0 flex flex-col justify-center py-1">
-                      <div
-                        className={`flex items-center gap-1.5 flex-wrap text-[8px] xs:text-[8.5px] font-mono uppercase tracking-wider mb-1 transition-transform duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/card:-translate-y-1 ${
-                          isEven ? "md:justify-end" : "md:justify-start"
-                        }`}
-                      >
-                        <span className="text-stone-300 font-bold transition-colors duration-300 group-hover/card:text-white">
-                          {movie.phase === 7 ? (movie.earthDesignation || "MULTIVERSE") : `PHASE ${movie.phase}`}
-                        </span>
-                        <span className="text-stone-600">•</span>
-                        <span className="text-stone-300 font-semibold group-hover/card:text-white">
-                          {movie.year}
-                        </span>
-                        {movie.runtime && (
-                          <>
-                            <span className="text-stone-600">•</span>
-                            <span className="text-stone-500 group-hover/card:text-stone-300">
-                              {movie.runtime} MIN
-                            </span>
-                          </>
-                        )}
-                      </div>
-
                       <h3 className={`text-xs xs:text-sm sm:text-base md:text-[16px] lg:text-[17px] font-mono uppercase tracking-[0.08em] sm:tracking-[0.1em] font-bold text-stone-200 group-hover/card:text-white transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] leading-snug break-words my-0.5 ${
                         isEven ? "group-hover/card:-translate-x-2" : "group-hover/card:translate-x-2"
                       }`}>
                         {movie.title}
                       </h3>
 
-                      <p className={`text-[9.5px] xs:text-[10.5px] sm:text-[11px] font-mono text-stone-400 mt-1 tracking-wide font-light leading-relaxed group-hover/card:text-stone-200 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] break-words ${
+                      <p className={`text-[9.5px] xs:text-[10.5px] sm:text-[11px] font-mono text-stone-400 my-1 tracking-wide font-light leading-relaxed group-hover/card:text-stone-200 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] break-words ${
                         isEven ? "group-hover/card:-translate-x-1.5" : "group-hover/card:translate-x-1.5"
                       }`}>
                         {movie.heroAlias && movie.heroAlias.trim().toLowerCase() !== movie.title.trim().toLowerCase()
@@ -514,6 +492,24 @@ export default function TimelineDoomsdayLayout({
                               ? movie.leadCharacter
                               : "")}
                       </p>
+
+                      <div
+                        className={`flex items-center gap-2 text-[8.5px] xs:text-[9px] font-mono uppercase tracking-wider mt-1 transition-transform duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                          isEven ? "md:justify-end" : "md:justify-start"
+                        }`}
+                      >
+                        <span className="text-stone-300 font-semibold group-hover/card:text-white">
+                          {movie.year}
+                        </span>
+                        {movie.runtime && (
+                          <>
+                            <span className="text-stone-600 font-normal">|</span>
+                            <span className="text-stone-400 font-medium group-hover/card:text-stone-300">
+                              {movie.runtime}MIN
+                            </span>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </Link>

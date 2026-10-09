@@ -14,6 +14,9 @@ export type CharacterItem = {
   role: string;
   portrait: string;
   universe?: string;
+  tagline?: string;
+  year?: number | string;
+  runtime?: number | string;
 };
 
 export type CharacterCarouselVariant = "filmstrip" | "wave";
@@ -109,27 +112,93 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
 }
 ` : `
 .portrait {
+  position: absolute !important;
+  inset: 6px 6px 33% !important;
+  overflow: hidden !important;
   background: #08080c !important;
   border-radius: 8px 8px 0 0 !important;
 }
 .footer {
+  position: absolute !important;
+  right: 6px !important;
+  bottom: 6px !important;
+  left: 6px !important;
+  height: calc(33% - 6px) !important;
+  display: grid !important;
+  grid-template-columns: clamp(20px, 2.3vw, 30px) 1fr !important;
+  align-items: center !important;
+  gap: clamp(5px, 0.6vw, 9px) !important;
+  padding: clamp(6px, 0.7vw, 10px) !important;
   background: #09090e !important;
   border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 0 0 8px 8px !important;
+  text-align: left !important;
 }
 .index {
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  display: grid !important;
+  width: clamp(19px, 2.1vw, 26px) !important;
+  aspect-ratio: 1 !important;
+  place-items: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 50% !important;
   color: #ffffff !important;
+  font: 700 clamp(6.5px, 0.6vw, 9.5px)/1 ui-monospace, "SFMono-Regular", monospace !important;
+}
+.meta {
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  overflow: hidden !important;
 }
 .name {
   color: #ffffff !important;
   font-size: clamp(8.5px, 0.82vw, 12px) !important;
   font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.15 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  text-transform: uppercase !important;
+}
+.tagline {
+  color: #a1a1aa !important;
+  font-size: clamp(5.5px, 0.52vw, 8px) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  font-style: italic !important;
 }
 .role {
   color: #d4d4d8 !important;
   font-size: clamp(5.5px, 0.48vw, 8px) !important;
   font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.meta-bottom {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  font-family: ui-monospace, "SFMono-Regular", monospace !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 700 !important;
+}
+.meta-bottom .year {
+  color: #f4f4f5 !important;
+}
+.meta-bottom .runtime {
+  color: #a1a1aa !important;
+  margin-left: auto !important;
 }
 `;
 

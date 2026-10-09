@@ -666,12 +666,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "WHAT IF S3",
   },
   "marvel-zombies": {
-    poster: "https://cdn.marvel.com/content/2x/marvelzombies_lob_crd_03.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
     color: "#20bf6b",
     fallbackText: "ZOMBIES",
   },
   "zombies": {
-    poster: "https://cdn.marvel.com/content/2x/marvelzombies_lob_crd_03.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
     color: "#20bf6b",
     fallbackText: "ZOMBIES",
   },
@@ -846,12 +846,12 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     fallbackText: "ACROSS SPIDER-VERSE",
   },
   "beyond-the-spider-verse": {
-    poster: "https://image.tmdb.org/t/p/w780/kC1R7zZ4nZ7iP9h1L5R4d7yqj1b.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/9KAe39xqyZnv9J4W3DRGdQqX82h.jpg",
     color: "#8b5cf6",
     fallbackText: "BEYOND SPIDER-VERSE",
   },
   "spider-man-beyond-the-spider-verse": {
-    poster: "https://image.tmdb.org/t/p/w780/kC1R7zZ4nZ7iP9h1L5R4d7yqj1b.jpg",
+    poster: "https://image.tmdb.org/t/p/w780/9KAe39xqyZnv9J4W3DRGdQqX82h.jpg",
     color: "#8b5cf6",
     fallbackText: "BEYOND SPIDER-VERSE",
   },

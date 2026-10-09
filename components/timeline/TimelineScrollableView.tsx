@@ -116,7 +116,7 @@ const VIEW_LABELS: Record<LayoutModeKey, string> = {
 export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-616", label: "EARTH-616", shortLabel: "616", count: 47, title: "The Sacred Timeline (MCU)" },
   { key: "Earth-10005", label: "EARTH-10005", shortLabel: "10005", count: 13, title: "Fox Mutant Universe (X-Men / Wolverine)" },
-  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 3, title: "Venom-Verse (Earth-688)" },
+  { key: "Earth-688", label: "EARTH-688", shortLabel: "688", count: 6, title: "Venom-Verse / Sony's Spider-Man Universe (Earth-688)" },
   { key: "Earth-96283", label: "EARTH-96283", shortLabel: "96283", count: 3, title: "Sam Raimi Spider-Man Trilogy" },
   { key: "Earth-120703", label: "EARTH-120703", shortLabel: "120703", count: 2, title: "The Amazing Spider-Man Duology" },
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
@@ -124,13 +124,13 @@ export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 4, title: "Marvel Zombies Apocalypse" },
   { key: "Earth-86445", label: "EARTH-86445", shortLabel: "86445", count: 2, title: "Your Friendly Neighborhood Spider-Man" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 84, title: "All Multiverse Timelines" },
+  { key: "Earth-1610", label: "EARTH-1610", shortLabel: "1610", count: 3, title: "Spider-Verse Animated Reality" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
   { title: "EARTH-616 • SACRED TIMELINE", href: "#Earth-616", count: 47 },
   { title: "EARTH-10005 • MUTANT UNIVERSE", href: "#Earth-10005", count: 13 },
-  { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 3 },
+  { title: "EARTH-688 • VENOM-VERSE", href: "#Earth-688", count: 6 },
   { title: "EARTH-96283 • RAIMI-VERSE", href: "#Earth-96283", count: 3 },
   { title: "EARTH-120703 • WEBB-VERSE", href: "#Earth-120703", count: 2 },
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
@@ -138,7 +138,7 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
   { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 2 },
-  { title: "ALL REALITIES", href: "#all", count: 84 },
+  { title: "EARTH-1610 • SPIDER-VERSE", href: "#Earth-1610", count: 3 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";

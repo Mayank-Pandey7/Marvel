@@ -102,7 +102,7 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "agatha-all-along": "/images/backdrops/agatha-all-along.jpg",
   "captain-america-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
   "cap-brave-new-world": "/images/backdrops/cap-brave-new-world.jpg",
-  "daredevil-born-again": "/images/backdrops/daredevil-born-again.jpg",
+  "daredevil-born-again": "https://image.tmdb.org/t/p/original/m291MEBjhuRqb0nh9ojnm9gzScq.jpg",
   "thunderbolts": "/images/backdrops/thunderbolts.jpg",
 
   
@@ -148,14 +148,14 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "what-if-s1": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "what-if-s2": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
   "what-if-s3": "https://image.tmdb.org/t/p/original/jnzoh5qoxRLFRIQAxnl6D3RStPC.jpg",
-  "marvel-zombies": "/images/multiverse/earth-2149.jpg",
-  "zombies": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-winter-soldier": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-the-winter-soldier": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-fist-of-khonshu": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-the-fist-of-khonshu": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-last-guardian": "/images/multiverse/earth-2149.jpg",
-  "marvel-zombies-the-last-guardian": "/images/multiverse/earth-2149.jpg",
+  "marvel-zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+  "zombies": "https://image.tmdb.org/t/p/original/lxQMxqao3vs2ehxESrkQU6acU86.jpg",
+  "marvel-zombies-winter-soldier": "https://cdn.marvel.com/content/2x/zombies_s2_tws_logo.jpg",
+  "marvel-zombies-the-winter-soldier": "https://cdn.marvel.com/content/2x/zombies_s2_tws_logo.jpg",
+  "marvel-zombies-fist-of-khonshu": "https://cdn.marvel.com/content/2x/zombies_s2_tfok_logo.jpg",
+  "marvel-zombies-the-fist-of-khonshu": "https://cdn.marvel.com/content/2x/zombies_s2_tfok_logo.jpg",
+  "marvel-zombies-last-guardian": "https://cdn.marvel.com/content/2x/zombies_s2_tlg_logo.jpg",
+  "marvel-zombies-the-last-guardian": "https://cdn.marvel.com/content/2x/zombies_s2_tlg_logo.jpg",
   "venom-2018": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
   "venom": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
   "venom-1": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
@@ -239,6 +239,8 @@ export const RELEASED_MOVIE_IDS = new Set([
   "madameweb",
   "kraven-the-hunter",
   "kraven",
+  "ironheart",
+  "iron-heart",
 ]);
 
 export const UPCOMING_MOVIE_IDS = new Set([
@@ -259,8 +261,6 @@ export const UPCOMING_MOVIE_IDS = new Set([
   "marvel-zombies-last-guardian",
   "marvel-zombies-the-last-guardian",
   "blade",
-  "ironheart",
-  "iron-heart",
   "beyond-the-spider-verse",
   "spider-man-beyond-the-spider-verse",
   "wonder-man",
@@ -559,6 +559,11 @@ export default function DeepMovieDetail({
               {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
                 <>
                   <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
+                  <span className="text-stone-600">•</span>
+                </>
+              ) : movie.earthDesignation === "Earth-688" ? (
+                <>
+                  <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">SONY UNIVERSE</span>
                   <span className="text-stone-600">•</span>
                 </>
               ) : movie.earthDesignation ? (

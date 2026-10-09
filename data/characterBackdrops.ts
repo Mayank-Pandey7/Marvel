@@ -314,7 +314,7 @@ export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
   "maw-new-york": "/images/backdrops/infinity-war.jpg",
   "surtur-ragnarok": "/images/backdrops/thor-ragnarok.jpg",
   "clea-incursion": "/images/backdrops/doctor-strange-multiverse.jpg",
-  "dex-born-again": "/images/backdrops/daredevil-born-again.jpg",
+  "dex-born-again": "https://image.tmdb.org/t/p/original/m291MEBjhuRqb0nh9ojnm9gzScq.jpg",
   "hwr-citadel": "/images/backdrops/loki-s1.jpg",
   "sylvie-ascent": "/images/backdrops/loki-s2.jpg",
   "mobius-tva": "/images/backdrops/loki-s1.jpg",
@@ -403,7 +403,7 @@ export function getCharacterBackdrop(characterId: string, eraId?: string, phase?
       if (normId.includes("loki")) return "/images/backdrops/loki-s2.jpg";
       if (normId.includes("deadpool") || normId.includes("wolverine")) return "/images/backdrops/deadpool-and-wolverine.jpg";
       if (normId.includes("agatha")) return "/images/backdrops/agatha-all-along.jpg";
-      if (normId.includes("daredevil") || normId.includes("murdock")) return "/images/backdrops/daredevil-born-again.jpg";
+      if (normId.includes("daredevil") || normId.includes("murdock")) return "https://image.tmdb.org/t/p/original/m291MEBjhuRqb0nh9ojnm9gzScq.jpg";
       if (normId.includes("cap") || normId.includes("sam") || normId.includes("bucky")) return "/images/backdrops/cap-brave-new-world.jpg";
       return "/images/backdrops/thunderbolts.jpg";
     }
