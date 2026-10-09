@@ -458,14 +458,6 @@ export default function DeepMovieDetail({
             )}
 
             <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-400 uppercase font-semibold">
-              {isUpcomingMovie(movie) && (
-                <>
-                  <span className="px-2.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold tracking-wider">
-                    COMING SOON
-                  </span>
-                  <span className="text-stone-600">•</span>
-                </>
-              )}
               {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
                 <>
                   <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>

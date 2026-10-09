@@ -861,11 +861,7 @@ export default function TimelineScrollableView() {
                                         {movie.title}
                                       </h3>
                                       <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
-                                        {upcoming ? (
-                                          <span className="text-amber-400 font-bold">COMING SOON</span>
-                                        ) : (
-                                          <span>{movie.year}</span>
-                                        )}
+                                        <span>{movie.year}</span>
                                         {movie.runtime ? (
                                           <>
                                             <span className="text-stone-700">•</span>
@@ -925,11 +921,7 @@ export default function TimelineScrollableView() {
                                 {movie.title}
                               </h3>
                               <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
-                                {upcoming ? (
-                                  <span className="text-amber-400 font-bold">COMING SOON</span>
-                                ) : (
-                                  <span>{movie.year}</span>
-                                )}
+                                <span>{movie.year}</span>
                                 {movie.runtime ? (
                                   <>
                                     <span className="text-stone-700">•</span>

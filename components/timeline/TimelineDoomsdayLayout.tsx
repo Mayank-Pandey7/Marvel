@@ -481,12 +481,6 @@ export default function TimelineDoomsdayLayout({
                           isEven ? "md:justify-end" : "md:justify-start"
                         }`}
                       >
-                        {isUpcomingMovie(movie) && (
-                          <>
-                            <span className="text-amber-400 font-bold">COMING SOON</span>
-                            <span className="text-stone-600">•</span>
-                          </>
-                        )}
                         <span className="text-stone-300 font-bold transition-colors duration-300 group-hover/card:text-white">
                           {movie.phase === 7 ? (movie.earthDesignation || "MULTIVERSE") : `PHASE ${movie.phase}`}
                         </span>
