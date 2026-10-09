@@ -231,8 +231,7 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "pyro": "/images/characters/pyro.jpg",
   "juggernaut": "/images/characters/juggernaut.jpg",
   "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "frank-castle": "/images/characters/frank-castle.jpg"
+  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg"
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {

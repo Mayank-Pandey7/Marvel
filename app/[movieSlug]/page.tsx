@@ -203,9 +203,6 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "ghost-rider-2": "ghost-rider-spirit-of-vengeance",
   "ghostrider-2": "ghost-rider-spirit-of-vengeance",
   "spirit-of-vengeance": "ghost-rider-spirit-of-vengeance",
-  "friendly-neighborhood-s2": "your-friendly-neighborhood-spider-man-s2",
-  "spider-man-freshman-year-s2": "your-friendly-neighborhood-spider-man-s2",
-  "yfn-spiderman-s2": "your-friendly-neighborhood-spider-man-s2",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {
