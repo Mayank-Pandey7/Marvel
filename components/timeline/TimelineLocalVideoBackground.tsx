@@ -11,7 +11,7 @@ interface TimelineLocalVideoBackgroundProps {
 export default function TimelineLocalVideoBackground({
   src = "/trailers/loki-video.mp4",
   blurClassName = "filter blur-[4px] sm:blur-[5px] scale-105",
-  overlayClassName = "bg-black/35 backdrop-blur-[1.5px]",
+  overlayClassName = "bg-black/15 backdrop-blur-[1px]",
 }: TimelineLocalVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -49,14 +49,26 @@ export default function TimelineLocalVideoBackground({
         <source src="/trailers/loki video .mp4" type="video/mp4" />
       </video>
 
-      {/* 2. Uniform Atmospheric Dark Overlay */}
+      {/* 2. Uniform Atmospheric Overlay */}
       <div className={`absolute inset-0 pointer-events-none ${overlayClassName}`} />
 
-      {/* 3. Top Black Header Fade across the Navbar */}
-      <div className="absolute top-0 inset-x-0 h-44 sm:h-64 bg-gradient-to-b from-black/90 via-black/40 via-black/10 to-transparent pointer-events-none" />
+      {/* 3. Top Glass Fade Blur across the Navbar */}
+      <div
+        className="absolute top-0 inset-x-0 h-44 sm:h-64 backdrop-blur-md pointer-events-none"
+        style={{
+          maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
+        }}
+      />
 
-      {/* 4. Full-Height Right Fade behind SELECT REALITY & Multiverse Controls */}
-      <div className="absolute top-0 bottom-0 right-0 w-80 sm:w-96 md:w-[420px] h-full bg-gradient-to-l from-black/80 via-black/40 to-transparent pointer-events-none" />
+      {/* 4. Full-Height Right Glass Fade Blur behind SELECT REALITY & Multiverse Controls */}
+      <div
+        className="absolute top-0 bottom-0 right-0 w-80 sm:w-96 md:w-[420px] h-full backdrop-blur-md pointer-events-none"
+        style={{
+          maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
+        }}
+      />
     </div>
   );
 }
