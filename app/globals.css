@@ -147,9 +147,49 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   .border-glass {
     border-color: var(--glass-border);
   }
-  .mask-radial-vignette {
-    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-    -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  .stamp-card-perforated {
+    --hole-r: 4px;
+    --corner-r: 6px;
+    --hole-gap-x: 16px;
+    --hole-gap-y: 16px;
+    -webkit-mask-image:
+      radial-gradient(circle var(--corner-r) at 0 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 100% 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 0 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 100% 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 50% 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 50% 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 0 50%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 100% 50%, transparent 99%, black 100%);
+    -webkit-mask-size:
+      100% 100%, 100% 100%, 100% 100%, 100% 100%,
+      var(--hole-gap-x) 100%, var(--hole-gap-x) 100%, 100% var(--hole-gap-y), 100% var(--hole-gap-y);
+    -webkit-mask-position:
+      0 0, 100% 0, 0 100%, 100% 100%,
+      50% 0, 50% 100%, 0 50%, 100% 50%;
+    -webkit-mask-repeat:
+      no-repeat, no-repeat, no-repeat, no-repeat,
+      repeat-x, repeat-x, repeat-y, repeat-y;
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(circle var(--corner-r) at 0 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 100% 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 0 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--corner-r) at 100% 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 50% 0, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 50% 100%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 0 50%, transparent 99%, black 100%),
+      radial-gradient(circle var(--hole-r) at 100% 50%, transparent 99%, black 100%);
+    mask-size:
+      100% 100%, 100% 100%, 100% 100%, 100% 100%,
+      var(--hole-gap-x) 100%, var(--hole-gap-x) 100%, 100% var(--hole-gap-y), 100% var(--hole-gap-y);
+    mask-position:
+      0 0, 100% 0, 0 100%, 100% 100%,
+      50% 0, 50% 100%, 0 50%, 100% 50%;
+    mask-repeat:
+      no-repeat, no-repeat, no-repeat, no-repeat,
+      repeat-x, repeat-x, repeat-y, repeat-y;
+    mask-composite: intersect;
   }
   .navbar-blur-fade {
     position: fixed;
@@ -225,20 +265,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 .animate-node-glow {
   animation: nodeGlow 3s ease-in-out infinite;
-}
-
-.ticket-stamp-perforation {
-  --hole-r: 4.5px;
-  --hole-spacing: 15px;
-  --mask-top: radial-gradient(circle var(--hole-r) at 50% 0, transparent 99%, #000 100%) 50% 0 / var(--hole-spacing) 100% repeat-x;
-  --mask-bottom: radial-gradient(circle var(--hole-r) at 50% 100%, transparent 99%, #000 100%) 50% 100% / var(--hole-spacing) 100% repeat-x;
-  --mask-left: radial-gradient(circle var(--hole-r) at 0 50%, transparent 99%, #000 100%) 0 50% / 100% var(--hole-spacing) repeat-y;
-  --mask-right: radial-gradient(circle var(--hole-r) at 100% 50%, transparent 99%, #000 100%) 100% 50% / 100% var(--hole-spacing) repeat-y;
-
-  -webkit-mask: var(--mask-top), var(--mask-bottom), var(--mask-left), var(--mask-right);
-  -webkit-mask-composite: source-in;
-  mask: var(--mask-top), var(--mask-bottom), var(--mask-left), var(--mask-right);
-  mask-composite: intersect;
 }
 
 

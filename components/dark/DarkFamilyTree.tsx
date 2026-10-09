@@ -13,7 +13,7 @@ import { CHARACTERS } from "@/data/characters";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
-import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+import TimelineLocalVideoBackground from "@/components/timeline/TimelineLocalVideoBackground";
 import { useDoomsdayTransition } from "@/components/doomsday/DoomsdayTransition";
 import {
   ZoomIn,
@@ -807,8 +807,11 @@ export default function DarkFamilyTree({
       className="fixed inset-0 w-screen h-screen bg-[#000000] text-stone-300 select-none overflow-hidden font-sans cursor-grab active:cursor-grabbing touch-none"
       style={{ touchAction: "none" }}
     >
-      {/* Alien X Celestialsapien Starfield Background */}
-      <BackgroundStarfield />
+      {/* Local Loki Ambient Video Background with 7px Blur */}
+      <TimelineLocalVideoBackground
+        blurClassName="filter blur-[7px] scale-105"
+        overlayClassName="bg-black/35"
+      />
 
       <div className="navbar-blur-fade" aria-hidden="true" />
 
@@ -1223,17 +1226,17 @@ export default function DarkFamilyTree({
 
               <div className="mt-2 flex flex-col items-center text-center w-full max-w-[160px] px-1 pointer-events-none z-20">
                 <h3
-                  className={`font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 max-w-full px-2 py-0.5 rounded bg-black/85 backdrop-blur-[2px] transition-colors ${
+                  className={`font-mono text-[10.5px] sm:text-[11px] uppercase tracking-[0.18em] font-bold leading-tight line-clamp-1 max-w-full drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] transition-colors ${
                     isSelected || isHovered
-                      ? "text-white ring-1 ring-white/30"
-                      : "text-stone-300"
+                      ? "text-white"
+                      : "text-stone-200 group-hover:text-white"
                   }`}
                   title={node.name}
                 >
                   {node.name}
                 </h3>
                 {node.subtitle && (
-                  <p className="text-[8px] sm:text-[8.5px] font-mono tracking-widest uppercase text-stone-400 line-clamp-1 max-w-full px-1.5 py-0.5 rounded bg-black/85 backdrop-blur-[2px] mt-0.5">
+                  <p className="text-[8.5px] sm:text-[9px] font-mono tracking-widest uppercase text-stone-400 font-medium line-clamp-1 max-w-full drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mt-0.5">
                     {node.subtitle}
                   </p>
                 )}

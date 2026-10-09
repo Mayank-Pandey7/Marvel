@@ -103,30 +103,30 @@ export default function TopTierVillainsView({
               topHeaderSlot
             ) : (
               <>
-                <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+                <span className="text-xs font-mono tracking-[0.25em] text-white uppercase font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   ALL-TIME POWERFUL CHARACTERS · MARVEL COMICS · {filteredVillains.length}
                 </span>
-                <span className="text-stone-600 font-mono text-xs">•</span>
-                <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-purple-400 font-semibold uppercase">
+                <span className="text-white/40 font-mono text-xs">•</span>
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-purple-300 font-bold uppercase drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">
                   {activeTierMeta.title}
                 </span>
               </>
             )}
           </div>
 
-          <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 rounded-full focus-within:border-white/30 transition-all">
-            <Search size={14} className="text-stone-400 shrink-0 mr-2.5" />
+          <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.06] hover:bg-white/[0.09] backdrop-blur-2xl border border-white/15 focus-within:border-white/35 px-4 py-2 rounded-full transition-all">
+            <Search size={14} className="text-stone-200 shrink-0 mr-2.5" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="SEARCH ENTITY OR DOMAIN..."
-              className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
+              className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-white placeholder:text-stone-300 font-medium focus:outline-none"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="text-stone-400 hover:text-stone-200 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                className="text-stone-300 hover:text-white text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer transition-colors"
               >
                 CLEAR
               </button>
@@ -137,10 +137,10 @@ export default function TopTierVillainsView({
         {/* Content Body: Empty State or Grid */}
         {filteredVillains.length === 0 ? (
           <div className="text-center py-28 w-full flex flex-col items-center justify-center animate-in fade-in duration-300">
-            <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-stone-300 font-bold">
+            <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-white font-bold drop-shadow">
               NO RECORDS FOUND
             </h3>
-            <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
+            <p className="text-xs font-mono tracking-wide text-stone-300 mt-1.5 max-w-sm mx-auto">
               No entity matches the active search query or tier filter.
             </p>
             <button
@@ -148,7 +148,7 @@ export default function TopTierVillainsView({
                 setSearchQuery("");
                 setSelectedTier("all");
               }}
-              className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/5 border border-white/10 px-4 py-1.5 rounded-full hover:bg-white/10 transition-colors"
+              className="mt-5 text-stone-200 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/10 border border-white/20 px-4 py-1.5 rounded-full hover:bg-white/20 transition-colors"
             >
               RESET FILTERS
             </button>
@@ -156,16 +156,16 @@ export default function TopTierVillainsView({
         ) : (
           <div className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
             <section className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/15 pb-3">
                 <div className="flex items-center gap-2.5 sm:gap-3">
-                  <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                  <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/15 border border-white/10 px-2.5 py-1 rounded shrink-0 drop-shadow">
                     {activeTierMeta.badge}
                   </span>
-                  <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                  <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-white uppercase font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                     {activeTierMeta.title}
                   </span>
                 </div>
-                <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                <span className="text-[10px] sm:text-[11px] font-mono text-stone-300 font-medium uppercase tracking-widest pl-0.5 sm:pl-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                   {filteredVillains.length} ENTITIES
                 </span>
               </div>

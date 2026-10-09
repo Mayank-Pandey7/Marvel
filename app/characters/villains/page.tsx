@@ -22,23 +22,23 @@ function VillainsPageContent() {
     <div className="flex items-center gap-4 sm:gap-6">
       <button
         onClick={() => router.push("/characters/villains")}
-        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer ${
+        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] ${
           activeTab === "mcu-villains"
-            ? "text-white font-bold"
-            : "text-stone-500 hover:text-stone-300"
+            ? "text-white font-bold drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
+            : "text-stone-200 hover:text-white font-semibold"
         }`}
       >
         MCU Villains Archives
       </button>
 
-      <span className="w-px h-3 bg-stone-800 shrink-0 select-none pointer-events-none" aria-hidden="true" />
+      <span className="w-px h-3.5 bg-white/30 shrink-0 select-none pointer-events-none" aria-hidden="true" />
 
       <button
         onClick={() => router.push("/characters/villains?tab=top-tier")}
-        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer ${
+        className={`text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-colors cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] ${
           activeTab === "top-tier"
-            ? "text-purple-400 font-bold"
-            : "text-stone-500 hover:text-stone-300"
+            ? "text-purple-300 font-bold drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]"
+            : "text-stone-200 hover:text-white font-semibold"
         }`}
       >
         Top-Tier Power Hierarchy

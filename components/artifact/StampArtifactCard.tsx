@@ -17,37 +17,8 @@ export default function StampArtifactCard({
         href={`/artifacts/${artifact.id}`}
         className="group relative block w-full cursor-pointer rounded-none transform-gpu will-change-transform transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:scale-[1.03] active:scale-[0.97]"
       >
-        {/* 1. PERFORATED STAMP TICKET CONTAINER (Crisp 90-Degree Square Corners) */}
-        <div className="relative bg-white shadow-[0_12px_28px_rgba(0,0,0,0.6)] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.85)] p-2 sm:p-2.5 rounded-none transition-shadow duration-200">
-          
-          {/* Scalloped Perforation Punch-Out Teeth along Top Edge */}
-          <div className="absolute -top-1.5 inset-x-2 flex justify-between pointer-events-none z-30">
-            {Array.from({ length: 13 }).map((_, i) => (
-              <span key={`top-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
-            ))}
-          </div>
-
-          {/* Scalloped Perforation Punch-Out Teeth along Bottom Edge */}
-          <div className="absolute -bottom-1.5 inset-x-2 flex justify-between pointer-events-none z-30">
-            {Array.from({ length: 13 }).map((_, i) => (
-              <span key={`bot-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
-            ))}
-          </div>
-
-          {/* Scalloped Perforation Punch-Out Teeth along Left Edge */}
-          <div className="absolute -left-1.5 inset-y-2 flex flex-col justify-between pointer-events-none z-30">
-            {Array.from({ length: 18 }).map((_, i) => (
-              <span key={`left-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
-            ))}
-          </div>
-
-          {/* Scalloped Perforation Punch-Out Teeth along Right Edge */}
-          <div className="absolute -right-1.5 inset-y-2 flex flex-col justify-between pointer-events-none z-30">
-            {Array.from({ length: 18 }).map((_, i) => (
-              <span key={`right-${i}`} className="w-2.5 h-2.5 rounded-full bg-black block shrink-0" />
-            ))}
-          </div>
-
+        {/* 1. PERFORATED STAMP TICKET CONTAINER (Crisp 90-Degree Square Corners with Real Transparent Notches) */}
+        <div className="relative bg-white stamp-card-perforated p-2 sm:p-2.5 rounded-none transition-shadow duration-200">
           {/* 2. INNER CARD BODY */}
           <div className="relative flex flex-col gap-1.5 bg-white rounded-none">
 

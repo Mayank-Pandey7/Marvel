@@ -164,28 +164,28 @@ function ArtifactsContent() {
           {/* Search and Overview Bar */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
+              <span className="text-xs font-mono tracking-[0.25em] text-white uppercase font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 ARCHIVES · {filteredArtifacts.length} RELICS &amp; ARTIFACTS
               </span>
-              <span className="text-stone-600 font-mono text-xs">•</span>
-              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-amber-400/90 uppercase font-semibold">
+              <span className="text-white/40 font-mono text-xs">•</span>
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-amber-300 font-bold uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">
                 {activeCategoryMeta.title}
               </span>
             </div>
 
-            <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 rounded-full focus-within:border-white/30 transition-all">
-              <Search size={14} className="text-stone-400 shrink-0 mr-2.5" />
+            <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.06] hover:bg-white/[0.09] backdrop-blur-2xl border border-white/15 focus-within:border-white/35 px-4 py-2 rounded-full transition-all">
+              <Search size={14} className="text-stone-200 shrink-0 mr-2.5" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="SEARCH ARTIFACTS..."
-                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
+                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-white placeholder:text-stone-300 font-medium focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="text-stone-400 hover:text-stone-200 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
+                  className="text-stone-300 hover:text-white text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer transition-colors"
                 >
                   CLEAR
                 </button>
@@ -225,14 +225,14 @@ function ArtifactsContent() {
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
                       <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                        <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/15 border border-white/10 px-2.5 py-1 rounded shrink-0 drop-shadow">
                           {cat.badge}
                         </span>
-                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-200 uppercase font-semibold">
                           {cat.title}
                         </span>
                       </div>
-                      <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                      <span className="text-[10px] sm:text-[11px] font-mono text-stone-300 font-medium uppercase tracking-widest pl-0.5 sm:pl-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                         {items.length} {items.length === 1 ? "ARTIFACT" : "ARTIFACTS"}
                       </span>
                     </div>
@@ -258,14 +258,14 @@ function ArtifactsContent() {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2.5 sm:gap-3">
-                    <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                    <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/15 border border-white/10 px-2.5 py-1 rounded shrink-0 drop-shadow">
                       {searchQuery ? "SEARCH RESULTS" : activeCategoryMeta.badge}
                     </span>
-                    <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                    <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-200 uppercase font-semibold">
                       {searchQuery ? `QUERY: "${searchQuery.toUpperCase()}"` : activeCategoryMeta.title}
                     </span>
                   </div>
-                  <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                  <span className="text-[10px] sm:text-[11px] font-mono text-stone-300 font-medium uppercase tracking-widest pl-0.5 sm:pl-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                     {filteredArtifacts.length} {filteredArtifacts.length === 1 ? "ARTIFACT" : "ARTIFACTS"}
                   </span>
                 </div>

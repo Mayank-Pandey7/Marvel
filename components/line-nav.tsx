@@ -143,7 +143,7 @@ const LineNavItem = memo(
         />
         <span
           className={cn(
-            "text-[11px] sm:text-xs font-mono tracking-wider whitespace-nowrap text-stone-400 transition-[color,font-weight] ease-out group-hover:text-white group-aria-[current=page]:text-white group-aria-[current=page]:font-bold flex items-center gap-1.5",
+            "text-[11px] sm:text-xs font-mono tracking-wider whitespace-nowrap text-stone-200 font-medium transition-[color,font-weight] ease-out group-hover:text-white group-aria-[current=page]:text-white group-aria-[current=page]:font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] flex items-center gap-1.5",
             isRight && "flex-row-reverse"
           )}
         >

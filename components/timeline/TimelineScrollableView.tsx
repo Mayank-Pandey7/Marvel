@@ -25,7 +25,7 @@ import { UNIFIED_MCU_TREE, type MovieNode } from "@/data/movies";
 import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
-import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+import TimelineLocalVideoBackground from "@/components/timeline/TimelineLocalVideoBackground";
 import { isUpcomingMovie } from "@/components/map/DeepMovieDetail";
 
 
@@ -470,9 +470,9 @@ export default function TimelineScrollableView() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#000000] text-stone-300 font-sans selection:bg-white selection:text-black">
-      {/* Alien X Celestialsapien Starfield Background */}
-      <BackgroundStarfield />
+    <div className="relative min-h-screen w-full bg-black text-stone-300 font-sans selection:bg-white selection:text-black">
+      {/* Local Loki Ambient Video Background */}
+      <TimelineLocalVideoBackground />
 
       <div className="navbar-blur-fade" aria-hidden="true" />
 
@@ -889,11 +889,11 @@ export default function TimelineScrollableView() {
                                       >
                                         {movie.title}
                                       </h3>
-                                      <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
+                                      <div className="flex items-center gap-1.5 text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-stone-300 font-medium group-hover:text-stone-200 transition-colors">
                                         <span>{movie.year}</span>
                                         {movie.runtime ? (
                                           <>
-                                            <span className="text-stone-700">•</span>
+                                            <span className="text-stone-400 font-bold">•</span>
                                             <span>{formatDuration(movie.runtime)}</span>
                                           </>
                                         ) : null}
@@ -950,11 +950,11 @@ export default function TimelineScrollableView() {
                               >
                                 {movie.title}
                               </h3>
-                              <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
+                              <div className="flex items-center gap-1.5 text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-stone-300 font-medium group-hover:text-stone-200 transition-colors">
                                 <span>{movie.year}</span>
                                 {movie.runtime ? (
                                   <>
-                                    <span className="text-stone-700">•</span>
+                                    <span className="text-stone-400 font-bold">•</span>
                                     <span>{formatDuration(movie.runtime)}</span>
                                   </>
                                 ) : null}

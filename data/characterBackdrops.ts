@@ -230,8 +230,11 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "sabretooth": "/images/characters/sabretooth.jpg",
   "pyro": "/images/characters/pyro.jpg",
   "juggernaut": "/images/characters/juggernaut.jpg",
-  "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "ghost-rider": "https://image.tmdb.org/t/p/w780/4quwR1VwZouD0YF9AaD72kQAjxH.jpg",
+  "johnny-blaze": "https://image.tmdb.org/t/p/w780/4quwR1VwZouD0YF9AaD72kQAjxH.jpg",
+  "spider-man-86445": "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+  "peter-parker-86445": "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+  "your-friendly-neighborhood-spider-man": "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
   "miles-morales": "https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
   "spider-gwen": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
   "spider-man-2099": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
@@ -247,9 +250,11 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
-  "ghost-rider-2007": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "ghost-rider-spirit-of-vengeance-era": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
-  "punisher-s2-pilgrim": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
+  "ghost-rider-2007": "https://image.tmdb.org/t/p/w780/4quwR1VwZouD0YF9AaD72kQAjxH.jpg",
+  "ghost-rider-spirit-of-vengeance-era": "https://image.tmdb.org/t/p/w780/xEoBT6lYfQNpSpTm8gJMTrQytiw.jpg",
+  "ghost-rider-2028-mcu": "https://cdn.marvel.com/content/1x/ghostrider_lob_crd_01.webp",
+  "freshman-year-spidey": "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+  "punisher-s2-pilgrim": "/images/characters/frank-castle.jpg",
   "toaa-genesis": "/images/backdrops/battleworld.jpg",
   "beyonder-secret-wars": "/images/backdrops/battleworld.jpg",
   "toba-below-place": "/images/backdrops/the-incredible-hulk.jpg",

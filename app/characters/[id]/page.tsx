@@ -118,6 +118,20 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <BackgroundStarfield />
 
+      {/* Frosted Glass Blur Vignette for Complete Text Legibility */}
+      <div 
+        className="fixed inset-y-0 left-0 w-full sm:w-[72%] lg:w-[62%] pointer-events-none z-10 bg-gradient-to-r from-black/40 via-black/20 to-transparent backdrop-blur-xl"
+        style={{
+          maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
+        }}
+        aria-hidden="true"
+      />
+      <div 
+        className="fixed inset-x-0 bottom-0 h-40 pointer-events-none z-10 bg-gradient-to-t from-black/50 via-black/20 to-transparent" 
+        aria-hidden="true" 
+      />
+
       <div className="navbar-blur-fade" aria-hidden="true" />
 
       <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between pointer-events-none bg-transparent">
