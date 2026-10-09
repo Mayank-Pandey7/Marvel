@@ -833,7 +833,7 @@ export default function TimelineScrollableView() {
                                   >
                                     <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                                       {upcoming && (
-                                        <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
+                                        <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[6.5px] sm:text-[7px] font-mono font-bold tracking-wider uppercase shadow-sm">
                                           COMING SOON
                                         </div>
                                       )}
@@ -893,7 +893,7 @@ export default function TimelineScrollableView() {
                           >
                             <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                               {upcoming && (
-                                <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
+                                <div className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[6.5px] sm:text-[7px] font-mono font-bold tracking-wider uppercase shadow-sm">
                                   COMING SOON
                                 </div>
                               )}

@@ -453,7 +453,7 @@ export default function TimelineDoomsdayLayout({
                       isEven ? "group-hover/card:rotate-[-1.5deg]" : "group-hover/card:rotate-[1.5deg]"
                     }`}>
                       {isUpcomingMovie(movie) && (
-                        <div className="absolute top-1.5 left-1.5 z-20 px-1.5 py-0.5 rounded bg-amber-500 text-black text-[7px] sm:text-[7.5px] font-mono font-extrabold tracking-wider uppercase shadow-md">
+                        <div className="absolute top-1 left-1 z-20 px-1 py-0.5 rounded bg-amber-400 text-black text-[6px] xs:text-[6.5px] font-mono font-black tracking-tight uppercase shadow-sm">
                           COMING SOON
                         </div>
                       )}

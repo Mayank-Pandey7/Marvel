@@ -39,7 +39,7 @@ export default function PosterArt({ entry, size = "normal" }: { entry: MCUEntry;
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
 
       {entry.status === "upcoming" && (
-        <span className="absolute top-2 right-2 text-[8.5px] font-mono tracking-[0.15em] uppercase bg-amber-500 text-black font-extrabold px-2 py-0.5 rounded shadow-md z-10">
+        <span className="absolute top-1.5 right-1.5 text-[7px] sm:text-[7.5px] font-mono tracking-wider uppercase bg-amber-400 text-black font-bold px-1.5 py-0.5 rounded shadow-sm z-10">
           COMING SOON
         </span>
       )}
