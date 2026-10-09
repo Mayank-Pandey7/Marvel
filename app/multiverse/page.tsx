@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Search, ArrowRight, X, Zap } from "lucide-react";
+import { Search, ArrowRight, ArrowLeft, X, Zap } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { UNIVERSES, type UniverseDimension, type UniverseCategory } from "@/data/universes";
 import StampUniverseCard from "@/components/multiverse/StampUniverseCard";
@@ -44,11 +44,18 @@ function MultiverseContent() {
   });
 
   const [activeUniverseId, setActiveUniverseId] = useState<string | null>(paramUniverse || null);
+  const [stage, setStage] = useState<"entering" | "expanded" | "closing">("entering");
   const [navMenuOpen, setNavMenuOpen] = useState(false);
-  const [waveDirection, setWaveDirection] = useState<"next" | "prev">("next");
-  const [isRippling, setIsRippling] = useState(false);
 
-  const isScrollLocked = useRef(false);
+  useEffect(() => {
+    if (activeUniverseId) {
+      setStage("entering");
+      const t = setTimeout(() => {
+        setStage("expanded");
+      }, 40);
+      return () => clearTimeout(t);
+    }
+  }, [activeUniverseId]);
 
   useEffect(() => {
     if (paramCat && CATEGORIES.some((c) => c.id === paramCat)) {
@@ -137,33 +144,34 @@ function MultiverseContent() {
 
   const currentUniverse = filteredUniverses[activeIndex] || filteredUniverses[0] || UNIVERSES[0];
 
-  const triggerSmoothLiquidWave = useCallback(() => {
-    setIsRippling(true);
+  const handleClose = () => {
+    setStage("closing");
     setTimeout(() => {
-      setIsRippling(false);
-    }, 1000);
-  }, []);
+      setActiveUniverseId(null);
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("universe");
+        window.history.replaceState({}, "", url.toString());
+      } catch {}
+    }, 450);
+  };
 
   const handleNext = useCallback(() => {
     if (activeIndex < filteredUniverses.length - 1) {
-      setWaveDirection("next");
-      triggerSmoothLiquidWave();
       setActiveUniverseId(filteredUniverses[activeIndex + 1].id);
     }
-  }, [activeIndex, filteredUniverses, triggerSmoothLiquidWave]);
+  }, [activeIndex, filteredUniverses]);
 
   const handlePrev = useCallback(() => {
     if (activeIndex > 0) {
-      setWaveDirection("prev");
-      triggerSmoothLiquidWave();
       setActiveUniverseId(filteredUniverses[activeIndex - 1].id);
     }
-  }, [activeIndex, filteredUniverses, triggerSmoothLiquidWave]);
+  }, [activeIndex, filteredUniverses]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (activeUniverseId) setActiveUniverseId(null);
+        if (activeUniverseId) handleClose();
       }
       if (activeUniverseId) {
         if (e.key === "ArrowRight" || e.key === "ArrowDown") handleNext();
@@ -174,236 +182,159 @@ function MultiverseContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeUniverseId, handleNext, handlePrev]);
 
-  useEffect(() => {
-    if (!activeUniverseId) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) < 18) return;
-      if (isScrollLocked.current) return;
-
-      isScrollLocked.current = true;
-
-      if (e.deltaY > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-
-      setTimeout(() => {
-        isScrollLocked.current = false;
-      }, 750);
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: true });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [activeUniverseId, handleNext, handlePrev]);
-
-  // Fullscreen Reality Dossier View
+  // Fullscreen Reality Dossier View (matching /thor DeepMovieDetail experience)
   if (activeUniverseId && currentUniverse) {
+    const isExpanded = stage === "expanded";
+    const isClosing = stage === "closing";
+
     return (
-      <div className="relative w-screen h-screen bg-black text-stone-200 font-sans selection:bg-white selection:text-black overflow-hidden select-none">
+      <div
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseMove={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+        className={`fixed inset-0 w-screen h-screen z-50 flex flex-col justify-between select-none bg-black/65 backdrop-blur-2xl text-stone-300 overflow-hidden font-sans transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isClosing
+            ? "opacity-0 scale-98 pointer-events-none filter blur-sm"
+            : isExpanded
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-105 pointer-events-none"
+        }`}
+      >
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          {filteredUniverses.map((univ, idx) => {
-            const isActive = idx === activeIndex;
-            const isPrev = idx < activeIndex;
-
-            return (
-              <div
-                key={univ.id}
-                className="absolute inset-0 w-full h-full will-change-[opacity,transform,filter]"
-                style={{
-                  opacity: isActive ? 1 : 0,
-                  transform: isActive
-                    ? "scale(1) translateY(0) rotate(0deg)"
-                    : isPrev
-                    ? "scale(1.08) translateY(-24px) rotate(0.4deg)"
-                    : "scale(0.96) translateY(24px) rotate(-0.4deg)",
-                  filter: isActive ? "blur(0px)" : "blur(8px)",
-                  transition:
-                    "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1), transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), filter 1000ms cubic-bezier(0.25, 1, 0.5, 1)",
-                }}
-              >
-                <img
-                  src={univ.backdrop}
-                  alt={univ.name}
-                  className="w-full h-full object-cover object-center filter brightness-90 contrast-105"
-                />
-              </div>
-            );
-          })}
-
-          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/55 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50 z-10 pointer-events-none" />
-
-          <div
-            className="absolute inset-0 pointer-events-none z-15 will-change-[opacity,transform]"
-            style={{
-              background: `radial-gradient(ellipse 80% 60% at 50% 50%, ${currentUniverse.color || "#fff"}22 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%)`,
-              opacity: isRippling ? 1 : 0,
-              transform: isRippling ? "scale(1.15) translateY(0)" : "scale(0.85) translateY(20px)",
-              transition:
-                "opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
+          <img
+            src={currentUniverse.backdrop}
+            alt={currentUniverse.name}
+            className={`w-full h-full object-cover object-center filter brightness-100 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              isExpanded ? "scale-105 opacity-100" : "scale-125 opacity-0"
+            }`}
           />
+
+          <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
         </div>
 
-        {/* Global Header */}
-        <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between bg-transparent pointer-events-none">
-          <button
-            onClick={() => setNavMenuOpen(true)}
-            className="text-stone-300 hover:text-white transition-colors cursor-pointer p-1.5 group pointer-events-auto"
-            title="Open Universe Menu"
-            aria-label="Open Universe Menu"
-          >
-            <div className="w-5 flex flex-col gap-1.5">
-              <span className="h-[1.5px] w-5 bg-current block group-hover:w-6 transition-all" />
-              <span className="h-[1.5px] w-3.5 bg-current block group-hover:w-5 transition-all" />
-            </div>
-          </button>
-
-          <div className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white pl-[0.45em] sm:pl-[0.55em] pointer-events-auto">
-            <Link href="/" className="hover:opacity-80 transition-opacity">
-              MARVEL
-            </Link>
+        <header
+          className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+          }`}
+        >
+          <div className="flex items-center gap-2 pointer-events-auto">
+            <button
+              onClick={handleClose}
+              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-stone-200 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer active:scale-95 group"
+              title="Close Reality Dossier"
+              aria-label="Close Reality Dossier"
+            >
+              <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
+            </button>
           </div>
 
-          <button
-            onClick={() => setActiveUniverseId(null)}
-            className="text-stone-300 hover:text-white p-1.5 transition-colors cursor-pointer pointer-events-auto rounded-full hover:bg-white/10"
-            title="Close Reality Dossier (Esc)"
-          >
-            <X size={18} strokeWidth={1.5} />
-          </button>
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
+            <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+              MARVEL
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 pointer-events-auto">
+            <button
+              onClick={handlePrev}
+              disabled={activeIndex === 0}
+              className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-stone-200 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer active:scale-95 ${
+                activeIndex === 0 ? "opacity-30 cursor-not-allowed" : ""
+              }`}
+              title="Previous Reality"
+            >
+              <ArrowLeft size={14} />
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={activeIndex === filteredUniverses.length - 1}
+              className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-stone-200 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer active:scale-95 ${
+                activeIndex === filteredUniverses.length - 1 ? "opacity-30 cursor-not-allowed" : ""
+              }`}
+              title="Next Reality"
+            >
+              <ArrowRight size={14} />
+            </button>
+          </div>
         </header>
 
-        <main className="relative z-20 w-full h-full px-6 sm:px-12 md:px-16 flex flex-col justify-between pt-24 pb-12">
-          <div className="h-2" />
+        <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-16 xl:gap-20 overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+          <div
+            className={`flex-1 max-w-5xl lg:max-w-6xl flex flex-col sm:flex-row items-start sm:items-end gap-6 sm:gap-8 w-full transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+              isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
+            }`}
+          >
+            <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start">
+              <img
+                src={currentUniverse.backdrop}
+                alt={currentUniverse.name}
+                loading="eager"
+                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
+            </div>
 
-          <div className="w-full max-w-3xl my-auto">
-            <div
-              key={currentUniverse.id}
-              className={`flex flex-col gap-3.5 ${
-                waveDirection === "next" ? "animate-wave-up" : "animate-wave-down"
-              }`}
-            >
-              {/* Designation Header */}
-              <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-[0.3em] uppercase text-stone-400">
-                <span
-                  className="w-2 h-2 rounded-full inline-block shrink-0"
-                  style={{ backgroundColor: currentUniverse.color }}
-                />
-                <span>{currentUniverse.designation}</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-[0.14em] uppercase text-white leading-tight">
-                {currentUniverse.name}
-              </h1>
-
-              <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-2xl">
-                {currentUniverse.description}
-              </p>
-
-              <div
-                className="mt-2 p-3.5 sm:p-4 bg-black/50 backdrop-blur-md border-l-2 flex flex-col gap-1 max-w-2xl rounded-r-lg"
-                style={{ borderColor: currentUniverse.color }}
+            <div className="flex-1 flex flex-col justify-end min-w-0 pb-1 text-left items-start w-full">
+              <h2
+                className={`font-mono font-semibold ${
+                  currentUniverse.name.length > 28
+                    ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
+                    : currentUniverse.name.length > 18
+                    ? "text-3xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-6xl"
+                    : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                } text-white uppercase leading-tight mt-1 drop-shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
+                  isExpanded
+                    ? `${currentUniverse.name.length > 18 ? "tracking-[0.05em] sm:tracking-[0.08em]" : "tracking-[0.08em] sm:tracking-[0.12em]"} opacity-100 scale-100`
+                    : "tracking-[0.35em] opacity-0 scale-95"
+                }`}
               >
-                <div className="flex items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-stone-400">
-                  <Zap size={11} style={{ color: currentUniverse.color }} />
-                  <span>INCURSION COLLISION VECTOR</span>
-                </div>
-                <p className="text-xs sm:text-sm font-mono text-stone-200 leading-relaxed">
-                  {currentUniverse.incursionVector}
-                </p>
-              </div>
+                {currentUniverse.name}
+              </h2>
 
-              <div className="mt-1 flex flex-wrap items-center gap-3 text-xs font-mono">
-                <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                  <span className="text-[9px] uppercase tracking-widest text-stone-500">ANCHOR:</span>
-                  <span className="text-stone-200 font-bold">
-                    {currentUniverse.anchorBeing.split("(")[0].trim()}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1.5 text-stone-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                  <span className="text-[9px] uppercase tracking-widest text-stone-500">GOVERNING:</span>
-                  <span className="text-stone-200 font-bold truncate max-w-[240px]">
-                    {currentUniverse.governingForce}
-                  </span>
-                </div>
-              </div>
-
-              {currentUniverse.keyInhabitants && currentUniverse.keyInhabitants.length > 0 && (
-                <div className="mt-1 flex flex-wrap gap-1.5 max-w-2xl">
-                  {currentUniverse.keyInhabitants.map((inh, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-0.5 text-[9.5px] font-mono tracking-wider uppercase bg-white/10 text-stone-300 rounded"
-                    >
-                      {inh}
+              <div className="mt-4 text-sm text-stone-300 font-sans font-light leading-relaxed">
+                <p>{currentUniverse.description}</p>
+                {currentUniverse.keyInhabitants && currentUniverse.keyInhabitants.length > 0 && (
+                  <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-300">
+                    <span className="text-stone-500 uppercase tracking-widest text-[10px]">
+                      KEY INHABITANTS:
                     </span>
-                  ))}
+                    {currentUniverse.keyInhabitants.slice(0, 6).map((inh: string) => (
+                      <span key={inh} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px]">
+                        {inh}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {currentUniverse.incursionVector && (
+                <div className="mt-4 p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md relative max-w-lg shadow-lg overflow-hidden">
+                  <div
+                    className="absolute top-0 left-0 bottom-0 w-1"
+                    style={{ background: `linear-gradient(to bottom, ${currentUniverse.color || "#fff"}dd, ${currentUniverse.color || "#fff"}22)` }}
+                  />
+                  <p className="text-xs font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
+                    &ldquo;{currentUniverse.incursionVector}&rdquo;
+                  </p>
+                  <p className="text-[10px] font-mono text-stone-400 uppercase tracking-widest mt-1 pl-2 font-bold">
+                    — INCURSION VECTOR • {currentUniverse.threatLevel.replace("_", " ")}
+                  </p>
                 </div>
               )}
 
-              <div className="mt-4 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-stone-500 max-w-2xl">
-                <span>
-                  DIMENSION {activeIndex + 1} OF {filteredUniverses.length}
-                </span>
-                <Link
-                  href="/familytree"
-                  className="text-stone-400 hover:text-white flex items-center gap-1 transition-colors"
-                >
-                  <span>FAMILY TREE</span>
-                  <ArrowRight size={11} />
-                </Link>
+              <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-400 uppercase font-semibold">
+                <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">{currentUniverse.designation.split("/")[0].trim()}</span>
+                <span className="text-stone-600">•</span>
+                <span className="text-stone-300">ANCHOR: {currentUniverse.anchorBeing.split("(")[0].trim()}</span>
+                <span className="text-stone-600">•</span>
+                <span className="text-stone-400">GOVERNING: {currentUniverse.governingForce}</span>
+                <span className="text-stone-600">•</span>
+                <span className="text-stone-300">DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
               </div>
             </div>
           </div>
         </main>
-
-        <SlideNavMenu isOpen={navMenuOpen} onClose={() => setNavMenuOpen(false)} />
-
-        <style jsx global>{`
-          @keyframes waveUp {
-            0% {
-              opacity: 0;
-              transform: translateY(22px) scale(0.985);
-              filter: blur(5px);
-            }
-            60% {
-              filter: blur(0.5px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0) scale(1);
-              filter: blur(0px);
-            }
-          }
-
-          @keyframes waveDown {
-            0% {
-              opacity: 0;
-              transform: translateY(-22px) scale(0.985);
-              filter: blur(5px);
-            }
-            60% {
-              filter: blur(0.5px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0) scale(1);
-              filter: blur(0px);
-            }
-          }
-
-          .animate-wave-up {
-            animation: waveUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-
-          .animate-wave-down {
-            animation: waveDown 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-        `}</style>
       </div>
     );
   }
