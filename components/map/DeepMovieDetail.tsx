@@ -345,7 +345,7 @@ export default function DeepMovieDetail({
                 }
               }}
               className={`w-full h-full ${
-                movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac"
+                movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac" || movie.id === "your-friendly-neighborhood-spider-man-s2"
                   ? "object-contain p-3 sm:p-4 bg-black"
                   : "object-cover object-center"
               } transition-transform duration-700 group-hover:scale-105`}

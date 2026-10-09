@@ -463,7 +463,7 @@ export default function TimelineDoomsdayLayout({
                         loading="lazy"
                         decoding="async"
                         className={`w-full h-full ${
-                          movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase() === "zodiac"
+                          movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase() === "zodiac" || movie.id === "your-friendly-neighborhood-spider-man-s2"
                             ? "object-contain p-1.5 bg-black"
                             : "object-cover"
                         } transition-transform duration-600 ease-out group-hover/card:scale-108 [image-rendering:-webkit-optimize-contrast]`}

@@ -2418,7 +2418,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Oscorp Advanced Suit", "Symbiotic Micro-Fibres", "Goblin Prototype Armour"],
     description: "Premiering on Disney+ on January 13, 2027, Season 2 thrusts Peter Parker into his sophomore year of high school as Norman Osborn's escalating Oscorp ambitions and burgeoning supervillain rogues push Peter's heroism and morality to the brink.",
     color: "#e11d48",
-    posterUrl: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    posterUrl: "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_crd_01.webp",
     x: 6000, y: 10200,
     offsetY: -120,
     connections: [

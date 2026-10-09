@@ -25,7 +25,7 @@ export default function PosterArt({ entry, size = "normal" }: { entry: MCUEntry;
           onError={() => setImgError(true)}
           loading="lazy"
           className={`w-full h-full ${
-            entry.id === "zodiac" || entry.id === "marvel-zodiac" || entry.id === "zodiac-series" || entry.title?.toLowerCase() === "zodiac"
+            entry.id === "zodiac" || entry.id === "marvel-zodiac" || entry.id === "zodiac-series" || entry.title?.toLowerCase() === "zodiac" || entry.id === "your-friendly-neighborhood-spider-man-s2"
               ? "object-contain p-2 bg-black"
               : "object-cover object-center"
           } transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-110`}
