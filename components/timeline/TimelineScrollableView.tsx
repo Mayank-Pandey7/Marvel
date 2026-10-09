@@ -122,8 +122,8 @@ export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 4, title: "Marvel Zombies Apocalypse" },
-  { key: "Earth-86445", label: "EARTH-86445", shortLabel: "86445", count: 1, title: "Your Friendly Neighborhood Spider-Man" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 80, title: "All Multiverse Timelines" },
+  { key: "Earth-86445", label: "EARTH-86445", shortLabel: "86445", count: 2, title: "Your Friendly Neighborhood Spider-Man" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 81, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
@@ -135,8 +135,8 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
-  { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 1 },
-  { title: "ALL REALITIES", href: "#all", count: 80 },
+  { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 2 },
+  { title: "ALL REALITIES", href: "#all", count: 81 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";

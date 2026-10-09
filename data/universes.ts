@@ -348,7 +348,7 @@ export const UNIVERSES: UniverseDimension[] = [
     "threatLevel": "STABLE",
     "anchorBeing": "Peter Parker / Spider-Man (Earth-86445)",
     "governingForce": "Norman Osborn / Oscorp Industries",
-    "description": "An alternate animated Marvel Cinematic Universe reality where Norman Osborn becomes Peter Parker's mentor instead of Tony Stark, leading young Peter through his freshman year high school trials with unique allies like Nico Minoru, Lonnie Lincoln, and street encounters with Matt Murdock.",
+    "description": "An alternate animated Marvel Cinematic Universe reality where Norman Osborn becomes Peter Parker's mentor instead of Tony Stark, leading young Peter through his freshman (2025) and sophomore (2027) high school trials with unique allies like Nico Minoru, Lonnie Lincoln, and street encounters with Matt Murdock.",
     "keyInhabitants": [
       "Peter Parker (Spider-Man)",
       "Norman Osborn",
@@ -362,7 +362,8 @@ export const UNIVERSES: UniverseDimension[] = [
     "keyNexusEvents": [
       "Oscorp Interdimensional Spider Bite",
       "Norman Osborn Becomes Peter's Mentor",
-      "Vigilante Debut in New York"
+      "Vigilante Debut in New York (2025)",
+      "Sophomore Year Escalation (January 13, 2027)"
     ],
     "incursionVector": "Branch timeline monitored by multiversal observers.",
     "backdrop": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",

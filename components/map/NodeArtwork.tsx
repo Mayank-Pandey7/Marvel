@@ -705,6 +705,26 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#e11d48",
     fallbackText: "FRIENDLY SPIDER-MAN",
   },
+  "your-friendly-neighborhood-spider-man-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN S2",
+  },
+  "friendly-neighborhood-spider-man-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN S2",
+  },
+  "spider-man-freshman-year-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN S2",
+  },
+  "yfn-spiderman-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN S2",
+  },
 };
 
 export default function NodeArtwork({

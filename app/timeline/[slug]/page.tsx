@@ -166,6 +166,13 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "spider-man-freshman-year": "your-friendly-neighborhood-spider-man",
   "freshman-year": "your-friendly-neighborhood-spider-man",
   "yfn-spiderman": "your-friendly-neighborhood-spider-man",
+
+  "your-friendly-neighborhood-spider-man-s2": "your-friendly-neighborhood-spider-man-s2",
+  "your-friendly-neighborhood-spider-man-season-2": "your-friendly-neighborhood-spider-man-s2",
+  "friendly-neighborhood-spider-man-s2": "your-friendly-neighborhood-spider-man-s2",
+  "friendly-neighborhood-s2": "your-friendly-neighborhood-spider-man-s2",
+  "spider-man-freshman-year-s2": "your-friendly-neighborhood-spider-man-s2",
+  "yfn-spiderman-s2": "your-friendly-neighborhood-spider-man-s2",
 };
 
 function parseRuntime(runtimeStr?: string): number {

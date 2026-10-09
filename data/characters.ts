@@ -769,11 +769,20 @@ export const CHARACTERS: Character[] = [
         universe: "Earth-86445",
         description: "Navigated high school trials and supervillain clashes under the watchful eye of Norman Osborn and Oscorp.",
         keyMoments: ["Bitten by interdimensional spider", "Norman Osborn offers mentorship", "Street-level alliance with Daredevil"]
+      },
+      {
+        eraId: "sophomore-year-spidey",
+        phase: 7,
+        title: "Sophomore Year: Oscorp Escalation",
+        year: "2027",
+        universe: "Earth-86445",
+        description: "Enters sophomore year facing darker technological supervillains and the full consequences of Norman Osborn's secretive ambition.",
+        keyMoments: ["Premiering January 13, 2027", "Sophomore year high school trials", "Clash with Oscorp-engineered threats"]
       }
     ],
-    artifactsPossessed: ["Oscorp Prototype Spider-Suit"],
-    linkedNexusEvents: ["nexus-osborn-mentor"],
-    entries: ["your-friendly-neighborhood-spider-man"]
+    artifactsPossessed: ["Oscorp Prototype Spider-Suit", "Oscorp Advanced Suit"],
+    linkedNexusEvents: ["nexus-osborn-mentor", "nexus-sophomore-year"],
+    entries: ["your-friendly-neighborhood-spider-man", "your-friendly-neighborhood-spider-man-s2"]
   },
   {
     id: "deadpool",

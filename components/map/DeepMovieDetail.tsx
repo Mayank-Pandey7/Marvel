@@ -163,6 +163,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "friendly-neighborhood-spider-man": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
   "spider-man-freshman-year": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
   "yfn-spiderman": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+  "your-friendly-neighborhood-spider-man-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+  "friendly-neighborhood-spider-man-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+  "spider-man-freshman-year-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+  "yfn-spiderman-s2": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
 };
 
 export const RELEASED_MOVIE_IDS = new Set([
@@ -184,6 +188,10 @@ export const UPCOMING_MOVIE_IDS = new Set([
   "avengers-secret-wars",
   "zodiac",
   "marvel-zodiac",
+  "your-friendly-neighborhood-spider-man-s2",
+  "friendly-neighborhood-spider-man-s2",
+  "spider-man-freshman-year-s2",
+  "yfn-spiderman-s2",
   "marvel-zombies-winter-soldier",
   "marvel-zombies-the-winter-soldier",
   "marvel-zombies-fist-of-khonshu",
