@@ -400,6 +400,65 @@ export const UNIVERSES: UniverseDimension[] = [
     "color": "#f97316"
   },
   {
+    "id": "earth-688",
+    "name": "Earth-688 (Sony's Spider-Man Universe)",
+    "designation": "SSU Reality (Venom, Morbius, Madame Web, Kraven)",
+    "category": "alternate",
+    "threatLevel": "DESTABILIZED",
+    "anchorBeing": "Eddie Brock & Venom",
+    "governingForce": "Symbiote Hivemind & Web of Life and Destiny",
+    "description": "The reality of Eddie Brock and Venom, Dr. Michael Morbius, Cassandra Webb, and Sergei Kravinoff. Linked to Earth-616 through the multiversal spell breach and Knull's universal hivemind awareness.",
+    "keyInhabitants": [
+      "Eddie Brock (Venom)",
+      "Dr. Michael Morbius",
+      "Cassandra Webb (Madame Web)",
+      "Sergei Kravinoff (Kraven the Hunter)",
+      "Cletus Kasady (Carnage)",
+      "Patrick Mulligan (Toxin)",
+      "Knull (The Void King)"
+    ],
+    "keyNexusEvents": [
+      "Life Foundation Symbiote Infiltration (2018)",
+      "Eddie Displaced to Earth-616 & Symbiote Shard Left Behind (2021)",
+      "Vampiric Transfusion of Dr. Morbius (2022)",
+      "Web of Life & Destiny Awakening (2024)",
+      "Knull's Xenophage Assault on Earth-688 (2024)"
+    ],
+    "incursionVector": "Destabilized by multiversal displacement of Vulture and Venom, plus Knull's cross-dimensional hivemind.",
+    "backdrop": "https://image.tmdb.org/t/p/original/hNsYUryiwxcdeTMkaBcPF3iEg0p.jpg",
+    "color": "#6366f1"
+  },
+  {
+    "id": "earth-1610",
+    "name": "Earth-1610 (Animated Spider-Verse)",
+    "designation": "Miles Morales Prime Reality / Spider-Society Multiverse",
+    "category": "alternate",
+    "threatLevel": "INCURSION_IMMINENT",
+    "anchorBeing": "Miles Morales / Spider-Man",
+    "governingForce": "Spider-Society (Miguel O'Hara / Earth-928) & Web of Life and Destiny",
+    "description": "The vibrant animated comic-book dimension where teenager Miles Morales was bitten by an Earth-42 spider and inherited the mantle of Spider-Man following Peter Parker's demise. Epicenter of multiversal collider anomalies that spawned the Spider-Society and The Spot's multiversal crusade.",
+    "keyInhabitants": [
+      "Miles Morales (Spider-Man)",
+      "Gwen Stacy (Spider-Woman / Earth-65)",
+      "Peter B. Parker (Earth-616B)",
+      "Miguel O'Hara (Spider-Man 2099 / Earth-928)",
+      "The Spot (Jonathan Ohnn)",
+      "Prowler Miles (Earth-42)",
+      "Hobie Brown (Spider-Punk)",
+      "Pavitr Prabhakar (Spider-Man India)"
+    ],
+    "keyNexusEvents": [
+      "Alchemax Super-Collider Activation (2018)",
+      "Spider-Heroes Multiversal Convergence & Kingpin Defeat",
+      "The Spot Multiversal Dark Matter Travel (2023)",
+      "Canon Event Disruption in Mumbattan (Earth-50101)",
+      "Miles Morales Trapped on Earth-42"
+    ],
+    "incursionVector": "Severe incursion threat caused by anomalous spider-bites, disrupted canon events, and The Spot's universe-devouring dark matter power.",
+    "backdrop": "https://image.tmdb.org/t/p/original/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg",
+    "color": "#e11d48"
+  },
+  {
     "id": "gap-junction",
     "name": "The Gap Junction",
     "designation": "Nexus Space Between Dimensions",

@@ -203,6 +203,38 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "ghost-rider-2": "ghost-rider-spirit-of-vengeance",
   "ghostrider-2": "ghost-rider-spirit-of-vengeance",
   "spirit-of-vengeance": "ghost-rider-spirit-of-vengeance",
+
+  "i-am-groot": "i-am-groot",
+  "i-am-groot-s1": "i-am-groot",
+  "i-am-groot-season-1": "i-am-groot",
+  "iamgroot": "i-am-groot",
+  "i-am-groot-s2": "i-am-groot-s2",
+  "i-am-groot-season-2": "i-am-groot-s2",
+  "iamgroot-s2": "i-am-groot-s2",
+
+  "ironheart": "ironheart",
+  "iron-heart": "ironheart",
+
+  "into-the-spider-verse": "into-the-spider-verse",
+  "spider-man-into-the-spider-verse": "into-the-spider-verse",
+  "spider-verse": "into-the-spider-verse",
+  "spiderverse": "into-the-spider-verse",
+  "spiderverse-1": "into-the-spider-verse",
+  "across-the-spider-verse": "across-the-spider-verse",
+  "spider-man-across-the-spider-verse": "across-the-spider-verse",
+  "spiderverse-2": "across-the-spider-verse",
+  "beyond-the-spider-verse": "beyond-the-spider-verse",
+  "spider-man-beyond-the-spider-verse": "beyond-the-spider-verse",
+  "spiderverse-3": "beyond-the-spider-verse",
+
+  "morbius": "morbius",
+  "dr-morbius": "morbius",
+
+  "madame-web": "madame-web",
+  "madameweb": "madame-web",
+
+  "kraven-the-hunter": "kraven-the-hunter",
+  "kraven": "kraven-the-hunter",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {

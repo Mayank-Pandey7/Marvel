@@ -231,7 +231,19 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "pyro": "/images/characters/pyro.jpg",
   "juggernaut": "/images/characters/juggernaut.jpg",
   "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg"
+  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "miles-morales": "https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+  "spider-gwen": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+  "spider-man-2099": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+  "the-spot": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+  "ironheart": "https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg",
+  "riri-williams": "https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg",
+  "the-hood": "https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg",
+  "morbius": "https://image.tmdb.org/t/p/w780/Av8Z2jZhEm1FLkFzMThzz9hndJF.jpg",
+  "madame-web": "https://image.tmdb.org/t/p/w780/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg",
+  "kraven": "https://image.tmdb.org/t/p/w780/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+  "kraven-the-hunter": "https://image.tmdb.org/t/p/w780/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+  "baby-groot": "https://image.tmdb.org/t/p/w780/3QfQYECgu6DX5UUWCBvv1Fl0BAJ.jpg"
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {

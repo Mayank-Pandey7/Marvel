@@ -785,6 +785,106 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#e11d48",
     fallbackText: "FRIENDLY SPIDER-MAN S2",
   },
+  "i-am-groot": {
+    poster: "https://image.tmdb.org/t/p/w780/3QfQYECgu6DX5UUWCBvv1Fl0BAJ.jpg",
+    color: "#10b981",
+    fallbackText: "I AM GROOT",
+  },
+  "i-am-groot-s1": {
+    poster: "https://image.tmdb.org/t/p/w780/3QfQYECgu6DX5UUWCBvv1Fl0BAJ.jpg",
+    color: "#10b981",
+    fallbackText: "I AM GROOT",
+  },
+  "iamgroot": {
+    poster: "https://image.tmdb.org/t/p/w780/3QfQYECgu6DX5UUWCBvv1Fl0BAJ.jpg",
+    color: "#10b981",
+    fallbackText: "I AM GROOT",
+  },
+  "i-am-groot-s2": {
+    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    color: "#059669",
+    fallbackText: "I AM GROOT S2",
+  },
+  "i-am-groot-season-2": {
+    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    color: "#059669",
+    fallbackText: "I AM GROOT S2",
+  },
+  "iamgroot-s2": {
+    poster: "https://cdn.marvel.com/content/2x/iamgroot2_lob_crd_01.jpg",
+    color: "#059669",
+    fallbackText: "I AM GROOT S2",
+  },
+  "ironheart": {
+    poster: "https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg",
+    color: "#e11d48",
+    fallbackText: "IRONHEART",
+  },
+  "iron-heart": {
+    poster: "https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg",
+    color: "#e11d48",
+    fallbackText: "IRONHEART",
+  },
+  "into-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+    color: "#e11d48",
+    fallbackText: "INTO SPIDER-VERSE",
+  },
+  "spider-man-into-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+    color: "#e11d48",
+    fallbackText: "INTO SPIDER-VERSE",
+  },
+  "across-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+    color: "#06b6d4",
+    fallbackText: "ACROSS SPIDER-VERSE",
+  },
+  "spider-man-across-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+    color: "#06b6d4",
+    fallbackText: "ACROSS SPIDER-VERSE",
+  },
+  "beyond-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/kC1R7zZ4nZ7iP9h1L5R4d7yqj1b.jpg",
+    color: "#8b5cf6",
+    fallbackText: "BEYOND SPIDER-VERSE",
+  },
+  "spider-man-beyond-the-spider-verse": {
+    poster: "https://image.tmdb.org/t/p/w780/kC1R7zZ4nZ7iP9h1L5R4d7yqj1b.jpg",
+    color: "#8b5cf6",
+    fallbackText: "BEYOND SPIDER-VERSE",
+  },
+  "morbius": {
+    poster: "https://image.tmdb.org/t/p/w780/Av8Z2jZhEm1FLkFzMThzz9hndJF.jpg",
+    color: "#3b82f6",
+    fallbackText: "MORBIUS",
+  },
+  "dr-morbius": {
+    poster: "https://image.tmdb.org/t/p/w780/Av8Z2jZhEm1FLkFzMThzz9hndJF.jpg",
+    color: "#3b82f6",
+    fallbackText: "MORBIUS",
+  },
+  "madame-web": {
+    poster: "https://image.tmdb.org/t/p/w780/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg",
+    color: "#dc2626",
+    fallbackText: "MADAME WEB",
+  },
+  "madameweb": {
+    poster: "https://image.tmdb.org/t/p/w780/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg",
+    color: "#dc2626",
+    fallbackText: "MADAME WEB",
+  },
+  "kraven-the-hunter": {
+    poster: "https://image.tmdb.org/t/p/w780/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+    color: "#b45309",
+    fallbackText: "KRAVEN",
+  },
+  "kraven": {
+    poster: "https://image.tmdb.org/t/p/w780/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+    color: "#b45309",
+    fallbackText: "KRAVEN",
+  },
 };
 
 export default function NodeArtwork({
