@@ -1543,7 +1543,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Zodiac Key", "Classified Espionage Dossiers", "Anachronaut Protocols"],
     description: "Debuting on Disney+ in 2028, Zodiac is a brand-new Marvel Television spy thriller delving into clandestine intelligence networks, covert operations, and the shadowy cartel known as the Zodiac.",
     color: "#e67e22",
-    posterUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
+    posterUrl: "https://cdn.marvel.com/content/2x/zodiac_logo_card.webp",
     x: 1000, y: 9600,
     offsetY: 120,
     connections: [
