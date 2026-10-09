@@ -470,7 +470,7 @@ export default function TimelineScrollableView() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-black text-stone-300 font-sans selection:bg-white selection:text-black">
+    <div className="relative min-h-screen w-full bg-transparent text-stone-300 font-sans selection:bg-white selection:text-black">
       {/* Local Loki Ambient Video Background */}
       <TimelineLocalVideoBackground />
 
@@ -590,7 +590,7 @@ export default function TimelineScrollableView() {
         <div className="fixed left-3 top-16 sm:top-20 z-30 md:hidden flex items-center gap-1.5">
           <button
             onClick={() => setIsPhaseDrawerOpen((prev) => !prev)}
-            className="px-3 py-1 rounded-full bg-black/80 text-stone-300 text-[9px] font-mono tracking-widest uppercase backdrop-blur-md shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/10"
+            className="px-3 py-1 rounded-full bg-white/[0.08] text-stone-200 text-[9px] font-mono tracking-widest uppercase backdrop-blur-xl shadow-lg flex items-center cursor-pointer active:scale-95 transition-transform border border-white/20"
           >
             <span>{activePhaseFilter === "all" ? "ALL PHASES" : activePhaseFilter === 7 ? "PHASE X" : `PHASE ${activePhaseFilter}`}</span>
           </button>
@@ -701,8 +701,8 @@ export default function TimelineScrollableView() {
       <div
         className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
       >
-        {/* Layout View Switcher (PATH | 3D WHEEL | GRID) */}
-        <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl pointer-events-auto whitespace-nowrap">
+        {/* Layout View Switcher (GRID | 3D WHEEL | PATH) */}
+        <div className="flex gap-0.5 rounded-full p-0.5 bg-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] pointer-events-auto whitespace-nowrap transition-colors">
           {(Object.keys(VIEW_ICONS) as LayoutModeKey[]).map((key) => (
             <button
               key={key}
@@ -710,7 +710,7 @@ export default function TimelineScrollableView() {
               className={`rounded-full border-none px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                 layoutMode === key
                   ? "bg-white text-black font-bold shadow-md"
-                  : "text-stone-400 hover:text-white"
+                  : "text-stone-300 hover:text-white hover:bg-white/10"
               }`}
             >
               {VIEW_LABELS[key]}
@@ -719,15 +719,15 @@ export default function TimelineScrollableView() {
         </div>
 
         {/* SELECT REALITY pill — clickable on mobile, static on desktop */}
-        <div className="flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap pointer-events-auto">
+        <div className="flex gap-0.5 rounded-full p-0.5 bg-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] whitespace-nowrap pointer-events-auto transition-colors">
           <button
             type="button"
             onClick={() => setIsRealityMenuOpen((prev) => !prev)}
-            className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400 hover:text-white sm:pointer-events-none flex items-center gap-1 cursor-pointer transition-colors active:scale-95 sm:active:scale-100"
+            className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-300 hover:text-white sm:pointer-events-none flex items-center gap-1 cursor-pointer transition-colors active:scale-95 sm:active:scale-100"
             title="Toggle Multiverse Realities"
           >
             <span>SELECT REALITY</span>
-            <span className="sm:hidden text-stone-500 font-bold text-[8px]">{isRealityMenuOpen ? "▲" : "▼"}</span>
+            <span className="sm:hidden text-stone-400 font-bold text-[8px]">{isRealityMenuOpen ? "▲" : "▼"}</span>
           </button>
         </div>
 
@@ -860,7 +860,7 @@ export default function TimelineScrollableView() {
                                     href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase === 7 ? "X" : movie.phase}&earth=${activeEarthFilter}`}
                                     className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                                   >
-                                    <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                                    <div className="relative w-full aspect-[2/3] overflow-hidden bg-white/[0.04] backdrop-blur-md rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                                       {upcoming && (
                                         <div className="absolute top-1.5 left-1.5 z-10 px-1 py-0.5 rounded bg-amber-400 text-black text-[5.5px] sm:text-[6px] font-mono font-bold tracking-tight uppercase shadow-xs leading-none">
                                           COMING SOON
@@ -921,7 +921,7 @@ export default function TimelineScrollableView() {
                             href={`/timeline/${movie.id}?view=${layoutMode}&phase=${movie.phase === 7 ? "X" : movie.phase}&earth=${activeEarthFilter}`}
                             className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                           >
-                            <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                            <div className="relative w-full aspect-[2/3] overflow-hidden bg-white/[0.04] backdrop-blur-md rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                               {upcoming && (
                                 <div className="absolute top-1.5 left-1.5 z-10 px-1 py-0.5 rounded bg-amber-400 text-black text-[5.5px] sm:text-[6px] font-mono font-bold tracking-tight uppercase shadow-xs leading-none">
                                   COMING SOON

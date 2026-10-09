@@ -167,13 +167,13 @@ export function MovieScene({ movies }: MovieSceneProps) {
   return (
     <div
       ref={containerRef}
-      className="group/carousel shader-frame w-full h-[460px] sm:h-[calc(100vh-140px)] min-h-[460px] sm:min-h-[650px] relative bg-black sm:bg-transparent overflow-hidden border-0 select-none flex items-center justify-center mt-6 sm:mt-0"
+      className="group/carousel shader-frame w-full h-[460px] sm:h-[calc(100vh-140px)] min-h-[460px] sm:min-h-[650px] relative bg-transparent overflow-hidden border-0 select-none flex items-center justify-center mt-6 sm:mt-0"
     >
       {/* Left Navigation Button */}
       <button
         onClick={handlePrev}
         aria-label="Previous Movie"
-        className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+        className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-stone-300 hover:text-white backdrop-blur-xl transition-all duration-200 cursor-pointer shadow-2xl active:scale-95 border-0"
       >
         <ChevronLeft size={22} className="sm:w-7 sm:h-7" />
       </button>
@@ -182,7 +182,7 @@ export function MovieScene({ movies }: MovieSceneProps) {
       <button
         onClick={handleNext}
         aria-label="Next Movie"
-        className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-2xl active:scale-95"
+        className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-stone-300 hover:text-white backdrop-blur-xl transition-all duration-200 cursor-pointer shadow-2xl active:scale-95 border-0"
       >
         <ChevronRight size={22} className="sm:w-7 sm:h-7" />
       </button>

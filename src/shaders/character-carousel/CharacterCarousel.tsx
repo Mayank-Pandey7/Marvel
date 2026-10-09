@@ -74,10 +74,12 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
   aspect-ratio: 0.67 !important;
   border-radius: 14px !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  background: #0a0a0f !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
   box-shadow:
     0 calc(10px + var(--focus) * 24px) calc(20px + var(--focus) * 36px)
-      rgba(0, 0, 0, calc(0.7 + var(--focus) * 0.3)),
+      rgba(0, 0, 0, calc(0.5 + var(--focus) * 0.3)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
   overflow: hidden !important;
 }
@@ -97,7 +99,7 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
   width: calc(100% - 12px) !important;
   height: calc(100% - 12px) !important;
   border-radius: 8px !important;
-  background: #000000 !important;
+  background: transparent !important;
   overflow: hidden !important;
 }
 .portrait img {
@@ -115,7 +117,7 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
   position: absolute !important;
   inset: 6px 6px 33% !important;
   overflow: hidden !important;
-  background: #08080c !important;
+  background: transparent !important;
   border-radius: 8px 8px 0 0 !important;
 }
 .footer {
@@ -129,7 +131,9 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
   align-items: center !important;
   gap: clamp(5px, 0.6vw, 9px) !important;
   padding: clamp(6px, 0.7vw, 10px) !important;
-  background: #09090e !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 0 0 8px 8px !important;
   text-align: left !important;
@@ -205,21 +209,24 @@ function buildFocusedDocument(variant: CharacterCarouselVariant, items: Characte
   const focusStyles = `<style data-character-carousel-focus>
 :root {
   --character-carousel-scale: 1;
-  color-scheme: dark !important;
-  background: #000000 !important;
+  color-scheme: normal !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
-  background: #000000 !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 .stage {
   width: 100% !important;
   height: 100% !important;
   min-height: 0 !important;
-  background: #000000 !important;
+  background: transparent !important;
+  background-color: transparent !important;
   border: 0 !important;
 }
 .stage::before {
@@ -235,11 +242,13 @@ html, body {
 .card {
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   border-radius: 12px !important;
-  background: #0c0c11 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
   color: #ffffff !important;
   box-shadow:
     0 calc(10px + var(--focus) * 24px) calc(20px + var(--focus) * 36px)
-      rgba(0, 0, 0, calc(0.7 + var(--focus) * 0.3)),
+      rgba(0, 0, 0, calc(0.5 + var(--focus) * 0.3)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
   cursor: pointer;
 }
@@ -369,13 +378,14 @@ export function CharacterCarousel({
   return (
     <div
       className={`threeui-background character-carousel character-carousel--${variant}${className ? ` ${className}` : ""}`}
-      style={{ background: "#000000", border: 0, pointerEvents: "auto", ...style }}
+      style={{ background: "transparent", border: 0, pointerEvents: "auto", ...style }}
     >
       <iframe
         ref={iframeRef}
         title="Interactive MCU character filmstrip"
         srcDoc={source}
         sandbox="allow-scripts allow-same-origin"
+        allowTransparency={true}
         onLoad={postControls}
         style={{
           position: "absolute",
@@ -384,7 +394,8 @@ export function CharacterCarousel({
           width: "100%",
           height: "100%",
           border: 0,
-          background: "#000000",
+          background: "transparent",
+          backgroundColor: "transparent",
           opacity: clamp(opacity, 0.05, 1),
         }}
       />

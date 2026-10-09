@@ -267,4 +267,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation: nodeGlow 3s ease-in-out infinite;
 }
 
+.character-carousel,
+.character-carousel iframe,
+.character-carousel .stage,
+.shader-frame {
+  background: transparent !important;
+}
+
+
 

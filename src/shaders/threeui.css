@@ -371,7 +371,7 @@
 .threeui-background {
   position: relative;
   isolation: isolate;
-  background: #030304;
+  background: transparent;
 }
 
 .threeui-background.condensation {

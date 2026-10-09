@@ -1250,21 +1250,21 @@ export default function DarkFamilyTree({
       <div className="fixed bottom-4 sm:bottom-6 left-3 sm:left-6 z-30 flex items-center gap-1.5 pointer-events-auto">
         <button
           onClick={zoomIn}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-stone-300 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-xl cursor-pointer shadow-[0_4px_20px_0_rgba(0,0,0,0.3)]"
           title="Zoom In"
         >
           <ZoomIn size={13} />
         </button>
         <button
           onClick={zoomOut}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-stone-300 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-xl cursor-pointer shadow-[0_4px_20px_0_rgba(0,0,0,0.3)]"
           title="Zoom Out"
         >
           <ZoomOut size={13} />
         </button>
         <button
           onClick={resetView}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/80 hover:bg-stone-900 text-stone-400 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-md cursor-pointer shadow-lg"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-stone-300 hover:text-white flex items-center justify-center text-xs transition-colors backdrop-blur-xl cursor-pointer shadow-[0_4px_20px_0_rgba(0,0,0,0.3)]"
           title="Fit All Families"
         >
           <RotateCcw size={12} />
