@@ -26,6 +26,7 @@ import { useTimelineState } from "@/context/TimelineStateContext";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
 import SearchOverlay from "@/components/SearchOverlay";
 import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+import { isUpcomingMovie } from "@/components/map/DeepMovieDetail";
 
 
 const TIMELINE_PHASES = [
@@ -819,6 +820,7 @@ export default function TimelineScrollableView() {
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3.5 sm:gap-5">
                               {earthMovies.map((movie) => {
                                 const posterUrl = getMoviePoster(movie);
+                                const upcoming = isUpcomingMovie(movie);
                                 return (
                                   <Link
                                     key={movie.id}
@@ -828,6 +830,11 @@ export default function TimelineScrollableView() {
                                     className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                                   >
                                     <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                                      {upcoming && (
+                                        <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
+                                          COMING SOON
+                                        </div>
+                                      )}
                                       <img
                                         src={posterUrl}
                                         alt={movie.title}
@@ -848,7 +855,11 @@ export default function TimelineScrollableView() {
                                         {movie.title}
                                       </h3>
                                       <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
-                                        <span>{movie.year}</span>
+                                        {upcoming ? (
+                                          <span className="text-amber-400 font-bold">COMING SOON</span>
+                                        ) : (
+                                          <span>{movie.year}</span>
+                                        )}
                                         {movie.runtime ? (
                                           <>
                                             <span className="text-stone-700">•</span>
@@ -869,6 +880,7 @@ export default function TimelineScrollableView() {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3.5 sm:gap-5">
                       {movies.map((movie) => {
                         const posterUrl = getMoviePoster(movie);
+                        const upcoming = isUpcomingMovie(movie);
                         return (
                           <Link
                             key={movie.id}
@@ -878,6 +890,11 @@ export default function TimelineScrollableView() {
                             className="group relative flex flex-col gap-2 transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5"
                           >
                             <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
+                              {upcoming && (
+                                <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
+                                  COMING SOON
+                                </div>
+                              )}
                               <img
                                 src={posterUrl}
                                 alt={movie.title}
@@ -898,7 +915,11 @@ export default function TimelineScrollableView() {
                                 {movie.title}
                               </h3>
                               <div className="flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono uppercase tracking-wider text-stone-500">
-                                <span>{movie.year}</span>
+                                {upcoming ? (
+                                  <span className="text-amber-400 font-bold">COMING SOON</span>
+                                ) : (
+                                  <span>{movie.year}</span>
+                                )}
                                 {movie.runtime ? (
                                   <>
                                     <span className="text-stone-700">•</span>

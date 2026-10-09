@@ -40,7 +40,7 @@ export default function MovieDetail({
       <Reveal delay={80}>
         <div className="flex items-center gap-2 mt-6 mb-2">
           <span className="text-[10px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">
-            Phase {entry.phase} · {entry.type.toUpperCase()} {entry.status === "upcoming" ? "· Upcoming" : ""}
+            Phase {entry.phase} · {entry.type.toUpperCase()} {entry.status === "upcoming" ? "· COMING SOON" : ""}
           </span>
           <span className="text-xs font-mono text-stone-500 flex items-center gap-1">
             <Calendar size={12} /> {entry.year}

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { UNIFIED_MCU_TREE, PHASES_CONFIG, type MovieNode } from "@/data/movies";
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
+import { isUpcomingMovie } from "@/components/map/DeepMovieDetail";
 
 function getMoviePoster(node: MovieNode) {
   const posterEntry =
@@ -451,6 +452,11 @@ export default function TimelineDoomsdayLayout({
                     <div className={`relative w-14 h-20 xs:w-18 xs:h-26 sm:w-22 sm:h-32 md:w-24 md:h-36 rounded-lg overflow-hidden bg-stone-950 shrink-0 border border-stone-800/90 group-hover/card:border-white/80 group-hover/card:scale-110 group-hover/card:-translate-y-2 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_4px_16px_rgba(0,0,0,0.6)] group-hover/card:shadow-[0_20px_40px_rgba(0,0,0,0.95)] ${
                       isEven ? "group-hover/card:rotate-[-1.5deg]" : "group-hover/card:rotate-[1.5deg]"
                     }`}>
+                      {isUpcomingMovie(movie) && (
+                        <div className="absolute top-1.5 left-1.5 z-20 px-1.5 py-0.5 rounded bg-amber-500 text-black text-[7px] sm:text-[7.5px] font-mono font-extrabold tracking-wider uppercase shadow-md">
+                          COMING SOON
+                        </div>
+                      )}
                       <img
                         src={posterUrl}
                         alt={movie.title}
@@ -471,6 +477,12 @@ export default function TimelineDoomsdayLayout({
                           isEven ? "md:justify-end" : "md:justify-start"
                         }`}
                       >
+                        {isUpcomingMovie(movie) && (
+                          <>
+                            <span className="text-amber-400 font-bold">COMING SOON</span>
+                            <span className="text-stone-600">•</span>
+                          </>
+                        )}
                         <span className="text-stone-300 font-bold transition-colors duration-300 group-hover/card:text-white">
                           {movie.phase === 7 ? (movie.earthDesignation || "MULTIVERSE") : `PHASE ${movie.phase}`}
                         </span>

@@ -154,8 +154,36 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "venom-2": "https://image.tmdb.org/t/p/original/eENEf62tMXbhyVvdcXlnQz2wcuT.jpg",
   "venom-the-last-dance": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
   "venom-last-dance": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
-  "venom-3": "https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
 };
+
+export const UPCOMING_MOVIE_IDS = new Set([
+  "spiderman-brand-new-day",
+  "spider-man-brand-new-day",
+  "visionquest",
+  "vision-quest",
+  "avengers-doomsday",
+  "avengers-secret-wars",
+  "zodiac",
+  "marvel-zodiac",
+  "marvel-zombies-winter-soldier",
+  "marvel-zombies-the-winter-soldier",
+  "marvel-zombies-fist-of-khonshu",
+  "marvel-zombies-the-fist-of-khonshu",
+  "marvel-zombies-last-guardian",
+  "marvel-zombies-the-last-guardian",
+  "blade",
+  "wonder-man",
+  "armor-wars",
+  "nova",
+]);
+
+export function isUpcomingMovie(movie?: { id?: string; year?: number; status?: string } | null): boolean {
+  if (!movie) return false;
+  if (movie.status === "upcoming") return true;
+  if (movie.id && UPCOMING_MOVIE_IDS.has(movie.id.toLowerCase())) return true;
+  if (movie.year && movie.year >= 2026) return true;
+  return false;
+}
 
 export default function DeepMovieDetail({
   movie,
@@ -271,6 +299,11 @@ export default function DeepMovieDetail({
           }`}
         >
           <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start">
+            {isUpcomingMovie(movie) && (
+              <div className="absolute top-3 left-3 z-30 px-2.5 py-1 rounded bg-amber-500 text-black text-[9.5px] font-mono font-black tracking-widest uppercase shadow-xl backdrop-blur-md">
+                COMING SOON
+              </div>
+            )}
             <img
               src={posterSrc}
               alt={movie.title}
@@ -400,6 +433,14 @@ export default function DeepMovieDetail({
             )}
 
             <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-400 uppercase font-semibold">
+              {isUpcomingMovie(movie) && (
+                <>
+                  <span className="px-2.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold tracking-wider">
+                    COMING SOON
+                  </span>
+                  <span className="text-stone-600">•</span>
+                </>
+              )}
               {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
                 <>
                   <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
