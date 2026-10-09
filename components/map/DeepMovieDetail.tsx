@@ -48,10 +48,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "ant-man-wasp": "/images/backdrops/ant-man-and-the-wasp.jpg",
   "the-punisher": "https://image.tmdb.org/t/p/original/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
   "punisher": "https://image.tmdb.org/t/p/original/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
-  "the-punisher-s2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
-  "punisher-s2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
-  "the-punisher-season-2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
-  "punisher-season-2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
+  "the-punisher-s2": "https://image.tmdb.org/t/p/original/bYRAALsl2HDAkliEBMK37QpG2uj.jpg",
+  "punisher-s2": "https://image.tmdb.org/t/p/original/bYRAALsl2HDAkliEBMK37QpG2uj.jpg",
+  "the-punisher-season-2": "https://image.tmdb.org/t/p/original/bYRAALsl2HDAkliEBMK37QpG2uj.jpg",
+  "punisher-season-2": "https://image.tmdb.org/t/p/original/bYRAALsl2HDAkliEBMK37QpG2uj.jpg",
   "captain-marvel": "/images/backdrops/captain-marvel.jpg",
   "avengers-endgame": "/images/backdrops/endgame.jpg",
   "endgame": "/images/backdrops/endgame.jpg",
@@ -171,14 +171,14 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "friendly-neighborhood-spider-man-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
   "spider-man-freshman-year-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
   "yfn-spiderman-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
-  "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "ghostrider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "ghost-rider-2007": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
-  "ghost-rider-spirit-of-vengeance": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
-  "ghost-rider-2": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
-  "ghostrider-2": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
-  "ghost-rider-spirit-of-vengeance-2011": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
-  "spirit-of-vengeance": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "ghost-rider": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
+  "ghostrider": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
+  "ghost-rider-2007": "https://image.tmdb.org/t/p/original/zbV32WKHFuEYLXLTpr0rmVjQn11.jpg",
+  "ghost-rider-spirit-of-vengeance": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
+  "ghost-rider-2": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
+  "ghostrider-2": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
+  "ghost-rider-spirit-of-vengeance-2011": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
+  "spirit-of-vengeance": "https://image.tmdb.org/t/p/original/ebNcAJfWsSbbv7VhboAvpUdOduJ.jpg",
 };
 
 export const RELEASED_MOVIE_IDS = new Set([
@@ -386,7 +386,9 @@ export default function DeepMovieDetail({
                 movie.title.toLowerCase().includes("holiday special") ||
                 movie.id === "shang-chi" ||
                 movie.title.toLowerCase().includes("shang-chi") ||
-                movie.title.toLowerCase().includes("friendly neighborhood")
+                movie.title.toLowerCase().includes("friendly neighborhood") ||
+                movie.title.toLowerCase().includes("punisher") ||
+                movie.title.toLowerCase().includes("spirit of vengeance")
                   ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
                   : movie.title.length > 28
                   ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
@@ -399,7 +401,9 @@ export default function DeepMovieDetail({
                 !movie.title.toLowerCase().includes("multiverse of madness") &&
                 !movie.title.toLowerCase().includes("holiday special") &&
                 !movie.title.toLowerCase().includes("shang-chi") &&
-                !movie.title.toLowerCase().includes("friendly neighborhood")
+                !movie.title.toLowerCase().includes("friendly neighborhood") &&
+                !movie.title.toLowerCase().includes("punisher") &&
+                !movie.title.toLowerCase().includes("spirit of vengeance")
                   ? "sm:whitespace-nowrap"
                   : ""
               } drop-shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
@@ -434,6 +438,20 @@ export default function DeepMovieDetail({
                   <span className="block">YOUR FRIENDLY NEIGHBORHOOD</span>
                   <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
                     SPIDER-MAN {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : movie.title.toLowerCase().includes("season 1") ? "(SEASON 1)" : ""}
+                  </span>
+                </>
+              ) : movie.title.toLowerCase().includes("punisher") && (movie.title.toLowerCase().includes("season 2") || movie.title.toLowerCase().includes("season 1")) ? (
+                <>
+                  <span className="block">THE PUNISHER</span>
+                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                    {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : "(SEASON 1)"}
+                  </span>
+                </>
+              ) : movie.id === "ghost-rider-spirit-of-vengeance" || movie.title.toLowerCase().includes("spirit of vengeance") ? (
+                <>
+                  <span className="block">GHOST RIDER</span>
+                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                    SPIRIT OF VENGEANCE
                   </span>
                 </>
               ) : movie.title.includes(":") ? (

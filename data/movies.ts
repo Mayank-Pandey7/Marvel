@@ -641,7 +641,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Skull Tactical Vest", "Pilgrim's Revolver", "Amy's Evidence Dossier"],
     description: "Former marine Frank Castle is pulled from his quiet nomadic life to protect teenager Amy Bendix from religious hitman John Pilgrim, while a scarred Billy Russo (Jigsaw) breaks out in New York seeking bloody vengeance.",
     color: "#e74c3c",
-    posterUrl: "https://image.tmdb.org/t/p/w780/z0GZ2W5d6Lsmc0cWqZ7B4f1K1qH.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
     x: 1350, y: 3960,
     offsetY: 60,
     connections: [
@@ -2472,7 +2472,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Hell Cycle", "Hellfire Chain", "Contract of San Venganza"],
     description: "Stunt motorcyclist Johnny Blaze gives up his soul to Mephistopheles to save his father, transforming by night into the supernatural bounty hunter Ghost Rider to defeat the rebellious demon Blackheart.",
     color: "#f97316",
-    posterUrl: "https://image.tmdb.org/t/p/w780/8LaV548f0XjK3mB5l6f4iWq4r3X.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/4quwR1VwZouD0YF9AaD72kQAjxH.jpg",
     x: 6200, y: 10200,
     offsetY: 120,
     connections: [
@@ -2500,7 +2500,7 @@ export const UNIFIED_MCU_TREE: MovieNode[] = [
     keyRelics: ["Flaming Mining Excavator", "Zarathos Hellfire", "Hell Cycle"],
     description: "Hiding in Eastern Europe to contain his curse, Johnny Blaze is recruited by a secret religious order to protect a young boy named Danny from the devil Roarke, unleashing Zarathos in an explosive battle of blue celestial hellfire.",
     color: "#ea580c",
-    posterUrl: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w780/xEoBT6lYfQNpSpTm8gJMTrQytiw.jpg",
     x: 6400, y: 10200,
     offsetY: -120,
     connections: [
