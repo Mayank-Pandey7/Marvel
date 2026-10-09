@@ -311,7 +311,7 @@ export default function DeepMovieDetail({
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
-          <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start">
+          <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start flex items-center justify-center">
             {isUpcomingMovie(movie) && (
               <div className="absolute top-3 left-3 z-30 px-2.5 py-1 rounded bg-amber-500 text-black text-[9.5px] font-mono font-black tracking-widest uppercase shadow-xl backdrop-blur-md">
                 COMING SOON
@@ -328,7 +328,11 @@ export default function DeepMovieDetail({
                   target.src = fallback;
                 }
               }}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              className={`w-full h-full ${
+                movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac"
+                  ? "object-contain p-3 sm:p-4 bg-black"
+                  : "object-cover object-center"
+              } transition-transform duration-700 group-hover:scale-105`}
             />
             <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
           </div>

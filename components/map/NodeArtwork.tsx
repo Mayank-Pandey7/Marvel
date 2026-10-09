@@ -717,7 +717,11 @@ export default function NodeArtwork({
           src={data.poster}
           alt={data.fallbackText || movieId}
           onError={() => setImgError(true)}
-          className={`w-full h-full object-cover object-center transition-all duration-500 ${
+          className={`w-full h-full ${
+            movieId === "zodiac" || movieId === "marvel-zodiac" || movieId === "zodiac-series" || movieId?.toLowerCase()?.includes("zodiac")
+              ? "object-contain p-2 bg-black"
+              : "object-cover object-center"
+          } transition-all duration-500 ${
             isActive
               ? "scale-110 brightness-110 contrast-105"
               : "scale-100 brightness-100 contrast-100 group-hover:scale-105 group-hover:brightness-105"

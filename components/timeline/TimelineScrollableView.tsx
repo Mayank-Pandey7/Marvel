@@ -840,7 +840,11 @@ export default function TimelineScrollableView() {
                                         alt={movie.title}
                                         loading="lazy"
                                         decoding="async"
-                                        className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out [image-rendering:-webkit-optimize-contrast]"
+                                        className={`w-full h-full ${
+                                          movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase() === "zodiac"
+                                            ? "object-contain p-2.5 bg-black"
+                                            : "object-cover object-center"
+                                        } filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out [image-rendering:-webkit-optimize-contrast]`}
                                         onError={(e) => {
                                           (e.target as HTMLImageElement).src =
                                             "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
@@ -900,7 +904,11 @@ export default function TimelineScrollableView() {
                                 alt={movie.title}
                                 loading="lazy"
                                 decoding="async"
-                                className="w-full h-full object-cover object-center filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out [image-rendering:-webkit-optimize-contrast]"
+                                className={`w-full h-full ${
+                                  movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase() === "zodiac"
+                                    ? "object-contain p-2.5 bg-black"
+                                    : "object-cover object-center"
+                                } filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 ease-out [image-rendering:-webkit-optimize-contrast]`}
                                 onError={(e) => {
                                   (e.target as HTMLImageElement).src =
                                     "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";

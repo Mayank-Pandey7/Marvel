@@ -462,7 +462,11 @@ export default function TimelineDoomsdayLayout({
                         alt={movie.title}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover/card:scale-108 [image-rendering:-webkit-optimize-contrast]"
+                        className={`w-full h-full ${
+                          movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase() === "zodiac"
+                            ? "object-contain p-1.5 bg-black"
+                            : "object-cover"
+                        } transition-transform duration-600 ease-out group-hover/card:scale-108 [image-rendering:-webkit-optimize-contrast]`}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
                             "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";

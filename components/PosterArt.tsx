@@ -24,7 +24,11 @@ export default function PosterArt({ entry, size = "normal" }: { entry: MCUEntry;
           alt={entry.title}
           onError={() => setImgError(true)}
           loading="lazy"
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
+          className={`w-full h-full ${
+            entry.id === "zodiac" || entry.id === "marvel-zodiac" || entry.id === "zodiac-series" || entry.title?.toLowerCase() === "zodiac"
+              ? "object-contain p-2 bg-black"
+              : "object-cover object-center"
+          } transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-110`}
         />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center opacity-25">

@@ -702,7 +702,11 @@ export default function RoadToDoomsday() {
                             src={posterSrc}
                             alt={item.title}
                             loading="lazy"
-                            className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover/card:scale-108"
+                            className={`w-full h-full ${
+                              item.id === "zodiac" || item.id === "marvel-zodiac" || item.id === "zodiac-series" || item.title?.toLowerCase() === "zodiac"
+                                ? "object-contain p-1.5 bg-black"
+                                : "object-cover"
+                            } transition-transform duration-600 ease-out group-hover/card:scale-108`}
                             onError={(e) => {
                               (e.target as HTMLImageElement).src =
                                 "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg";
