@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useCallback, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Search, ArrowRight, ArrowLeft, X, Zap } from "lucide-react";
 import PageShell from "@/components/PageShell";
@@ -43,18 +43,26 @@ function MultiverseContent() {
     return "all";
   });
 
-  const [activeUniverseId, setActiveUniverseId] = useState<string | null>(paramUniverse || null);
+  const [activeUniverseId, setActiveUniverseId] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const univParam = urlParams.get("universe");
+      if (univParam && UNIVERSES.some((u) => u.id === univParam)) {
+        return univParam;
+      }
+    }
+    return paramUniverse || "earth-616";
+  });
   const [stage, setStage] = useState<"entering" | "expanded" | "closing">("entering");
   const [navMenuOpen, setNavMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    if (activeUniverseId) {
-      setStage("entering");
-      const t = setTimeout(() => {
-        setStage("expanded");
-      }, 40);
-      return () => clearTimeout(t);
-    }
+    setStage("entering");
+    const t = setTimeout(() => {
+      setStage("expanded");
+    }, 40);
+    return () => clearTimeout(t);
   }, [activeUniverseId]);
 
   useEffect(() => {
@@ -147,13 +155,12 @@ function MultiverseContent() {
   const handleClose = () => {
     setStage("closing");
     setTimeout(() => {
-      setActiveUniverseId(null);
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("universe");
-        window.history.replaceState({}, "", url.toString());
-      } catch {}
-    }, 450);
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.back();
+      } else {
+        router.push("/timeline");
+      }
+    }, 300);
   };
 
   const handleNext = useCallback(() => {
@@ -332,6 +339,28 @@ function MultiverseContent() {
                 <span className="text-stone-600">•</span>
                 <span className="text-stone-300">DIMENSION {activeIndex + 1} OF {filteredUniverses.length}</span>
               </div>
+
+              {/* Floating Earth Quick-Switcher Pills */}
+              <div className="mt-5 flex items-center flex-wrap gap-1.5 max-w-2xl pt-2 border-t border-white/10">
+                <span className="text-[9px] font-mono uppercase tracking-widest text-stone-500 mr-1">SWITCH REALITY:</span>
+                {UNIVERSES.map((u) => {
+                  const isCur = u.id === currentUniverse.id;
+                  const label = u.designation.split("/")[0].trim().replace("Earth-", "E-");
+                  return (
+                    <button
+                      key={u.id}
+                      onClick={() => setActiveUniverseId(u.id)}
+                      className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                        isCur
+                          ? "bg-white text-black font-bold shadow-md scale-105"
+                          : "bg-white/5 hover:bg-white/15 text-stone-400 hover:text-white border border-white/10"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </main>
@@ -339,165 +368,7 @@ function MultiverseContent() {
     );
   }
 
-  // Main Archives Grid View (Synchronized with /artifacts and /characters/heroes)
-  return (
-    <PageShell backHref="/timeline" backLabel="TIMELINE">
-      {/* Top-Right Floating SELECT REALITIES List matching /artifacts styling */}
-      <div
-        className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
-      >
-        {/* SELECT REALITIES pill */}
-        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
-          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
-            SELECT REALITIES
-          </span>
-        </div>
-
-        {/* Reality Category LineNav */}
-        <div className="pointer-events-auto">
-          <LineNav
-            align="right"
-            className="w-auto"
-            items={universeNavItems}
-            activeHref={`#${selectedCategory}`}
-            scrollActiveIntoView={false}
-            onItemClick={(item) => {
-              const key = item.href.replace("#", "");
-              handleSelectCategory(key);
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="relative min-h-[calc(100vh-80px)] w-full bg-transparent text-stone-300 font-sans selection:bg-white selection:text-black">
-        <div className="relative z-10 mx-auto flex flex-col gap-10 max-w-5xl px-3 sm:px-6 md:px-8 pt-10 sm:pt-12 pb-24">
-          {/* Search and Overview Bar */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 w-full">
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="text-xs font-mono tracking-[0.25em] text-stone-400 uppercase font-bold">
-                ARCHIVES · {filteredUniverses.length} REALITIES &amp; DIMENSIONS
-              </span>
-              <span className="text-stone-600 font-mono text-xs">•</span>
-              <span className="text-[10px] sm:text-[11px] font-mono tracking-wider text-amber-400/90 uppercase font-semibold">
-                {activeCategoryMeta.title}
-              </span>
-            </div>
-
-            <div className="relative w-full sm:w-72 md:w-80 flex items-center bg-white/[0.04] border border-white/10 px-4 py-2 rounded-full focus-within:border-white/30 transition-all">
-              <Search size={14} className="text-stone-400 shrink-0 mr-2.5" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH REALITIES..."
-                className="w-full bg-transparent text-[11px] sm:text-xs font-mono tracking-[0.16em] uppercase text-stone-100 placeholder:text-stone-500 focus:outline-none"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="text-stone-400 hover:text-stone-200 text-[9.5px] font-mono tracking-widest px-2 py-0.5 uppercase cursor-pointer"
-                >
-                  CLEAR
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Empty State or Sections */}
-          {filteredUniverses.length === 0 ? (
-            <div className="text-center py-28 w-full flex flex-col items-center justify-center animate-in fade-in duration-300">
-              <h3 className="text-sm font-mono tracking-[0.25em] uppercase text-stone-300 font-bold">
-                NO RECORDS FOUND
-              </h3>
-              <p className="text-xs font-mono tracking-wide text-stone-500 mt-1.5 max-w-sm mx-auto">
-                No multiverse dimension matches the active category or search query.
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery("");
-                  handleSelectCategory("all");
-                }}
-                className="mt-5 text-stone-300 hover:text-white text-[10px] font-mono tracking-widest uppercase cursor-pointer bg-white/5 border border-white/10 px-4 py-1.5 rounded-full hover:bg-white/10 transition-colors"
-              >
-                RESET FILTERS
-              </button>
-            </div>
-          ) : selectedCategory === "all" && !searchQuery ? (
-            <div className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              {CATEGORIES.filter((c) => c.id !== "all").map((cat) => {
-                const items = UNIVERSES.filter((u) => u.category === cat.id);
-                if (items.length === 0) return null;
-                return (
-                  <section
-                    key={`category-section-${cat.id}`}
-                    id={`category-section-${cat.id}`}
-                    className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
-                          {cat.badge}
-                        </span>
-                        <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
-                          {cat.title}
-                        </span>
-                      </div>
-                      <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
-                        {items.length} {items.length === 1 ? "REALITY" : "REALITIES"}
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
-                      {items.map((universe, index) => (
-                        <StampUniverseCard
-                          key={universe.id}
-                          universe={universe}
-                          index={index}
-                          onClick={() => setActiveUniverseId(universe.id)}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-14 animate-in fade-in-0 slide-in-from-bottom-8 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              <section
-                key={`category-section-${selectedCategory}`}
-                className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
-                  <div className="flex items-center gap-2.5 sm:gap-3">
-                    <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
-                      {searchQuery ? "SEARCH RESULTS" : activeCategoryMeta.badge}
-                    </span>
-                    <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
-                      {searchQuery ? `QUERY: "${searchQuery.toUpperCase()}"` : activeCategoryMeta.title}
-                    </span>
-                  </div>
-                  <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
-                    {filteredUniverses.length} {filteredUniverses.length === 1 ? "REALITY" : "REALITIES"}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
-                  {filteredUniverses.map((universe, index) => (
-                    <StampUniverseCard
-                      key={universe.id}
-                      universe={universe}
-                      index={index}
-                      onClick={() => setActiveUniverseId(universe.id)}
-                    />
-                  ))}
-                </div>
-              </section>
-            </div>
-          )}
-        </div>
-      </div>
-    </PageShell>
-  );
+  return null;
 }
 
 export default function MultiversePage() {

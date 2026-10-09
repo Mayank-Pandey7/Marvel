@@ -6,6 +6,7 @@ import { DOOMSDAY_WATCHLIST } from "@/data/doomsdayWatchlist";
 import MovieSlugDetail from "@/components/map/MovieSlugDetail";
 import { getTopTierHero, HERO_SLUG_ALIASES } from "@/data/topTierHeroes";
 import { getTopTierVillain, VILLAIN_SLUG_ALIASES } from "@/data/topTierVillains";
+import { UNIVERSES } from "@/data/universes";
 import { TopTierHeroExperience } from "@/components/character/TopTierHeroExperience";
 import { CosmicEntityExperience } from "@/components/villains/CosmicEntityExperience";
 
@@ -240,6 +241,43 @@ function resolveMovieNode(slug: string): MovieNode | null {
   );
   if (titleMatch) return titleMatch;
 
+  const universeMatch = UNIVERSES.find(
+    (u) =>
+      u.id.toLowerCase() === normalizedSlug ||
+      (aliasedId && u.id.toLowerCase() === aliasedId.toLowerCase()) ||
+      u.name.toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedSlug.replace(/[^a-z0-9]/g, "")
+  );
+  if (universeMatch) {
+    return {
+      id: universeMatch.id,
+      title: universeMatch.name,
+      shortTitle: universeMatch.designation.split("/")[0].trim(),
+      year: 2026,
+      releaseDate: "MULTIVERSAL ARCHIVE",
+      phase: 7,
+      order: 1,
+      quote: universeMatch.incursionVector,
+      speaker: universeMatch.anchorBeing ? `Anchor: ${universeMatch.anchorBeing.split("(")[0].trim()}` : "Multiverse Reality",
+      tagline: universeMatch.designation,
+      director: universeMatch.governingForce,
+      runtime: 0,
+      leadCharacter: universeMatch.anchorBeing,
+      heroAlias: universeMatch.threatLevel.replace("_", " ") + " THREAT",
+      keyRelics: universeMatch.keyNexusEvents || [],
+      description: universeMatch.description,
+      color: universeMatch.color,
+      posterUrl: universeMatch.backdrop,
+      backdropUrl: universeMatch.backdrop,
+      keyCharacters: universeMatch.keyInhabitants,
+      earthDesignation: universeMatch.designation.split("/")[0].trim(),
+      earthName: universeMatch.name,
+      x: 0,
+      y: 0,
+      offsetY: 0,
+      connections: [],
+    } as unknown as MovieNode;
+  }
+
   return null;
 }
 
@@ -267,6 +305,12 @@ export function generateStaticParams() {
   UNIFIED_MCU_TREE.forEach((m) => {
     if (m.id && !RESERVED_ROOT_ROUTES.has(m.id.toLowerCase())) {
       slugSet.add(m.id.toLowerCase());
+    }
+  });
+
+  UNIVERSES.forEach((u) => {
+    if (u.id && !RESERVED_ROOT_ROUTES.has(u.id.toLowerCase())) {
+      slugSet.add(u.id.toLowerCase());
     }
   });
 
