@@ -48,6 +48,10 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "ant-man-wasp": "/images/backdrops/ant-man-and-the-wasp.jpg",
   "the-punisher": "https://image.tmdb.org/t/p/original/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
   "punisher": "https://image.tmdb.org/t/p/original/jBGjbSDRxOEudW9rmQbWDzJUKq9.jpg",
+  "the-punisher-s2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
+  "punisher-s2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
+  "the-punisher-season-2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
+  "punisher-season-2": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
   "captain-marvel": "/images/backdrops/captain-marvel.jpg",
   "avengers-endgame": "/images/backdrops/endgame.jpg",
   "endgame": "/images/backdrops/endgame.jpg",
@@ -167,6 +171,14 @@ export const MCU_BACKDROP_MAP: Record<string, string> = {
   "friendly-neighborhood-spider-man-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
   "spider-man-freshman-year-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
   "yfn-spiderman-s2": "https://cdn.marvel.com/content/2x/yourfriendlyneighborhoodspidermans2_lob_mas_dsk_01.webp",
+  "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "ghostrider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "ghost-rider-2007": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "ghost-rider-spirit-of-vengeance": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "ghost-rider-2": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "ghostrider-2": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "ghost-rider-spirit-of-vengeance-2011": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "spirit-of-vengeance": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
 };
 
 export const RELEASED_MOVIE_IDS = new Set([
@@ -179,6 +191,18 @@ export const RELEASED_MOVIE_IDS = new Set([
   "friendly-neighborhood-spider-man",
   "spider-man-freshman-year",
   "yfn-spiderman",
+  "ghost-rider",
+  "ghostrider",
+  "ghost-rider-2007",
+  "ghost-rider-spirit-of-vengeance",
+  "ghost-rider-2",
+  "ghostrider-2",
+  "ghost-rider-spirit-of-vengeance-2011",
+  "spirit-of-vengeance",
+  "the-punisher-s2",
+  "punisher-s2",
+  "the-punisher-season-2",
+  "punisher-season-2",
 ]);
 
 export const UPCOMING_MOVIE_IDS = new Set([

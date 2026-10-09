@@ -185,6 +185,26 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "friendly-neighborhood-spider-man-s2": "your-friendly-neighborhood-spider-man-s2",
   "friendly-neighborhood-s2": "your-friendly-neighborhood-spider-man-s2",
   "spider-man-freshman-year-s2": "your-friendly-neighborhood-spider-man-s2",
+  "sophomore-year": "your-friendly-neighborhood-spider-man-s2",
+  "yfn-spiderman-s2": "your-friendly-neighborhood-spider-man-s2",
+
+  "the-punisher-s2": "the-punisher-s2",
+  "the-punisher-season-2": "the-punisher-s2",
+  "punisher-s2": "the-punisher-s2",
+  "punisher-season-2": "the-punisher-s2",
+  "punisher-2": "the-punisher-s2",
+
+  "ghost-rider": "ghost-rider",
+  "ghostrider": "ghost-rider",
+  "ghost-rider-1": "ghost-rider",
+  "ghost-rider-2007": "ghost-rider",
+  "ghost-rider-spirit-of-vengeance": "ghost-rider-spirit-of-vengeance",
+  "ghost-rider-spirit-of-vengeance-2011": "ghost-rider-spirit-of-vengeance",
+  "ghost-rider-2": "ghost-rider-spirit-of-vengeance",
+  "ghostrider-2": "ghost-rider-spirit-of-vengeance",
+  "spirit-of-vengeance": "ghost-rider-spirit-of-vengeance",
+  "friendly-neighborhood-s2": "your-friendly-neighborhood-spider-man-s2",
+  "spider-man-freshman-year-s2": "your-friendly-neighborhood-spider-man-s2",
   "yfn-spiderman-s2": "your-friendly-neighborhood-spider-man-s2",
 };
 

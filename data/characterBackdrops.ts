@@ -229,10 +229,16 @@ export const CHARACTER_IMAGE_MAP: Record<string, string> = {
   "bullseye": "/images/characters/bullseye.jpg",
   "sabretooth": "/images/characters/sabretooth.jpg",
   "pyro": "/images/characters/pyro.jpg",
-  "juggernaut": "/images/characters/juggernaut.jpg"
+  "juggernaut": "/images/characters/juggernaut.jpg",
+  "ghost-rider": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "johnny-blaze": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "frank-castle": "/images/characters/frank-castle.jpg"
 };
 
 export const ERA_SPECIFIC_BACKDROPS: Record<string, string> = {
+  "ghost-rider-2007": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+  "ghost-rider-spirit-of-vengeance-era": "https://image.tmdb.org/t/p/original/7X2C9hN1wJ7H6K3L4rF3D9v5xQ.jpg",
+  "punisher-s2-pilgrim": "https://image.tmdb.org/t/p/original/fr87mS6k13NlM93p1n6x8m8hDkF.jpg",
   "toaa-genesis": "/images/backdrops/battleworld.jpg",
   "beyonder-secret-wars": "/images/backdrops/battleworld.jpg",
   "toba-below-place": "/images/backdrops/the-incredible-hulk.jpg",

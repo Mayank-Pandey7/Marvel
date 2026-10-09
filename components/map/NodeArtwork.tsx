@@ -164,6 +164,66 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#e74c3c",
     fallbackText: "PUNISHER",
   },
+  "the-punisher-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/z0GZ2W5d6Lsmc0cWqZ7B4f1K1qH.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER S2",
+  },
+  "punisher-s2": {
+    poster: "https://image.tmdb.org/t/p/w780/z0GZ2W5d6Lsmc0cWqZ7B4f1K1qH.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER S2",
+  },
+  "the-punisher-season-2": {
+    poster: "https://image.tmdb.org/t/p/w780/z0GZ2W5d6Lsmc0cWqZ7B4f1K1qH.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER S2",
+  },
+  "punisher-season-2": {
+    poster: "https://image.tmdb.org/t/p/w780/z0GZ2W5d6Lsmc0cWqZ7B4f1K1qH.jpg",
+    color: "#e74c3c",
+    fallbackText: "PUNISHER S2",
+  },
+  "ghost-rider": {
+    poster: "https://image.tmdb.org/t/p/w780/8LaV548f0XjK3mB5l6f4iWq4r3X.jpg",
+    color: "#f97316",
+    fallbackText: "GHOST RIDER",
+  },
+  "ghostrider": {
+    poster: "https://image.tmdb.org/t/p/w780/8LaV548f0XjK3mB5l6f4iWq4r3X.jpg",
+    color: "#f97316",
+    fallbackText: "GHOST RIDER",
+  },
+  "ghost-rider-2007": {
+    poster: "https://image.tmdb.org/t/p/w780/8LaV548f0XjK3mB5l6f4iWq4r3X.jpg",
+    color: "#f97316",
+    fallbackText: "GHOST RIDER",
+  },
+  "ghost-rider-spirit-of-vengeance": {
+    poster: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    color: "#ea580c",
+    fallbackText: "SPIRIT OF VENGEANCE",
+  },
+  "ghost-rider-2": {
+    poster: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    color: "#ea580c",
+    fallbackText: "SPIRIT OF VENGEANCE",
+  },
+  "ghostrider-2": {
+    poster: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    color: "#ea580c",
+    fallbackText: "SPIRIT OF VENGEANCE",
+  },
+  "ghost-rider-spirit-of-vengeance-2011": {
+    poster: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    color: "#ea580c",
+    fallbackText: "SPIRIT OF VENGEANCE",
+  },
+  "spirit-of-vengeance": {
+    poster: "https://image.tmdb.org/t/p/w780/vG9r3mE5G4D8eK8K5h9w8h2G6aD.jpg",
+    color: "#ea580c",
+    fallbackText: "SPIRIT OF VENGEANCE",
+  },
   "ant-man-wasp": {
     poster: "https://image.tmdb.org/t/p/w780/cFQEO687n1K6umXbInzocxcnAQz.jpg",
     color: "#fed330",

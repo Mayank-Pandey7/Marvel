@@ -370,6 +370,36 @@ export const UNIVERSES: UniverseDimension[] = [
     "color": "#ef4444"
   },
   {
+    "id": "earth-121347",
+    "name": "Earth-121347 (Ghost Rider Universe)",
+    "designation": "Spirit of Vengeance Reality / Columbia Pictures Marvel Knights",
+    "category": "alternate",
+    "threatLevel": "STABLE",
+    "anchorBeing": "Johnny Blaze / Ghost Rider (Nicolas Cage)",
+    "governingForce": "The Spirit of Vengeance (Zarathos)",
+    "description": "The supernatural realm where stunt cyclist Johnny Blaze made a blood pact with Mephistopheles to cure his father, becoming bound to the demon Zarathos as the flaming, leather-clad Spirit of Vengeance riding his Hell Cycle across the highway of lost souls.",
+    "keyInhabitants": [
+      "Johnny Blaze (Ghost Rider)",
+      "Carter Slade (Phantom Rider)",
+      "Roxanne Simpson",
+      "Mephistopheles",
+      "Blackheart",
+      "Zarathos",
+      "Moreau",
+      "Danny Ketch",
+      "Roarke (The Devil)",
+      "Carrigan (Blackout)"
+    ],
+    "keyNexusEvents": [
+      "San Venganza Contract Blood Pact",
+      "Penance Stare Annihilation of Blackheart (2007)",
+      "Zarathos Reawakens as Angel of Justice in Turkey (2011)"
+    ],
+    "incursionVector": "Connected to multiversal occult realms and demonic dimensions.",
+    "backdrop": "https://image.tmdb.org/t/p/original/k1yT3Xn1r4uM7gU7oH0G5T6dZ.jpg",
+    "color": "#f97316"
+  },
+  {
     "id": "gap-junction",
     "name": "The Gap Junction",
     "designation": "Nexus Space Between Dimensions",

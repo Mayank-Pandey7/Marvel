@@ -1167,6 +1167,43 @@ export const CHARACTERS: Character[] = [
     entries: ["spider-man-no-way-home", "she-hulk", "echo", "daredevil-born-again"]
   },
   {
+    id: "ghost-rider",
+    name: "Johnny Blaze",
+    aliases: ["Ghost Rider", "Spirit of Vengeance", "The Devil's Bounty Hunter", "Zarathos Wielder"],
+    universe: "Earth-121347",
+    faction: "Spirits of Vengeance / Occult Defenders",
+    role: "Supernatural bounty hunter wielding demonic hellfire and the Penance Stare.",
+    overview: "World-famous motorcycle stuntman Johnny Blaze made a pact with Mephistopheles to cure his dying father. Bound to the demon Zarathos, Blaze transforms into the flaming skull vigilante Ghost Rider, punishing the guilty with his Penance Stare and mystical Hell Cycle.",
+    firstAppearance: "Ghost Rider (2007)",
+    color: "#f97316",
+    statusByPhase: {
+      7: { status: "alive", note: "Roaming the globe as the Spirit of Vengeance with blue angelic hellfire." }
+    },
+    eras: [
+      {
+        eraId: "ghost-rider-2007",
+        phase: 7,
+        title: "Ghost Rider: Curse of Mephistopheles (2007)",
+        year: "2007",
+        universe: "Earth-121347",
+        description: "Embraced his flaming curse and turned his Penance Stare against Mephistopheles' traitorous son Blackheart.",
+        keyMoments: ["First transformation on the highway", "Graveyard ride alongside Carter Slade (Phantom Rider)", "Penance Stare destruction of Blackheart with thousands of souls"]
+      },
+      {
+        eraId: "ghost-rider-spirit-of-vengeance-era",
+        phase: 7,
+        title: "Ghost Rider: Spirit of Vengeance (2011)",
+        year: "2011",
+        universe: "Earth-121347",
+        description: "Protected young Danny Ketch in Eastern Europe, cleansing Zarathos into the Angel of Justice with brilliant blue hellfire.",
+        keyMoments: ["Ignited giant bucket-wheel excavator with hellfire", "Desert chase against Blackout", "Resurrected as the blue Angel of Justice to destroy the Devil"]
+      }
+    ],
+    artifactsPossessed: [],
+    linkedNexusEvents: [],
+    entries: ["ghost-rider", "ghost-rider-spirit-of-vengeance"]
+  },
+  {
     id: "punisher",
     name: "Frank Castle",
     aliases: ["The Punisher", "One Batch, Two Batch", "Death on Two Legs"],
@@ -1194,7 +1231,7 @@ export const CHARACTERS: Character[] = [
     ],
     artifactsPossessed: [],
     linkedNexusEvents: [],
-    entries: ["the-punisher", "daredevil-born-again"]
+    entries: ["the-punisher", "the-punisher-s2", "daredevil-born-again"]
   },
   {
     id: "kingpin",
