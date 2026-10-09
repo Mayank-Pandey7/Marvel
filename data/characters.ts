@@ -748,6 +748,34 @@ export const CHARACTERS: Character[] = [
     entries: ["spider-man-no-way-home"]
   },
   {
+    id: "spider-man-86445",
+    name: "Peter Parker (Earth-86445)",
+    aliases: ["Your Friendly Neighborhood Spider-Man", "Freshman Spidey", "Oscorp Protégé"],
+    universe: "Earth-86445",
+    faction: "Midtown High / Oscorp Allies",
+    role: "Young high school freshman discovering spider-powers under Norman Osborn's tutelage.",
+    overview: "In an alternate timeline where Norman Osborn became his mentor instead of Tony Stark, Peter balances homework and teen life while constructing homemade web gear and protecting NYC with allies like Nico Minoru and Matt Murdock.",
+    firstAppearance: "Your Friendly Neighborhood Spider-Man (2025)",
+    color: "#e11d48",
+    statusByPhase: {
+      7: { status: "alive", note: "Protecting New York as the animated Friendly Neighborhood Spider-Man." }
+    },
+    eras: [
+      {
+        eraId: "freshman-year-spidey",
+        phase: 7,
+        title: "Freshman Year: Osborn Mentorship",
+        year: "2025",
+        universe: "Earth-86445",
+        description: "Navigated high school trials and supervillain clashes under the watchful eye of Norman Osborn and Oscorp.",
+        keyMoments: ["Bitten by interdimensional spider", "Norman Osborn offers mentorship", "Street-level alliance with Daredevil"]
+      }
+    ],
+    artifactsPossessed: ["Oscorp Prototype Spider-Suit"],
+    linkedNexusEvents: ["nexus-osborn-mentor"],
+    entries: ["your-friendly-neighborhood-spider-man"]
+  },
+  {
     id: "deadpool",
     name: "Wade Wilson",
     aliases: ["Deadpool", "Merc with a Mouth", "Marvel Jesus", "Regenerating Degenerate"],

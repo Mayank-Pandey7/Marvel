@@ -159,6 +159,13 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "venom-3": "venom-the-last-dance",
   "venom-last-dance": "venom-the-last-dance",
   "last-dance": "venom-the-last-dance",
+
+  "your-friendly-neighborhood-spider-man": "your-friendly-neighborhood-spider-man",
+  "friendly-neighborhood-spider-man": "your-friendly-neighborhood-spider-man",
+  "friendly-neighborhood": "your-friendly-neighborhood-spider-man",
+  "spider-man-freshman-year": "your-friendly-neighborhood-spider-man",
+  "freshman-year": "your-friendly-neighborhood-spider-man",
+  "yfn-spiderman": "your-friendly-neighborhood-spider-man",
 };
 
 function parseRuntime(runtimeStr?: string): number {

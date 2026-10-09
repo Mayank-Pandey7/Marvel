@@ -122,7 +122,8 @@ export const EARTH_FILTER_OPTIONS = [
   { key: "Earth-121698", label: "EARTH-121698", shortLabel: "121698", count: 2, title: "Tim Story Fantastic Four Duology" },
   { key: "Earth-82111", label: "EARTH-82111", shortLabel: "82111", count: 3, title: "What If...? Animated Multiverse" },
   { key: "Earth-2149", label: "EARTH-2149", shortLabel: "2149", count: 4, title: "Marvel Zombies Apocalypse" },
-  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 79, title: "All Multiverse Timelines" },
+  { key: "Earth-86445", label: "EARTH-86445", shortLabel: "86445", count: 1, title: "Your Friendly Neighborhood Spider-Man" },
+  { key: "all", label: "ALL REALITIES", shortLabel: "ALL", count: 80, title: "All Multiverse Timelines" },
 ] as const;
 
 export const EARTH_NAV_ITEMS = [
@@ -134,7 +135,8 @@ export const EARTH_NAV_ITEMS = [
   { title: "EARTH-121698 • FANTASTIC FOUR", href: "#Earth-121698", count: 2 },
   { title: "EARTH-82111 • WHAT IF...?", href: "#Earth-82111", count: 3 },
   { title: "EARTH-2149 • MARVEL ZOMBIES", href: "#Earth-2149", count: 4 },
-  { title: "ALL REALITIES", href: "#all", count: 79 },
+  { title: "EARTH-86445 • FRIENDLY SPIDER-MAN", href: "#Earth-86445", count: 1 },
+  { title: "ALL REALITIES", href: "#all", count: 80 },
 ];
 
 import { MCU_POSTER_MAP } from "@/components/map/NodeArtwork";
@@ -831,7 +833,7 @@ export default function TimelineScrollableView() {
                                   >
                                     <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                                       {upcoming && (
-                                        <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md whitespace-nowrap leading-none select-none pointer-events-none">
+                                        <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
                                           COMING SOON
                                         </div>
                                       )}
@@ -895,7 +897,7 @@ export default function TimelineScrollableView() {
                           >
                             <div className="relative w-full aspect-[2/3] overflow-hidden bg-stone-950 rounded-xl border border-white/10 group-hover:border-white/30 shadow-xl transition-all block">
                               {upcoming && (
-                                <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md whitespace-nowrap leading-none select-none pointer-events-none">
+                                <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded bg-amber-500 text-black text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wider uppercase shadow-md">
                                   COMING SOON
                                 </div>
                               )}

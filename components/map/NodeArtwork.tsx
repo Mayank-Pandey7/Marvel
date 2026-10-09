@@ -685,6 +685,26 @@ export const MCU_POSTER_MAP: Record<string, { poster: string; color: string; fal
     color: "#6366f1",
     fallbackText: "VENOM 3",
   },
+  "your-friendly-neighborhood-spider-man": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN",
+  },
+  "friendly-neighborhood-spider-man": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN",
+  },
+  "spider-man-freshman-year": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN",
+  },
+  "yfn-spiderman": {
+    poster: "https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg",
+    color: "#e11d48",
+    fallbackText: "FRIENDLY SPIDER-MAN",
+  },
 };
 
 export default function NodeArtwork({

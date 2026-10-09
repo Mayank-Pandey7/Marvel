@@ -341,6 +341,34 @@ export const UNIVERSES: UniverseDimension[] = [
     "color": "#16a34a"
   },
   {
+    "id": "earth-86445",
+    "name": "Earth-86445 (Your Friendly Neighborhood Spider-Man)",
+    "designation": "Osborn Mentorship Reality / Animated Timeline",
+    "category": "whatif",
+    "threatLevel": "STABLE",
+    "anchorBeing": "Peter Parker / Spider-Man (Earth-86445)",
+    "governingForce": "Norman Osborn / Oscorp Industries",
+    "description": "An alternate animated Marvel Cinematic Universe reality where Norman Osborn becomes Peter Parker's mentor instead of Tony Stark, leading young Peter through his freshman year high school trials with unique allies like Nico Minoru, Lonnie Lincoln, and street encounters with Matt Murdock.",
+    "keyInhabitants": [
+      "Peter Parker (Spider-Man)",
+      "Norman Osborn",
+      "Harry Osborn",
+      "Otto Octavius",
+      "Matt Murdock (Daredevil)",
+      "Nico Minoru",
+      "Lonnie Lincoln",
+      "Bentley Wittman"
+    ],
+    "keyNexusEvents": [
+      "Oscorp Interdimensional Spider Bite",
+      "Norman Osborn Becomes Peter's Mentor",
+      "Vigilante Debut in New York"
+    ],
+    "incursionVector": "Branch timeline monitored by multiversal observers.",
+    "backdrop": "https://image.tmdb.org/t/p/original/kkT2B2gmynoh9kZMo1gromLNeqy.jpg",
+    "color": "#ef4444"
+  },
+  {
     "id": "gap-junction",
     "name": "The Gap Junction",
     "designation": "Nexus Space Between Dimensions",
