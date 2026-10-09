@@ -146,6 +146,19 @@ const MOVIE_SLUG_ALIASES: Record<string, string> = {
   "venom-3": "venom-the-last-dance",
   "venom-last-dance": "venom-the-last-dance",
   "last-dance": "venom-the-last-dance",
+
+  "marvel-zombies": "marvel-zombies",
+  "zombies": "marvel-zombies",
+  "marvel-zombies-winter-soldier": "marvel-zombies-winter-soldier",
+  "zombies-winter-soldier": "marvel-zombies-winter-soldier",
+  "marvel-zombies-the-winter-soldier": "marvel-zombies-winter-soldier",
+  "marvel-zombies-fist-of-khonshu": "marvel-zombies-fist-of-khonshu",
+  "zombies-fist-of-khonshu": "marvel-zombies-fist-of-khonshu",
+  "marvel-zombies-the-fist-of-khonshu": "marvel-zombies-fist-of-khonshu",
+  "marvel-zombies-last-guardian": "marvel-zombies-last-guardian",
+  "zombies-last-guardian": "marvel-zombies-last-guardian",
+  "marvel-zombies-the-last-guardian": "marvel-zombies-last-guardian",
+  "the-last-guardian": "marvel-zombies-last-guardian",
 };
 
 function resolveMovieNode(slug: string): MovieNode | null {

@@ -319,17 +319,22 @@ export const UNIVERSES: UniverseDimension[] = [
     "threatLevel": "INCURSION_IMMINENT",
     "anchorBeing": "Zombie Scarlet Witch",
     "governingForce": "The Undead Avengers / Zombie Thanos",
-    "description": "A horrific reality where a quantum virus brought back from the Quantum Realm by Janet van Dyne infected the Avengers, creating flesh-eating super-powered undead with Infinity Gauntlets.",
+    "description": "A horrific reality where a quantum virus infected the Avengers. Expanded at NYCC into a multi-part event saga spanning Marvel Zombies (2025), The Winter Soldier (2027), The Fist of Khonshu (2028), and the trilogy finale The Last Guardian (2029).",
     "keyInhabitants": [
       "Zombie Captain America",
-      "Zombie Iron Man",
+      "Zombie Winter Soldier",
+      "Moon Knight (Fist of Khonshu)",
+      "The Last Guardian",
       "Zombie Scarlet Witch",
       "Spider-Man (Survivor)",
       "Zombie Thanos"
     ],
     "keyNexusEvents": [
       "Quantum Virus Outbreak in San Francisco",
-      "Zombie Thanos Completing the Gauntlet"
+      "Zombie Thanos Completing the Gauntlet",
+      "The Winter Soldier Outbreak (2027)",
+      "The Fist of Khonshu Outbreak in Egypt (2028)",
+      "The Last Guardian Cosmic Climax (2029)"
     ],
     "incursionVector": "High biological and dimensional contamination risk.",
     "backdrop": "/images/multiverse/earth-2149.jpg",
