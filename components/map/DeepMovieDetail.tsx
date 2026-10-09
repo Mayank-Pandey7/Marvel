@@ -361,25 +361,26 @@ export default function DeepMovieDetail({
                 movie.id === "guardians-holiday" ||
                 movie.title.toLowerCase().includes("holiday special") ||
                 movie.id === "shang-chi" ||
-                movie.title.toLowerCase().includes("shang-chi")
+                movie.title.toLowerCase().includes("shang-chi") ||
+                movie.title.toLowerCase().includes("friendly neighborhood")
                   ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
                   : movie.title.length > 28
-                  ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
+                  ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
                   : movie.title.length > 18
-                  ? "text-3xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-6xl"
-                  : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
-              } text-white uppercase leading-tight mt-1 ${
-                movie.id === "doctor-strange-multiverse" ||
-                movie.title.toLowerCase().includes("multiverse of madness") ||
-                movie.id === "guardians-holiday" ||
-                movie.title.toLowerCase().includes("holiday special") ||
-                movie.id === "shang-chi" ||
-                movie.title.toLowerCase().includes("shang-chi")
-                  ? ""
-                  : "sm:whitespace-nowrap"
+                  ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                  : "text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+              } text-white uppercase leading-tight mt-1 break-words max-w-full ${
+                movie.title.length <= 18 &&
+                !movie.id?.includes("doctor-strange") &&
+                !movie.title.toLowerCase().includes("multiverse of madness") &&
+                !movie.title.toLowerCase().includes("holiday special") &&
+                !movie.title.toLowerCase().includes("shang-chi") &&
+                !movie.title.toLowerCase().includes("friendly neighborhood")
+                  ? "sm:whitespace-nowrap"
+                  : ""
               } drop-shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
                 isExpanded
-                  ? `${movie.title.length > 18 ? "tracking-[0.05em] sm:tracking-[0.08em]" : "tracking-[0.08em] sm:tracking-[0.12em]"} opacity-100 scale-100`
+                  ? `${movie.title.length > 22 ? "tracking-[0.03em] sm:tracking-[0.05em]" : movie.title.length > 15 ? "tracking-[0.05em] sm:tracking-[0.08em]" : "tracking-[0.08em] sm:tracking-[0.12em]"} opacity-100 scale-100`
                   : "tracking-[0.35em] opacity-0 scale-95"
               }`}
             >
@@ -402,6 +403,13 @@ export default function DeepMovieDetail({
                   <span className="block">SHANG-CHI</span>
                   <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
                     AND THE LEGEND OF THE TEN RINGS
+                  </span>
+                </>
+              ) : movie.title.toLowerCase().includes("friendly neighborhood") ? (
+                <>
+                  <span className="block">YOUR FRIENDLY NEIGHBORHOOD</span>
+                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                    SPIDER-MAN {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : movie.title.toLowerCase().includes("season 1") ? "(SEASON 1)" : ""}
                   </span>
                 </>
               ) : movie.title.includes(":") ? (
