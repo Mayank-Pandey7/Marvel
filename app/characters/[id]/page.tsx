@@ -182,21 +182,13 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
 
         <div className="relative z-20 max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-3.5 sm:gap-5 mt-auto pt-6 sm:pt-12">
 
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[9px] sm:text-[11px] font-mono tracking-wider uppercase text-stone-400">
-            <span>{character.universe.split("/")[0].trim()}</span>
-            <span className="text-stone-600">/</span>
-            <span>{character.faction.split(",")[0].trim()}</span>
-            <span className="text-stone-600">/</span>
-            <span className="text-white font-semibold">{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
-          </div>
-
-          <div className="max-w-[85%] sm:max-w-[55%] md:max-w-[58%] lg:max-w-[62%]">
-            <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl break-words ${
-              character.name.length > 16
-                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.02em] sm:tracking-[0.04em]"
-                : character.name.length > 12
-                ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
-                : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
+          <div className="w-full">
+            <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap ${
+              character.name.length > 20
+                ? "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-[0.02em] sm:tracking-[0.04em]"
+                : character.name.length > 14
+                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.03em] sm:tracking-[0.05em]"
+                : "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.04em] sm:tracking-[0.08em]"
             }`}>
               {character.name}
             </h1>

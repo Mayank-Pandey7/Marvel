@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
 import { MCU_POSTER_MAP } from "./NodeArtwork";
@@ -302,6 +302,7 @@ export default function DeepMovieDetail({
   onNavigateToConnectedMovie: (targetMovie: MovieNode) => void;
 }) {
   const [stage, setStage] = useState<"entering" | "expanded" | "closing">("entering");
+  const smokeCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     setStage("entering");
@@ -310,6 +311,96 @@ export default function DeepMovieDetail({
     }, 40);
     return () => clearTimeout(t);
   }, [movie?.id]);
+
+  // Atmospheric volumetric smoke simulation behind text
+  useEffect(() => {
+    const canvas = smokeCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    let animId: number;
+    let width = 0;
+    let height = 0;
+
+    const handleResize = () => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      width = canvas.width = rect.width || window.innerWidth;
+      height = canvas.height = rect.height || Math.floor(window.innerHeight * 0.75);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    // Generate volumetric smoke particles
+    const particleCount = 30;
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * (width || window.innerWidth),
+      y: (height || 500) * (0.2 + Math.random() * 0.8),
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: -(Math.random() * 0.35 + 0.12), // Upward rolling draft
+      radius: Math.random() * 150 + 90,
+      baseOpacity: Math.random() * 0.24 + 0.1,
+      phase: Math.random() * Math.PI * 2,
+      isAsh: Math.random() > 0.7,
+    }));
+
+    let time = 0;
+
+    const render = () => {
+      time += 0.009;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx + Math.sin(time * 0.7 + p.phase) * 0.22;
+        p.y += p.vy;
+
+        // Puff expands slightly as it drifts upward
+        const lifeProgress = Math.max(0, Math.min(1, 1 - p.y / height));
+        const currentRadius = p.radius + lifeProgress * 55;
+
+        // Vertical fade so smoke softly billows out near top
+        const verticalFade = Math.sin(Math.max(0, Math.min(1, p.y / height)) * Math.PI * 0.5);
+        const currentOpacity = p.baseOpacity * verticalFade * (1 + 0.15 * Math.sin(time + p.phase));
+
+        // Recycle particle when it drifts above smoke container
+        if (p.y < -currentRadius || currentOpacity <= 0.005) {
+          p.y = height + Math.random() * 30;
+          p.x = Math.random() * width;
+          p.radius = Math.random() * 150 + 90;
+        }
+        if (p.x < -currentRadius) p.x = width + currentRadius;
+        if (p.x > width + currentRadius) p.x = -currentRadius;
+
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentRadius);
+        if (p.isAsh) {
+          grad.addColorStop(0, `rgba(130, 140, 160, ${currentOpacity * 0.18})`);
+          grad.addColorStop(0.45, `rgba(25, 28, 38, ${currentOpacity * 0.45})`);
+          grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        } else {
+          grad.addColorStop(0, `rgba(10, 10, 14, ${currentOpacity * 0.75})`);
+          grad.addColorStop(0.5, `rgba(6, 6, 9, ${currentOpacity * 0.4})`);
+          grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        }
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, currentRadius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
 
   const handleClose = () => {
     setStage("closing");
@@ -366,15 +457,37 @@ export default function DeepMovieDetail({
               (e.target as HTMLImageElement).src = posterSrc;
             }
           }}
-          className={`w-full h-full object-cover object-center filter blur-[3.5px] brightness-90 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`w-full h-full object-cover object-center filter blur-[1.5px] brightness-90 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? "scale-110 opacity-100" : "scale-125 opacity-0"
           }`}
         />
-
-        <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
       </div>
 
       <div className="navbar-blur-fade" aria-hidden="true" />
+
+      {/* Volumetric Smoky Glass Atmosphere Behind Text */}
+      <div
+        className={`fixed inset-x-0 bottom-0 h-[80%] sm:h-[72%] pointer-events-none z-10 overflow-hidden transition-opacity duration-1000 ${
+          isExpanded ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden="true"
+      >
+        {/* Animated billows of smoke */}
+        <canvas
+          ref={smokeCanvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none opacity-90"
+        />
+
+        {/* Smoky frosted glass refraction blur with organic rolling mask */}
+        <div
+          className="absolute inset-0 backdrop-blur-md bg-gradient-to-t from-black/40 via-black/15 to-transparent [mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)]"
+        />
+
+        {/* Subtle ground-level misty baseline */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"
+        />
+      </div>
 
       <header
         className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
@@ -384,7 +497,7 @@ export default function DeepMovieDetail({
         <div className="flex items-center pointer-events-auto">
           <button
             onClick={handleClose}
-            className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-stone-200 hover:text-white border border-white/20 hover:border-white/50 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer active:scale-95 group"
+            className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/[0.08] hover:bg-white/[0.18] text-white border border-white/20 hover:border-white/40 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-200 cursor-pointer active:scale-95 group"
             title="Close Dossier"
             aria-label="Close Dossier"
           >
@@ -526,28 +639,28 @@ export default function DeepMovieDetail({
               )}
             </h2>
 
-            <div className="mt-4 text-sm text-stone-300 font-sans font-light leading-relaxed">
+            <div className="mt-4 text-sm text-stone-200 font-sans font-light leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
               <p>{movie.description}</p>
               {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-300">
-                  <span className="text-stone-500 uppercase tracking-widest text-[10px]">
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                  <span className="text-stone-400 uppercase tracking-widest text-[10px] font-bold">
                     {(movie as any).keyCharacters?.length > 1 ? "KEY CHARACTERS:" : "LEAD CHARACTER:"}
                   </span>
                   {(movie as any).keyCharacters?.length > 0 ? (
                     (movie as any).keyCharacters.slice(0, 4).map((char: string) => (
-                      <span key={char} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px]">
+                      <span key={char} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px] bg-black/40 backdrop-blur-md">
                         {char}
                       </span>
                     ))
                   ) : (
                     <>
                       {movie.leadCharacter && (
-                        <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm">
+                        <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm bg-black/40 backdrop-blur-md">
                           {movie.leadCharacter}
                         </span>
                       )}
                       {movie.heroAlias && movie.heroAlias !== movie.leadCharacter && (
-                        <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-300">
+                        <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-200 bg-black/40 backdrop-blur-md">
                           {movie.heroAlias}
                         </span>
                       )}
@@ -558,7 +671,7 @@ export default function DeepMovieDetail({
             </div>
 
             {movie.quote && (
-              <div className="mt-4 p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md relative max-w-lg shadow-lg overflow-hidden">
+              <div className="mt-4 p-3.5 rounded-xl bg-black/40 border border-white/15 backdrop-blur-md relative max-w-lg shadow-lg overflow-hidden">
                 <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
                 <p className="text-xs font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
                   &ldquo;{movie.quote}&rdquo;
@@ -571,28 +684,28 @@ export default function DeepMovieDetail({
               </div>
             )}
 
-            <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-400 uppercase font-semibold">
+            <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-300 uppercase font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
               {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
                 <>
-                  <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">PHASE {movie.phase}</span>
-                  <span className="text-stone-600">•</span>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">PHASE {movie.phase}</span>
+                  <span className="text-stone-400">•</span>
                 </>
               ) : movie.earthDesignation === "Earth-688" ? (
                 <>
-                  <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">SONY UNIVERSE</span>
-                  <span className="text-stone-600">•</span>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">SONY UNIVERSE</span>
+                  <span className="text-stone-400">•</span>
                 </>
               ) : movie.earthDesignation ? (
                 <>
-                  <span className="px-2.5 py-0.5 rounded bg-white/10 text-white font-bold">{movie.earthDesignation}</span>
-                  <span className="text-stone-600">•</span>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">{movie.earthDesignation}</span>
+                  <span className="text-stone-400">•</span>
                 </>
               ) : null}
-              <span className="text-stone-300">{movie.year}</span>
-              <span className="text-stone-600">•</span>
-              <span className="text-stone-400">{formatDuration(movie.runtime)}</span>
-              <span className="text-stone-600">•</span>
-              <span className="text-stone-300">{movie.director}</span>
+              <span className="text-white font-medium">{movie.year}</span>
+              <span className="text-stone-400">•</span>
+              <span className="text-stone-300">{formatDuration(movie.runtime)}</span>
+              <span className="text-stone-400">•</span>
+              <span className="text-stone-200">{movie.director}</span>
             </div>
           </div>
         </div>

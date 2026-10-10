@@ -46,14 +46,14 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
       className="fixed inset-0 z-50 flex select-none animate-in fade-in duration-200"
     >
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
-      <aside className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] bg-[#000000] border-r border-stone-900 h-full flex flex-col justify-between p-7 sm:p-9 shadow-[20px_0_50px_rgba(0,0,0,0.9)] animate-in slide-in-from-left duration-300 overflow-y-auto">
+      <aside className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] bg-black/25 backdrop-blur-xl border-r border-white/10 h-full flex flex-col justify-between p-7 sm:p-9 shadow-[20px_0_50px_rgba(0,0,0,0.5)] animate-in slide-in-from-left duration-300 overflow-y-auto">
 
         <div>
-          <div className="flex justify-between items-center mb-7 pb-4 border-b border-stone-900">
+          <div className="flex justify-between items-center mb-7 pb-4 border-b border-white/10">
             <Link
               href="/timeline"
               onClick={onClose}
@@ -79,8 +79,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex md:hidden items-center justify-between group ${
                   pathname === "/timeline" || pathname.startsWith("/timeline/")
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>SACRED TIMELINE</span>
@@ -91,8 +91,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex md:hidden items-center justify-between group ${
                   pathname === "/familytree"
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>CHARACTER FAMILY TREE</span>
@@ -103,8 +103,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
                   pathname === "/characters/heros" || pathname === "/characters/heroes"
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>HEROES &amp; ALLIES</span>
@@ -115,8 +115,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
                   pathname === "/characters/villains" || pathname.startsWith("/characters/villains")
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>VILLAINS &amp; THREATS</span>
@@ -127,8 +127,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
                   pathname === "/artifacts" || pathname.startsWith("/artifacts/")
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>COSMIC RELICS &amp; REALITIES</span>
@@ -139,8 +139,8 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
                 onClick={onClose}
                 className={`text-xs sm:text-[13px] font-mono tracking-[0.16em] uppercase hover:translate-x-1 transition-all py-1.5 flex items-center justify-between group ${
                   pathname === "/developer"
-                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.35)]"
-                    : "text-stone-400 hover:text-white"
+                    ? "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                    : "text-stone-300 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
                 }`}
               >
                 <span>DEVELOPER</span>
@@ -150,14 +150,14 @@ export default function SlideNavMenu({ isOpen, onClose }: SlideNavMenuProps) {
           </div>
         </div>
 
-        <div className="pt-5 mt-6 border-t border-stone-900 flex items-center justify-between">
+        <div className="pt-5 mt-6 border-t border-white/10 flex items-center justify-between">
           <Link
             href="/"
             onClick={onClose}
-            className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-300 text-[11px] sm:text-xs font-mono tracking-[0.18em] uppercase transition-colors cursor-pointer group py-1"
-            title="Return to Select Phase & Movies"
+            className="inline-flex items-center gap-2 text-stone-400 hover:text-white text-[11px] sm:text-xs font-mono tracking-[0.18em] uppercase transition-colors cursor-pointer group py-1"
+            title="Return to Select Phase &amp; Movies"
           >
-            <ArrowLeft size={14} className="text-stone-600 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft size={14} className="text-stone-500 group-hover:-translate-x-1 transition-transform" />
             <span>RETURN TO PORTAL</span>
           </Link>
         </div>

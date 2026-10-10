@@ -303,15 +303,15 @@ export default function TimelineDoomsdayLayout({
                   className="scroll-mt-36 sm:scroll-mt-28 w-full my-4 sm:my-8 flex items-center justify-center relative z-20 select-none"
                 >
                   <div className="flex items-center gap-2 sm:gap-2.5 max-w-[94vw] flex-nowrap">
-                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0">
+                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       PHASE {phaseInfo?.roman || movie.phase}
                     </span>
-                    <span className="text-stone-500 font-mono text-[9px] sm:text-[10px]">•</span>
-                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.12em] sm:tracking-[0.16em] text-stone-300 uppercase font-semibold whitespace-nowrap truncate">
+                    <span className="text-stone-400 font-mono text-[9px] sm:text-[10px]">•</span>
+                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.12em] sm:tracking-[0.16em] text-stone-200 uppercase font-semibold whitespace-nowrap truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       {phaseInfo?.title || "EXPANDED ERA"}
                     </span>
-                    <span className="hidden sm:inline text-stone-600 font-mono text-[10px]">|</span>
-                    <span className="hidden sm:inline text-[9.5px] font-mono text-stone-400 tracking-wider whitespace-nowrap">
+                    <span className="hidden sm:inline text-stone-400 font-mono text-[10px]">|</span>
+                    <span className="hidden sm:inline text-[9.5px] font-mono text-stone-300 font-medium tracking-wider whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                       {phaseInfo?.years}
                     </span>
                   </div>
@@ -321,11 +321,11 @@ export default function TimelineDoomsdayLayout({
               {isNewEarth && (
                 <div className="w-full my-3 sm:my-5 flex items-center justify-center relative z-20 select-none">
                   <div className="flex items-center gap-2 sm:gap-2.5 max-w-[94vw] flex-nowrap">
-                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0">
+                    <span className="text-[10px] sm:text-[11.5px] font-mono font-bold tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase whitespace-nowrap shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       {movie.earthDesignation}
                     </span>
-                    <span className="text-stone-500 font-mono text-[9px] sm:text-[10px]">•</span>
-                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.1em] sm:tracking-[0.15em] text-stone-300 uppercase font-medium whitespace-nowrap truncate">
+                    <span className="text-stone-400 font-mono text-[9px] sm:text-[10px]">•</span>
+                    <span className="text-[10px] sm:text-[11.5px] font-mono tracking-[0.1em] sm:tracking-[0.15em] text-stone-200 uppercase font-medium whitespace-nowrap truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       {movie.earthName}
                     </span>
                   </div>

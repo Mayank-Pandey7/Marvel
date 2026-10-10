@@ -856,14 +856,14 @@ export default function DarkFamilyTree({
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-[11px] sm:text-base md:text-lg select-none">|</span>
-          <button
-            onClick={triggerDoomsdayTransition}
+          <span className="text-stone-400 font-mono text-[11px] sm:text-base md:text-lg select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">|</span>
+          <Link
+            href="/doomsday"
             className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-emerald-400/90 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_15px_rgba(52,211,153,0.45)] transition-all select-none cursor-pointer bg-transparent border-none"
-            title="Initialize Road to Doomsday Incursion"
+            title="Explore Road to Doomsday"
           >
             DOOMSDAY
-          </button>
+          </Link>
         </div>
 
         {/* Right Side: Phase Jump Switcher, Return & Search */}

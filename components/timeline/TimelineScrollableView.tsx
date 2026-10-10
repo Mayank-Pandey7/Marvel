@@ -510,7 +510,7 @@ export default function TimelineScrollableView() {
           >
             MARVEL
           </Link>
-          <span className="text-stone-600 font-mono text-[11px] sm:text-base md:text-lg select-none">|</span>
+          <span className="text-stone-400 font-mono text-[11px] sm:text-base md:text-lg select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">|</span>
           <Link
             href="/doomsday"
             className="text-[11px] sm:text-base md:text-lg font-mono font-bold tracking-[0.2em] sm:tracking-[0.45em] md:tracking-[0.55em] uppercase text-emerald-400/90 hover:text-emerald-300 hover:scale-105 drop-shadow-[0_0_15px_rgba(52,211,153,0.45)] transition-all select-none cursor-pointer bg-transparent border-none"
@@ -797,16 +797,16 @@ export default function TimelineScrollableView() {
                   className="flex flex-col gap-6 scroll-mt-36 sm:scroll-mt-28"
                 >
                   {phase.id !== 7 && (
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/10 pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 border-b border-white/20 pb-3">
                     <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0">
+                      <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-[0.2em] text-white uppercase bg-white/10 px-2.5 py-1 rounded shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                         PHASE {phase.roman}
                       </span>
-                      <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-300 uppercase font-semibold">
+                      <span className="text-xs sm:text-sm font-mono tracking-[0.15em] text-stone-200 uppercase font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                         {phase.title}
                       </span>
                     </div>
-                    <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-500 uppercase tracking-widest pl-0.5 sm:pl-0">
+                    <span className="text-[9.5px] sm:text-[10.5px] font-mono text-stone-300 font-medium uppercase tracking-widest pl-0.5 sm:pl-0 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                       {phase.years} • {movies.length} {movies.length === 1 ? "MOVIE" : "MOVIES"}
                     </span>
                   </div>
@@ -835,15 +835,15 @@ export default function TimelineScrollableView() {
                           if (earthMovies.length === 0) return null;
                         return (
                           <div key={earth.key} className="flex flex-col gap-4">
-                            <div className="flex items-center gap-2.5 pb-2 border-b border-white/5 flex-nowrap">
-                              <span className="text-[9.5px] sm:text-[10px] font-mono font-bold tracking-[0.14em] sm:tracking-[0.2em] text-white uppercase whitespace-nowrap shrink-0">
+                            <div className="flex items-center gap-2.5 pb-2 border-b border-white/20 flex-nowrap">
+                              <span className="text-[9.5px] sm:text-[10px] font-mono font-bold tracking-[0.14em] sm:tracking-[0.2em] text-white uppercase whitespace-nowrap shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                                 {earth.badge}
                               </span>
-                              <span className="text-xs sm:text-[13px] font-mono tracking-[0.12em] text-stone-300 uppercase font-medium whitespace-nowrap truncate">
+                              <span className="text-xs sm:text-[13px] font-mono tracking-[0.12em] text-stone-200 uppercase font-medium whitespace-nowrap truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                                 {earth.name}
                               </span>
-                              <span className="text-stone-600 font-mono text-[10px]">•</span>
-                              <span className="text-[9.5px] font-mono text-stone-500 uppercase tracking-widest whitespace-nowrap">
+                              <span className="text-stone-400 font-mono text-[10px]">•</span>
+                              <span className="text-[9.5px] font-mono text-stone-300 font-medium uppercase tracking-widest whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                                 {earthMovies.length} {earthMovies.length === 1 ? "MOVIE" : "MOVIES"}
                               </span>
                             </div>
