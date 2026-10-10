@@ -67,40 +67,61 @@ export default function DarkIntroSelector({
     };
     window.addEventListener("resize", handleResize, { passive: true });
 
-    const clouds = Array.from({ length: 14 }, () => ({
+    // Generate volumetric smoke particles rising from the bottom
+    const particleCount = 28;
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: (Math.random() - 0.5) * 0.12,
-      radius: Math.random() * 140 + 70,
-      baseOpacity: Math.random() * 0.025 + 0.008,
+      y: height * (0.35 + Math.random() * 0.65),
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: -(Math.random() * 0.35 + 0.12),
+      radius: Math.random() * 160 + 90,
+      baseOpacity: Math.random() * 0.22 + 0.08,
       phase: Math.random() * Math.PI * 2,
+      isMystic: Math.random() > 0.65,
     }));
 
     let time = 0;
 
     const render = () => {
-      time += 0.008;
+      time += 0.009;
       ctx.clearRect(0, 0, width, height);
 
-      for (let i = 0; i < clouds.length; i++) {
-        const c = clouds[i];
-        c.x += c.vx;
-        c.y += c.vy;
-        if (c.x < -140) c.x = width + 140;
-        if (c.x > width + 140) c.x = -140;
-        if (c.y < -140) c.y = height + 140;
-        if (c.y > height + 140) c.y = -140;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx + Math.sin(time * 0.7 + p.phase) * 0.22;
+        p.y += p.vy;
 
-        const dynamicOpacity = c.baseOpacity * (1 + 0.2 * Math.sin(time + c.phase));
-        const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.radius);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${dynamicOpacity})`);
-        grad.addColorStop(0.6, `rgba(180, 190, 210, ${dynamicOpacity * 0.3})`);
-        grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        // Puff expands slightly as it drifts upward
+        const progressFromBottom = Math.max(0, Math.min(1, 1 - p.y / height));
+        const currentRadius = p.radius + progressFromBottom * 60;
+
+        // Vertical fade so smoke softly billows out near mid-screen
+        const verticalFade = Math.sin(Math.max(0, Math.min(1, p.y / height)) * Math.PI * 0.5);
+        const currentOpacity = p.baseOpacity * verticalFade * (1 + 0.15 * Math.sin(time + p.phase));
+
+        // Recycle particle when it drifts above smoke zone
+        if (p.y < height * 0.25 || currentOpacity <= 0.005) {
+          p.y = height + Math.random() * 40;
+          p.x = Math.random() * width;
+          p.radius = Math.random() * 160 + 90;
+        }
+        if (p.x < -currentRadius) p.x = width + currentRadius;
+        if (p.x > width + currentRadius) p.x = -currentRadius;
+
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentRadius);
+        if (p.isMystic) {
+          grad.addColorStop(0, `rgba(52, 211, 153, ${currentOpacity * 0.16})`);
+          grad.addColorStop(0.5, `rgba(16, 185, 129, ${currentOpacity * 0.08})`);
+          grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        } else {
+          grad.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity * 0.18})`);
+          grad.addColorStop(0.5, `rgba(220, 235, 245, ${currentOpacity * 0.08})`);
+          grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        }
 
         ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, currentRadius, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -222,15 +243,22 @@ export default function DarkIntroSelector({
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-90 filter brightness-105 contrast-110 select-none transform-gpu"
+          className="absolute inset-0 w-full h-full object-cover object-[center_25%] opacity-100 filter brightness-105 contrast-110 select-none transform-gpu"
         >
           <source src="/trailers/doctor-doom.3840x2160.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/35 to-transparent" />
       </div>
 
-      {/* Atmospheric Canvas Layer */}
+      {/* Atmospheric Volumetric Smoke Canvas Layer */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-[1]" />
+
+      {/* Volumetric Smoky Glass Atmosphere Behind Selector */}
+      <div className="absolute inset-x-0 bottom-0 h-[58%] sm:h-[50%] pointer-events-none z-[2] overflow-hidden">
+        {/* Pure frosted glass refraction blur without dark black tone */}
+        <div
+          className="absolute inset-0 backdrop-blur-md [mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)]"
+        />
+      </div>
 
       {/* 2. Brand Title Header Animation */}
       <div
@@ -264,7 +292,7 @@ export default function DarkIntroSelector({
           <div className="relative flex flex-col items-center justify-end w-full mt-auto mb-0.5 text-center px-4 animate-in fade-in duration-1000 min-h-[44px] gap-3.5">
             <button
               onClick={() => handleSelectPhase(1)}
-              className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 xs:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
+              className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.32em] sm:tracking-[0.45em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 xs:px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
             >
               {/* Sketch-type hand-drawn circle / ellipse */}
               <svg
@@ -451,7 +479,7 @@ export default function DarkIntroSelector({
             <div className="mt-1.5 sm:mt-2 mb-0.5 animate-in fade-in duration-700 delay-500 flex justify-center">
               <button
                 onClick={handleContinue}
-                className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 sm:px-8 cursor-pointer bg-black/30 backdrop-blur-xs border-none outline-none select-none flex items-center justify-center will-change-transform"
+                className="group relative text-[11px] xs:text-xs sm:text-sm font-mono tracking-[0.35em] sm:tracking-[0.55em] text-stone-200 hover:text-white uppercase font-medium hover:font-bold hover:scale-105 active:scale-95 transition-all duration-300 ease-out py-2.5 sm:py-3 px-6 sm:px-8 cursor-pointer bg-transparent border-none outline-none select-none flex items-center justify-center will-change-transform"
               >
                 {/* Sketch-type hand-drawn circle / ellipse */}
                 <svg
