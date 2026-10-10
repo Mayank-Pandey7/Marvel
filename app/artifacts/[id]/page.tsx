@@ -109,7 +109,7 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
 
       {/* Frosted Glass Blur Vignette for Complete Text Legibility */}
       <div 
-        className="fixed inset-y-0 left-0 w-full sm:w-[72%] lg:w-[62%] pointer-events-none z-10 bg-gradient-to-r from-black/40 via-black/20 to-transparent backdrop-blur-xl"
+        className="fixed inset-y-0 left-0 w-full sm:w-[75%] lg:w-[65%] pointer-events-none z-10 bg-gradient-to-r from-black/60 via-black/35 to-transparent backdrop-blur-xl"
         style={{
           maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
@@ -117,7 +117,7 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
         aria-hidden="true"
       />
       <div 
-        className="fixed inset-x-0 bottom-0 h-40 pointer-events-none z-10 bg-gradient-to-t from-black/50 via-black/20 to-transparent" 
+        className="fixed inset-x-0 bottom-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" 
         aria-hidden="true" 
       />
 
@@ -255,11 +255,11 @@ export default function ArtifactDetailPage({ params }: { params: { id: string } 
       {/* CHRONOLOGICAL WIELDER PROVENANCE TIMELINE */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-16 flex flex-col gap-8 sm:gap-12">
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             MCU CHRONOLOGICAL TIMELINE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
             {artifact.history.length} RECORDED ERAS
           </span>
         </div>

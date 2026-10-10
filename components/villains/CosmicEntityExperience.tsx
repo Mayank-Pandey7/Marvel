@@ -68,7 +68,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
 
       {/* Frosted Glass Blur Vignette for Complete Text Legibility */}
       <div 
-        className="fixed inset-y-0 left-0 w-full sm:w-[72%] lg:w-[62%] pointer-events-none z-10 bg-gradient-to-r from-black/40 via-black/20 to-transparent backdrop-blur-xl"
+        className="fixed inset-y-0 left-0 w-full sm:w-[75%] lg:w-[65%] pointer-events-none z-10 bg-gradient-to-r from-black/60 via-black/35 to-transparent backdrop-blur-xl"
         style={{
           maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
@@ -76,7 +76,7 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
         aria-hidden="true"
       />
       <div 
-        className="fixed inset-x-0 bottom-0 h-40 pointer-events-none z-10 bg-gradient-to-t from-black/50 via-black/20 to-transparent" 
+        className="fixed inset-x-0 bottom-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" 
         aria-hidden="true" 
       />
 
@@ -156,16 +156,16 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
           {/* Character Name & Sub-Alias */}
           <div className="space-y-1">
             <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap ${
-              entity.name.length > 16
-                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.02em] sm:tracking-[0.04em]"
-                : entity.name.length > 12
-                ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
-                : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
+              entity.name.length > 20
+                ? "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-[0.02em] sm:tracking-[0.04em]"
+                : entity.name.length > 14
+                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.03em] sm:tracking-[0.05em]"
+                : "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.04em] sm:tracking-[0.08em]"
             }`}>
               {entity.name}
             </h1>
             {entity.alias && entity.alias !== entity.name && (
-              <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+              <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-300 uppercase font-semibold whitespace-nowrap">
                 {entity.alias}
               </p>
             )}
@@ -201,41 +201,56 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
       {/* SECTION 1: POTENTIAL POWER & POWER SCALE (Clean open layout, no enclosing box) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-6">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
-            POTENTIAL POWER & COSMIC SCALE
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
+            POTENTIAL POWER &amp; COSMIC SCALE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
             {entity.potentialPower.scale}
           </span>
         </div>
 
         {/* Open Text Narrative (No card box) */}
         <div className="max-w-4xl flex flex-col gap-3">
-          <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 font-bold">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-stone-200 font-bold">
             EXECUTIVE POWER ANALYSIS:
           </span>
-          <p className="text-sm sm:text-base font-mono text-stone-200 leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base font-mono text-stone-100 leading-relaxed max-w-3xl font-medium">
             {entity.potentialPower.summary}
           </p>
         </div>
+
+        {/* Attributes Breakdown */}
+        {entity.potentialPower.attributes && entity.potentialPower.attributes.length > 0 && (
+          <div className="max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3 pt-3">
+            {entity.potentialPower.attributes.map((attr, i) => (
+              <div
+                key={i}
+                className="flex items-baseline justify-between gap-4 py-2 border-b border-white/20 text-[10.5px] sm:text-xs font-mono tracking-wider uppercase"
+              >
+                <span className="text-stone-200 font-bold">{attr.label}</span>
+                <span className="text-white font-bold text-right drop-shadow">{attr.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
       </section>
 
       {/* SECTION 2: WHAT THEY HAVE DONE (Clean open chronicle, no icons in header) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             LORE RECORD: WHAT THEY HAVE DONE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
             {entity.whatTheyHaveDone.length} MONUMENTAL FEATS
           </span>
         </div>
 
         {/* Feats List */}
-        <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
+        <div className="relative border-l border-white/20 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
           {entity.whatTheyHaveDone.map((feat, idx) => (
             <div key={idx} className="relative flex flex-col gap-2.5 group">
               {/* Timeline Indicator Dot */}
@@ -246,34 +261,34 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
 
               {/* Event Subtitle */}
               <div className="flex items-center gap-2 text-[10.5px] sm:text-[11px] font-mono tracking-[0.2em] uppercase">
-                <span className="text-stone-400 font-bold">
+                <span className="text-stone-300 font-bold">
                   {feat.eraOrEvent}
                 </span>
               </div>
 
               {/* Feat Title */}
-              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wide text-white uppercase leading-snug group-hover:text-amber-200 transition-colors">
+              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wide text-white uppercase leading-snug group-hover:text-amber-200 transition-colors drop-shadow">
                 {feat.title}
               </h3>
 
               {/* Feat Narrative */}
-              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-300 leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-100 leading-relaxed max-w-3xl font-medium">
                 {feat.description}
               </p>
 
               {/* Iconic Quote */}
               {feat.quote && (
-                <div className="border-l-2 border-stone-600 pl-3.5 py-1 text-xs font-mono italic text-stone-400 my-1">
+                <div className="border-l-2 border-stone-400 pl-3.5 py-1 text-xs font-mono italic text-stone-200 my-1">
                   &ldquo;{feat.quote}&rdquo;
                 </div>
               )}
 
               {/* Multiversal Impact Box */}
-              <div className="flex items-start gap-2 pt-1 text-xs font-mono text-stone-400">
-                <span className="text-[9px] uppercase tracking-widest text-amber-500/90 font-bold shrink-0 mt-0.5">
+              <div className="flex items-start gap-2 pt-1 text-xs font-mono text-stone-200">
+                <span className="text-[9.5px] uppercase tracking-widest text-amber-400 font-bold shrink-0 mt-0.5">
                   [IMPACT]
                 </span>
-                <span className="text-stone-300">{feat.impact}</span>
+                <span className="text-stone-100 font-medium">{feat.impact}</span>
               </div>
 
             </div>
@@ -285,12 +300,12 @@ export function CosmicEntityExperience({ entity }: CosmicEntityExperienceProps) 
       {/* SECTION 3: WHAT THEY CAN POTENTIALLY DO (Clean open columns without boxes or icons) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             POTENTIAL CAPABILITIES: WHAT THEY CAN DO
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
-            THEORETICAL CEILING & THREAT HORIZON
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
+            THEORETICAL CEILING &amp; THREAT HORIZON
           </span>
         </div>
 

@@ -74,7 +74,7 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
 
       {/* Frosted Glass Blur Vignette for Complete Text Legibility */}
       <div 
-        className="fixed inset-y-0 left-0 w-full sm:w-[72%] lg:w-[62%] pointer-events-none z-10 bg-gradient-to-r from-black/40 via-black/20 to-transparent backdrop-blur-xl"
+        className="fixed inset-y-0 left-0 w-full sm:w-[75%] lg:w-[65%] pointer-events-none z-10 bg-gradient-to-r from-black/60 via-black/35 to-transparent backdrop-blur-xl"
         style={{
           maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
@@ -82,7 +82,7 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
         aria-hidden="true"
       />
       <div 
-        className="fixed inset-x-0 bottom-0 h-40 pointer-events-none z-10 bg-gradient-to-t from-black/50 via-black/20 to-transparent" 
+        className="fixed inset-x-0 bottom-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" 
         aria-hidden="true" 
       />
 
@@ -165,15 +165,15 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
           <div className="space-y-1">
             <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap ${
               hero.name.length > 20
-                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.02em] sm:tracking-[0.04em]"
+                ? "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-[0.02em] sm:tracking-[0.04em]"
                 : hero.name.length > 14
-                ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
-                : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
+                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.03em] sm:tracking-[0.05em]"
+                : "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.04em] sm:tracking-[0.08em]"
             }`}>
               {hero.name}
             </h1>
             {hero.alias && hero.alias !== hero.name && (
-              <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+              <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-300 uppercase font-semibold whitespace-nowrap">
                 {hero.alias}
               </p>
             )}
@@ -209,21 +209,21 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
       {/* SECTION 1: POTENTIAL POWER & POWER SCALE */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-6">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
-            POTENTIAL POWER & COSMIC SCALE
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
+            POTENTIAL POWER &amp; COSMIC SCALE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
             {hero.potentialPower.scale}
           </span>
         </div>
 
         {/* Executive Power Analysis */}
         <div className="max-w-4xl flex flex-col gap-3">
-          <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 font-bold">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-stone-200 font-bold">
             EXECUTIVE POWER ANALYSIS:
           </span>
-          <p className="text-sm sm:text-base font-mono text-stone-200 leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base font-mono text-stone-100 leading-relaxed max-w-3xl font-medium">
             {hero.potentialPower.summary}
           </p>
         </div>
@@ -234,10 +234,10 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
             {hero.potentialPower.attributes.map((attr, i) => (
               <div
                 key={i}
-                className="flex items-baseline justify-between gap-4 py-2 border-b border-white/10 text-[10.5px] sm:text-xs font-mono tracking-wider uppercase"
+                className="flex items-baseline justify-between gap-4 py-2 border-b border-white/20 text-[10.5px] sm:text-xs font-mono tracking-wider uppercase"
               >
-                <span className="text-stone-400 font-semibold">{attr.label}</span>
-                <span className="text-white font-bold text-right">{attr.value}</span>
+                <span className="text-stone-200 font-bold">{attr.label}</span>
+                <span className="text-white font-bold text-right drop-shadow">{attr.value}</span>
               </div>
             ))}
           </div>
@@ -248,17 +248,17 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
       {/* SECTION 2: WHAT THEY HAVE DONE (Feats Record) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             LORE RECORD: WHAT THEY HAVE DONE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
             {hero.whatTheyHaveDone.length} MONUMENTAL FEATS
           </span>
         </div>
 
         {/* Feats List */}
-        <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
+        <div className="relative border-l border-white/20 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
           {hero.whatTheyHaveDone.map((feat, idx) => (
             <div key={idx} className="relative flex flex-col gap-2.5 group">
               {/* Timeline Indicator Dot */}
@@ -269,30 +269,30 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
 
               {/* Event Subtitle */}
               <div className="flex items-center gap-2 text-[10.5px] sm:text-[11px] font-mono tracking-[0.2em] uppercase">
-                <span className="text-stone-400 font-bold">
+                <span className="text-stone-300 font-bold">
                   {feat.eraOrEvent}
                 </span>
               </div>
 
               {/* Feat Title */}
-              <h3 className="text-sm sm:text-base md:text-lg font-mono font-bold uppercase text-white group-hover:text-stone-200 transition-colors">
+              <h3 className="text-sm sm:text-base md:text-lg font-mono font-bold uppercase text-white group-hover:text-stone-200 transition-colors drop-shadow">
                 {feat.title}
               </h3>
 
               {/* Feat Narrative Description */}
-              <p className="text-xs sm:text-sm font-mono text-stone-300 leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm font-mono text-stone-100 leading-relaxed max-w-3xl font-medium">
                 {feat.description}
               </p>
 
               {/* Impact / Outcome */}
-              <div className="text-[11px] sm:text-xs font-mono text-stone-400 flex items-start gap-1.5 pt-1">
-                <span className="text-[9px] uppercase tracking-widest text-stone-500 shrink-0 font-bold">IMPACT:</span>
-                <span className="text-stone-300">{feat.impact}</span>
+              <div className="text-[11px] sm:text-xs font-mono text-stone-200 flex items-start gap-1.5 pt-1">
+                <span className="text-[9px] uppercase tracking-widest text-stone-300 shrink-0 font-bold">IMPACT:</span>
+                <span className="text-stone-100 font-medium">{feat.impact}</span>
               </div>
 
               {/* Iconic Quote */}
               {feat.quote && (
-                <blockquote className="mt-2 pl-3 border-l-2 border-white/20 italic text-xs font-mono text-stone-400">
+                <blockquote className="mt-2 pl-3 border-l-2 border-white/40 italic text-xs font-mono text-stone-200">
                   &ldquo;{feat.quote}&rdquo;
                 </blockquote>
               )}
@@ -305,11 +305,11 @@ export function TopTierHeroExperience({ hero }: TopTierHeroExperienceProps) {
       {/* SECTION 3: WHAT THEY CAN DO (Potential Capabilities) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-6">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             POTENTIAL CAPABILITIES: WHAT THEY CAN DO
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-200 font-semibold drop-shadow">
             {hero.whatTheyCanDo.length} HIGHER-TIER POWERS
           </span>
         </div>

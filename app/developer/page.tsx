@@ -21,7 +21,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import SlideNavMenu from "@/components/dark/SlideNavMenu";
-import BackgroundStarfield from "@/components/ui/BackgroundStarfield";
+import TimelineLocalVideoBackground from "@/components/timeline/TimelineLocalVideoBackground";
 
 const SOCIAL_HANDLES = [
   {
@@ -167,7 +167,11 @@ export default function DeveloperPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-stone-200 font-sans selection:bg-white selection:text-black overflow-x-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      <BackgroundStarfield />
+      {/* Ambient Video Background with 12px blur (matching navbar blur) */}
+      <TimelineLocalVideoBackground
+        blurClassName="filter blur-[12px] scale-110"
+        overlayClassName="bg-black/35 backdrop-blur-[12px]"
+      />
 
       {/* Ambient Radial Aura */}
       <div
@@ -176,6 +180,20 @@ export default function DeveloperPage() {
           background: "radial-gradient(circle, #38bdf8 0%, transparent 70%)",
         }}
         aria-hidden="true"
+      />
+
+      {/* Frosted Glass Blur Vignette with 12px blur (matching navbar blur) */}
+      <div 
+        className="fixed inset-y-0 left-0 w-full sm:w-[75%] lg:w-[65%] pointer-events-none z-10 bg-gradient-to-r from-black/60 via-black/35 to-transparent backdrop-blur-[12px]"
+        style={{
+          maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
+        }}
+        aria-hidden="true"
+      />
+      <div 
+        className="fixed inset-x-0 bottom-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" 
+        aria-hidden="true" 
       />
 
       <div className="navbar-blur-fade" aria-hidden="true" />
@@ -248,25 +266,25 @@ export default function DeveloperPage() {
             <h1 className="font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]">
               MAYANK PANDEY
             </h1>
-            <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-400 uppercase">
+            <p className="text-xs sm:text-sm font-mono tracking-widest text-stone-200 uppercase font-semibold">
               Love to build cool stuff &bull; Products that leave an impact
             </p>
           </div>
 
           {/* In-depth Overview */}
-          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-xl">
+          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-100 leading-relaxed max-w-xl">
             Full Stack web developer passionate about building products to solve real-world problems and creating immersive digital experiences. Creator and architect of the <strong>MCUverse</strong> spatial platform &mdash; mapping the Sacred Timeline, Multiverse Realities, 100+ character genealogies, and cosmic relics.
           </p>
 
           {/* Summary Metric Stats */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-400">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-300">
             <div>
-              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">CLASSIFICATION:</span>
-              <span className="text-stone-200 font-semibold">FULL STACK DEVELOPER</span>
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-widest text-stone-400 mr-1.5 font-bold">CLASSIFICATION:</span>
+              <span className="text-white font-semibold">FULL STACK DEVELOPER</span>
             </div>
             <div>
-              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">SPECIALIZATION:</span>
-              <span className="text-stone-200 font-semibold">SPATIAL UI &amp; DISTRIBUTED ARCHITECTURE</span>
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-widest text-stone-400 mr-1.5 font-bold">SPECIALIZATION:</span>
+              <span className="text-white font-semibold">SPATIAL UI &amp; DISTRIBUTED ARCHITECTURE</span>
             </div>
           </div>
 
@@ -327,10 +345,10 @@ export default function DeveloperPage() {
 
         {/* Open Text Narrative */}
         <div className="max-w-4xl flex flex-col gap-3">
-          <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-stone-500 font-bold">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-stone-300 font-bold">
             EXECUTIVE ARCHITECTURE ANALYSIS:
           </span>
-          <p className="text-sm sm:text-base font-mono text-stone-200 leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base font-mono text-stone-100 leading-relaxed max-w-3xl">
             Architected MCUverse as a unified spatial universe interface combining React Server Components, client-side hardware-accelerated canvas renderers, zero-layout-shift timelines, and deep relational genealogies. Built with sub-millisecond edge routing and complete offline resilience.
           </p>
         </div>
@@ -340,17 +358,17 @@ export default function DeveloperPage() {
       {/* SECTION 2: WHAT THEY HAVE DONE (Feats Lore Record) */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             LORE RECORD: WHAT WAS BUILT
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
             {FEATS.length} CORE PLATFORM ENGINES
           </span>
         </div>
 
         {/* Feats List */}
-        <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
+        <div className="relative border-l border-white/20 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-10 max-w-4xl">
           {FEATS.map((feat, idx) => (
             <div key={idx} className="relative flex flex-col gap-2.5 group">
               {/* Timeline Indicator Dot */}
@@ -360,34 +378,34 @@ export default function DeveloperPage() {
 
               {/* Event Subtitle */}
               <div className="flex items-center gap-2 text-[10.5px] sm:text-[11px] font-mono tracking-[0.2em] uppercase">
-                <span className="text-stone-400 font-bold">
+                <span className="text-stone-300 font-bold">
                   {feat.eraOrEvent}
                 </span>
               </div>
 
               {/* Feat Title */}
-              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wide text-white uppercase leading-snug group-hover:text-sky-300 transition-colors">
+              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wide text-white uppercase leading-snug group-hover:text-sky-300 transition-colors drop-shadow">
                 {feat.title}
               </h3>
 
               {/* Feat Narrative */}
-              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-300 leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-200 leading-relaxed max-w-3xl">
                 {feat.description}
               </p>
 
               {/* Iconic Quote */}
               {feat.quote && (
-                <div className="border-l-2 border-stone-600 pl-3.5 py-1 text-xs font-mono italic text-stone-400 my-1">
+                <div className="border-l-2 border-stone-400 pl-3.5 py-1 text-xs font-mono italic text-stone-300 my-1">
                   &ldquo;{feat.quote}&rdquo;
                 </div>
               )}
 
               {/* Multiversal Impact */}
-              <div className="flex items-start gap-2 pt-1 text-xs font-mono text-stone-400">
-                <span className="text-[9px] uppercase tracking-widest text-sky-400 font-bold shrink-0 mt-0.5">
+              <div className="flex items-start gap-2 pt-1 text-xs font-mono text-stone-300">
+                <span className="text-[9.5px] uppercase tracking-widest text-sky-400 font-bold shrink-0 mt-0.5">
                   [IMPACT]
                 </span>
-                <span className="text-stone-300">{feat.impact}</span>
+                <span className="text-stone-200">{feat.impact}</span>
               </div>
 
             </div>
@@ -396,19 +414,19 @@ export default function DeveloperPage() {
 
       </section>
 
-      {/* SECTION 3: WHAT THEY CAN POTENTIALLY DO (Social Channels & Connect) */}
+      {/* SECTION 3: CONNECT */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
-            POTENTIAL CAPABILITIES: CONNECT &amp; PROFILES
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
+            CONNECT
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
             {SOCIAL_HANDLES.length} PUBLIC CHANNELS
           </span>
         </div>
 
-        {/* Clean Open Grid (Matching minimalist social cards) */}
+        {/* Clean Open Grid (High Contrast & Clear Readability) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl">
           {SOCIAL_HANDLES.map((social) => {
             const Icon = social.icon;
@@ -418,17 +436,17 @@ export default function DeveloperPage() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-1.5 transition-colors cursor-pointer py-1"
+                className="group flex flex-col gap-1.5 transition-colors cursor-pointer py-1.5 px-2 -mx-2 rounded-lg hover:bg-white/[0.06]"
               >
                 <div className="flex items-center gap-2">
-                  <Icon size={16} className="text-stone-400 group-hover:text-white transition-colors" />
-                  <h4 className="text-base sm:text-lg font-mono font-bold text-white uppercase leading-snug group-hover:text-sky-300 transition-colors">
+                  <Icon size={17} className="text-white drop-shadow group-hover:text-sky-300 transition-colors" />
+                  <h4 className="text-base sm:text-lg font-mono font-bold text-white uppercase leading-snug drop-shadow group-hover:text-sky-300 transition-colors">
                     {social.name}
                   </h4>
-                  <ExternalLink size={12} className="text-stone-500 group-hover:text-white transition-colors ml-auto" />
+                  <ExternalLink size={13} className="text-stone-300 group-hover:text-white transition-colors ml-auto" />
                 </div>
 
-                <span className="text-[11px] sm:text-xs font-mono text-stone-400 tracking-wider">
+                <span className="text-xs sm:text-sm font-mono text-stone-200 tracking-wider group-hover:text-white transition-colors font-medium">
                   {social.handle}
                 </span>
               </a>
@@ -440,11 +458,11 @@ export default function DeveloperPage() {
 
       {/* SECTION 4: SYSTEM STACK & INFRASTRUCTURE */}
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-14 flex flex-col gap-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/10">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-3 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             SYSTEM STACK &amp; INFRASTRUCTURE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
             NEXT-GEN WEB TECH
           </span>
         </div>
@@ -455,10 +473,10 @@ export default function DeveloperPage() {
               <span className="text-[9.5px] font-mono uppercase tracking-widest text-sky-400 font-bold">
                 {tech.label}
               </span>
-              <h4 className="text-base font-mono font-bold text-white uppercase">
+              <h4 className="text-base font-mono font-bold text-white uppercase drop-shadow">
                 {tech.value}
               </h4>
-              <p className="text-xs font-mono text-stone-400">
+              <p className="text-xs font-mono text-stone-200 font-medium">
                 {tech.desc}
               </p>
             </div>

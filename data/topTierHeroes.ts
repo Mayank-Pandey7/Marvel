@@ -45,8 +45,8 @@ export const TOP_TIER_HEROES: TopTierHero[] = [
   {
     rank: 1,
     characterId: "the-one-above-all",
-    name: "The One-Above-All (Omnipotent Creator)",
-    alias: "The Supreme Architect of the Omniverse",
+    name: "The One-Above-All",
+    alias: "Omnipotent Creator & Supreme Architect",
     image: "/images/characters/the-one-above-all.jpg",
     tier: "Multiversal+",
     tierColor: "#f59e0b",

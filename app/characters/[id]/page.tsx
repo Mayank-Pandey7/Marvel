@@ -120,7 +120,7 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
 
       {/* Frosted Glass Blur Vignette for Complete Text Legibility */}
       <div 
-        className="fixed inset-y-0 left-0 w-full sm:w-[72%] lg:w-[62%] pointer-events-none z-10 bg-gradient-to-r from-black/40 via-black/20 to-transparent backdrop-blur-xl"
+        className="fixed inset-y-0 left-0 w-full sm:w-[75%] lg:w-[65%] pointer-events-none z-10 bg-gradient-to-r from-black/60 via-black/35 to-transparent backdrop-blur-xl"
         style={{
           maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 65%, transparent 100%)"
@@ -128,7 +128,7 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
         aria-hidden="true"
       />
       <div 
-        className="fixed inset-x-0 bottom-0 h-40 pointer-events-none z-10 bg-gradient-to-t from-black/50 via-black/20 to-transparent" 
+        className="fixed inset-x-0 bottom-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent" 
         aria-hidden="true" 
       />
 
@@ -190,36 +190,39 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
             <span className="text-white font-semibold">{character.aliases[0] || character.role.split(",")[0] || "OPERATIVE"}</span>
           </div>
 
-          <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl whitespace-nowrap ${
-            character.name.length > 16
-              ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.02em] sm:tracking-[0.04em]"
-              : character.name.length > 12
-              ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
-              : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
-          }`}>
-            {character.name}
-          </h1>
+          <div className="max-w-[85%] sm:max-w-[55%] md:max-w-[58%] lg:max-w-[62%]">
+            <h1 className={`font-mono font-bold uppercase text-white leading-tight drop-shadow-2xl break-words ${
+              character.name.length > 16
+                ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0.02em] sm:tracking-[0.04em]"
+                : character.name.length > 12
+                ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.04em] sm:tracking-[0.06em]"
+                : "text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] sm:tracking-[0.1em]"
+            }`}>
+              {character.name}
+            </h1>
+          </div>
 
-          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-300 leading-relaxed max-w-xl">
+          {/* Overview text */}
+          <p className="text-xs sm:text-sm md:text-base font-mono tracking-wide text-stone-100 leading-relaxed max-w-xl">
             {character.overview}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-400">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono text-stone-300">
             <div>
-              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">ROLE:</span>
-              <span className="text-stone-200">{character.role}</span>
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-widest text-stone-400 mr-1.5 font-bold">ROLE:</span>
+              <span className="text-white font-medium">{character.role}</span>
             </div>
             <div>
-              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">FIRST SEEN:</span>
-              <span className="text-stone-200">{character.firstAppearance}</span>
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-widest text-stone-400 mr-1.5 font-bold">FIRST SEEN:</span>
+              <span className="text-white font-medium">{character.firstAppearance}</span>
             </div>
             <div>
-              <span className="text-[8.5px] sm:text-[9px] uppercase tracking-widest text-stone-500 mr-1.5">APPEARANCES:</span>
-              <span className="text-stone-200">{movieEntries.length} MCU TITLES</span>
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-widest text-stone-400 mr-1.5 font-bold">APPEARANCES:</span>
+              <span className="text-white font-medium">{movieEntries.length} MCU TITLES</span>
             </div>
           </div>
 
-          <div className="pt-4 sm:pt-6 flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-500 animate-pulse">
+          <div className="pt-4 sm:pt-6 flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-300 animate-pulse font-medium">
             <span>SCROLL FOR MCU TIMELINE CHRONOLOGY</span>
             <ChevronDown size={14} />
           </div>
@@ -230,34 +233,34 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
 
       <section className="relative z-10 w-full max-w-6xl px-4 sm:px-12 md:px-16 py-10 sm:py-16 flex flex-col gap-8 sm:gap-12">
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl">
-          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 max-w-4xl border-b border-white/20">
+          <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
             MCU CHRONOLOGICAL TIMELINE
           </h2>
-          <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
             {character.eras.length} RECORDED ERAS
           </span>
         </div>
 
-        <div className="relative border-l border-white/10 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-12 sm:gap-14 max-w-4xl">
+        <div className="relative border-l border-white/20 ml-2 sm:ml-4 pl-6 sm:pl-10 flex flex-col gap-12 sm:gap-14 max-w-4xl">
           {character.eras.map((era, idx) => (
             <div key={era.eraId || idx} className="relative flex flex-col gap-3 group">
 
-              <span className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-3.5 h-3.5 rounded-full bg-black border-2 border-stone-500 group-hover:border-white transition-colors" />
+              <span className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-3.5 h-3.5 rounded-full bg-black border-2 border-stone-400 group-hover:border-white transition-colors" />
 
               <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase">
-                <span className="text-stone-300 font-bold">
+                <span className="text-white font-bold">
                   PHASE {era.phase}
                 </span>
-                <span className="text-stone-600">/</span>
-                <span className="text-stone-400">{era.year}</span>
+                <span className="text-stone-400">/</span>
+                <span className="text-stone-300 font-medium">{era.year}</span>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wider text-white uppercase leading-snug">
+              <h3 className="text-xl sm:text-2xl font-mono font-bold tracking-wider text-white uppercase leading-snug drop-shadow">
                 {era.title}
               </h3>
 
-              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-300 leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm font-mono tracking-wide text-stone-200 leading-relaxed max-w-3xl">
                 {era.description}
               </p>
 
@@ -270,11 +273,11 @@ function StandardCharacterDetail({ characterId }: { characterId: string }) {
       {movieEntries.length > 0 && (
         <section className="relative z-10 w-full max-w-6xl px-6 sm:px-12 md:px-16 py-12 flex flex-col gap-8">
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 max-w-4xl">
-            <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 max-w-4xl border-b border-white/20 pb-2">
+            <h2 className="text-base sm:text-xl font-mono font-bold tracking-[0.16em] uppercase text-white drop-shadow">
               MCU CINEMATIC FILMOGRAPHY
             </h2>
-            <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest uppercase text-stone-500">
+            <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-stone-300 font-semibold">
               {movieEntries.length} CANON TITLES
             </span>
           </div>

@@ -384,9 +384,9 @@ export function CharactersContent({
       <div
         className="fixed top-14 sm:top-20 right-3 sm:right-8 z-40 pointer-events-none flex flex-col items-end gap-1.5 origin-top-right scale-[0.82] sm:scale-100"
       >
-        {/* SELECT pill */}
-        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-black/85 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap">
-          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-400">
+        {/* SELECT pill — matching /timeline SELECT REALITY styling */}
+        <div className="pointer-events-none flex gap-0.5 rounded-full p-0.5 bg-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] whitespace-nowrap">
+          <span className="rounded-full px-2.5 sm:px-3 py-1 text-[8px] sm:text-[9.5px] font-mono tracking-wider uppercase text-stone-300">
             {pillLabel}
           </span>
         </div>
