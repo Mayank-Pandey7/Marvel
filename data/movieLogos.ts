@@ -148,7 +148,9 @@ export const MCU_LOGO_MAP: Record<string, string> = {
   "spider-man-beyond-the-spider-verse": "/images/logos/beyond-the-spider-verse.png",
   "venom": "/images/logos/venom-2018.png",
   "venom-2": "/images/logos/venom-let-there-be-carnage.png",
-  "venom-3": "/images/logos/venom-the-last-dance.png"
+  "venom-3": "/images/logos/venom-the-last-dance.png",
+  "thunderbolts*": "/images/logos/thunderbolts.png",
+  "thunderbolts-2025": "/images/logos/thunderbolts.png"
 };
 
 /**
