@@ -5,6 +5,9 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
 import { MCU_POSTER_MAP } from "./NodeArtwork";
 import { formatDuration } from "@/components/timeline/TimelineScrollableView";
+import { getMovieLogo } from "@/data/movieLogos";
+import { getMovieMetadata, formatMovieRuntime } from "@/data/movieMetadata";
+import { getExtendedMovieSynopsis } from "@/data/movieSynopses";
 
 
 export const MCU_BACKDROP_MAP: Record<string, string> = {
@@ -302,9 +305,11 @@ export default function DeepMovieDetail({
   onNavigateToConnectedMovie: (targetMovie: MovieNode) => void;
 }) {
   const [stage, setStage] = useState<"entering" | "expanded" | "closing">("entering");
+  const [logoFailed, setLogoFailed] = useState(false);
   const smokeCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    setLogoFailed(false);
     setStage("entering");
     const t = setTimeout(() => {
       setStage("expanded");
@@ -431,6 +436,10 @@ export default function DeepMovieDetail({
     MCU_BACKDROP_MAP[movie.id.replace(/_/g, "-")] ||
     posterSrc;
 
+  const movieLogo = movie ? getMovieLogo(movie.id) : null;
+  const movieMeta = movie ? getMovieMetadata(movie.id) : getMovieMetadata(null);
+  const movieSynopsis = movie ? getExtendedMovieSynopsis(movie.id, movie.description) : "";
+
   const isExpanded = stage === "expanded";
   const isClosing = stage === "closing";
 
@@ -457,13 +466,11 @@ export default function DeepMovieDetail({
               (e.target as HTMLImageElement).src = posterSrc;
             }
           }}
-          className={`w-full h-full object-cover object-center filter blur-[1.5px] brightness-90 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isExpanded ? "scale-110 opacity-100" : "scale-125 opacity-0"
+          className={`w-full h-full object-cover object-center brightness-95 contrast-[1.05] transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isExpanded ? "scale-105 opacity-100" : "scale-115 opacity-0"
           }`}
         />
       </div>
-
-      <div className="navbar-blur-fade" aria-hidden="true" />
 
       {/* Volumetric Smoky Glass Atmosphere Behind Text */}
       <div
@@ -478,235 +485,237 @@ export default function DeepMovieDetail({
           className="absolute inset-0 w-full h-full pointer-events-none opacity-90"
         />
 
-        {/* Smoky frosted glass refraction blur with organic rolling mask */}
+        {/* Smoky frosted glass refraction blur with organic rolling mask (restored previous bottom blur) */}
         <div
-          className="absolute inset-0 backdrop-blur-md bg-gradient-to-t from-black/40 via-black/15 to-transparent [mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)]"
+          className="absolute inset-0 backdrop-blur-md bg-gradient-to-t from-[#050b14]/75 via-[#0a1628]/30 to-transparent [mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_130%_90%_at_50%_100%,black_35%,rgba(0,0,0,0.6)_65%,transparent_100%)]"
         />
 
-        {/* Subtle ground-level misty baseline */}
+        {/* Ground-level soft navy blue baseline glow */}
         <div
-          className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#040810]/70 via-[#081324]/25 to-transparent pointer-events-none"
         />
       </div>
 
-      <header
-        className={`fixed top-0 left-0 right-0 w-full px-4 sm:px-8 py-4 sm:py-6 min-h-[58px] sm:min-h-[72px] flex items-center justify-between z-50 bg-transparent pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      {/* Floating Close Button in Top-Left (No navbar bar, no navbar blur) */}
+      <div
+        className={`fixed top-4 sm:top-6 left-4 sm:left-8 z-50 pointer-events-none transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isExpanded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
-        <div className="flex items-center pointer-events-auto">
-          <button
-            onClick={handleClose}
-            className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/[0.08] hover:bg-white/[0.18] text-white border border-white/20 hover:border-white/40 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-200 cursor-pointer active:scale-95 group"
-            title="Close Dossier"
-            aria-label="Close Dossier"
-          >
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
-          </button>
+        <button
+          onClick={handleClose}
+          className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 hover:bg-white/20 text-white border border-white/20 hover:border-white/40 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] transition-all duration-200 cursor-pointer active:scale-95 group pointer-events-auto"
+          title="Close Dossier"
+          aria-label="Close Dossier"
+        >
+          <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
+        </button>
+      </div>
+
+      {/* Standalone Movie Poster Frame on Right Middle (Fixed in viewport, matching character detail) */}
+      <div
+        className={`fixed top-1/2 -translate-y-1/2 right-6 sm:right-12 md:right-16 lg:right-24 xl:right-32 w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px] xl:w-[370px] aspect-[2/3] z-30 overflow-hidden rounded-2xl border border-white/20 bg-stone-950 shadow-[0_25px_70px_rgba(0,0,0,0.95)] pointer-events-none hidden sm:block transition-all duration-700 group ${
+          isExpanded ? "opacity-100 scale-100 translate-x-0" : "opacity-0 scale-95 translate-x-8"
+        }`}
+      >
+        {isUpcomingMovie(movie) && (
+          <div className="absolute top-2.5 left-2.5 z-30 px-2 py-0.5 rounded bg-amber-400 text-black text-[7.5px] sm:text-[8px] font-mono font-bold tracking-tight uppercase shadow-sm leading-none">
+            COMING SOON
+          </div>
+        )}
+        <img
+          src={posterSrc}
+          alt={movie.title}
+          loading="eager"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            const fallback = MCU_POSTER_MAP[movie.id]?.poster || `/images/posters/${movie.id}.jpg`;
+            if (target.src !== fallback && !target.src.endsWith(fallback)) {
+              target.src = fallback;
+            }
+          }}
+          className={`w-full h-full ${
+            movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac" || movie.id === "your-friendly-neighborhood-spider-man-s2"
+              ? "object-contain p-3 sm:p-4 bg-black"
+              : "object-cover object-center"
+          } transition-transform duration-700 group-hover:scale-105`}
+        />
+        <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
+      </div>
+
+      <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col justify-end overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+        {/* Mobile Poster Fallback in Viewport */}
+        <div className="sm:hidden w-36 xs:w-40 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative mb-4">
+          {isUpcomingMovie(movie) && (
+            <div className="absolute top-2 left-2 z-30 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[7px] font-mono font-bold tracking-tight uppercase shadow-sm leading-none">
+              COMING SOON
+            </div>
+          )}
+          <img
+            src={posterSrc}
+            alt={movie.title}
+            loading="eager"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              const fallback = MCU_POSTER_MAP[movie.id]?.poster || `/images/posters/${movie.id}.jpg`;
+              if (target.src !== fallback && !target.src.endsWith(fallback)) {
+                target.src = fallback;
+              }
+            }}
+            className={`w-full h-full ${
+              movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac" || movie.id === "your-friendly-neighborhood-spider-man-s2"
+                ? "object-contain p-2 bg-black"
+                : "object-cover object-center"
+            }`}
+          />
+          <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
         </div>
 
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-          <span className="text-xs sm:text-sm md:text-base font-mono font-bold tracking-[0.45em] sm:tracking-[0.55em] uppercase text-white select-none whitespace-nowrap pl-[0.45em] sm:pl-[0.55em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            MARVEL
-          </span>
-        </div>
-
-        <div className="w-8 sm:w-9" />
-      </header>
-
-      <main className="relative z-20 flex-1 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 pt-16 pb-8 sm:pb-12 md:pb-14 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-16 xl:gap-20 overflow-y-auto w-full min-h-[calc(100vh-80px)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-stone-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         <div
-          className={`flex-1 max-w-5xl lg:max-w-6xl flex flex-col sm:flex-row items-start sm:items-end gap-6 sm:gap-8 w-full transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+          className={`relative z-20 max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col items-start w-full transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
             isExpanded ? "opacity-100 translate-x-0 translate-y-0 blur-0" : "opacity-0 -translate-x-12 translate-y-4 blur-sm"
           }`}
         >
-          <div className="w-44 xs:w-48 sm:w-56 md:w-64 lg:w-72 aspect-[2/3] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.95)] shrink-0 bg-stone-900 group relative self-start flex items-center justify-center">
-            {isUpcomingMovie(movie) && (
-              <div className="absolute top-2 left-2 z-30 px-1.5 py-0.5 rounded bg-amber-400 text-black text-[7px] sm:text-[7.5px] font-mono font-bold tracking-tight uppercase shadow-sm leading-none">
-                COMING SOON
-              </div>
-            )}
-            <img
-              src={posterSrc}
-              alt={movie.title}
-              loading="eager"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                const fallback = MCU_POSTER_MAP[movie.id]?.poster || `/images/posters/${movie.id}.jpg`;
-                if (target.src !== fallback && !target.src.endsWith(fallback)) {
-                  target.src = fallback;
-                }
-              }}
-              className={`w-full h-full ${
-                movie.id === "zodiac" || movie.id === "marvel-zodiac" || movie.id === "zodiac-series" || movie.title?.toLowerCase?.() === "zodiac" || movie.id === "your-friendly-neighborhood-spider-man-s2"
-                  ? "object-contain p-3 sm:p-4 bg-black"
-                  : "object-cover object-center"
-              } transition-transform duration-700 group-hover:scale-105`}
-            />
-            <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-          </div>
-
           <div className="flex-1 flex flex-col justify-end min-w-0 pb-1 text-left items-start w-full">
-            <h2
-              className={`font-mono font-semibold ${
-                movie.id === "doctor-strange-multiverse" ||
-                movie.title.toLowerCase().includes("multiverse of madness") ||
-                movie.id === "guardians-holiday" ||
-                movie.title.toLowerCase().includes("holiday special") ||
-                movie.id === "shang-chi" ||
-                movie.title.toLowerCase().includes("shang-chi") ||
-                movie.title.toLowerCase().includes("friendly neighborhood") ||
-                movie.title.toLowerCase().includes("punisher") ||
-                movie.title.toLowerCase().includes("spirit of vengeance")
-                  ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
-                  : movie.title.length > 28
-                  ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
-                  : movie.title.length > 18
-                  ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
-                  : "text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
-              } text-white uppercase leading-tight mt-1 break-words max-w-full ${
-                movie.title.length <= 18 &&
-                !movie.id?.includes("doctor-strange") &&
-                !movie.title.toLowerCase().includes("multiverse of madness") &&
-                !movie.title.toLowerCase().includes("holiday special") &&
-                !movie.title.toLowerCase().includes("shang-chi") &&
-                !movie.title.toLowerCase().includes("friendly neighborhood") &&
-                !movie.title.toLowerCase().includes("punisher") &&
-                !movie.title.toLowerCase().includes("spirit of vengeance")
-                  ? "sm:whitespace-nowrap"
-                  : ""
-              } drop-shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
-                isExpanded
-                  ? `${movie.title.length > 22 ? "tracking-[0.03em] sm:tracking-[0.05em]" : movie.title.length > 15 ? "tracking-[0.05em] sm:tracking-[0.08em]" : "tracking-[0.08em] sm:tracking-[0.12em]"} opacity-100 scale-100`
-                  : "tracking-[0.35em] opacity-0 scale-95"
-              }`}
-            >
-              {movie.id === "doctor-strange-multiverse" || movie.title.toLowerCase().includes("multiverse of madness") ? (
-                <>
-                  <span className="block">DOCTOR STRANGE</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    IN THE MULTIVERSE OF MADNESS
-                  </span>
-                </>
-              ) : movie.id === "guardians-holiday" || movie.title.toLowerCase().includes("holiday special") ? (
-                <>
-                  <span className="block">THE GUARDIANS OF THE GALAXY</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    HOLIDAY SPECIAL
-                  </span>
-                </>
-              ) : movie.id === "shang-chi" || movie.title.toLowerCase().includes("shang-chi") ? (
-                <>
-                  <span className="block">SHANG-CHI</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    AND THE LEGEND OF THE TEN RINGS
-                  </span>
-                </>
-              ) : movie.title.toLowerCase().includes("friendly neighborhood") ? (
-                <>
-                  <span className="block">YOUR FRIENDLY NEIGHBORHOOD</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    SPIDER-MAN {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : movie.title.toLowerCase().includes("season 1") ? "(SEASON 1)" : ""}
-                  </span>
-                </>
-              ) : movie.title.toLowerCase().includes("punisher") && (movie.title.toLowerCase().includes("season 2") || movie.title.toLowerCase().includes("season 1")) ? (
-                <>
-                  <span className="block">THE PUNISHER</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : "(SEASON 1)"}
-                  </span>
-                </>
-              ) : movie.id === "ghost-rider-spirit-of-vengeance" || movie.title.toLowerCase().includes("spirit of vengeance") ? (
-                <>
-                  <span className="block">GHOST RIDER</span>
-                  <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
-                    SPIRIT OF VENGEANCE
-                  </span>
-                </>
-              ) : movie.title.includes(":") ? (
-                movie.title.split(":").map((chunk, i, arr) => (
-                  <React.Fragment key={i}>
-                    {chunk}
+            {movieLogo && !logoFailed ? (
+              <div
+                className={`transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 mb-3 mt-1 max-w-full flex items-start justify-start ${
+                  isExpanded ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-2"
+                }`}
+              >
+                <img
+                  src={movieLogo}
+                  alt={movie.title}
+                  referrerPolicy="no-referrer"
+                  onError={() => setLogoFailed(true)}
+                  className="h-16 xs:h-20 sm:h-24 md:h-30 lg:h-36 xl:h-42 2xl:h-48 max-h-[185px] w-auto max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] lg:max-w-[760px] xl:max-w-[840px] object-contain object-left drop-shadow-[0_4px_28px_rgba(0,0,0,0.9)] filter brightness-105 select-none pointer-events-none"
+                />
+              </div>
+            ) : (
+              <h2
+                className={`font-mono font-semibold ${
+                  movie.id === "doctor-strange-multiverse" ||
+                  movie.title.toLowerCase().includes("multiverse of madness") ||
+                  movie.id === "guardians-holiday" ||
+                  movie.title.toLowerCase().includes("holiday special") ||
+                  movie.id === "shang-chi" ||
+                  movie.title.toLowerCase().includes("shang-chi") ||
+                  movie.title.toLowerCase().includes("friendly neighborhood") ||
+                  movie.title.toLowerCase().includes("punisher") ||
+                  movie.title.toLowerCase().includes("spirit of vengeance")
+                    ? "text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl"
+                    : movie.title.length > 28
+                    ? "text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+                    : movie.title.length > 18
+                    ? "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                    : "text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+                } text-white uppercase leading-tight mt-1 break-words max-w-full ${
+                  movie.title.length <= 18 &&
+                  !movie.id?.includes("doctor-strange") &&
+                  !movie.title.toLowerCase().includes("multiverse of madness") &&
+                  !movie.title.toLowerCase().includes("holiday special") &&
+                  !movie.title.toLowerCase().includes("shang-chi") &&
+                  !movie.title.toLowerCase().includes("friendly neighborhood") &&
+                  !movie.title.toLowerCase().includes("punisher") &&
+                  !movie.title.toLowerCase().includes("spirit of vengeance")
+                    ? "sm:whitespace-nowrap"
+                    : ""
+                } drop-shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${
+                  isExpanded
+                    ? `${movie.title.length > 22 ? "tracking-[0.03em] sm:tracking-[0.05em]" : movie.title.length > 15 ? "tracking-[0.05em] sm:tracking-[0.08em]" : "tracking-[0.08em] sm:tracking-[0.12em]"} opacity-100 scale-100`
+                    : "tracking-[0.35em] opacity-0 scale-95"
+                }`}
+              >
+                {movie.id === "doctor-strange-multiverse" || movie.title.toLowerCase().includes("multiverse of madness") ? (
+                  <>
+                    <span className="block">DOCTOR STRANGE</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      IN THE MULTIVERSE OF MADNESS
+                    </span>
+                  </>
+                ) : movie.id === "guardians-holiday" || movie.title.toLowerCase().includes("holiday special") ? (
+                  <>
+                    <span className="block">THE GUARDIANS OF THE GALAXY</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      HOLIDAY SPECIAL
+                    </span>
+                  </>
+                ) : movie.id === "shang-chi" || movie.title.toLowerCase().includes("shang-chi") ? (
+                  <>
+                    <span className="block">SHANG-CHI</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      AND THE LEGEND OF THE TEN RINGS
+                    </span>
+                  </>
+                ) : movie.title.toLowerCase().includes("friendly neighborhood") ? (
+                  <>
+                    <span className="block">YOUR FRIENDLY NEIGHBORHOOD</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      SPIDER-MAN {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : movie.title.toLowerCase().includes("season 1") ? "(SEASON 1)" : ""}
+                    </span>
+                  </>
+                ) : movie.title.toLowerCase().includes("punisher") && (movie.title.toLowerCase().includes("season 2") || movie.title.toLowerCase().includes("season 1")) ? (
+                  <>
+                    <span className="block">THE PUNISHER</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      {movie.title.toLowerCase().includes("season 2") ? "(SEASON 2)" : "(SEASON 1)"}
+                    </span>
+                  </>
+                ) : movie.id === "ghost-rider-spirit-of-vengeance" || movie.title.toLowerCase().includes("spirit of vengeance") ? (
+                  <>
+                    <span className="block">GHOST RIDER</span>
+                    <span className="block text-[0.82em] sm:text-[0.88em] text-stone-100 tracking-normal sm:tracking-[0.05em] mt-0.5">
+                      SPIRIT OF VENGEANCE
+                    </span>
+                  </>
+                ) : movie.title.includes(":") ? (
+                  movie.title.split(":").map((chunk, i, arr) => (
+                    <React.Fragment key={i}>
+                      {chunk}
+                      {i < arr.length - 1 && (
+                        <span className="font-sans font-normal mx-1.5 opacity-90 inline-block align-middle text-[0.8em] tracking-normal">
+                          :
+                        </span>
+                      )}
+                    </React.Fragment>
+                  ))
+                ) : (
+                  movie.title
+                )}
+              </h2>
+            )}
+
+            {/* Metadata Row: ★ [Rating]  •  [Year]  •  [Certification]  •  [Runtime] */}
+            <div className="flex items-center flex-wrap gap-2.5 text-xs sm:text-sm font-sans font-medium text-stone-200 mt-2 mb-3.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+              <span className="flex items-center gap-1 font-bold text-white tracking-wide">
+                <span className="text-amber-400 text-sm leading-none">★</span> {movieMeta.rating}
+              </span>
+              <span className="text-stone-400 text-xs select-none">•</span>
+              <span className="text-stone-200 font-medium">{movie.year}</span>
+              <span className="text-stone-400 text-xs select-none">•</span>
+              <span className="text-stone-200 font-semibold">{movieMeta.certification}</span>
+              <span className="text-stone-400 text-xs select-none">•</span>
+              <span className="text-stone-200 font-medium">{formatMovieRuntime(movie.runtime)}</span>
+            </div>
+
+            {/* Synopsis Paragraph (5-6 Lines Summary) */}
+            <p className="text-sm sm:text-base text-stone-200/90 font-sans font-normal leading-relaxed tracking-normal max-w-2xl lg:max-w-3xl mb-4 drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
+              {movieSynopsis}
+            </p>
+
+            {/* Genres Row: Science Fiction | Action | Adventure */}
+            {movieMeta.genres && movieMeta.genres.length > 0 && (
+              <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 text-sm sm:text-base font-sans font-semibold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+                {movieMeta.genres.map((genre, i, arr) => (
+                  <React.Fragment key={genre}>
+                    <span>{genre}</span>
                     {i < arr.length - 1 && (
-                      <span className="font-sans font-normal mx-1.5 opacity-90 inline-block align-middle text-[0.8em] tracking-normal">
-                        :
-                      </span>
+                      <span className="text-stone-500 font-light select-none">|</span>
                     )}
                   </React.Fragment>
-                ))
-              ) : (
-                movie.title
-              )}
-            </h2>
-
-            <div className="mt-4 text-sm text-stone-200 font-sans font-light leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
-              <p>{movie.description}</p>
-              {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-                  <span className="text-stone-400 uppercase tracking-widest text-[10px] font-bold">
-                    {(movie as any).keyCharacters?.length > 1 ? "KEY CHARACTERS:" : "LEAD CHARACTER:"}
-                  </span>
-                  {(movie as any).keyCharacters?.length > 0 ? (
-                    (movie as any).keyCharacters.slice(0, 4).map((char: string) => (
-                      <span key={char} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px] bg-black/40 backdrop-blur-md">
-                        {char}
-                      </span>
-                    ))
-                  ) : (
-                    <>
-                      {movie.leadCharacter && (
-                        <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm bg-black/40 backdrop-blur-md">
-                          {movie.leadCharacter}
-                        </span>
-                      )}
-                      {movie.heroAlias && movie.heroAlias !== movie.leadCharacter && (
-                        <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-200 bg-black/40 backdrop-blur-md">
-                          {movie.heroAlias}
-                        </span>
-                      )}
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {movie.quote && (
-              <div className="mt-4 p-3.5 rounded-xl bg-black/40 border border-white/15 backdrop-blur-md relative max-w-lg shadow-lg overflow-hidden">
-                <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
-                <p className="text-xs font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
-                  &ldquo;{movie.quote}&rdquo;
-                </p>
-                {movie.speaker && (
-                  <p className="text-[10px] font-mono text-stone-400 uppercase tracking-widest mt-1 pl-2 font-bold">
-                    — {movie.speaker}
-                  </p>
-                )}
+                ))}
               </div>
             )}
-
-            <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-300 uppercase font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
-              {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
-                <>
-                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">PHASE {movie.phase}</span>
-                  <span className="text-stone-400">•</span>
-                </>
-              ) : movie.earthDesignation === "Earth-688" ? (
-                <>
-                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">SONY UNIVERSE</span>
-                  <span className="text-stone-400">•</span>
-                </>
-              ) : movie.earthDesignation ? (
-                <>
-                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">{movie.earthDesignation}</span>
-                  <span className="text-stone-400">•</span>
-                </>
-              ) : null}
-              <span className="text-white font-medium">{movie.year}</span>
-              <span className="text-stone-400">•</span>
-              <span className="text-stone-300">{formatDuration(movie.runtime)}</span>
-              <span className="text-stone-400">•</span>
-              <span className="text-stone-200">{movie.director}</span>
-            </div>
           </div>
         </div>
       </main>
