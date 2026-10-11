@@ -6,8 +6,6 @@ import { MovieNode, UNIFIED_MCU_TREE } from "../../data/movies";
 import { MCU_POSTER_MAP } from "./NodeArtwork";
 import { formatDuration } from "@/components/timeline/TimelineScrollableView";
 import { getMovieLogo } from "@/data/movieLogos";
-import { getMovieMetadata, formatMovieRuntime } from "@/data/movieMetadata";
-import { getExtendedMovieSynopsis } from "@/data/movieSynopses";
 
 
 export const MCU_BACKDROP_MAP: Record<string, string> = {
@@ -437,8 +435,6 @@ export default function DeepMovieDetail({
     posterSrc;
 
   const movieLogo = movie ? getMovieLogo(movie.id) : null;
-  const movieMeta = movie ? getMovieMetadata(movie.id) : getMovieMetadata(null);
-  const movieSynopsis = movie ? getExtendedMovieSynopsis(movie.id, movie.description) : "";
 
   const isExpanded = stage === "expanded";
   const isClosing = stage === "closing";
@@ -685,37 +681,77 @@ export default function DeepMovieDetail({
               </h2>
             )}
 
-            {/* Metadata Row: ★ [Rating]  •  [Year]  •  [Certification]  •  [Runtime] */}
-            <div className="flex items-center flex-wrap gap-2.5 text-xs sm:text-sm font-sans font-medium text-stone-200 mt-2 mb-3.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
-              <span className="flex items-center gap-1 font-bold text-white tracking-wide">
-                <span className="text-amber-400 text-sm leading-none">★</span> {movieMeta.rating}
-              </span>
-              <span className="text-stone-400 text-xs select-none">•</span>
-              <span className="text-stone-200 font-medium">{movie.year}</span>
-              <span className="text-stone-400 text-xs select-none">•</span>
-              <span className="text-stone-200 font-semibold">{movieMeta.certification}</span>
-              <span className="text-stone-400 text-xs select-none">•</span>
-              <span className="text-stone-200 font-medium">{formatMovieRuntime(movie.runtime)}</span>
+            {/* Description Paragraph & Lead Characters */}
+            <div className="mt-4 text-sm text-stone-200 font-sans font-light leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)] max-w-2xl lg:max-w-3xl">
+              <p>{movie.description}</p>
+              {((movie as any).keyCharacters?.length > 0 || movie.leadCharacter) && (
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-mono text-stone-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                  <span className="text-stone-400 uppercase tracking-widest text-[10px] font-bold">
+                    {(movie as any).keyCharacters?.length > 1 ? "KEY CHARACTERS:" : "LEAD CHARACTER:"}
+                  </span>
+                  {(movie as any).keyCharacters?.length > 0 ? (
+                    (movie as any).keyCharacters.slice(0, 4).map((char: string) => (
+                      <span key={char} className="border border-white/30 rounded-full px-2.5 py-0.5 text-white font-medium text-[11px] bg-black/40 backdrop-blur-md">
+                        {char}
+                      </span>
+                    ))
+                  ) : (
+                    <>
+                      {movie.leadCharacter && (
+                        <span className="border border-white/40 rounded-full px-3 py-0.5 text-white font-semibold shadow-sm bg-black/40 backdrop-blur-md">
+                          {movie.leadCharacter}
+                        </span>
+                      )}
+                      {movie.heroAlias && movie.heroAlias !== movie.leadCharacter && (
+                        <span className="border border-white/20 rounded-full px-3 py-0.5 text-stone-200 bg-black/40 backdrop-blur-md">
+                          {movie.heroAlias}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
-            {/* Synopsis Paragraph (5-6 Lines Summary) */}
-            <p className="text-sm sm:text-base text-stone-200/90 font-sans font-normal leading-relaxed tracking-normal max-w-2xl lg:max-w-3xl mb-4 drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)]">
-              {movieSynopsis}
-            </p>
-
-            {/* Genres Row: Science Fiction | Action | Adventure */}
-            {movieMeta.genres && movieMeta.genres.length > 0 && (
-              <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 text-sm sm:text-base font-sans font-semibold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
-                {movieMeta.genres.map((genre, i, arr) => (
-                  <React.Fragment key={genre}>
-                    <span>{genre}</span>
-                    {i < arr.length - 1 && (
-                      <span className="text-stone-500 font-light select-none">|</span>
-                    )}
-                  </React.Fragment>
-                ))}
+            {/* Quote Card */}
+            {movie.quote && (
+              <div className="mt-4 p-3.5 rounded-xl bg-black/40 border border-white/15 backdrop-blur-md relative max-w-lg shadow-lg overflow-hidden">
+                <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-white/80 to-white/10" />
+                <p className="text-xs font-sans italic text-stone-100 leading-relaxed pl-2 font-normal">
+                  &ldquo;{movie.quote}&rdquo;
+                </p>
+                {movie.speaker && (
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-stone-400 pl-2 mt-1.5 font-bold">
+                    — {movie.speaker}
+                  </p>
+                )}
               </div>
             )}
+
+            {/* Footer Metadata Row: [PHASE X] • Year • Duration • Director */}
+            <div className="mt-4 flex items-center flex-wrap gap-2.5 text-[11px] font-mono tracking-[0.25em] text-stone-300 uppercase font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+              {(!movie.earthDesignation || movie.earthDesignation === "Earth-616") && movie.phase <= 6 ? (
+                <>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">PHASE {movie.phase}</span>
+                  <span className="text-stone-400">•</span>
+                </>
+              ) : movie.earthDesignation === "Earth-688" ? (
+                <>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">SONY UNIVERSE</span>
+                  <span className="text-stone-400">•</span>
+                </>
+              ) : movie.earthDesignation ? (
+                <>
+                  <span className="px-2.5 py-0.5 rounded bg-black/50 border border-white/15 text-white font-bold backdrop-blur-sm">{movie.earthDesignation}</span>
+                  <span className="text-stone-400">•</span>
+                </>
+              ) : null}
+              <span className="text-white font-medium">{movie.year}</span>
+              <span className="text-stone-400">•</span>
+              <span className="text-stone-300">{formatDuration(movie.runtime)}</span>
+              <span className="text-stone-400">•</span>
+              <span className="text-stone-200">{movie.director}</span>
+            </div>
           </div>
         </div>
       </main>
