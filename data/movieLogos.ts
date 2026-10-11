@@ -154,7 +154,14 @@ export const MCU_LOGO_MAP: Record<string, string> = {
   "gotg-3": "/images/logos/guardians-vol3.png",
   "gotg3": "/images/logos/guardians-vol3.png",
   "guardians-3": "/images/logos/guardians-vol3.png",
-  "guardians-of-the-galaxy-3": "/images/logos/guardians-vol3.png"
+  "guardians-of-the-galaxy-3": "/images/logos/guardians-vol3.png",
+  "iamgroot": "/images/logos/i-am-groot.png",
+  "i-am-groot-season-1": "/images/logos/i-am-groot.png",
+  "i-am-groot-season-2": "/images/logos/i-am-groot-s2.png",
+  "iamgroot-s2": "/images/logos/i-am-groot-s2.png",
+  "iamgroot-season-2": "/images/logos/i-am-groot-s2.png",
+  "i-am-groot-vol-2": "/images/logos/i-am-groot-s2.png",
+  "i-am-groot-vol2": "/images/logos/i-am-groot-s2.png"
 };
 
 /**
