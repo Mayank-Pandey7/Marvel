@@ -5,6 +5,7 @@
 export const MCU_LOGO_MAP: Record<string, string> = {
   "across-the-spider-verse": "/images/logos/across-the-spider-verse.png",
   "agatha-all-along": "/images/logos/agatha-all-along.png",
+  "agatha": "/images/logos/agatha-all-along.png",
   "ant-man-quantumania": "/images/logos/ant-man-quantumania.png",
   "ant-man-wasp": "/images/logos/ant-man-wasp.png",
   "ant-man": "/images/logos/ant-man.png",
@@ -133,10 +134,17 @@ export const MCU_LOGO_MAP: Record<string, string> = {
   "doctor-strange-in-the-multiverse-of-madness": "/images/logos/doctor-strange-multiverse.png",
   "multiverse-of-madness": "/images/logos/doctor-strange-multiverse.png",
   "brave-new-world": "/images/logos/captain-america-brave-new-world.png",
+  "captain-america-4": "/images/logos/captain-america-brave-new-world.png",
+  "cap-4": "/images/logos/captain-america-brave-new-world.png",
   "born-again": "/images/logos/daredevil-born-again.png",
+  "daredevil": "/images/logos/daredevil-born-again.png",
   "the-fantastic-four": "/images/logos/fantastic-four.png",
   "the-fantastic-four-first-steps": "/images/logos/fantastic-four.png",
+  "the-fantastic-4": "/images/logos/fantastic-four.png",
+  "fantastic-4": "/images/logos/fantastic-four.png",
   "deadpool-3": "/images/logos/deadpool-and-wolverine.png",
+  "deadpool3": "/images/logos/deadpool-and-wolverine.png",
+  "deadpool-wolverine": "/images/logos/deadpool-and-wolverine.png",
   "friendly-neighborhood-spider-man": "/images/logos/your-friendly-neighborhood-spider-man.png",
   "spider-man-freshman-year": "/images/logos/your-friendly-neighborhood-spider-man.png",
   "yfn-spiderman": "/images/logos/your-friendly-neighborhood-spider-man.png",
@@ -161,7 +169,17 @@ export const MCU_LOGO_MAP: Record<string, string> = {
   "iamgroot-s2": "/images/logos/i-am-groot-s2.png",
   "iamgroot-season-2": "/images/logos/i-am-groot-s2.png",
   "i-am-groot-vol-2": "/images/logos/i-am-groot-s2.png",
-  "i-am-groot-vol2": "/images/logos/i-am-groot-s2.png"
+  "i-am-groot-vol2": "/images/logos/i-am-groot-s2.png",
+  "captain-america-the-winter-soldier": "/images/logos/cap-winter-soldier.png",
+  "winter-soldier": "/images/logos/cap-winter-soldier.png",
+  "the-winter-soldier": "/images/logos/cap-winter-soldier.png",
+  "falcon-and-the-winter-soldier": "/images/logos/falcon-winter-soldier.png",
+  "falcon-and-winter-soldier": "/images/logos/falcon-winter-soldier.png",
+  "moonknight": "/images/logos/moon-knight.png",
+  "msmarvel": "/images/logos/ms-marvel.png",
+  "she-hulk-attorney-at-law": "/images/logos/she-hulk.png",
+  "shehulk": "/images/logos/she-hulk.png",
+  "black-panther-2": "/images/logos/black-panther-wakanda.png"
 };
 
 /**
@@ -172,9 +190,15 @@ export function getMovieLogo(movieId: string | undefined | null): string | null 
   if (!movieId) return null;
   const cleanId = movieId.trim().toLowerCase();
   
-  if (MCU_LOGO_MAP[cleanId]) return MCU_LOGO_MAP[cleanId];
-  if (MCU_LOGO_MAP[cleanId.replace(/_/g, "-")]) return MCU_LOGO_MAP[cleanId.replace(/_/g, "-")];
-  if (MCU_LOGO_MAP[cleanId.replace(/-/g, "_")]) return MCU_LOGO_MAP[cleanId.replace(/-/g, "_")];
+  const logo =
+    MCU_LOGO_MAP[cleanId] ||
+    MCU_LOGO_MAP[cleanId.replace(/_/g, "-")] ||
+    MCU_LOGO_MAP[cleanId.replace(/-/g, "_")];
+    
+  if (logo) {
+    return `${logo}?v=20261011_33`;
+  }
   
   return null;
 }
+

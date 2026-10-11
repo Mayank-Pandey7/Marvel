@@ -48,10 +48,22 @@ export const EXTENDED_MOVIE_SYNOPSES: Record<string, string> = {
   "captain-america":
     "During the darkest hours of World War II, frail yet fiercely courageous Brooklyn youth Steve Rogers repeatedly volunteers for military service, desperate to fight tyranny alongside his childhood friend Bucky Barnes. Handpicked for the secret Project Rebirth, Rogers is injected with the Super-Soldier Serum, emerging as Captain America—the peak of human physical perfection. Leading the Howling Commandos against the terrifying occult Nazi division HYDRA and its maniacal leader, the Red Skull, Steve makes the ultimate self-sacrifice in the icy arctic waters.",
 
+  "cap-first-avenger":
+    "During the darkest hours of World War II, frail yet fiercely courageous Brooklyn youth Steve Rogers repeatedly volunteers for military service, desperate to fight tyranny alongside his childhood friend Bucky Barnes. Handpicked for the secret Project Rebirth, Rogers is injected with the Super-Soldier Serum, emerging as Captain America—the peak of human physical perfection. Leading the Howling Commandos against the terrifying occult Nazi division HYDRA and its maniacal leader, the Red Skull, Steve makes the ultimate self-sacrifice in the icy arctic waters.",
+
   "captain-america-winter-soldier":
     "Struggling to adjust to modern life in Washington D.C., Steve Rogers serves as a covert operative for S.H.I.E.L.D., only to discover that the global peacekeeping agency has been secretly infiltrated by HYDRA for decades. Branded a fugitive alongside Black Widow and Falcon, Rogers uncovers a terrifying satellite surveillance program designed to preemptively slaughter millions of potential threats. Worse still, the shadowy ghost assassin hunting them is revealed to be Bucky Barnes—reprogrammed as the deadly Winter Soldier.",
 
+  "cap-winter-soldier":
+    "Struggling to adjust to modern life in Washington D.C., Steve Rogers serves as a covert operative for S.H.I.E.L.D., only to discover that the global peacekeeping agency has been secretly infiltrated by HYDRA for decades. Branded a fugitive alongside Black Widow and Falcon, Rogers uncovers a terrifying satellite surveillance program designed to preemptively slaughter millions of potential threats. Worse still, the shadowy ghost assassin hunting them is revealed to be Bucky Barnes—reprogrammed as the deadly Winter Soldier.",
+
+  "winter-soldier":
+    "Struggling to adjust to modern life in Washington D.C., Steve Rogers serves as a covert operative for S.H.I.E.L.D., only to discover that the global peacekeeping agency has been secretly infiltrated by HYDRA for decades. Branded a fugitive alongside Black Widow and Falcon, Rogers uncovers a terrifying satellite surveillance program designed to preemptively slaughter millions of potential threats. Worse still, the shadowy ghost assassin hunting them is revealed to be Bucky Barnes—reprogrammed as the deadly Winter Soldier.",
+
   "captain-america-civil-war":
+    "When an international incident involving the Avengers results in devastating collateral damage, world governments introduce the Sokovia Accords to oversee and control the team's autonomous missions. The controversial legislation fractures Earth's Mightiest Heroes down the middle: Tony Stark supports government accountability, while Steve Rogers refuses to surrender their moral freedom to politicians. As personal loyalties and family betrayals boil over, an explosive ideological clash erupts between longtime allies with universe-altering consequences.",
+
+  "cap-civil-war":
     "When an international incident involving the Avengers results in devastating collateral damage, world governments introduce the Sokovia Accords to oversee and control the team's autonomous missions. The controversial legislation fractures Earth's Mightiest Heroes down the middle: Tony Stark supports government accountability, while Steve Rogers refuses to surrender their moral freedom to politicians. As personal loyalties and family betrayals boil over, an explosive ideological clash erupts between longtime allies with universe-altering consequences.",
 
   "captain-america-brave-new-world":
@@ -75,6 +87,9 @@ export const EXTENDED_MOVIE_SYNOPSES: Record<string, string> = {
     "Following the tragic assassination of his father King T'Chaka, T'Challa returns home to the secluded, technologically superior African nation of Wakanda to ascend to the throne. However, his rightful claim as king and protector is fiercely challenged when Erik Killmonger—an exiled Wakandan soldier fueled by historic injustice—arrives to seize the crown and weaponize vibranium worldwide. T'Challa must rally his royal guard and confront his nation's past to protect his people and redefine Wakanda's role on the world stage.",
 
   "black-panther-wakanda-forever":
+    "Grieving the heartbreaking death of King T'Challa, Queen Ramonda, Princess Shuri, Okoye, and the Dora Milaje fight to protect their nation from world powers eager to plunder their precious vibranium reserves. Their vulnerability triggers an unexpected confrontation with Namor, the feathered-serpent god and ruler of Talokan, a hidden undersea empire determined to wage war on the surface world. Burdened by grief and vengeance, Shuri must take up the sacred mantle of the Black Panther to forge peace.",
+
+  "black-panther-wakanda":
     "Grieving the heartbreaking death of King T'Challa, Queen Ramonda, Princess Shuri, Okoye, and the Dora Milaje fight to protect their nation from world powers eager to plunder their precious vibranium reserves. Their vulnerability triggers an unexpected confrontation with Namor, the feathered-serpent god and ruler of Talokan, a hidden undersea empire determined to wage war on the surface world. Burdened by grief and vengeance, Shuri must take up the sacred mantle of the Black Panther to forge peace.",
 
   // DOCTOR STRANGE
@@ -129,8 +144,23 @@ export const EXTENDED_MOVIE_SYNOPSES: Record<string, string> = {
     "Attempting to embrace a quiet, anonymous existence on the road, Frank Castle's violent instincts are reignited when he intervenes to rescue a terrified teenage grifter from a ruthless death squad of Christian fundamentalist mercenaries. Drawn back into the bloody crosshairs of power and corruption, Frank returns to New York, only to discover that his scarred former brother-in-arms, Billy Russo, has escaped psychiatric custody as the fractured madman Jigsaw. Unleashing relentless firepower, Castle must finish his war.",
 
   // STREET & COSMIC HEROES
+  "falcon-winter-soldier":
+    "Six months after the Blip and Steve Rogers passing his iconic shield, Sam Wilson struggles with the personal and political weight of taking up the Captain America mantle. Partnering with a haunted Bucky Barnes, who is seeking redemption for his lethal past as the Winter Soldier, the duo embarks on a worldwide mission to neutralize the Flag Smashers—an anti-patriotism militia wielding super-soldier serum. Confronted by government-appointed replacement John Walker, Sam must overcome institutional resistance and define what it truly means to represent America.",
+
+  "the-falcon-and-the-winter-soldier":
+    "Six months after the Blip and Steve Rogers passing his iconic shield, Sam Wilson struggles with the personal and political weight of taking up the Captain America mantle. Partnering with a haunted Bucky Barnes, who is seeking redemption for his lethal past as the Winter Soldier, the duo embarks on a worldwide mission to neutralize the Flag Smashers—an anti-patriotism militia wielding super-soldier serum. Confronted by government-appointed replacement John Walker, Sam must overcome institutional resistance and define what it truly means to represent America.",
+
   "moon-knight":
     "Mild-mannered gift-shop employee Steven Grant discovers his dissociative blackouts and haunting dreams are the consequence of sharing a body with hardened mercenary Marc Spector. Bound to the Egyptian moon god Khonshu as his vengeful avatar, Marc and Steven must learn to harmonize their fractured identities while racing across Cairo to thwart Arthur Harrow, an enigmatic cult leader seeking to unleash the goddess Ammit's preemptive judgment upon humanity.",
+
+  "ms-marvel":
+    "Kamala Khan, a creative Pakistani-American high schooler in Jersey City obsessed with superheroes and Captain Marvel, struggles to find her place within her family and school expectations. Everything changes when she discovers an ancestral golden bangle that unlocks dormant cosmic light-construct abilities passed down through her heritage. Pursued by the Department of Damage Control and extradimensional beings known as the Clandestines, Kamala journeys from Jersey City to Karachi to uncover the secrets of the Noor Dimension and become a hero in her own right.",
+
+  "she-hulk":
+    "Jennifer Walters, an ambitious single attorney in her thirties navigating a demanding legal career, is cross-contaminated with the gamma-irradiated blood of her cousin Bruce Banner following a car accident. Gaining the ability to transform into a 6-foot-7 green superheroine while retaining her full intellect, Jennifer is recruited to head the superhuman law division at prestigious law firm GLK&H. Juggling chaotic dates, eccentric superhuman clients like Emil Blonsky, and an online hate group named Intelligencia, Jen breaks the fourth wall as she redefines justice.",
+
+  "she-hulk-attorney-at-law":
+    "Jennifer Walters, an ambitious single attorney in her thirties navigating a demanding legal career, is cross-contaminated with the gamma-irradiated blood of her cousin Bruce Banner following a car accident. Gaining the ability to transform into a 6-foot-7 green superheroine while retaining her full intellect, Jennifer is recruited to head the superhuman law division at prestigious law firm GLK&H. Juggling chaotic dates, eccentric superhuman clients like Emil Blonsky, and an online hate group named Intelligencia, Jen breaks the fourth wall as she redefines justice.",
 
   "shang-chi":
     "Living an unassuming life as a San Francisco valet, Shang-Chi is suddenly ambushed by trained assassins sent by his immortal father, Wenwu, the legendary wielder of the mystical Ten Rings. Reunited with his estranged sister Xialing, Shang-Chi is forced to confront the traumatic martial arts training of his childhood and his family's ancient legacy. Journeying to the mythical realm of Ta Lo, Shang-Chi must unlock the ancient power of the Great Protector to prevent an ancient soul-eating evil from escaping.",

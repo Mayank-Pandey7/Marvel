@@ -26,6 +26,7 @@ html, body {
   scrollbar-width: none;
   -ms-overflow-style: none;
   caret-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 button, a, header, nav, [role="button"] {

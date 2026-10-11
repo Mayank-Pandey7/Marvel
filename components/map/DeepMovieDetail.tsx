@@ -474,8 +474,8 @@ export default function DeepMovieDetail({
 
       {/* Volumetric Smoky Glass Atmosphere Behind Text */}
       <div
-        className={`fixed inset-x-0 bottom-0 h-[80%] sm:h-[72%] pointer-events-none z-10 overflow-hidden transition-opacity duration-1000 ${
-          isExpanded ? "opacity-100" : "opacity-0"
+        className={`fixed inset-x-0 bottom-0 h-[80%] sm:h-[72%] pointer-events-none z-10 overflow-hidden transition-opacity duration-300 ${
+          isClosing ? "opacity-0" : "opacity-100"
         }`}
         aria-hidden="true"
       >
@@ -588,7 +588,7 @@ export default function DeepMovieDetail({
                   alt={movie.title}
                   referrerPolicy="no-referrer"
                   onError={() => setLogoFailed(true)}
-                  className="h-16 xs:h-20 sm:h-24 md:h-30 lg:h-36 xl:h-42 2xl:h-48 max-h-[185px] w-auto max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] lg:max-w-[760px] xl:max-w-[840px] object-contain object-left drop-shadow-[0_4px_28px_rgba(0,0,0,0.9)] filter brightness-105 select-none pointer-events-none"
+                  className="h-16 xs:h-20 sm:h-24 md:h-30 lg:h-36 xl:h-42 2xl:h-48 max-h-[185px] aspect-[634/192] w-auto max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] lg:max-w-[760px] xl:max-w-[840px] object-contain object-left drop-shadow-[0_4px_28px_rgba(0,0,0,0.9)] filter brightness-105 select-none pointer-events-none"
                 />
               </div>
             ) : (

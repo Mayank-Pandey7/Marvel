@@ -30,6 +30,7 @@ export const metadata: Metadata = {
 };
 
 import { DoomsdayTransitionProvider } from "@/components/doomsday/DoomsdayTransition";
+import InspectProtection from "@/components/common/InspectProtection";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Geist+Pixel&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-[#020204] text-stone-100 antialiased min-h-screen selection:bg-white selection:text-black">
+        <InspectProtection />
         <TimelineStateProvider>
           <WatchedProvider>
             <DoomsdayTransitionProvider>
