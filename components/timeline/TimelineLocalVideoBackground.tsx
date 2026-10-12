@@ -61,14 +61,8 @@ export default function TimelineLocalVideoBackground({
         }}
       />
 
-      {/* 4. Full-Height Right Glass Fade Blur behind SELECT REALITY & Multiverse Controls */}
-      <div
-        className="absolute top-0 bottom-0 right-0 w-80 sm:w-96 md:w-[420px] h-full backdrop-blur-md pointer-events-none"
-        style={{
-          maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 45%, transparent 100%)",
-        }}
-      />
+      {/* 4. Full Background Glass Blur matching SELECT REALITY backdrop */}
+      <div className="absolute inset-0 w-full h-full backdrop-blur-md pointer-events-none" />
     </div>
   );
 }
