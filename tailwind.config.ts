@@ -21,6 +21,8 @@ const config: Config = {
         body: ["'Geist Pixel'", "monospace", "sans-serif"],
         mono: ["'Geist Pixel'", "monospace", "sans-serif"],
         pixel: ["'Geist Pixel'", "monospace", "sans-serif"],
+        panchang: ["'Panchang'", "sans-serif"],
+        clash: ["'Clash Display'", "sans-serif"],
       },
     },
   },

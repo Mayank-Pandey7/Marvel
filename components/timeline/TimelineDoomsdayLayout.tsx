@@ -477,7 +477,7 @@ export default function TimelineDoomsdayLayout({
                     </div>
 
                     <div className="flex-1 min-w-0 flex flex-col justify-center py-1">
-                      <h3 className={`text-xs xs:text-sm sm:text-base md:text-[16px] lg:text-[17px] font-mono uppercase tracking-[0.08em] sm:tracking-[0.1em] font-bold text-stone-200 group-hover/card:text-white transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] leading-snug break-words my-0.5 ${
+                      <h3 className={`text-xs xs:text-sm sm:text-base md:text-[16px] lg:text-[17px] font-clash font-medium uppercase tracking-[0.05em] sm:tracking-[0.07em] text-stone-100 group-hover/card:text-white transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] leading-snug break-words my-0.5 ${
                         isEven ? "group-hover/card:-translate-x-2" : "group-hover/card:translate-x-2"
                       }`}>
                         {movie.title}

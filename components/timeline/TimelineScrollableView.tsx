@@ -884,7 +884,7 @@ export default function TimelineScrollableView() {
                                     </div>
                                     <div className="flex flex-col gap-0.5 min-w-0">
                                       <h3
-                                        className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors truncate"
+                                        className="text-xs sm:text-[13px] font-clash font-medium tracking-wide uppercase text-white group-hover:text-white transition-colors truncate"
                                         title={movie.title}
                                       >
                                         {movie.title}
@@ -945,7 +945,7 @@ export default function TimelineScrollableView() {
                             </div>
                             <div className="flex flex-col gap-0.5 min-w-0">
                               <h3
-                                className="text-xs sm:text-[13px] font-mono font-bold tracking-wider uppercase text-white group-hover:text-white transition-colors truncate"
+                                className="text-xs sm:text-[13px] font-clash font-medium tracking-wide uppercase text-white group-hover:text-white transition-colors truncate"
                                 title={movie.title}
                               >
                                 {movie.title}

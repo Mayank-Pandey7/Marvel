@@ -591,7 +591,7 @@ export default function DeepMovieDetail({
               </div>
             ) : (
               <h2
-                className={`font-mono font-semibold ${
+                className={`font-clash font-medium ${
                   movie.id === "doctor-strange-multiverse" ||
                   movie.title.toLowerCase().includes("multiverse of madness") ||
                   movie.id === "guardians-holiday" ||
