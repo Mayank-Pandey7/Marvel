@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     title: "MCUVERSE — Marvel Sacred Timeline & Multiverse Map",
     description: "Interactive timeline tree exploring 6 Phases of the Marvel Cinematic Universe.",
   },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 import { DoomsdayTransitionProvider } from "@/components/doomsday/DoomsdayTransition";

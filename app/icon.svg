@@ -1,4 +1,66 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#e23636"/>
-  <text x="32" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="-1">M</text>
+  <defs>
+    <!-- Vibrant Marvel Cinematic Red Gradient Background -->
+    <linearGradient id="mcu-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E61A24"/>
+      <stop offset="45%" stop-color="#C4121B"/>
+      <stop offset="100%" stop-color="#930B12"/>
+    </linearGradient>
+
+    <!-- Glossy top highlight for 3D depth -->
+    <linearGradient id="gloss-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Metallic Platinum / Silver for primary M & Multiverse V bevels -->
+    <linearGradient id="silver-face" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="40%" stop-color="#F2F3F5"/>
+      <stop offset="70%" stop-color="#D5D8DF"/>
+      <stop offset="100%" stop-color="#A8ADB8"/>
+    </linearGradient>
+
+    <linearGradient id="silver-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#808590"/>
+      <stop offset="100%" stop-color="#4D525C"/>
+    </linearGradient>
+
+    <!-- Deep Crimson Multiverse Core Inset -->
+    <linearGradient id="dark-crimson" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#550205"/>
+      <stop offset="100%" stop-color="#2D0103"/>
+    </linearGradient>
+
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- 1. Red Base Shield with Rounded Corners -->
+  <rect width="64" height="64" rx="14" fill="url(#mcu-red)"/>
+  <rect width="64" height="64" rx="14" fill="url(#gloss-light)"/>
+  <!-- Inner subtle border highlight -->
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="1.2"/>
+
+  <!-- 2. Cinematic Stylized 3D "M" Emblem with Multiverse Chevron Inset -->
+  <g filter="url(#subtle-shadow)">
+    <!-- Base / Shadow structure of M -->
+    <path d="M12 49 L12 17 L22 17 L32 30.5 L42 17 L52 17 L52 49 L43.5 49 L43.5 28.5 L34.5 40.5 L29.5 40.5 L20.5 28.5 L20.5 49 Z" fill="url(#silver-shadow)"/>
+    
+    <!-- Primary Silver Chiseled Face -->
+    <path d="M13 48 L13 18 L21.5 18 L32 32 L42.5 18 L51 18 L51 48 L44 48 L44 27 L33.8 40.5 L30.2 40.5 L20 27 L20 48 Z" fill="url(#silver-face)"/>
+
+    <!-- Inner Multiverse Dark Crimson Dimension Cut (Interlocking V Chevron) -->
+    <polygon points="32,35.5 39,26 36,22 32,27.5 28,22 25,26" fill="url(#dark-crimson)"/>
+
+    <!-- Left Pillar Accent Inset -->
+    <polygon points="14.5,23 18.5,27.5 18.5,46.5 14.5,46.5" fill="url(#silver-shadow)" opacity="0.35"/>
+    <!-- Right Pillar Accent Inset -->
+    <polygon points="49.5,23 45.5,27.5 45.5,46.5 49.5,46.5" fill="url(#silver-shadow)" opacity="0.35"/>
+  </g>
+
+  <!-- Top Vertex Dynamic Gleam -->
+  <circle cx="32" cy="18" r="1.5" fill="#FFFFFF" opacity="0.8"/>
 </svg>
